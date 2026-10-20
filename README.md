@@ -8,7 +8,7 @@ A lightweight PDF viewer and editor in a single HTML file, with a small Windows 
 
 ## 下载
 
-Windows 安装包在 [Releases](../../releases) 页面（约 2 MB，不需要管理员权限）。安装包没有数字签名，Windows 可能提示「已保护你的电脑」，点「更多信息」→「仍要运行」即可。
+Windows 安装包在 [Releases](../../releases) 页面（约 7 MB，含文字识别组件；不需要管理员权限）。安装包没有数字签名，Windows 可能提示「已保护你的电脑」，点「更多信息」→「仍要运行」即可。
 
 ## 功能
 
@@ -16,7 +16,9 @@ Windows 安装包在 [Releases](../../releases) 页面（约 2 MB，不需要管
 - 编辑：修改原文字，加文字、日期、勾选、签名、印章、骑缝章、图片、高亮、画笔、方框，白色遮盖和永久涂黑，页码、水印
 - 页面：旋转、删除、调整顺序，合并 PDF，拆分 PDF（每页一份、每 N 页一份、按页码分组，或按发票号码自动拆分和排序），对比两份文件的文字差异
 - 保存：Ctrl+S 直接存回原文件，Ctrl+Shift+S 另存为
-- 转换：PDF 转 JPG / PNG、PDF 转 Word（只含文字）、PDF 转文字、图片转 PDF
+- 转换：PDF 转 JPG / PNG、PDF 转 Word（只含文字）、PDF 转文字、图片转 PDF、压缩 PDF
+- 批量：一次处理很多个 PDF，合并、按发票号码拆分、按号码排好合成一个，或全部压缩
+- 扫描件文字识别（tesseract.js，英文）：按发票号码拆分时，扫描页也能找出号码。桌面版把识别组件装在本机，网页版第一次用时从 CDN 下载
 - 打印、中英文切换
 
 ## 文件结构

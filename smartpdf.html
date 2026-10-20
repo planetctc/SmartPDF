@@ -227,10 +227,10 @@ textarea.ed{position:absolute;margin:0;padding:0;border:1px dashed var(--accent)
 .opt input{margin:0}
 html[lang=en] .ops{grid-template-columns:repeat(2,1fr)}
 @media (min-width:821px){.tools{flex-wrap:wrap;row-gap:2px}}
-@media (min-width:821px) and (max-width:1230px){#btnMerge .t,#btnSplit .t,#btnCmp .t,#btnPrint .t,#btnSaveAs .t{display:none}#btnMerge,#btnSplit,#btnCmp,#btnPrint,#btnSaveAs{padding:0 9px}}
-@media (min-width:821px) and (max-width:1400px){html[lang=en] :is(#btnMerge,#btnSplit,#btnCmp,#btnPrint,#btnSaveAs) .t{display:none}html[lang=en] :is(#btnMerge,#btnSplit,#btnCmp,#btnPrint,#btnSaveAs){padding:0 9px}}
+@media (min-width:821px) and (max-width:1340px){#btnMerge .t,#btnSplit .t,#btnBatch .t,#btnCmp .t,#btnPrint .t,#btnSaveAs .t{display:none}#btnMerge,#btnSplit,#btnBatch,#btnCmp,#btnPrint,#btnSaveAs{padding:0 9px}}
+@media (min-width:821px) and (max-width:1490px){html[lang=en] :is(#btnMerge,#btnSplit,#btnBatch,#btnCmp,#btnPrint,#btnSaveAs) .t{display:none}html[lang=en] :is(#btnMerge,#btnSplit,#btnBatch,#btnCmp,#btnPrint,#btnSaveAs){padding:0 9px}}
 @media (min-width:821px) and (max-width:1080px){.acts .btn:not(#btnSave) .t{display:none}.acts .btn:not(#btnSave){padding:0 9px}.search input{width:130px}.brand b{display:none}}
-@media (min-width:821px) and (max-width:960px){.fname{display:none}.search input{width:110px}}
+@media (min-width:821px) and (max-width:960px){.fname,#btnCmp{display:none}.search input{width:110px}}
 @media (max-width:820px){
   .only-m{display:inline-flex}
   .fname{display:none}
@@ -243,7 +243,7 @@ html[lang=en] .ops{grid-template-columns:repeat(2,1fr)}
   .search input{width:110px}
   .desk{padding:10px}
   .acts .btn .t{display:none}
-  #btnPrint,#btnMerge,#btnSplit{display:none}
+  #btnPrint,#btnMerge,#btnSplit,#btnBatch{display:none}
   .acts{gap:4px}
   .acts .btn{padding:0 8px}
 }
@@ -255,7 +255,7 @@ html[lang=en] .ops{grid-template-columns:repeat(2,1fr)}
     <div class="brand">
       <img class="logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAA6mElEQVR42u29eZgU1dU//jnn3upl9mEZQUAxolGIGgUV1wE1cYlJ1KQnJuprEhXcTSRxN025oxKjcQm4ixqdTuISt/iq0EERF+LKaBRFlH1ghpnp6a3q3vP7o6p7ZmBQQLO83+dXPv04dFdXV51z7lk+Z7mE//SRTDL+HzuSAFzXFQDy332n8v8e8Tf3oP8o8cm1RyfPG75uuwG11JETIAJRJrynIoAIiuHpEfR+N7x5ZaR8AoAIIij2eoO1EusH12OtBACsb6j338EXI8GVi+HfxfAakUjP7RqzAa3ImL4SHt5cJBKB39G57LkLpnWENN7oStD/EeLPTmqQ6zfeNz3xWi1mZklqUV9FTMGCEAiAClCv+xZiiAiIgjNKH9EGkhQJP6Je529UCkDlX4n0XEiCa/SmnIB6riXlXwCBwtsRwAqsiF9RU6O3WxU7D8B1jbOTKj3R9f9bGECQZgY1+fvcc/Wk9wfrGau0AYwIEUOILEDS62RACCAJCcEhSWSDJSwbLOjen1iAAkIFVA3+KBG47zU2RVVQn98MrkNEYlgskI0zhldG4ptCkH8fA0QIABGR2W3WNRd8MLzy6rXGWFW0YBG2EEHEYY46IKJetAqJRb2IJBsIciijvZcE9ZFW9POVkvT3CLYATD082viz9JCeATDD+j6QtbAAtBXAbhpZ/j0MSCYZTJYFsusD0276eETtWZ2maBxDLEqRNb44rGlQu/cPeJmPhUmRiBATWbEgIRGSHiEURSIQYkCsgJgAsRRyQEpnkgiBGbAEgS1ziKRHuzCIhMAllRUwLiSwAcqUpJ6VKUQCEQJBmCDC8Dge32l1ZWTXglcMl6v9L2FAMslwXZtsPDH20Mk7zlw0JHZCd3eXgdbwmMkRBV+J1Iqi3bq885886ZLn6D/gv22KNyIb+Z4A2Oe+645tr43+Me+LBQRirf2PMyDR3KxSTU0mOX36gD+N5EeX1OKAQi7nE4EiKqZiopAxRXCo2jsYGs3NamdAtQBm4xdOCFIp2uA9AH3eL73X3/ulfycSAkzdRIZP3eCdnVMp3QKYbOEjDWN6+wf/4RUQEv+4iy4a+uD2+q+fDoqMLXR2eUxMFbGoGrms+8GK+rr4O9Xq6FzRN5aFxbGEpiYzprkZLU1N5r/Pa3c3eGdMc7NpaWoyfOeVgG8C+xBau0254r8kEGqcndRoajI/uOXaXeeOHzR78SA9tpDJe9ARro5W6OGfdt323gkXHOflsitJEHhBFtCW/8sjx8/TT5asNWWPjf5jDJid1OmJrr/vre4BLw9Xc5bX6K+bTN6HJjWwokLtsDp35T9/dsnpRoREcdyX/7s073Ookv3evOfhr5r4mOj6+97mfv+DrWJPL49Jve3OeaJYDzbMoz7pOuf1n/z6Enm3OQIigZgiEwFE/+fpb21J9wggVghk/50MoBLx93/od6d/uG3to2squJLzxhciZ3DO+tst6fjJK8dPuQmzkxovPScAQKxC11H+62GrLyQkK98y+QAZUZqgKd6HPskkN85OaojQV8sAASGZJEx0/V3vu+rClgbnltYILAk8ibLeusD5nVcVj3l10qV/HDtjhoOJro8dh4ahU7hepaRG7f/ZpWCJdayuWtfCqRiwNpvh9uxHieZmtSw3QAEQuK5NT3T93vHEl/aCkskku+xaJa7seu/1Ny4eVnH2OlO0ZIzhyrizdWt22ddX5o997sxLX2ycndTpiZO9vuuGBEwABYjDpnoO/03H6IULBQB0Z3bx8E+67q4smGcHfpaZ98QF7qfhKUYAOuKu6d/IxtHotHU//9wZv3kvmUyy67pWfwnqs+u6dgbGOr+9/Xv3fbh19NhMMesDDKemyhnZ7n+w2xL/O6kply5qDA3zhoqL+oA6wkyfu9LKANF/yZFM8hyA0ZygBU2XvwTgpdJHP7rl+hGLKrzx3XF1yIiIjM/FeZeqSJS2ae3cGwDclhba4hWQaE6oVJNrLrjggvprt4s8tHSrim/7XV0eK6hoXQ2PWJGdt+8qc+w9Uy76bNRTN0bTrS/6ieZmlSpdILdCoblZICuohNsQEdTGAy8FSgVxQXNCoSll/lMET4wZQ6nBCwkTXR+ua9OAJQDX3HFH9f9WZvZqrVSNXdY/8Hnyxxaj8apihFG0BpYEnMu3jylUfTIXAEaPli1iQCm6PfqKi4b+Zdv6p5ZX8jdNNueTZuUo5pGL2x/84KeXHvdBeP6iI84pAEAKqd6XMQCg/3yDx6J7ifdGjlTKHDnpx4MA4ImmP675dwKIiVSKU4MXEiZMNSCyqV66+4g7bxy9Ku7vt0b5h94YXbd3IR4Znq+OwLMafr4I+EWDAgkZgRNVysl5K2974qm2PwBAkDHbTAYkk5xqajLfueTXO7zRUP34qqrITn4h72thJWBq6Oal1atzzTvedMEhGo4TibIRYjLMIrZI4oMDD41Iaet1wowxBS+ELqnf35OpU+Wb1/zs4pYa/NIwsOs1J/zurQtmXUHJJMF17b+UAUSSCoVFwcUJd10/4p81auxaKR6cdXj/F21+V6+mkrMqAmN9kO8Jd/qGSEgJsZBSAgFpMtZRVMF2nUqn/QDIo81kQDLJmDpVDombXd6pjT67vDo2RDJ5ozVrIYB9wRr4W7dvX/eoYkA0AREHpLgMK1srsBLQTFmgYH34xSJIKQUiEPdEwo3JpG4Y0yL7nXf8Dmu3U5d3Vwqs+GCKXHZYctKTAN4cO2OSs2DyTO9fI/2gKddfV/HaYLvXmkp9cIbMgU9GsEe+iis9XQXPWJiiB/YLhg1BBxkbBkEDBOkNiwuEtYaf734vePoUl7XAJsMLAKeJ/BVXXHRAe0V0iGQ6iyrqRIwhK4osswUUUBDjkwGECNYL0wDMPfcithwtMhNRgO1aC8tFsZJMJjmFharFdYsAsPv1p+xXqBHYfM4nY7y8Y2Pr6uhw/NL9xwLAIpnkMAluvyo9D9e137psyl5/HaMeX1YbbfAjgA8HpuCBip7hohEC2AlSAkoQxmAbUaQCQsQA1aw+AoDGOQspvaVuaB5cJM8IiWHKCyKVEdaxGIu2ICaIAAILKIGwAhyGKAbClUAArDUBjh++Y0CIORqc7+SQkMXx15y0l5A+naBGVGX9D7u03oGV0rrL6/aK3oRx15y0m6PUzS//2v27W9LXTU2cSn1JA+26Fskkty1b8Q9nlHdV3PJ1awq+Yt8YzawhrErRk2wKkC0CS0IRK4jkvQ8BoKF1jGxxHOAogEgRrLLkKNS3ZZ4d3JWfV2RymEgAhhVDIENCROQogQIsa2gObthagTEeAQwGmESZmFLrRq7m+d6VpzQiRmeKyACb9//4anbIXT9e9dmQt7ZWc6sock8xmztMZ80tVB9RInTxftNPnwLmP7xE9HQKMBBQoinx5RjhunaBQEC48YAZyfcWDat9sLU6MlCyBZ+I9OaZEYAgrLMFqYf+LPQqvkQg5lnAWpAPiToKkfa1s978zQ33f9mVP979yX7/rIjfpUlVsXJuf/EXtzxUkq9xl/9UVXZj8WuX/OHyfZLHP+JXcOq1KbfvLMCf97365O8XI/TLPa772dkxUX+YR3c8lkIqYEQqwaktdVkJgtlJPXei++z3brvuwDeH2odXDIx/w+/OWQXFfYVcNh5DCkS0Is4Vu9WHK5cAQCrRbEsrZ7MZoIAgbLUE8QWWVHXj7KT+5BPokSPhf953Mx9sTR0j8rzo8DYP5NrGZFJn40uPE6VO9ATd2srt886f+Xg5ykwmIy2uWyRrxwkj35hs1Gn3/nf3v+7ke8Zfe/JjL593x/fnXXjHYwAe2+uKE79TjPCp466bfJY2ZuZ8uqM5hYD4QdySMhChxqkTFACkp6bNFwZ1E12/MZnUj5/265YzzjhjwvPf2qF5SXX0oKLnWSLaJCYIkbBmigh9Ot2pXfu30rLYUizIGBPmHAhEGiTapCe6/pJP4KcnusFrDizmAJgDpCdMNemJrsGcOVgwebK36IhzConfdkYP+O1ppxaqW/+mHD7U8f2pC86b+d1Xzr/9cQCUaE4oABiMOTZAGmk38fGPtJv2R914VvTFX98xzVqp3OuyE34OAGNnTHJeveTeJ18/787vsm+ugqMT+0w/7dl9rjv1BAJQXgVEknbTftpN+5saUadd1080J9Qtt9yy9sOjfnHw0A5vLsWjDIjpq2qoH/VDIBJRTIiRWrGL6xbDYrQttwEkIuQLSv+x9WmDxRtGiKE+DR8k7R9yfqK2rS426WNv3dERjn0QZzlv9pTbF5SjzJYWSqVSpkdtTACQRrQqup0Y+isA1MYKFgLiK3IneVCzD7j4+NlzJ8/8ZOykSc6CoUPNqxe6LwB44YAbT9vX8+nMcdecdAoT3T///GF3/OTcrgHvb935P2Rs/uA1A2ddd911XX1KgzZyrB48mgCg8b7ffvfdKmcXWyhaFnDJ/m5M/YhIWFijgGJxmQBAagx9KTDO2iCygwkKkdaPHEEkh1x20s4rq/3JilR2x6Wxm9bWaylEi6d3muLBRPKW6i6e/LJ7d0sZWlg4WuC6NrWh9BkAVMjlh8cQeQ8AFkya6SdSCU5d+uCSvX7zk2R3jO8GMKFq6D8F7kxJJpPsjmmhuU23zQMwb98rTz6gyHzmHtd+dkxnJL9dtjayI6IOnoyvOe6sww476Pd4pviFkf/EJn//my/d+/16/LHV8StVIdQ3AggFUPpGmQBAsUKkYJcAQOPgHhd0ixggRkj88JeDSjABgLFbr6AFRDgkOWmbJQMKf8806EFkGd2V5riGDLeIxYJokU+Ye+kdi8t6eeFoQZNrNmoGARl/0f8MK/pWV7fHF5WMYwop05hM6rTrzhp3xYmHjb/q58n0RXe5Y2dMclqea7GNGE3p8PvzLr5jLoC535x+8rR19epQUyzkLYqkayL7vnvgdo0gPFu2Ef1iXk3msNuuHP3WsNijK6t0pcp7FmEJn8D2yoBR/xqdQKroI1a07wBAupcLumVekDEQE0S1QcGZMgCwZnlBAfC6o97BmSoZVOjKZSHEEolsY629bv6U22/uA+8sHC2NAE9IJvutJE4mk+S6rnBU7xhlaX3m978vJBIJVXIv065rEs0J1f5x9PQMm9f2v3bycy9OnvHSgp7v6786y8Yp8Ld88vcS4w9zjILRiCohUnkgWsDK0r30C7U3uebYKy/c6rWhsSdX1UaGULZgwKxK/n1oCSFBHtgG7gmpoJBMABGIBWvPx0AnugQAEn2c0C2yASywAvaNkC+WQl1fiZEWADhj36vMAMW4raCIg1inL16RfrjXVackrMJbUR2ZHc3n571wsbsqDdh0GXpo1A1jGiSVaLYgkidWrFBoTlD+PW83hvoUAK0ePZoCRDKAckOp7dj7ypN+WIjIzROvnfQzq5w9c7534DNY+XUYa0jkHxHQTfXd1a9AFc5rqytcSDnbPiRD055xb3u7FPluALVf5topU6ZU/mWHmkc+q4uMlFzRZyYt0htBD1Bca33hmMPMGl62YJlDXF0g5ChyMl6m6qPMssAFTdgvtwKYLQS+9SxDiE2+GAWAlhAWmOe68/e+/KenKt/5FYjzDfnoFS9dOPPhvZMn7qSqKg4S2COL0ciZ+00/rc2KvK1hnh/StfXrqRB6AAhIJnnBZa6HmUD19DN3KRbyj0AQlOX0shWJm5NVq2XNOMrxfm01/g55xa8O7FT3OdrOt9nCtH9ceteS3rf+/XNOvN4p8oTheefYR9w7lgYGeD3iixBSKZLfJPXO36j+0/IhsX387pyviHU/Lj5ExDhVFWrI2uLbsVzuo+UDIkdnyBglYCGAlEIVTNtvgTWP9BM5bz4DFMWqYzGtOzJedVtXywDffDKyMamXvdKmFj3zNqQxyfMvdWckj0zOGvME/Ca4RTQ26pfde98H8D4AJKZPjy/3/jnWMh1esHLpJ84nVXtffco/ybdz47HonNm/dpecdNJJA97dI3Lpmho6uqJdLybCE2m4/oE3nLZzvuAfrJTae1l+xXAVja824r1Vl48fkfMyNxa7c83zkne9XBLSxmSjyqz4Oi2YOdNvGx7fI07q40cuvGXp2BmTnAW0AZBHmDNVUZPrf+OBa+5cMrTqsEIm4ymwUza0Qa1wEHJba8TRauja/Io9P8we9edfX7p411nX/nbZNjW/XOPlRXnGVxAnX/QWfc1186WS/C1iwIRQXVR2ZhZWKeec2qL3XPrq6S29RCwIwtKBUnGfcLNlS5pO+72TK6kpU/IAXgxfGJ88fpQo2d+KnVjU5n/GX3/KupdraLuOWrN7JtuOurrKy795y2m7Rdd5kWLRixf94vtxiv1ZVrfOmzv9kdWlS++d/J8zCxH8uTF5+gENY1pbUwtHS9p1/cYkNAARg6+DzKdIJhkLVvRX1aFoouvv8uA1Vy4eXvPzfKbb1yBH+gRWoSKwsEYrHpaV7p2W545J/frSxQDw5gnnnbvnrGktXBu9rVWLJt/Yap+WL+/HBd0sBriuK0gk1D9uvnkugLkAcPyUKZXvL+zesX1ddpe1XbkRgwYOHJMvkOP5wmBBLOJYrUx3+9q1bw4dNGDR1iP0whcevHmx6WFGBKtX2/nu/YsALAJwTzKZ5Pl16761ijqeznTlCtondFYVuUap0dWGj/37xTPfWd9TWb1wNLWihV9x73t77GXH3dPJbXemm1LfaUw26iAemQDIBM5fs2xvkH0eU6fKglTKYubM8nXGzpjhLJg42dvr3mlTPhpRe1FXvtvXIlp6uZelSm2IiMQiaOg2/rZLOhLPnJ2cP+76c0dUDRny4+Tt3b+deML5dxw88+rW9waqe9rqq+t4Rf49AMDghdSfq7cJabCEQuh9JJOJqodfqv1ud2fke1nfHmCEhnk2Ah8KIA5dsV7NDNZCsYBZoOEVtGTfjTves5VVNvX+87PekMAC68YJADCnDBHsMu2Ev7SNUEfn83nUcAwDPjXHLfjNrAcRRslIjJYN9Hdzs0JTk9njqhOei1DkofkX3nnHqBtvjC46J8jK7XnlyU8ObO86+3+vf/gjCgF56VXPtNstyeOXjqye1RYRoyyxhNQnCps9BLAkIo6yg32lRn7S2fTq5EtSSCb5m9voH7XuNuLBysWrH9/vA+/kuy++uLXx2uQ320cPfLyuK3fF3398/sz+cuObwICEAlImOWlsxb1v7nx6hx8/3UfFdr6tgA8PMD4IYThMHELMPXhHKdloxXCQdRcosnCQt5XKf6qhNnfN23MefClY5kmGTBVgKh129qcDV42QqwsVdvuKdjz52qX3TU9htJNAi+1xWRtpATLlZxiLBYYAe8i0M7bOOX7a5P3D51905yJBUh/yB33I4mj3TF/HF8QjlQOdQTV1Az5b+2bFQ3ee8swziwqHzLjiO28NiT7WGgcpX0iUIup5mhIDxCeYOiemd1qWOXf+/5x/w7azk7ElE9387vdOO+G9beJ3i0Bt3Zp9d0Rb8Zi/n/abD4876+ThS6MRP339rSvRT7sSbYrk73bwSRNWdOibu4rRMUYIBGuIVGCXQCwo0YSxHkaFUkeLiA2cZ4GIkBWwVkojpvOorczP+OGe+SnTp9/fDSQZ6JHs0h3vdWvyoOVDq27KG88yKw76BYhIQGKtGGaq78yvGfnaoqOev2XW2v2uOekYr6r6bG/oyMfWsZnUEcFOnWzAimGiCkO6RUatKhyU/tmFc46Ycc2+7wyPPfeZ48fYWBEiZnCf6JYBFCF+lYrqEZ+0X/3eyZdehNlJ3TgnwIt2v/Oy4z8cWTMrUyhmK2qrKnZbmnNfbum8DJe59vOAjo3bgMakRsr1d9r/56cv7ai5udOLEEneZzIsRCpA/zjUiUHtUf/hOIUqidETudgwR2ZNtx9hLxef/MCLnXvtvs8xR7/xsrskSH+6glSC92g/hL9W/5z9MBMZ0t5QM6Y7nwlSnUF6LWC7sbCsIdY3w0fUxQFADRzlfbK1s++62mhjzhjYQlGUz1I0xgxu9/wdVhUTcyYn5xw67ZKvvzNE/2lZpcRVzloBmEQQVBb2CJRP4lVXVjjbLu64Z2FIfEx0TUNzc3ACE4kwQKRgxFqtDFzXjn19hrNg7OSNgn+8UclPu/42ux971meZ+C3riiyMoiViLVAM4R7il5IOG63xpA0WGpVtBZQikFf0vfZ81e6fZKtfGL3fkdvAdS0IhKaU+Vp9vU01pYwi9jhXtPB8T2V9y1nPqpxvdd5YKlpDnm8ZyOzx6D+zu98/7ZKWYbHHVzCp7kzeR8G3DIaJKBlktDNySe6UOZOTTx5/03XbfTCq7qkVNc5Q5DwL1twXyA/NmMCPV1Y4267KPvbOo187WZqbFSZMNRuoE6LADkopCQtUdS2XzwP7eGNqZ8f9TzyqHfU35Y02GkUCgYkIVJYKXk/NWJBYAcQG9k1skKC0ACw2KP6kHt3KAofEeN0Y8LXW/MA/J5OJSNDu3MM5sZbA1PPjIgxB8CJSAoJXURF/+heH3v9hvXP5WhiBMaSMr2F9siymIRJTo9f4v3jtnMseOPGcc+rm1Rf/vLRaf83kCj6RYgFA3Fe4rG98FXf01ss7X/zBo28fS80Ji0TClqoaVi8MPBuh8I2SHOpNQ/p5A3FNpexRJ5wxcE23mpH1HdFsKMwjBkQkDtMyAXkhAhIxItZaYQJHGewoUIyNaBKBJSMmqL8tAVa9Vk/pjokcEvFy0jDu4Tl1UwDXItFcvj+fLJW/T6WUlYSQmNhIRHO95faOusjhGU0gKzYQGQsr4tepiB65NHPl3396/o03HnZWdP4ugx5cNiC6u8kWfCWkg2S29BEwERiKsh6xqvujAz7q/pF7zz3F5NSptH59Z0BJBWEJojRiiDBvPgMakwqAvPFB4eycDGpQgCFR3HMa9dLzBA6IYI3WytGa47rQ5di1b0RM+zzHrH2jUue6HDYsSiuxgchu0FhKPc2iTKQ9H7a1O3Let44/vgGpJvtx+3O8vsdQLkCwgBhjdEzzsNbcu4fOW7X7dp92HLV13uQQUwoixifyK2MxZ+vP1t312k9+fYkCcM+Pt7l76fC6w03W95WFhrEgKyAR9GA9YiSi1FYd3rIdP2w/4q7z3eUgsu5UVzZeyVICKDYD2ekj/WnXHHfccTWdvj7FsyIqWPJ99HipBIMIsEQSUcS1WPf4ttXZ7+67fdeO3W/dvkfn2zP363535h7775jbYZuq7sPrVNtjjrJkRAlRSS2Ftyu2zACQIiJr81JR98Hi6EkAZM28guqNvfQIAgASA0erYStzi8e91fqdmVddtWLepEse22VZ4dDhXfZTqoipaCSqt12effL616pOFwCjf5+8/uP66I9znXkfYC1WQAYgIyAbgrLWimilhuWQ/fri7DFPX3TNB2N/d/H+e/xh6rRA5oQ2kqzdfGitl+5nAPLOUr2vJ9GhTJ5IuN4pVL0laWWxMGJthA0NctrOXPuPO76/MP2HJ55K3bvShv68FeCvD925quXFO59Z9Y+7jhpR551WE7XwBX1sQ8AAKrOXATKGJJfXP0wmwUtGjvRL1YxU6nkQC4EYVMTVyAxW7LlSvp9yp3064YIpex96ySVj/nb6xXPHvd81cYc1fsuI5V0vT3j09WOP+P05hT1+6160dGDllEx31nfE6HKXsA2AFPItyDNiFMkQT/k7rPF//MIU99Vjrr7ga59tUztryU4N5+1329UTQCSJ5uY+FDcloEhKbvemVXr3uKGrg7Tb0jav0VdKWHwrRLx+1TgJQUQMK1J1TvcDi1+99xY0JjUaWgSp5rDTveTHCyHRxPJxPb+Xvu0PoydOrs93VF9V9GGIrIKU7EHQ3yMiYFiGEOU82vWx2cdsj7nuh0GM50joYUDEGERiattutO7Rar6bOuuCd/b9xS/GtVTFn9cRnZngXvD9v1zovnLCCScc2IUa3JpKZfa+Pjlp8cCKKzuKvq9JNLSAdCBUloOsJPkQX5MZXIAe/lnHT2effunjZ1155eCnd4o9sbZOjTTi2eX1fJUkmg+g9WDlYFVI76pG2TwGpGEZQEVV/a7dWSYGb2BpRMpGD1EiVMX0g0HgFBTQbhjXkSAVeERAuzrpmxW/uzrddWYRsa1I4AWWLtByJKUiJgJgjHKqFSK8AwQfAoAyJfwd1uqIM7TNa995WeeRqbMvWfCDa6/d9VWTf3KtQqV2uPIDHX9hrHvBT2clr0kBwJ6Xnnfoopi+ZZ2XNxGQMpqClCoE0IFQAQSfrKlXjh65Mjv11dMvnZWcNKnigR0if/x0YGxn6e72icHt9dF99v/2RweAaA6amxUWLuzHmArsJjaLbWCpHe0MIAqIXG5g6XOtoEGfIagdVNEBuIKGFvmiNA4SwJQbbshpFNKkokpYO8JRBR1RwlpZVkqUVkKOAqtIQZRavqprWOkKBfLI+D4kympot+na9oO2o548+5JXj/rVr7Z/vZj762on0uBYMSj6dpWliiWV8Yd3v+rSU4++cfr45UNr/7wuojX7RAIisqGTbMPctggMkV8dieqtlrTf8OrJl7ivT5rkPHTQqFnLto4f7HV3+0SkyZLtjitpreGf9VMB0WMYBBDf37JGbZEgAOmjdkL1UK50FGUMSK9e074tgJdGf1FjNcrJOBoUp0eRXzfAWHgEpjJ7ezUriRXLDD2o1raXsGYWNkSQQV2msP2n2cTcC6/8e+NZZw1/jfmJ1aS24VzOQCklDER8kY4Ik62M3bbC5vx2sOaiL6yIxZRWW49HZVn82sqYHr68876FZ1x+LgM46cDtb182rPqYXKbLJ4YWETAR+55HXQ4OP+2CC+pva2pqz8yY5IR066nwJkBppTaTAW7wRebs50+4IRBbLopGrhD91bzpv3xk3yk35NCY1JgAi41NikoFjdfvvnR3MwHNm3Jzq3v1I6iKSGSodahhaddxc89K/u0np51W//d45aNtVZU7oZD3rVaabYBYGi3ExkqXsbAKWheskEMEG0QPNkAOAAtYiB+tiuuhq7v+949Li6d8A8Cud19x6cdbVZ6YyXb7CqxL1eQCsPi+LdTEBi/csX4fAE91jBgTYCxkZf1JLpvHgMYk27Rru9a1v8d68ERrTB9fi3pV/4qAlVi7rli5+w/+1PXk+G+fNGn+s+4ipHvhSH2Mcp+E62Z0Y7syOhw3MKC90N7Q0Tb52dMueWTS+efXPmvUY22VVWNtIe+zCtxJEQtWDBgOQkYG2EJEEZFBGCShPOOHPPFVRUwPXtHx2vjXP/3BN+66qzh+1rSTF42ovKyrmPeVQJWdmVIiBmzzMU2tUTkIwFM99Tol2gel6XazGYA5AICaKjU/m/POMELUN+Cj9arAhK0xti1bNTGbK7wxfPzJD9bG6d53X1j3ClEJ8w6GVaGxkdHQIEilbG+kc5NYEN7EC6cnnwaAm5ubq2567c1HVzuVBxSzRV8r0qEnG3qBFrAECusTRDEFjq8ASoKGIgIE1op29LB12c/2XyM/vOvuu7sAUKcjR3ZEWFTeQkhR78KrAIoBFWApH1P7KgCLGhba/iOyzTXC6bQFgEH1ejbbXBZiqWcWlC13MoZ4clieKExibM5Gq9YU6id92l7x0qBxA98ese8Z1+88YfL3jz7+1AYmWKTTfpjQESChkEgobNa4NCE0J5TMTuqb5r/x8FKnYoJfzHvaGi2llW8BskHNKmwwxgYWgAmKiSGCUkEZGbGWNQ3sKqzeeVXm0Fmu++mo3/0uCkAqoB6LGSIbzMDpNXaoxGEi61t4moZdm0jEMXaGXyoZ7E1UMpvvBVkgoeY/OWNZdaRwt3LiLKL8Mkup95SoMgQKEDGTFbHGLwijy1SOXpuvmvJZZ+zRdAu/N2js5Be2Hf/Ti8Ye8bO9706eGANSpsyMRJkZn1+nnEgxN6XMyAfa71pGsSO8XNEjgSM2cHBLxBaDIFte6kIOYcHA0wmxKCNiLWNI1ppR7dnEU1dc+15jMqmPO7vNA4Dattyb0Y6cFRLurUiCEUEWIobF8+ERhr50+LjhJVxICVGfwU+br4IAICVAkvcd2ebO+WTdkZ22ZlsSGAKpcBGEhZRh0VFPRTARQQf+vFgxReuJogLpAWQxsduvmrhupX/lr54oLtpm/CkvxFTh0X1G0cv33nvvuh4iJxgb1vQTEgmmVJPZ5qen3doaG3BCPuf5WsMRpp7ZDBLEckIQK0QqWAeMcMVSqJdJRDxHmwGeUcO6ssfPdaf9Payw89NusCJHv9f60cKtoq0Uj2xFxrc9QtrLC7SQnGZncceaQUAQp5gy1aVUvrNFaKhNJoFU6vet2w40iZpIbp2QViLwIH74rFIuDOubgCEEkS0YxJrBSsEKWd94xvp5X0mXXzVqdaFu0vJc3VN/fTfeMmzvSbfvPvF/DmSCBMTvsxoIjY0KqZTZ/qRfTG+rajgtZ3xPidViEeA2NtCLJAIxbCNCVOf5FkoxjBiypjx+jDwjxpKpI6W3Wtd15itTr3kYIfF7E+CmlQd0x4jbA2PN/eQyCIBYikVQPWTwduuHO6WWW+kXL9qEQMx1XYtEQr3+zO2vDY21HlSt1n3MIMdYEYgxbAM2EFGvhAyV4boA1RUI2VBPsSKCDirlPQvr+57PNuNXDF1bqD35447a9NbjT5/9zUNOaQTKK4DQmFScTvvfPOWCa9Y49efmc74fMdYJXIxQvYgBiYXxyYtwhLfKZB4YU+gaOyDT/S6zo3xffAnhE2vZVFmlt2nrntZy+XW3NiaTGn2JLxAhlWoyftEsZ636nWARBuxCmsERp279dqRNN7+flxFLpQwSCfX23x96Y+KuxfH1TuudFZSDMCs/MDc+AYaJN4SciPqpkSf0rEvSRMIEK7DGLxgta/IVEz5eq+eMHP/TW6dMmVI5OpFwkHb9McedftGnXuT8bHfOV8Zq8YM5bmRDKMEA8MiPOI4zLL8ufcLAylPTN9745mF5OmhEMT83Eo9rAflW4EWjjh60tu2ON93LL5BA8k0/z80WgANkguJn2RCKCalrIMgWir0e1vQlAX8ZBpSxnSSn7r67dfnr95w8akh2/4GRrkdikisqpbWwowyYLJQPggkqVO16cwj7GqXyzM9Qc4CsZgJZ6xeKUgEi3nuN7zstqVRx1DEnnfaZrbqyq1DwSaDKqHVodMkCYqyvnIjeOpedd8bXhn3Pdd0MAL7791e3nvGPzm8N6ex6ICKstVLOsEzmqQ+vnz4Jzc0KUzdMJ/YRGmYb3F6Q8wgr0MOV3huW761mFHqPs2RsLhravxduQyCHX3/2/nkEHLPnYT8bvbZTji7Y+HczRTPO5wptDMOIBw6wNMvBsBzu39UMqK+CJ4IV9pWjo0Pi2ZebvrP34dMumNwx6js/P24119+at2Q0ibJCQbaz1IIAgWVrlBPX9Zm2BV/PrjrynHOu6TzilitPEuO///Ra+/I5gMeue/yOv5jieTCjD66t/RGJAFOnCpqaZCO5cAlk2WpTqq61JrjP9RF/pn4TilueD/gcJxxIGSSTLEjyq8/c3fLRvBlXrnjld+N3bCjuOqKy/bRqXv3XKpVZHWGfWTvakFZWmETIhFC5UO9xkOQEPy3WJ4auoXWvjdsxe+S0CyZ3jD765B+2qrr78lZZMj5bCyonS0RAYgEDw+SoAd1r3xtRXPv9Jx98sH3/26897OPt6+9YWmEHwnVt44QJbAF88LvpPzv7/fcPvDVYHfiC7npRAAyhXowNaBy6n7SemnUsUB2LF/tb6VsGRXxxbaItQQloBJu0a159ZkYLgBYC/nD2OefUPbugbZxnzITOohzokdrTQzxWtBZkDUAwRKJKwbEQG5DouG19ayvddWTqzkfaDjj+lz94v1M/lBUGG0sgRbAlVzJwgS2MYRVRgwv5paOi+e/Onnnfsv2nX9r4wSDVnK1i7BStrAGAhtZWQVBcIuc880wB5aL9z4k3iMQfO8nZhnlrMRYAyFLgwvbgJxZgxZL3kVnZsbS3saMSgiyAGPyrxla6Funw4skkYw5Y0rA33uiuA/AcgOeYgIlH/+xrS1blJ3YX1NHdnhzk6bq48Y0oCEHECLGq5M4PRlV3Hflq+pHV+/3ozMMXtamHOy0zKxO4WQbhk4dGwxoLiqpBVFw7ppa/98zvZ3508PWX7P7e16r/tDouVVUCFGJqDABaHdRhynr1XZ8j+4ELedRRg4dkSQbDmlLLVa8kdClxL6x8A8eapRtJDG/ZCkgkEmp1mBnb2JEG0BgUQdtwVdg+wdTq0WTTU83zf6GPAXzMwJ3jD/3515d3Z8/qKOgzsgU2IFL10fzqMQPou88//cjSHb79471aVvnNXSzMji9siKWnqA4kAsvWQkV4oMmu204Vj3jm9ze/kZgxfZfXh/BTK6tpEBe9Yh42kiUaS4CkJ/SRwC8kSyKV4hRg27ep2cXUVFTB5GwwUTfgjaVS4Ecimijabdbs1hFd9mKZtXa9uGgLJuduand5emO2ovx9N1RVc9imG2Te3+76J4Azd//2qbMXr3X+pMTrHLNt5Mjnm+/44Jv7J0Z/mq15tEtXVmkLYw0UlIQj70rSD2uhqdp0Zwei7ai5D8169UfXXr79q1vrJ5fUqCHI5Y0idjzPQ4a8scclkw33k7u691SSLzpS4Yppj/LEQlyDMmRNyAAiAksYUQsLK4diUlx+80UXtd0SFgQzabK9Kj42tSxFl8AuAsneh516YlHX7SxiCxAhCWcvUylnIkLE2jJTHN1rn17wwsw52OjYmF6qCknG2BXqjWf/8OfdJp54nu9n3nq++c+vjZuY+Pri7MC/5Zy6oWw8IyyKbAgbhMQPRnszamzBbi3rmt59fFb6+xefO+KVUfHHl9WoEcjnDTMrC4CKnukeUDng/e1xFICZjXOmqjQ+v3m8F9Jmmn9ZEz83ahJ5rwgmZkvSx7CGBbqWtGLy7TsEyKiqFXoRYMo+Xwkj481SQU0MwPzzs3XHFysGHsJiAeKgEW/9qhfxASJUed3jCJgtbgtvkt1YAAsk+a3Z7nUAkDj54u1efGfN3zpsfDgb37AOkvRSauIPVI/Awg6I+2q7ePHE+X+898lvnXpqwzu7DHls2aDYaD+fNyqcyRNUaxBlGWitUue8PmnG3eMm1NtNWQWNc6aq9ETXv+G+aSd0DKjYVvKeCUY6mnJgWVIvBoJKX1BXDHoksH7zBm2JG9o4mgRAxIm+bX3f83yT9wpF3/eKvlcs+F6x6HvFol8sFH3j+Z4pFj2jq3c/9seTBiE5WsqJ+S9UtC0EJPno449vmP/emqfavcptYY0Pa5Q1FBDfWIi1EBGxVkkVPDVUZ0+Z/8eb75v262nVnxy8w5+XDanc3XYXfAVW0iuXaZWwFAqmbVDl6Enj1/4K1GRGp6Y6n0eWRHOzSh/k+ucmk4OWVqtLM8aIptLcW+ql0QlkSYSUjq0r+EMzXhoAIpm2IHaw2KLRm31swKDa+Jv5jDgFX5jIqN6VcKXJ7kGATiZHVXWvLOucgj+6F2J0IoIWeJ97C0HNqR0/fnxs7js7PtrN1TuR+L5DrK1PfWHuoC5NIo7HA1T2F2/+acYdJyaTdffvopuXDY3v72VyYcciYNn22YVBWXCmUDBLGuKX7TXjsvdebfrNoxChxjlTdUPrGEmFUw5Ls99SE5t8QaPeaUzl3SsHRIYj7xkJa+/77EkQeJdWRRyu6si/9vTki9+HCA2eM9X2k6DfTAaEurq6hl9GZ6YIVDgglt6j3KhXPoAg7Hli2jPxX+/13TPffvWvN/+xTyqybNkANK4mYAKQcn2RpB6x56d/6jI1+wCez6K1sAeyAPlB1soyg60IWHE01770w+cPvZmmDuEPtna+tWxw/FvZ7pznEDl+7wJfkjJEYAnEvs9tMQ21TU1qn4emXzCPJt9E6NuQV+q0POa2aTvsNDR225JaPtjLF4wCqw3i2rDk05CgCorqu819nwDA1KkbzWUQyeZAEa4FkvzKX91FW+05+ZW8r/Yn8SygVLk9p6QLw+srGM76jEUr/Ae2P2DyyD12brs1NdPt6N9lSuPgo07ecbt9V964zgw8zKIQJLvJAMJBxs0SSsieBDOclAN/HnOTgQDdd1+pilYsQdiWJ1T1KpQpqQqyYK1IWStrHdG5rZzrt/3LjieMy133wCCn5uXs+5+tqojHne5h8e1Wa3P4S3F1wtpaVWPyBaOIVV90mUuDYaAglh2H69tyy/b/OPvgG0GLq0EyqYJzrZQsjQR+q9k8FZRoIUkB1ap4Q8YUDygaBVXaSoT65zGTkUzBoYKNXvXCAj35awec/XiUM68Vs1g0YEA1li5dwXUNdbt2dMn4BYvlB3mpqrTkG1ZKl2pRiCh40FJhsTIwSlPMGqqOerevLOdBrIQ2y3xe+F9CMYVAMFa6/ILN1Ed2a22I7hbNFaG+UV0UgjK1jso5MRQLHjhfNAxS6wcMAkG4vQZ8kK2PRPXwrvyVv3fdzsSYZpXClx+xr9dHPz84FI8NeWL5y0Wu2wfiGxJS6GUHet+igIgZ8IwYH/Ftc918FlkFWB+rVxn4PBBdHRUwluHbIgi+ZbIqKEezvUrUS7kEC/LFMEVULa+b88GEB1+gr09yMLOX+lgPbO1bs1RS1xaBT86kCEqKxua8bpsTo1Cjgu2S/IJlj60WKOEenE16zdwuAX9sxDiVcd2wsvvVK+988vaJkuQUNdkvjbJtcFoSINe1IwfHT62QzoIJJkOFaAz3SjrYPh0kDFEEzxq/4PsWxgPbvFHWUMQWPeOL9XzFECJwqZ2pp8Slx48hkBirES2u8wYp8wtyYUdFo0GaTVNQxdNPjFnOORDBWguyZNkGdZ8SzOxhJdAEJrIQshAKOgq1YZAli9Jr/euyQIxiDOwoFLdblTl1YjrtJ3v55Q1jguEbZCnY/SDsptyyjFiYDXvlmZverlVtP65UBTGIkVgyAhOWHpSqImQDFJ2INJEoJmLFxEzEzNAgaEjo21H/OAwJibURUxFlNbgy+8s3X7r7rUQioXY/4AC/J99RdsX6/n5JEATYSlUgSpqtiA3w+zCZXqrsCDMRwV8WG50yXyI+iT9AOWpka37KM6f/5o1Ec7Nye7XHljtkeg0eFwjUJkbg3G8iprFRL/lH6pEBvPonlSpjRGkFER9iRMT2re3b1KPfFuVSgkOMB1As4ukRNdnLF8+//5bek1E2BW8XEhONxjA6E7lj6DozJ1pXzQbiwVr0aR3qMfT9VbD2bFElMEZrGVRR5Yxamk2+8vOLbm6cndSpjW2tojaeFdx8TZVO+2hs1B+9/vDDI2o7D61zMh8rZm1ABIFPsJbIhthI77ajvu1H/XMhOIeChJIB2FgdVRUqnx3orP3pOy/c9hsr/REfEOH+fe2gW0aUo9Bpuhf94LWV3xu5MvtWLBpzjMAqkCmVtlPQKdtv1gMEsJANWpOiaqjP2H5F9hevnnj+ZdKcUOmJG51tBEWa0KerHrzlDCgxIZFQb8++54UD6/J7DtJrbqhU3TlmpUU0WzjWkvKZlAlGZ5l+G/J6mifLCVUjAt+IwBArzVbV68zfRg1cO/7j+bPuLTWG958q3FCF9W6ZsiBIhKuuu+66rsPfWHLQdkszDwzWMUZ1hYJVgLAPgU9ChgADCquGhHwR9i0INh7jmkhMbdteeGO3pd0HvdJ07o1BB37KfNGy79mHDLBMm9kf8DnJ+VTqzjYA5+576M9nLO3snJQvqmOKUj2ygBgLLKyxPcF6aJ3LSzyQWgqaITkYG62BiHg26nTPrlLdv/t4/oNPrBL0GYmw0eTc59fPQSwMROgGoJ2Ijj/w3mvvWV7rTOlg++1MTVT7mgMxkXD4IAfNl1HLiHdmpTJTfHVIkWbe+vw/Z42bOdMrjT/YHF1LoC1wQz83OQ8CEhzCylNOP/305EstXY1tuWxj0ffHG6V2LBgZLBRl31owK1C4+aYVHw4TWPy8E1Vt8LoWVmn632GDnWdffvL2t1aWSTeVkHLNF2ZHezOhXC5ZTpPDBsC9jH19hrMgmTTpE897joHnDrv5im8ub5B9iizjcoq2y3vFShgxESeSjYr6rILo1SHr7Pz/PflXb3wKYBx6RpZtCiFNAB2He18SGEJfDQN654WR5F2/9VH8tltvzQjwJIAnCcC5xx9fOXd55bZL1q5qyGY7qqtqq6scYm3Fmo6OTOfAuqquEUNrPz1oj2GrLnNvyq4B8EmJ8IkmRoq+cHn32wMnfRv3OFDiAoQN0q5rE83NKpVI2KeI3gTwZu+4ox+WBqL2cLNKNTXZzR36Kr1V0Veigvpgto0aadfPdv3o+yP2P+2XUSWPaXTPj9Tx69Pvv3cdgJbwha71vtoVEnzuX1FO1GDCBAuXbNDC9CWO9Ttf1/MqyxKcTHLjBHC6dYxIYqEIX2ZhbbjyxlDj4IU0YQKsS65NbdEmcqZccgME9cBfcU54AoA0ClIZafcGjbPZ7nEOEWLrVv4cwD2jEwmnBTA9AFzJmDdI0BwzWgBXyomadHrzns+S9Kdby5sw9WkE77+oIO1i/UirvADSG8/0fe5RDsRK82xKToj9alUQSv0DsJ6QzRtjJOerSAXAGoC0rF5tkU6bfnOWKXwlh6yXQN8Ip/CfPogIzFsaiH3BUTSGLHwF8TWzYkXRf98Tlz1Z2fC9nk6Gf+tRioTLKLaEuyH8q7azVWHXaVARzuW92vsJVdffFZy+AtEq7/db3jNTwtGRJfnvu/T/5dtiZVasIABkrVWlnDB96Uj4C1gQ+BsqKJTq2wki6zkWG/tsc159pb0cWzCCHmOF0vicfh5c/tWvBYccEkyi4mAgSS9Yg/8lKyCYXqAACgIZzaIUAc9NSOOQv2NjqHG/h2+/4JSpoFTJhDD3CvUpxG2oXDVX6hPQoe5taG0RCaJqCUbfuOj5f4KA0rTcls+5h9VfKMof3jVX7QDYvZRTiXJT1xbmhDfN2VLhXuKe9n2DvFN7xYBxZ/6y6WlR9XtR0OmuAoyaWQhMEg7WIGEJ0h4UtIkOOZIC3cnUAyMpAEwQgolGHF3zwfNXArgPnuhwZHOvUsUSghbOsGCGsqIBYOWiMceOui6aLNBuPmso6CvC37kaYCHRImAG8R5ktYJlAhTBqh41IrDhwCzukycANHpPxFOn/9bkFQ/O+x4gwehika86DgjdUKUoHJUMIfFtwUS3yhFvpWADxoAghsoLJdAWofAG1TsIJnsBzBx0rIf63YKgSi1HYuFQFAS1FQBoZiHYAAfvNYWtXLlYckZ18EgmFm9YFVE75DwDHVWwKiAwKQpSElrCERUMqwHRCqIIlgFSoV3pPSy3V3aeID2Zt3BnevgGFIzXkEBJ/ouMMBMrEJNldkp4uxIb6OKy/rNhJ0nYj2sFxAy23NNDyzasOiaQZQhJMBW5HEwJGBqKHQMAhkSbiCb4pKEVRIJkiy3RxRjH1wpWgmdyiMRhRt5awOde3crBUCZb4poCxAgEBrAMUhSWPyDo+qN+IOZeeVoq+V5MQESTWOuYiAPLRn3FDAjiADZdnRGolUTwOTQ0FI6qFhskoIInoHIWjYKNPISsEIQgzCQsAsXh3MVeMy6Dt4SYfcfLOMrPdwCAkyl21bd2r4r4Plh81TMzKPhtQ2LiJqsrOvJrAYC7u9uq87yUrWeV5zlgBhQRqaC5ljQHw7E0YBjB9AsOVggUIEwQDpM35YcSCIL+nhLCGO7QUM4kWBET97q101lc1Tt82uQ0yRcjEo26oaGhMhKJCNauRVckItXVRYp2RaQr2lGWs+pCbb/XLlQHbT3RroiU/l0sVm9wbiQSkWJxFX38cXt2wYIFXmNjox41alSNqq1lLxrtc75TKAgAeJ5HmZUrO1KpVDEJcEsiURGJRLiyspIKhQIF51SQ42SloqKCirFYn+tEolEphucBQDEaJb9YpGoAuUhE/GJw79XV1ejq6oKORMrPGwnvAQCKxSK1zJ/fuWDBgn/NJnP///EVRs3/5u99KQQCm5LoLjeilVU0/iPbdW9iTvj/Az1M2NGFkbBbAAAAAElFTkSuQmCC" alt="">
       <span class="wordmark"><span class="w1">smart</span><span class="w2">PDF</span></span>
-      <button class="ver" id="btnAbout" title="版本记录">v2.2.1</button>
+      <button class="ver" id="btnAbout" title="版本记录">v2.3</button>
       <button class="ver" id="btnLang" title="Switch to English">EN</button>
     </div>
     <div class="fname" id="fname"></div>
@@ -271,6 +271,7 @@ html[lang=en] .ops{grid-template-columns:repeat(2,1fr)}
       <button class="btn" id="btnConv" title="PDF 转图片、Word、文字，或图片转 PDF"><span data-ic="conv"></span><span class="t">转换</span></button>
       <button class="btn" id="btnMerge" title="把其他 PDF 接在最后"><span data-ic="merge"></span><span class="t">合并</span></button>
       <button class="btn" id="btnSplit" title="把 PDF 拆成几个文件"><span data-ic="split"></span><span class="t">拆分</span></button>
+      <button class="btn" id="btnBatch" title="一次处理很多个 PDF：合并、按发票号码拆分或排序、压缩"><span data-ic="batch"></span><span class="t">批量</span></button>
       <button class="btn" id="btnCmp" title="对比两份合同的文字差异"><span data-ic="cmp"></span><span class="t">对比</span></button>
       <span class="vsep"></span>
       <button class="btn ghost" id="btnUndo" title="撤销 (Ctrl+Z)" aria-label="撤销"><span data-ic="undo"></span></button>
@@ -358,6 +359,7 @@ html[lang=en] .ops{grid-template-columns:repeat(2,1fr)}
 <input type="file" id="fMerge" accept="application/pdf,.pdf" multiple hidden>
 <input type="file" id="fImg" accept="image/*" hidden>
 <input type="file" id="fImgs" accept="image/*" multiple hidden>
+<input type="file" id="fBatch" accept="application/pdf,.pdf" multiple hidden>
 
 <div class="modal" id="mSign" hidden><div class="card" role="dialog" aria-labelledby="mSignT">
   <h2 id="mSignT">签名</h2>
@@ -477,10 +479,30 @@ html[lang=en] .ops{grid-template-columns:repeat(2,1fr)}
       <div class="field" style="flex:1 1 200px"><label class="lbl" for="spMiss">认不出号码的页</label><select id="spMiss"><option value="prev">并到前一张发票（多页发票）</option><option value="own">单独一个文件</option></select></div>
       <div class="field" style="flex:1 1 160px"><label class="lbl" for="spOut">输出</label><select id="spOut"><option value="files">每张发票一个文件</option><option value="one">合成一个 PDF，按号码排好</option></select></div>
     </div>
+    <label class="row" style="margin-top:6px"><input type="checkbox" id="spOcr" checked> 扫描件也用文字识别找号码（比较慢）</label>
     <ul class="spList" id="spList"></ul>
   </div>
   <p class="muted" id="spInfo" style="margin:8px 0 0;min-height:1.4em"></p>
   <div class="row end"><button class="btn" data-close>取消</button><button class="btn primary" id="spGo">拆分并保存</button></div>
+</div></div>
+
+<div class="modal" id="mBatch" hidden><div class="card" role="dialog" aria-labelledby="btT">
+  <h2 id="btT">批量处理</h2>
+  <div class="row" style="align-items:center"><button class="btn" id="btAdd">选择 PDF 文件…</button><button class="btn" id="btClear">清空</button><span class="muted" id="btCnt"></span></div>
+  <ul class="spList" id="btList"></ul>
+  <div class="conv" style="margin-top:10px">
+    <label class="opt"><input type="radio" name="bt" value="merge" checked><b>合并成一个 PDF</b><span>按文件名顺序接在一起</span></label>
+    <label class="opt"><input type="radio" name="bt" value="inv"><b>按发票号码拆分</b><span>每张发票一个文件，用号码当文件名</span></label>
+    <label class="opt"><input type="radio" name="bt" value="invsort"><b>按发票号码排好，合成一个 PDF</b><span>所有文件里的发票按号码从小到大排</span></label>
+    <label class="opt"><input type="radio" name="bt" value="zip"><b>每个文件都压缩</b><span>把图片压小，文件名后面加 -compressed</span></label>
+  </div>
+  <div class="row" id="btInvOpts" style="gap:8px;flex-wrap:wrap;margin-top:8px;align-items:flex-end">
+    <div class="field" style="flex:1 1 200px"><label class="lbl" for="btKey">号码前面的字</label><input type="text" id="btKey" placeholder="自动（Invoice No、INV、发票号码…）"></div>
+    <label class="row" style="flex:1 1 200px"><input type="checkbox" id="btOcr" checked> 扫描件也用文字识别（比较慢）</label>
+  </div>
+  <div class="row" id="btZipOpts" style="margin-top:8px"><div class="field" style="flex:1"><label class="lbl" for="btLvl">压缩程度</label><select id="btLvl"><option value="strong">强（文件最小，图片较模糊）</option><option value="mid" selected>中（推荐）</option><option value="light">轻（图片较清楚）</option></select></div></div>
+  <p class="muted" id="btInfo" style="margin:8px 0 0;min-height:1.4em"></p>
+  <div class="row end"><button class="btn" data-close>取消</button><button class="btn primary" id="btGo">开始</button></div>
 </div></div>
 
 <div class="modal" id="mConfirm" hidden><div class="card" role="dialog" aria-labelledby="cfMsg">
@@ -513,11 +535,13 @@ html[lang=en] .ops{grid-template-columns:repeat(2,1fr)}
     <label class="opt"><input type="radio" name="cv" value="docx"><b>PDF 转 Word</b><span>只转文字，排版会简化；扫描件没有文字可转</span></label>
     <label class="opt"><input type="radio" name="cv" value="txt"><b>PDF 转文字</b><span>存成 .txt 纯文字</span></label>
     <label class="opt"><input type="radio" name="cv" value="fromimg"><b>图片转 PDF</b><span>选几张图片，合成一个新 PDF</span></label>
+    <label class="opt"><input type="radio" name="cv" value="zip"><b>压缩 PDF</b><span>把 PDF 里的图片压小，文件变小，适合电邮或上传</span></label>
   </div>
   <div class="row" id="cvOpts" style="margin-top:12px;align-items:flex-end">
     <div class="field" id="cvFmtF"><label class="lbl" for="cvFmt">格式</label><select id="cvFmt"><option value="jpg">JPG</option><option value="png">PNG</option></select></div>
     <div class="field" id="cvDpiF"><label class="lbl" for="cvDpi">清晰度</label><select id="cvDpi"><option value="100">100 dpi</option><option value="150" selected>150 dpi</option><option value="300">300 dpi</option></select></div>
-    <div class="field" style="flex:1"><label class="lbl" for="cvR">页码范围</label><input type="text" id="cvR" value="全部" placeholder="全部，或 1-3,5"></div>
+    <div class="field" style="flex:1" id="cvRF"><label class="lbl" for="cvR">页码范围</label><input type="text" id="cvR" value="全部" placeholder="全部，或 1-3,5"></div>
+    <div class="field" id="cvLvlF" style="flex:1"><label class="lbl" for="cvLvl">压缩程度</label><select id="cvLvl"><option value="strong">强（文件最小，图片较模糊）</option><option value="mid" selected>中（推荐）</option><option value="light">轻（图片较清楚）</option></select></div>
   </div>
   <div class="row end"><button class="btn" data-close>取消</button><button class="btn primary" id="cvGo">开始转换</button></div>
 </div></div>
@@ -606,8 +630,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '2.2.1';
+const VERSION = '2.3';
 const CHANGELOG = [
+  { v: '2.3', d: '2026-10-20', items: [
+    '新增「批量」：一次选很多个 PDF，合并、按发票号码拆分、按号码排好合成一个，或全部压缩',
+    '新增「压缩 PDF」（在「转换」里）：把图片压小，文件变小',
+    '「拆分」按发票号码时，扫描件也能用文字识别找出号码（第一次用会下载识别组件）',
+    '修复 2.2 版「PDF 转 Word」排版出错的问题'
+  ] },
   { v: '2.2.1', d: '2026-10-20', items: [
     '修复拆分、提取和保存后文件变得很大的问题：有些 PDF 所有页面共用一套图片和字体，以前每一页都会带上整份文件的内容'
   ] },
@@ -708,6 +738,27 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  '「拆分」按发票号码时，扫描件也能用文字识别找出号码（第一次用会下载识别组件）': 'Split by invoice number now reads scanned pages too, using text recognition (the recognizer downloads on first use)',
+  '新增「压缩 PDF」（在「转换」里）：把图片压小，文件变小': 'New Compress PDF (in Convert): shrinks the images so the file gets smaller',
+  '新增「批量」：一次选很多个 PDF，合并、按发票号码拆分、按号码排好合成一个，或全部压缩': 'New Batch: pick many PDFs at once to merge, split by invoice number, sort by number into one PDF, or compress them all',
+  '修复 2.2 版「PDF 转 Word」排版出错的问题': 'Fixed PDF to Word layout broken in 2.2',
+  '批量': 'Batch', '一次处理很多个 PDF：合并、按发票号码拆分或排序、压缩': 'Process many PDFs at once: merge, split or sort by invoice number, compress',
+  '批量处理': 'Batch processing', '选择 PDF 文件…': 'Choose PDF files…', '清空': 'Clear',
+  '合并成一个 PDF': 'Merge into one PDF', '按文件名顺序接在一起': 'Joined in file name order',
+  '按发票号码拆分': 'Split by invoice number', '每张发票一个文件，用号码当文件名': 'One file per invoice, named by its number',
+  '按发票号码排好，合成一个 PDF': 'Sort by invoice number into one PDF', '所有文件里的发票按号码从小到大排': 'Invoices from all files, smallest number first',
+  '每个文件都压缩': 'Compress every file', '把图片压小，文件名后面加 -compressed': 'Shrinks the images; adds -compressed to the file name',
+  '扫描件也用文字识别（比较慢）': 'Use text recognition on scanned pages (slower)', '扫描件也用文字识别找号码（比较慢）': 'Find numbers on scanned pages with text recognition (slower)',
+  '压缩程度': 'Compression', '强（文件最小，图片较模糊）': 'Strong (smallest, images blurrier)', '中（推荐）': 'Medium (recommended)', '轻（图片较清楚）': 'Light (sharper images)',
+  '开始': 'Start', '压缩 PDF': 'Compress PDF', '把 PDF 里的图片压小，文件变小，适合电邮或上传': 'Shrinks the images in the PDF so the file is smaller for email or upload',
+  '{n} 个文件，共 {size}': '{n} files, {size} in total', '先选择要处理的 PDF 文件': 'Choose the PDF files first',
+  '正在读取 {name}…': 'Reading {name}…', '正在识别 {name} 第 {p} 页…': 'Reading {name} page {p}…', '正在识别扫描页… {i}/{n}': 'Reading scanned pages… {i}/{n}',
+  '正在下载文字识别组件…': 'Downloading the text recognizer…', '文字识别组件载入失败，请检查网络：{e}': 'Could not load the text recognizer. Check the internet connection: {e}',
+  '正在压缩… {i}/{n}': 'Compressing… {i}/{n}', '正在合并… {i}/{n}': 'Merging… {i}/{n}', '正在生成… {i}/{n}': 'Creating… {i}/{n}',
+  '已压缩：{a} → {b}': 'Compressed: {a} → {b}', '这个文件已经很精简，压缩不了多少（{a}）': 'This file is already compact and cannot shrink much ({a})',
+  '已完成，{n} 个文件保存在 {dir}': 'Done: {n} files saved in {dir}', '已跳过 {n} 个有密码或加密的文件：{list}': 'Skipped {n} password-protected or encrypted files: {list}',
+  '选择保存结果的文件夹': 'Choose a folder for the results', '没有可以处理的文件': 'No files could be processed', '批量-按号码排序': 'batch-sorted', '批量-合并': 'batch-merged', '批量结果': 'batch-results',
+  '其中 {n} 页用了文字识别': '{n} pages read with text recognition', '共 {a} → {b}': '{a} → {b} in total',
   '修复拆分、提取和保存后文件变得很大的问题：有些 PDF 所有页面共用一套图片和字体，以前每一页都会带上整份文件的内容': 'Fixed split, extract and save producing very large files: in some PDFs all pages share one set of images and fonts, and every page used to carry the whole file',
   '「拆分」可以按发票号码拆：自动认出每页的 INV 号码，用号码当文件名并排序，也可以合成一个按号码排好的 PDF': 'Split by invoice number: finds the INV number on each page, names and sorts the files by it, or makes one PDF sorted by number',
   '按发票号码（自动识别）': 'By invoice number (auto-detect)', '号码前面的字': 'Text before the number', '自动（Invoice No、INV、发票号码…）': 'Auto (Invoice No, INV, …)',
@@ -865,7 +916,7 @@ function T(zh, v) {
 const I18N = { texts: [], attrs: [] };
 function collectI18n() {
   const cjk = /[㐀-鿿]/;
-  const skip = el => !el || el.closest('#pages,#thumbs,#outline,#cmpOut,#recent,#chlog,#limits,script,style,textarea,#toast,#fname,#hint,#cfMsg,#signSaved,#stampSaved,#seamSaved,#seamInfo,#spInfo,#spList,#cmpSum,#pnInfo,#qCnt,#stMsg,#pwName,#cmpOld,#gnPv,#swatches,#padInk');
+  const skip = el => !el || el.closest('#pages,#thumbs,#outline,#cmpOut,#recent,#chlog,#limits,script,style,textarea,#toast,#fname,#hint,#cfMsg,#signSaved,#stampSaved,#seamSaved,#seamInfo,#spInfo,#spList,#btList,#btCnt,#btInfo,#cmpSum,#pnInfo,#qCnt,#stMsg,#pwName,#cmpOld,#gnPv,#swatches,#padInk');
   const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   let n;
   while ((n = w.nextNode())) {
@@ -918,6 +969,7 @@ const IC = {
   wm: '<path d="M5 15l5-10 5 10M7 11.5h6"/>',
   open: '<path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H8l1.5 2h6A1.5 1.5 0 0 1 17 8.5v6A1.5 1.5 0 0 1 15.5 16h-11A1.5 1.5 0 0 1 3 14.5z"/>',
   cmp: '<rect x="2.5" y="4" width="6.5" height="12" rx="1"/><rect x="11" y="4" width="6.5" height="12" rx="1"/><path d="M5 8h2M13.5 8h2M5 11h2M13.5 11h2"/>',
+  batch: '<rect x="7" y="3" width="10" height="12" rx="1.5"/><path d="M4.5 6v9.5A1.5 1.5 0 0 0 6 17h8"/>',
   split: '<path d="M10 3v5M10 8H7a3 3 0 0 0-3 3v5M10 8h3a3 3 0 0 1 3 3v5M2.5 13.5L4 16l1.5-2.5M14.5 13.5L16 16l1.5-2.5"/>',
   merge: '<path d="M4 4v4a3 3 0 0 0 3 3h3M16 4v4a3 3 0 0 1-3 3h-3M10 11v6M7.5 14.5L10 17l2.5-2.5"/>',
   undo: '<path d="M7 5L3.5 8.5 7 12"/><path d="M4 8.5h7a4.5 4.5 0 0 1 0 9H8"/>',
@@ -1261,7 +1313,7 @@ async function openFiles(files, mode, meta) {
       S.filePath = list.length === 1 ? meta.path || null : null; S.fileHandle = list.length === 1 ? meta.handle || null : null;
       if (S.filePath) addRecent(S.filePath);
       S.undo = []; S.redo = []; S.sel.clear(); S.selAnn = null; S.cur = 0; S.dirty = false; S.sample = false;
-      textCache.clear(); fieldCache.clear(); linkCache.clear(); S.search = { q: '', hits: [], i: -1 }; $('#q').value = ''; updSearchUi();
+      textCache.clear(); OCR.cache.clear(); fieldCache.clear(); linkCache.clear(); S.search = { q: '', hits: [], i: -1 }; $('#q').value = ''; updSearchUi();
       $('#note').hidden = true;
     } else { S.dirty = true; }
     if (meta.dirty) S.dirty = true;
@@ -1442,7 +1494,7 @@ async function loadSample() {
   const di = await loadPdfBytes(bytes, T('合同示例.pdf'));
   S.pages = await pagesFromDoc(di);
   S.fileName = T('合同示例.pdf'); S.sample = true; S.dirty = false; S.filePath = null; S.fileHandle = null;
-  S.undo = []; S.redo = []; S.sel.clear(); S.selAnn = null; S.cur = 0; textCache.clear(); fieldCache.clear(); linkCache.clear(); updUndo();
+  S.undo = []; S.redo = []; S.sel.clear(); S.selAnn = null; S.cur = 0; textCache.clear(); OCR.cache.clear(); fieldCache.clear(); linkCache.clear(); updUndo();
   $('#note').hidden = false;
   renderAll(); buildOutline(); fitWidth();
 }
@@ -1743,6 +1795,7 @@ function convOpts() {
   const v = ($('input[name="cv"]:checked') || {}).value;
   $('#cvOpts').hidden = v === 'fromimg';
   $('#cvFmtF').hidden = $('#cvDpiF').hidden = v !== 'img';
+  $('#cvRF').hidden = v === 'zip'; $('#cvLvlF').hidden = v !== 'zip';
   $('#cvGo').textContent = v === 'fromimg' ? T('选择图片') : T('开始转换');
 }
 async function pageLines(p) {
@@ -1801,6 +1854,7 @@ async function convGo() {
   const kind = ($('input[name="cv"]:checked') || {}).value;
   if (kind === 'fromimg') { closeModals(); $('#fImgs').click(); return; }
   if (!S.pages.length) { toast(T('请先打开一个 PDF')); return; }
+  if (kind === 'zip') { closeModals(); closeEditor(); return compressCurrent(); }
   const idx = parseRange($('#cvR').value, S.pages.length);
   if (!idx || !idx.length) { toast(T('页码范围不正确')); return; }
   closeModals(); closeEditor();
@@ -2960,10 +3014,13 @@ const INV = { res: null, key: '', run: 0 };
 const escHtml = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const INV_LABELS = ['tax invoice no', 'tax invoice number', 'invoice no', 'invoice number', 'invoice num', 'invoice #', 'invoice', 'inv no', 'inv. no', 'inv #', 'inv', 'no. invois', 'no invois', 'bill no', '发票号码', '发票编号', '发票号', '单据编号', '单号'];
 const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-async function pageLines(p) {
-  if (p.blank) return [];
+async function invLines(p) {
+  return p.blank ? [] : linesFromItems(await getItems(p));
+}
+function linesFromItems(list) {
   const rows = [];
-  for (const it of await getItems(p)) {
+  for (const it of list) {
+    if (!it.str || !it.str.trim()) continue;
     const y = it.tr[5], h = Math.hypot(it.tr[2], it.tr[3]) || 10;
     let r = rows.find(r => Math.abs(r.y - y) < h * 0.5);
     if (!r) rows.push(r = { y, items: [] });
@@ -2994,15 +3051,26 @@ function findInv(lines, key) {
   return null;
 }
 async function scanInv() {
-  const key = $('#spKey').value.trim(), run = ++INV.run;
-  if (!INV.res || INV.key !== key || INV.n !== S.pages.length) {
-    const nums = [];
+  const key = $('#spKey').value.trim(), ocr = $('#spOcr').checked, run = ++INV.run, ck = key + '|' + ocr;
+  if (!INV.res || INV.key !== ck || INV.n !== S.pages.length) {
+    const nums = [], scanned = [];
+    let ocrErr = null;
     for (let i = 0; i < S.pages.length; i++) {
       if (run !== INV.run) return;
       if (i % 5 === 0) $('#spInfo').textContent = T('正在识别发票号码… {i}/{n}', { i, n: S.pages.length });
-      try { nums.push(findInv(await pageLines(S.pages[i]), key)); } catch (e) { console.warn(e); nums.push(null); }
+      try {
+        const p = S.pages[i];
+        let lines = await invLines(p);
+        if (!lines.length && !p.blank && ocr && !ocrErr) {
+          scanned.push(i);
+          $('#spInfo').textContent = OCR.p ? T('正在识别扫描页… {i}/{n}', { i: i + 1, n: S.pages.length }) : T('正在下载文字识别组件…');
+          try { lines = await ocrPage(p); } catch (e) { ocrErr = e; console.warn(e); }
+          if (run !== INV.run) return;
+        }
+        nums.push(findInv(lines, key));
+      } catch (e) { console.warn(e); nums.push(null); }
     }
-    INV.res = { nums }; INV.key = key; INV.n = S.pages.length;
+    INV.res = { nums, ocrN: scanned.length && !ocrErr ? scanned.length : 0, ocrErr }; INV.key = ck; INV.n = S.pages.length;
   }
   invGroup();
 }
@@ -3032,8 +3100,10 @@ function splitInfo(fromScan) {
   if (mode === 'inv') {
     const r = INV.res;
     $('#spGo').disabled = !r.found;
+    if (r.ocrErr) { $('#spInfo').textContent = T('文字识别组件载入失败，请检查网络：{e}', { e: r.ocrErr.message || r.ocrErr }); $('#spGo').disabled = !r.found; return; }
     $('#spInfo').textContent = !r.found ? T('没有认出任何发票号码。如果是扫描件，页面上没有文字，就认不出来；也可以在「号码前面的字」填上号码前的标签，例如 No.')
-      : $('#spOut').value === 'one' ? T('认出 {k} 张发票，会合成一个 PDF', { k: r.found }) : T('认出 {k} 张发票，会生成 {n} 个文件', { k: r.found, n: r.groups.length });
+      : ($('#spOut').value === 'one' ? T('认出 {k} 张发票，会合成一个 PDF', { k: r.found }) : T('认出 {k} 张发票，会生成 {n} 个文件', { k: r.found, n: r.groups.length }))
+        + (r.ocrN ? (LANG === 'en' ? ' · ' : '，') + T('其中 {n} 页用了文字识别', { n: r.ocrN }) : '');
     return;
   }
   const gs = splitGroups(), el = $('#spInfo');
@@ -3081,6 +3151,227 @@ async function splitGo() {
     if (dir) toast(T('已拆分成 {n} 个文件，保存在 {dir}', { n: gs.length, dir: baseName(dir) || dir }));
     else if (zip) await saveFile(stem() + T('-拆分') + '.zip', await zip.generateAsync({ type: 'blob' }));
     else await saveFile(name(gs[0], 0), new Blob([last], { type: 'application/pdf' }));
+  } catch (e) { busy(false); console.error(e); toast(T('生成失败：{e}', { e: e.message || e })); }
+}
+
+/* ----- 文字识别（扫描件，v2.3）：只在用到时载入；桌面版用安装目录里的 ocr/，网页版从 CDN 下载 ----- */
+const OCR = { p: null, cache: new Map() };
+const OCR_CDN = { js: 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/', core: 'https://cdn.jsdelivr.net/npm/tesseract.js-core@5.1.1', lang: 'https://cdn.jsdelivr.net/npm/@tesseract.js-data/eng@1.0.0/4.0.0_best_int' };
+async function ocrPaths() {
+  if (DESK.on) {
+    const b = new URL('ocr/', location.href).href;
+    try { if ((await fetch(b + 'tesseract.min.js', { method: 'HEAD' })).ok) return { js: b, core: b.slice(0, -1), lang: b.slice(0, -1) }; } catch (e) { /* 没有本地组件 */ }
+  }
+  return OCR_CDN;
+}
+function getOcr() {
+  if (!OCR.p) OCR.p = (async () => {
+    const P = await ocrPaths();
+    if (!window.Tesseract) await loadScript(P.js + 'tesseract.min.js');
+    return Tesseract.createWorker('eng', 1, { workerPath: P.js + 'worker.min.js', corePath: P.core, langPath: P.lang });
+  })().catch(e => { OCR.p = null; throw (e instanceof Error ? e : new Error(String(e && e.message || e || 'load failed'))); });
+  return OCR.p;
+}
+async function ocrImage(blob, sc) {
+  const w = await getOcr(), { data } = await w.recognize(blob);
+  return (data.lines || []).map(l => ({ items: l.words.map(wd => ({ x: wd.bbox.x0 / sc, s: wd.text })), text: l.text.replace(/\s+/g, ' ').trim() })).filter(l => l.text);
+}
+const OCR_SC = 2.8;
+async function ocrPage(p) {
+  const key = p.doc + ':' + p.idx + ':' + totalRot(p);
+  if (!OCR.cache.has(key)) OCR.cache.set(key, await ocrImage(new Blob([await flattenPage(p, OCR_SC, 'image/png')]), OCR_SC));
+  return OCR.cache.get(key);
+}
+async function renderPdfjsPng(pg, sc) {
+  const v = pg.getViewport({ scale: sc }), c = document.createElement('canvas');
+  c.width = Math.round(v.width); c.height = Math.round(v.height);
+  const ctx = c.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+  await pg.render({ canvasContext: ctx, viewport: v }).promise;
+  return new Promise((res, rej) => c.toBlob(b => (b ? res(b) : rej(new Error(T('无法生成页面图片')))), 'image/png'));
+}
+
+/* ----- 压缩 PDF（v2.3）：把图片重新存成较小的 JPG；字体和文字不动 ----- */
+const fmtSize = n => n >= 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB';
+const ZIP_LEVEL = { strong: [1100, 0.5], mid: [1700, 0.68], light: [2500, 0.82] };
+async function shrinkImage(ctx, st, maxPx, q) {
+  const { PDFName, PDFArray, PDFRawStream, PDFNumber, decodePDFRawStream } = PDFLib;
+  const d = st.dict, get = k => d.lookup(PDFName.of(k));
+  if (String(get('ImageMask')) === 'true' || d.get(PDFName.of('Decode')) || d.get(PDFName.of('DecodeParms'))) return null;
+  const w = get('Width') instanceof PDFNumber ? get('Width').asNumber() : 0, h = get('Height') instanceof PDFNumber ? get('Height').asNumber() : 0;
+  if (!w || !h || w * h < 90000) return null;
+  const f = get('Filter'), filters = f instanceof PDFArray ? f.asArray().map(String) : f ? [String(f)] : [];
+  let cs = get('ColorSpace'), comps = 0;
+  if (cs instanceof PDFArray && String(cs.get(0)) === '/ICCBased') { const icc = cs.lookup(1); const n = icc && icc.dict && icc.dict.lookup(PDFName.of('N')); comps = n ? n.asNumber() : 0; }
+  else if (String(cs) === '/DeviceRGB') comps = 3; else if (String(cs) === '/DeviceGray') comps = 1;
+  if (comps !== 3 && comps !== 1) return null;
+  let src;
+  if (filters.length === 1 && filters[0] === '/DCTDecode') src = await createImageBitmap(new Blob([st.contents], { type: 'image/jpeg' }));
+  else if (filters.every(x => x === '/FlateDecode') && (!get('BitsPerComponent') || get('BitsPerComponent').asNumber() === 8)) {
+    const raw = filters.length ? decodePDFRawStream(st).decode() : st.contents;
+    if (raw.length < w * h * comps) return null;
+    const id = new ImageData(w, h), px = id.data;
+    for (let i = 0, j = 0; i < w * h; i++, j += comps) { const k = i * 4; if (comps === 3) { px[k] = raw[j]; px[k + 1] = raw[j + 1]; px[k + 2] = raw[j + 2]; } else px[k] = px[k + 1] = px[k + 2] = raw[j]; px[k + 3] = 255; }
+    src = await createImageBitmap(id);
+  } else return null;
+  const sc = Math.min(1, maxPx / Math.max(w, h)), nw = Math.max(1, Math.round(w * sc)), nh = Math.max(1, Math.round(h * sc));
+  const c = document.createElement('canvas'); c.width = nw; c.height = nh;
+  const cx = c.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, nw, nh); cx.drawImage(src, 0, 0, nw, nh);
+  if (src.close) src.close();
+  const jpg = new Uint8Array(await (await new Promise(r => c.toBlob(r, 'image/jpeg', q))).arrayBuffer());
+  if (jpg.length >= st.contents.length * 0.9) return null;
+  const nd = { Type: 'XObject', Subtype: 'Image', Width: nw, Height: nh, ColorSpace: 'DeviceRGB', BitsPerComponent: 8, Filter: 'DCTDecode' };
+  const out = ctx.stream(jpg, nd), sm = d.get(PDFName.of('SMask'));
+  if (sm) out.dict.set(PDFName.of('SMask'), sm);
+  return out;
+}
+async function compressPdf(bytes, level, onProg) {
+  const { PDFDocument, PDFName, PDFRawStream } = PDFLib, [maxPx, q] = ZIP_LEVEL[level] || ZIP_LEVEL.mid;
+  const doc = await PDFDocument.load(bytes), ctx = doc.context;
+  const imgs = ctx.enumerateIndirectObjects().filter(([, o]) => o instanceof PDFRawStream && String(o.dict.get(PDFName.of('Subtype'))) === '/Image');
+  for (let k = 0; k < imgs.length; k++) {
+    if (onProg) onProg(k + 1, imgs.length);
+    try { const ns = await shrinkImage(ctx, imgs[k][1], maxPx, q); if (ns) ctx.assign(imgs[k][0], ns); } catch (e) { console.warn('shrinkImage', e); }
+  }
+  const out = await doc.save({ useObjectStreams: true });
+  return out.length < bytes.length ? out : bytes;
+}
+async function compressCurrent() {
+  try {
+    busy(true, T('正在生成 PDF…'));
+    const orig = S.docs.reduce((a, d) => a + (d.bytes ? d.bytes.length : 0), 0);
+    const built = await buildPdf(S.pages, (i, n) => busy(true, T('正在生成 PDF… {i}/{n}', { i, n })));
+    const out = await compressPdf(built, $('#cvLvl').value, (i, n) => busy(true, T('正在压缩… {i}/{n}', { i, n })));
+    busy(false);
+    if (out.length >= orig * 0.95) { toast(T('这个文件已经很精简，压缩不了多少（{a}）', { a: fmtSize(orig) })); return; }
+    if (await saveFile(stem() + '-compressed.pdf', new Blob([out], { type: 'application/pdf' }))) toast(T('已压缩：{a} → {b}', { a: fmtSize(orig), b: fmtSize(out.length) }));
+  } catch (e) { busy(false); console.error(e); toast(T('生成失败：{e}', { e: e.message || e })); }
+}
+
+/* ----- 批量处理（v2.3） ----- */
+const BT = { files: [] };
+function openBatch() { batchUi(); openModal('mBatch'); }
+async function batchPick() {
+  if (DESK.on) {
+    let paths;
+    try { paths = await Neutralino.os.showOpenDialog(T('打开 PDF'), { filters: [{ name: 'PDF', extensions: ['pdf', 'PDF'] }], multiSelections: true }); } catch (e) { console.warn(e); return; }
+    for (const p of paths || []) { try { BT.files.push({ name: baseName(p), bytes: new Uint8Array(await Neutralino.filesystem.readBinaryFile(p)) }); } catch (e) { toast(String(e.message || e)); } }
+    batchUi(); return;
+  }
+  $('#fBatch').click();
+}
+function batchUi() {
+  BT.files.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
+  const mode = ($('input[name="bt"]:checked') || {}).value, total = BT.files.reduce((a, f) => a + f.bytes.length, 0);
+  $('#btList').innerHTML = BT.files.map(f => `<li><b>${escHtml(f.name)}</b> · ${fmtSize(f.bytes.length)}</li>`).join('');
+  $('#btCnt').textContent = BT.files.length ? T('{n} 个文件，共 {size}', { n: BT.files.length, size: fmtSize(total) }) : '';
+  $('#btInvOpts').hidden = mode !== 'inv' && mode !== 'invsort'; $('#btZipOpts').hidden = mode !== 'zip';
+  $('#btGo').disabled = !BT.files.length; $('#btInfo').textContent = BT.files.length ? '' : T('先选择要处理的 PDF 文件');
+}
+async function batchLoad() {
+  const docs = [], skipped = [];
+  for (const f of BT.files) {
+    busy(true, T('正在读取 {name}…', { name: f.name }));
+    try {
+      const lib = await PDFLib.PDFDocument.load(f.bytes);
+      const pdf = await pdfjsLib.getDocument({ data: f.bytes.slice(), isEvalSupported: false, password: '' }).promise;
+      docs.push({ name: f.name, stem: f.name.replace(/\.pdf$/i, ''), bytes: f.bytes, lib, pdf, n: lib.getPageCount() });
+    } catch (e) { console.warn(f.name, e); skipped.push(f.name); }
+  }
+  return { docs, skipped };
+}
+/* entries: [{ d, i }]，同一份文件的页面一次复制；只要部分页面时先把资源表瘦身 */
+async function assemble(entries) {
+  const out = await PDFLib.PDFDocument.create(), bySrc = new Map(), copies = new Array(entries.length);
+  entries.forEach((e, j) => { if (!bySrc.has(e.d)) bySrc.set(e.d, []); bySrc.get(e.d).push(j); });
+  for (const [d, js] of bySrc) {
+    const idxs = js.map(j => entries[j].i);
+    if (new Set(idxs).size < d.n) { const seen = new Set(); for (const i of new Set(idxs)) slimPage(d.lib, i, seen); }
+    const cps = await out.copyPages(d.lib, idxs);
+    js.forEach((j, k) => { copies[j] = cps[k]; });
+  }
+  copies.forEach(c => out.addPage(c));
+  return out.save();
+}
+async function batchInvoices(docs, key, ocr) {
+  const groups = [], map = new Map();
+  let ocrN = 0, ocrErr = null;
+  for (const d of docs) {
+    let cur = null;
+    for (let i = 0; i < d.n; i++) {
+      busy(true, T('正在识别 {name} 第 {p} 页…', { name: d.name, p: i + 1 }));
+      const pg = await d.pdf.getPage(i + 1), tc = await pg.getTextContent();
+      let lines = linesFromItems(tc.items.map(t => ({ str: t.str, tr: t.transform })));
+      if (!lines.length && ocr && !ocrErr) {
+        if (!OCR.p) busy(true, T('正在下载文字识别组件…'));
+        try { lines = await ocrImage(await renderPdfjsPng(pg, OCR_SC), OCR_SC); ocrN++; } catch (e) { ocrErr = e; console.warn(e); }
+      }
+      const num = findInv(lines, key);
+      if (num) {
+        if (!map.has(num)) { const g = { num, pages: [] }; map.set(num, g); groups.push(g); }
+        cur = map.get(num);
+      } else if (!cur) { cur = { num: null, name: d.stem + '_' + T('未识别') + '_' + (i + 1), pages: [] }; groups.push(cur); }
+      cur.pages.push({ d, i });
+    }
+  }
+  return { groups, ocrN, ocrErr };
+}
+async function batchGo() {
+  const mode = ($('input[name="bt"]:checked') || {}).value;
+  if (!BT.files.length) return;
+  let dir = null;
+  const multi = mode === 'inv' || (mode === 'zip' && BT.files.length > 1);
+  if (DESK.on && multi) {
+    try { dir = await Neutralino.os.showFolderDialog(T('选择保存结果的文件夹'), {}); } catch (e) { console.warn(e); return; }
+    if (!dir) return;
+  }
+  closeModals(); closeEditor();
+  try {
+    const { docs, skipped } = await batchLoad();
+    if (!docs.length) { busy(false); toast(T('没有可以处理的文件')); return; }
+    const results = [];
+    let note = '';
+    if (mode === 'merge') {
+      const entries = docs.flatMap(d => Array.from({ length: d.n }, (_, i) => ({ d, i })));
+      busy(true, T('正在合并… {i}/{n}', { i: docs.length, n: docs.length }));
+      results.push({ name: T('批量-合并') + '.pdf', bytes: await assemble(entries) });
+    } else if (mode === 'zip') {
+      let a = 0, b = 0;
+      for (let k = 0; k < docs.length; k++) {
+        busy(true, T('正在压缩… {i}/{n}', { i: k + 1, n: docs.length }));
+        const out = await compressPdf(docs[k].bytes, $('#btLvl').value);
+        a += docs[k].bytes.length; b += out.length;
+        results.push({ name: docs[k].stem + '-compressed.pdf', bytes: out });
+      }
+      note = T('共 {a} → {b}', { a: fmtSize(a), b: fmtSize(b) });
+    } else {
+      const r = await batchInvoices(docs, $('#btKey').value.trim(), $('#btOcr').checked);
+      if (r.ocrErr) toast(T('文字识别组件载入失败，请检查网络：{e}', { e: r.ocrErr.message || r.ocrErr }));
+      const cmp = (x, y) => (!x.num) - (!y.num) || (x.num && y.num ? x.num.localeCompare(y.num, undefined, { numeric: true, sensitivity: 'base' }) : 0);
+      const gs = r.groups.slice().sort(cmp);
+      if (!gs.some(g => g.num)) { busy(false); toast(T('没有认出任何发票号码。如果是扫描件，页面上没有文字，就认不出来；也可以在「号码前面的字」填上号码前的标签，例如 No.')); return; }
+      if (mode === 'invsort') {
+        busy(true, T('正在生成 PDF…'));
+        results.push({ name: T('批量-按号码排序') + '.pdf', bytes: await assemble(gs.flatMap(g => g.pages)) });
+      } else {
+        const safe = x => x.replace(/[\\/:*?"<>|\s]+/g, '-');
+        for (let k = 0; k < gs.length; k++) {
+          busy(true, T('正在生成… {i}/{n}', { i: k + 1, n: gs.length }));
+          results.push({ name: (gs[k].num ? safe(gs[k].num) : safe(gs[k].name)) + '.pdf', bytes: await assemble(gs[k].pages) });
+        }
+      }
+      if (r.ocrN) note = T('其中 {n} 页用了文字识别', { n: r.ocrN });
+    }
+    if (dir) {
+      for (const f of results) await Neutralino.filesystem.writeBinaryFile(dir + sepOf(dir) + f.name, toAB(f.bytes));
+      busy(false); toast(T('已完成，{n} 个文件保存在 {dir}', { n: results.length, dir: baseName(dir) || dir }) + (note ? ' · ' + note : ''));
+    } else if (results.length === 1) {
+      busy(false); if (await saveFile(results[0].name, new Blob([results[0].bytes], { type: 'application/pdf' })) && note) toast(note);
+    } else {
+      const zip = new JSZip(); results.forEach(f => zip.file(f.name, f.bytes));
+      const blob = await zip.generateAsync({ type: 'blob' });
+      busy(false); if (await saveFile(T('批量结果') + '.zip', blob) && note) toast(note);
+    }
+    if (skipped.length) setTimeout(() => toast(T('已跳过 {n} 个有密码或加密的文件：{list}', { n: skipped.length, list: skipped.join('、') })), 2500);
   } catch (e) { busy(false); console.error(e); toast(T('生成失败：{e}', { e: e.message || e })); }
 }
 
@@ -3144,6 +3435,10 @@ function wire() {
   $$('input[name="spMode"]').forEach(r => { r.onchange = splitInfo; });
   $('#spN').oninput = () => { $$('input[name="spMode"]')[1].checked = true; splitInfo(); };
   $('#spGroups').oninput = () => { $$('input[name="spMode"]')[2].checked = true; splitInfo(); };
+  $('#spOcr').onchange = () => splitInfo();
+  $('#btnBatch').onclick = openBatch; $('#btAdd').onclick = batchPick; $('#btClear').onclick = () => { BT.files = []; batchUi(); };
+  $('#fBatch').onchange = async e => { const fs = Array.from(e.target.files); e.target.value = ''; for (const f of fs) BT.files.push({ name: f.name, bytes: new Uint8Array(await f.arrayBuffer()) }); batchUi(); };
+  $$('input[name="bt"]').forEach(r => { r.onchange = batchUi; }); $('#btGo').onclick = batchGo;
   let spT; $('#spKey').oninput = () => { clearTimeout(spT); spT = setTimeout(splitInfo, 350); };
   $('#spSort').onchange = $('#spMiss').onchange = () => { if (INV.res) invGroup(); };
   $('#spOut').onchange = () => splitInfo(true);

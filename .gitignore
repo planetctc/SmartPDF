@@ -7,3 +7,4 @@ desktop/resources/index.html
 desktop/.tmp/
 desktop/.storage/
 *.log
+desktop/resources/ocr/
