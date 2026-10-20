@@ -1,0 +1,20 @@
+import * as ResEdit from 'resedit';
+import * as PELibrary from 'pe-library';
+import fs from 'fs';
+const [,, src, ico, out, ver] = process.argv;
+const exe = PELibrary.NtExecutable.from(fs.readFileSync(src));
+const res = PELibrary.NtExecutableResource.from(exe);
+const groups = ResEdit.Resource.IconGroupEntry.fromEntries(res.entries);
+const iconFile = ResEdit.Data.IconFile.from(fs.readFileSync(ico));
+const lang = groups.length ? groups[0].lang : 1033, id = groups.length ? groups[0].id : 1;
+// remove all existing icon groups + icons
+res.entries = res.entries.filter(e => e.type !== 14 && e.type !== 3);
+ResEdit.Resource.IconGroupEntry.replaceIconsForResource(res.entries, id, lang, iconFile.icons.map(i => i.data));
+const vi = ResEdit.Resource.VersionInfo.fromEntries(res.entries)[0];
+const [a, b, c] = ver.split('.').map(Number);
+vi.setFileVersion(a, b, c, 0, 1033); vi.setProductVersion(a, b, c, 0, 1033);
+vi.setStringValues({ lang: 1033, codepage: 1200 }, { ProductName: 'smartPDF', FileDescription: 'smartPDF', CompanyName: 'nick', InternalName: 'smartPDF', OriginalFilename: 'smartPDF.exe', FileVersion: ver, ProductVersion: ver });
+vi.outputToResourceEntries(res.entries);
+res.outputResource(exe);
+fs.writeFileSync(out, Buffer.from(exe.generate()));
+console.log('icon groups', ResEdit.Resource.IconGroupEntry.fromEntries(res.entries).map(g => [g.id, g.icons.length]));
