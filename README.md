@@ -34,7 +34,7 @@ sudo apt-get install nsis   # 需要 Node 18+ 和 NSIS
 desktop/build.sh            # 输出 desktop/out/smartPDF-Setup-<版本>.exe
 ```
 
-版本号在 `desktop/neutralino.config.json` 的 `version`。推送 `v*` 标签（例如 `v2.0.1`）时，GitHub Actions 会自动打包并把安装包放到 Releases。
+在 GitHub 的 Actions 页面运行 Release（或推送 `v*` 标签），会自动打包，并按这个版本号建立 Release、附上安装包。
 
 桌面版说明：
 - 用 Neutralino 的 chrome 模式，窗口由电脑自带的 Edge 以 `--app` 方式显示（v2.0 用 WebView2，在部分电脑上窗口出不来，v2.0.1 起改掉）。

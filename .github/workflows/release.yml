@@ -15,11 +15,15 @@ jobs:
           node-version: 20
       - run: sudo apt-get update && sudo apt-get install -y nsis
       - run: desktop/build.sh
+      - id: ver
+        run: echo "v=$(node -p "require('./desktop/neutralino.config.json').version")" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v4
         with:
           name: smartPDF-Setup
           path: desktop/out/smartPDF-Setup-*.exe
-      - if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v2
         with:
+          tag_name: v${{ steps.ver.outputs.v }}
+          name: smartPDF ${{ steps.ver.outputs.v }}
+          target_commitish: ${{ github.sha }}
           files: desktop/out/smartPDF-Setup-*.exe
