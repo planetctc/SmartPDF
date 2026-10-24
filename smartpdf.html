@@ -135,7 +135,7 @@ textarea.ed{position:absolute;margin:0;padding:0;border:1px dashed var(--accent)
 .ops .btn{--c:var(--c-slate);color:var(--c);background:color-mix(in srgb,var(--c) 9%,var(--panel));border-color:color-mix(in srgb,var(--c) 28%,var(--line));font-weight:500}
 .ops .btn:hover:not(:disabled){background:color-mix(in srgb,var(--c) 17%,var(--panel))}
 .ops [data-op=rotL],.ops [data-op=rotR]{--c:var(--c-blue)} .ops [data-op=dup],.ops [data-op=blank]{--c:var(--c-teal)}
-.ops [data-op=extract],.ops [data-op=split]{--c:var(--c-purple)} .ops [data-op=del]{--c:var(--c-red)}
+.ops [data-op=extract],.ops [data-op=split],.ops [data-op=rcpt]{--c:var(--c-purple)} .ops [data-op=del]{--c:var(--c-red)}
 .modal{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:rgba(10,14,22,.55);padding:16px}
 .modal[hidden]{display:none}
 .card{background:var(--panel);color:var(--ink);width:min(560px,100%);max-height:100%;overflow:auto;border-radius:14px;padding:18px;box-shadow:var(--shadow);border:1px solid var(--line)}
@@ -175,6 +175,22 @@ textarea.ed{position:absolute;margin:0;padding:0;border:1px dashed var(--accent)
 .muted{color:var(--mute);font-size:12px}
 .spList{list-style:none;margin:8px 0 0;padding:6px 8px;max-height:180px;overflow:auto;border:1px solid var(--line);border-radius:7px;font-size:12.5px;display:flex;flex-direction:column;gap:2px}
 .spList:empty{display:none}
+.card.rc{width:min(980px,100%)}
+.rcBar{gap:10px;flex-wrap:wrap;align-items:center}
+.rcNav{display:flex;align-items:center;gap:6px}.rcNav .mono{min-width:64px;text-align:center;font-size:12.5px}
+.rcGap{display:flex;align-items:center;gap:6px;flex:1 1 220px}.rcGap input{flex:1;min-width:80px}.rcGap .mono{font-size:12px;min-width:42px}
+.rcWrap{margin-top:10px;display:flex;justify-content:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;overflow:auto}
+.rcStage{position:relative;touch-action:none;cursor:crosshair;box-shadow:0 1px 4px rgba(0,0,0,.25);line-height:0}
+.rcStage canvas{display:block}
+.rcBox{position:absolute;border:2px solid var(--c-purple);background:color-mix(in srgb,var(--c-purple) 10%,transparent);cursor:move;box-sizing:border-box}
+.rcBox.on{border-color:var(--c-orange);background:color-mix(in srgb,var(--c-orange) 12%,transparent)}
+.rcBox .n{position:absolute;left:-2px;top:-2px;background:var(--c-purple);color:#fff;font:600 12px/18px var(--mono);padding:0 6px;border-radius:0 0 6px 0}
+.rcBox.on .n{background:var(--c-orange)}
+.rcBox .x{position:absolute;right:14px;top:-12px;width:22px;height:22px;border-radius:50%;border:0;background:var(--c-red);color:#fff;font:600 14px/22px sans-serif;padding:0;cursor:pointer;text-align:center}
+.rcBox .h{position:absolute;width:12px;height:12px;background:#fff;border:2px solid var(--c-purple);border-radius:3px;box-sizing:border-box}
+.rcBox.on .h{border-color:var(--c-orange)}
+.rcBox .h[data-h=nw]{left:-7px;top:-7px;cursor:nwse-resize}.rcBox .h[data-h=ne]{right:-7px;top:-7px;cursor:nesw-resize}
+.rcBox .h[data-h=sw]{left:-7px;bottom:-7px;cursor:nesw-resize}.rcBox .h[data-h=se]{right:-7px;bottom:-7px;cursor:nwse-resize}
 .spList b{font-family:var(--mono);font-weight:600}
 .spList .miss{color:var(--danger,#c62828)}
 .chlog{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
@@ -278,7 +294,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <div class="brand">
       <img class="logo" src="data:image/png;base64,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" alt="">
       <span class="wordmark"><span class="w1">smart</span><span class="w2">PDF</span></span>
-      <button class="ver" id="btnAbout" title="版本记录">v2.3.2</button>
+      <button class="ver" id="btnAbout" title="版本记录">v2.4</button>
       <button class="ver" id="btnLang" title="Switch to English">EN</button>
     </div>
     <div class="fname" id="fname"></div>
@@ -351,6 +367,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
         <button class="btn sm" data-op="blank" title="在后面插入空白页">空白页</button>
         <button class="btn sm" data-op="extract" title="把选中的页面另存成一个 PDF">提取</button>
         <button class="btn sm" data-op="split" title="把 PDF 拆成几个文件">拆分</button>
+        <button class="btn sm" data-op="rcpt" title="一页上扫了好几张收据，把它们分开">分收据</button>
         <button class="btn sm danger" data-op="del" title="删除页面">删除</button>
       </div>
       <div class="thumbs" id="thumbs"></div>
@@ -510,6 +527,24 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
   <div class="row end"><button class="btn" data-close>取消</button><button class="btn primary" id="spGo">拆分并保存</button></div>
 </div></div>
 
+<div class="modal" id="mRcpt" hidden><div class="card rc" role="dialog" aria-labelledby="rcT">
+  <h2 id="rcT">分开收据</h2>
+  <div class="row rcBar">
+    <div class="rcNav"><button class="btn sm" id="rcPrev" aria-label="上一页">‹</button><span class="mono" id="rcPg"></span><button class="btn sm" id="rcNext" aria-label="下一页">›</button></div>
+    <label class="rcGap"><span class="lbl">收据之间的空隙</span><input type="range" id="rcGap" min="3" max="30" value="10" aria-label="收据之间的空隙"><span class="mono" id="rcGapV">10 mm</span></label>
+    <button class="btn sm" id="rcAuto" title="按空隙重新找出每张收据">重新找框</button>
+    <button class="btn sm" id="rcClear" title="删掉这一页所有框">清空框</button>
+  </div>
+  <div class="rcWrap"><div class="rcStage" id="rcStage"><canvas id="rcCv"></canvas></div></div>
+  <p class="muted" style="margin:6px 0 0">拖框可以移动，拖四个角调整大小；在空白处拖拉可以加框；点框上的 × 删框。</p>
+  <div class="row" style="gap:8px;flex-wrap:wrap;margin-top:8px">
+    <div class="field" style="flex:1 1 200px"><label class="lbl" for="rcScope">要分的页面</label><select id="rcScope"><option value="cur">只分这一页</option><option value="all">所有页面</option></select></div>
+    <div class="field" style="flex:1 1 240px"><label class="lbl" for="rcOut">分好后</label><select id="rcOut"><option value="pages">在这个文件里变成单独几页</option><option value="files">每张收据存成一个 PDF</option></select></div>
+  </div>
+  <p class="muted" id="rcInfo" style="margin:8px 0 0;min-height:1.4em"></p>
+  <div class="row end"><button class="btn" data-close>取消</button><button class="btn primary" id="rcGo">分开</button></div>
+</div></div>
+
 <div class="modal" id="mBatch" hidden><div class="card" role="dialog" aria-labelledby="btT">
   <h2 id="btT">批量处理</h2>
   <div class="row" style="align-items:center"><button class="btn" id="btAdd">选择 PDF 文件…</button><button class="btn" id="btClear">清空</button><span class="muted" id="btCnt"></span></div>
@@ -654,8 +689,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '2.3.2';
+const VERSION = '2.4';
 const CHANGELOG = [
+  { v: '2.4', d: '2026-10-24', items: [
+    '新增「分收据」（左边页面栏）：一页上扫了好几张收据，自动找出每张的位置，可以拖拉调整框框，再分成单独的页面或单独的 PDF，画质不变'
+  ] },
   { v: '2.3.2', d: '2026-10-24', items: [
     'PDF 文件换上新图标：白纸加蓝色「PDF」标签，一眼就认得出是 PDF'
   ] },
@@ -725,6 +763,7 @@ const LIMITS = [
   '保存时，添加的内容（文字、签名、印章等）会合成为一层图片，不是可选中的文字。',
   '「PDF 转 Word」只转原文件的文字和大致段落，不含图片、表格、原排版和你在这里加的内容；扫描件没有文字可转。',
   '用了「涂黑」的页面，保存后整页是图片，不能再选中或搜索文字。',
+  '「分收据」靠收据之间的空白找框：收据贴在一起或叠在一起时，要自己画框。',
   '有密码或加密保护的 PDF 可以打开和编辑，但保存时这些页面会转为图片。图片签名不等于具法律认证的电子签名。'
 ];
 const FONT = '"Noto Sans SC","PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif';
@@ -768,6 +807,41 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  "新增「分收据」（左边页面栏）：一页上扫了好几张收据，自动找出每张的位置，可以拖拉调整框框，再分成单独的页面或单独的 PDF，画质不变": "New Split receipts (in the page panel): when one scanned page holds several receipts, it finds each one, lets you adjust the boxes, then makes each receipt its own page or PDF at full quality",
+  "「分收据」靠收据之间的空白找框：收据贴在一起或叠在一起时，要自己画框。": "Split receipts finds receipts by the blank space between them. If receipts touch or overlap, draw the boxes yourself.",
+  "分收据": "Receipts",
+  "一页上扫了好几张收据，把它们分开": "Split several receipts scanned on one page",
+  "分开收据": "Split receipts",
+  "收据之间的空隙": "Gap between receipts",
+  "重新找框": "Find again",
+  "按空隙重新找出每张收据": "Find each receipt again using this gap",
+  "清空框": "Clear boxes",
+  "删掉这一页所有框": "Remove all boxes on this page",
+  "拖框可以移动，拖四个角调整大小；在空白处拖拉可以加框；点框上的 × 删框。": "Drag a box to move it, drag its corners to resize. Drag on an empty area to add a box. Click × to remove one.",
+  "要分的页面": "Pages",
+  "只分这一页": "This page only",
+  "所有页面": "All pages",
+  "分好后": "Result",
+  "在这个文件里变成单独几页": "Separate pages in this file",
+  "每张收据存成一个 PDF": "One PDF per receipt",
+  "分开": "Split",
+  "选中的 {n} 页": "The {n} selected pages",
+  "这一页是空白页，没有收据可以分": "This page is blank; there are no receipts to split",
+  "正在找收据…": "Finding receipts…",
+  "删掉这个框": "Remove this box",
+  "这一页没有找到收据。可以在页面上拖拉画框，或把「空隙」调小再按「重新找框」。": "No receipts found on this page. Drag on the page to draw a box, or make the gap smaller and click Find again.",
+  "找到 {n} 张收据": "Found {n} receipts",
+  "这一页找到 {n} 张收据": "Found {n} receipts on this page",
+  "其他页会在按「分开」时自动找框": "Other pages are detected when you click Split",
+  "全部共 {n} 张": "{n} in total",
+  "没有找到收据": "No receipts found",
+  "选择保存收据的文件夹": "Choose a folder for the receipts",
+  "正在分开收据… {i}/{n}": "Splitting receipts… {i}/{n}",
+  "收据": "receipts",
+  "已分成 {n} 页，可以用「撤销」还原": "Split into {n} pages. Use Undo to go back",
+  "_收据": "_receipt",
+  "-收据": "-receipts",
+  "已存成 {n} 个文件，保存在 {dir}": "Saved {n} files in {dir}",
   'PDF 文件换上新图标：白纸加蓝色「PDF」标签，一眼就认得出是 PDF': 'PDF files get a new icon: a white page with a blue PDF label, easy to recognize',
   '左边页面栏可以拖拉调宽窄（双击恢复），功能按钮和工具改成彩色图标': 'The page panel on the left can be dragged wider or narrower (double-click to reset); buttons and tools now have colored icons',
   '拖拉调整页面栏宽度，双击恢复': 'Drag to resize the page panel; double-click to reset',
@@ -949,7 +1023,7 @@ function T(zh, v) {
 const I18N = { texts: [], attrs: [] };
 function collectI18n() {
   const cjk = /[㐀-鿿]/;
-  const skip = el => !el || el.closest('#pages,#thumbs,#outline,#cmpOut,#recent,#chlog,#limits,script,style,textarea,#toast,#fname,#hint,#cfMsg,#signSaved,#stampSaved,#seamSaved,#seamInfo,#spInfo,#spList,#btList,#btCnt,#btInfo,#cmpSum,#pnInfo,#qCnt,#stMsg,#pwName,#cmpOld,#gnPv,#swatches,#padInk');
+  const skip = el => !el || el.closest('#pages,#thumbs,#outline,#cmpOut,#recent,#chlog,#limits,script,style,textarea,#toast,#fname,#hint,#cfMsg,#signSaved,#stampSaved,#seamSaved,#seamInfo,#spInfo,#spList,#rcInfo,#rcPg,#rcStage,#rcGapV,#btList,#btCnt,#btInfo,#cmpSum,#pnInfo,#qCnt,#stMsg,#pwName,#cmpOld,#gnPv,#swatches,#padInk');
   const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   let n;
   while ((n = w.nextNode())) {
@@ -2661,6 +2735,8 @@ function pageOp(name) {
     openModal('mExtract');
   } else if (name === 'split') {
     openSplit();
+  } else if (name === 'rcpt') {
+    openRcpt();
   }
 }
 
@@ -3209,6 +3285,310 @@ async function splitGo() {
   } catch (e) { busy(false); console.error(e); toast(T('生成失败：{e}', { e: e.message || e })); }
 }
 
+/* ----- 分开收据（v2.4）：一页上扫了几张收据，按空白找出每张的位置，裁成单独的页面。
+   裁切只改页面的显示范围（CropBox），原来的图片和文字不动，画质不变。 ----- */
+const RC = { ids: [], i: 0, boxes: new Map(), sc: 1, sel: -1, drag: null };
+const MM = 72 / 25.4;
+async function pageCanvas(p, sc) {
+  const c = document.createElement('canvas'); c.width = Math.max(1, Math.round(p.W * sc)); c.height = Math.max(1, Math.round(p.H * sc));
+  const ctx = c.getContext('2d'); ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+  if (!p.blank) {
+    const pg = await S.docs[p.doc].pdf.getPage(p.idx + 1);
+    await pg.render({ canvasContext: ctx, viewport: pg.getViewport({ scale: sc, rotation: totalRot(p) }) }).promise;
+  }
+  ctx.setTransform(sc, 0, 0, sc, 0, 0); drawAnns(ctx, p.ann); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  return c;
+}
+/* 找框：页面边缘的颜色当底色。先找跟底色稍有不同的地方（收据纸和边上的阴影），
+   找不出两张以上，再只看字。然后反复用整行或整列的空白把页面切开（XY-cut），切不开的块就是一张收据 */
+async function findReceipts(p, gapMm) {
+  const sc = Math.min(1.2, 900 / Math.max(p.W, p.H)), c = await pageCanvas(p, sc);
+  const w = c.width, h = c.height, d = c.getContext('2d').getImageData(0, 0, w, h).data;
+  const lum = new Float32Array(w * h);
+  for (let i = 0, j = 0; i < lum.length; i++, j += 4) lum[i] = (d[j] * 3 + d[j + 1] * 6 + d[j + 2]) / 10;
+  // 3×3 平均，去掉 JPG 杂点
+  const bl = new Float32Array(w * h);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    let s = 0, n = 0;
+    for (let yy = Math.max(0, y - 1); yy <= Math.min(h - 1, y + 1); yy++) for (let xx = Math.max(0, x - 1); xx <= Math.min(w - 1, x + 1); xx++) { s += lum[yy * w + xx]; n++; }
+    bl[y * w + x] = s / n;
+  }
+  const edge = [], bw = Math.max(2, Math.round(Math.min(w, h) * 0.01));
+  for (let y = 0; y < h; y += 2) for (let x = 0; x < w; x += 2) if (x < bw || y < bw || x >= w - bw || y >= h - bw) edge.push(bl[y * w + x]);
+  edge.sort((a, b) => a - b);
+  const bg = edge[edge.length >> 1];
+  const gapOf = mm => Math.max(2, Math.round(mm * MM * sc)), minD = Math.round(Math.min(w, h) * 0.04);
+  const mask = (src, thr) => { const m = new Uint8Array(w * h); for (let i = 0; i < m.length; i++) m[i] = Math.abs(src[i] - bg) > thr ? 1 : 0; return m; };
+  const cutAll = (m, tf, gap) => {
+    const rowCnt = (x0, x1, y) => { let n = 0; for (let x = x0, o = y * w; x < x1; x++) n += m[o + x]; return n; };
+    const colCnt = (y0, y1, x) => { let n = 0; for (let y = y0; y < y1; y++) n += m[y * w + x]; return n; };
+    const out = [];
+    const cut = (x0, y0, x1, y1, depth) => {
+      const tolR = Math.max(1, (x1 - x0) * tf), tolC = Math.max(1, (y1 - y0) * tf);
+      const rows = [], cols = [];
+      for (let y = y0; y < y1; y++) rows.push(rowCnt(x0, x1, y) > tolR);
+      for (let x = x0; x < x1; x++) cols.push(colCnt(y0, y1, x) > tolC);
+      const a = rows.indexOf(true), b = rows.lastIndexOf(true), l = cols.indexOf(true), r = cols.lastIndexOf(true);
+      if (a < 0 || l < 0) return;
+      const runs = (arr, s, e) => { const g = []; let st = -1; for (let i = s; i <= e; i++) { if (!arr[i]) { if (st < 0) st = i; } else if (st >= 0) { if (i - st >= gap) g.push([st, i]); st = -1; } } return g; };
+      const gr = runs(rows, a, b), gc = runs(cols, l, r);
+      const big = g => g.reduce((s, [p, q]) => Math.max(s, q - p), 0);
+      if (depth < 12 && (gr.length || gc.length)) {
+        if (big(gr) >= big(gc)) { let s = a; for (const [p, q] of gr) { cut(x0 + l, y0 + s, x0 + r + 1, y0 + p, depth + 1); s = q; } cut(x0 + l, y0 + s, x0 + r + 1, y0 + b + 1, depth + 1); }
+        else { let s = l; for (const [p, q] of gc) { cut(x0 + s, y0 + a, x0 + p, y0 + b + 1, depth + 1); s = q; } cut(x0 + s, y0 + a, x0 + r + 1, y0 + b + 1, depth + 1); }
+        return;
+      }
+      out.push({ x0: x0 + l, y0: y0 + a, x1: x0 + r + 1, y1: y0 + b + 1 });
+    };
+    cut(0, 0, w, h, 0);
+    const big = b => b.x1 - b.x0 >= minD && b.y1 - b.y0 >= minD && (b.x1 - b.x0) * (b.y1 - b.y0) >= w * h * 0.006;
+    const keep = out.filter(big);
+    // 太小的块（居中的店名、底下的总数）并到最近的收据里；离得远的当杂点丢掉
+    for (const s of out) {
+      if (big(s) || (s.x1 - s.x0) * (s.y1 - s.y0) < 20) continue;
+      let best = null, bd = gap * 3;
+      for (const k of keep) {
+        const dx = Math.max(0, k.x0 - s.x1, s.x0 - k.x1), dy = Math.max(0, k.y0 - s.y1, s.y0 - k.y1), dd = Math.hypot(dx, dy);
+        if (dd < bd) { bd = dd; best = k; }
+      }
+      if (best) { best.x0 = Math.min(best.x0, s.x0); best.y0 = Math.min(best.y0, s.y0); best.x1 = Math.max(best.x1, s.x1); best.y1 = Math.max(best.y1, s.y1); }
+    }
+    return keep;
+  };
+  // 收据纸跟底色看得出差别时，整张纸是一块：纸张之间只要有几毫米空隙就能分开，也不怕杂点。
+  // 纸跟底色一样白（只认得出字）时，改用字和字之间的空白，空隙要比收据里面的空行大
+  const fm = mask(bl, 6), fill = b => { let n = 0; for (let y = b.y0; y < b.y1; y++) for (let x = b.x0; x < b.x1; x++) n += fm[y * w + x]; return n / ((b.x1 - b.x0) * (b.y1 - b.y0)); };
+  let keep = cutAll(fm, 0.03, gapOf(Math.min(gapMm, 4)));
+  if (keep.length < 2 || keep.some(b => fill(b) < 0.5)) keep = cutAll(mask(lum, 38), 0.004, gapOf(gapMm));
+  const gap = gapOf(gapMm);
+  const pad = Math.min(gap / 2, Math.round(3 * MM * sc));
+  return sortBoxes(keep.map(b => {
+    const x = Math.max(0, b.x0 - pad), y = Math.max(0, b.y0 - pad);
+    return { x: x / sc, y: y / sc, w: (Math.min(w, b.x1 + pad) - x) / sc, h: (Math.min(h, b.y1 + pad) - y) / sc };
+  }));
+}
+// 从上到下、从左到右排：上下重叠一半以上的算同一行
+function sortBoxes(bs) {
+  const rest = bs.slice().sort((a, b) => a.y - b.y), out = [];
+  while (rest.length) {
+    const top = rest[0], row = rest.filter(b => Math.min(b.y + b.h, top.y + top.h) - Math.max(b.y, top.y) > Math.min(b.h, top.h) * 0.5);
+    row.sort((a, b) => a.x - b.x); out.push(...row);
+    for (const b of row) rest.splice(rest.indexOf(b), 1);
+  }
+  return out;
+}
+/* 扫描页（没有文字、有图片）：按原图的清晰度把每个框里的像素切出来，
+   这样每张收据的文件只带自己那一块，不会偷偷带着整页其他收据，文件也小 */
+async function scanScale(p) {
+  if (p.blank || S.docs[p.doc].enc || (await getItems(p)).length) return 0;
+  const { PDFDocument, PDFName, PDFDict, PDFStream } = PDFLib;
+  const doc = await PDFDocument.load(S.docs[p.doc].bytes), pg = doc.getPage(p.idx);
+  const xo = pg.node.Resources() && pg.node.Resources().lookup(PDFName.of('XObject'));
+  let px = 0;
+  if (xo instanceof PDFDict) for (const k of xo.keys()) {
+    const s = xo.lookup(k);
+    if (s instanceof PDFStream && String(s.dict.get(PDFName.of('Subtype'))) === '/Image') {
+      const n = v => +String(s.dict.lookup(PDFName.of(v)) || 0);
+      px = Math.max(px, n('Width'), n('Height'));
+    }
+  }
+  return px ? clamp(px / Math.max(p.W, p.H), 1.5, 4.2) : 0;
+}
+async function cropScan(p, boxes, sc) {
+  const c = await pageCanvas(p, sc), doc = await PDFLib.PDFDocument.create();
+  for (const b of boxes) {
+    const x = Math.round(b.x * sc), y = Math.round(b.y * sc), w = Math.max(1, Math.round(b.w * sc)), h = Math.max(1, Math.round(b.h * sc));
+    const t = document.createElement('canvas'); t.width = w; t.height = h;
+    t.getContext('2d').drawImage(c, x, y, w, h, 0, 0, w, h);
+    const blob = await new Promise((res, rej) => t.toBlob(z => (z ? res(z) : rej(new Error(T('无法生成页面图片')))), 'image/jpeg', 0.92));
+    const im = await doc.embedJpg(new Uint8Array(await blob.arrayBuffer()));
+    doc.addPage([b.w, b.h]).drawImage(im, { x: 0, y: 0, width: b.w, height: b.h });
+  }
+  return await doc.save();
+}
+/* 有文字的页面：每个框复制一次页面（内容和图片共用），只改 MediaBox / CropBox，文字还能选 */
+async function cropPage(p, boxes) {
+  const sc = await scanScale(p).catch(() => 0);
+  if (sc) return cropScan(p, boxes, sc);
+  const { PDFDocument, PDFName, PDFPage } = PDFLib;
+  const doc = await PDFDocument.load(await buildPdf([p])), pg0 = doc.getPage(0);
+  const cb = pg0.getCropBox(), q = { vb: [cb.x, cb.y, cb.x + cb.width, cb.y + cb.height], intr: pg0.getRotation().angle, rot: 0 };
+  computeView(q);
+  const [a, b, c, d, e, f] = q.vt, det = a * d - b * c;
+  const toPdf = (vx, vy) => [(d * (vx - e) - c * (vy - f)) / det, (-b * (vx - e) + a * (vy - f)) / det];
+  for (const bx of boxes) {
+    const pts = [toPdf(bx.x, bx.y), toPdf(bx.x + bx.w, bx.y + bx.h)];
+    const X0 = Math.min(pts[0][0], pts[1][0]), X1 = Math.max(pts[0][0], pts[1][0]), Y0 = Math.min(pts[0][1], pts[1][1]), Y1 = Math.max(pts[0][1], pts[1][1]);
+    const node = pg0.node.clone(), ref = doc.context.register(node);
+    for (const k of ['TrimBox', 'BleedBox', 'ArtBox', 'Annots']) node.delete(PDFName.of(k));
+    const np = PDFPage.of(node, ref, doc); doc.addPage(np);
+    np.setMediaBox(X0, Y0, X1 - X0, Y1 - Y0); np.setCropBox(X0, Y0, X1 - X0, Y1 - Y0);
+  }
+  doc.removePage(0);
+  return await doc.save();
+}
+function openRcpt() {
+  if (!S.pages.length) { toast(T('先打开一个 PDF')); return; }
+  closeEditor();
+  RC.boxes = new Map(); RC.sel = -1;
+  const sel = S.pages.filter(p => S.sel.has(p.id) && !p.blank);
+  $('#rcScope').value = 'cur';
+  $('#rcScope').options[0].textContent = sel.length > 1 ? T('选中的 {n} 页', { n: sel.length }) : T('只分这一页');
+  RC.selIds = sel.length > 1 ? sel.map(p => p.id) : null;
+  rcScope();
+  openModal('mRcpt');
+}
+function rcScope() {
+  const all = $('#rcScope').value === 'all', cur = S.pages[S.cur];
+  RC.ids = all ? S.pages.filter(p => !p.blank).map(p => p.id) : RC.selIds || (cur && !cur.blank ? [cur.id] : []);
+  if (!RC.ids.length) { $('#rcInfo').textContent = T('这一页是空白页，没有收据可以分'); $('#rcGo').disabled = true; return; }
+  RC.i = all && cur ? Math.max(0, RC.ids.indexOf(cur.id)) : 0;
+  rcShow();
+}
+async function rcShow() {
+  const p = pageById(RC.ids[RC.i]); if (!p) return;
+  const n = RC.ids.length;
+  $('#rcPg').textContent = n > 1 ? `${RC.i + 1} / ${n}` : T('第 {p} 页', { p: S.pages.indexOf(p) + 1 });
+  $('#rcPrev').disabled = RC.i <= 0; $('#rcNext').disabled = RC.i >= n - 1;
+  const maxW = Math.min(940, window.innerWidth - 90), maxH = Math.max(260, window.innerHeight - 380);
+  RC.sc = Math.min(maxW / p.W, maxH / p.H);
+  const src = await pageCanvas(p, RC.sc * dprNow()), cv = $('#rcCv');
+  if (RC.ids[RC.i] !== p.id) return;
+  cv.width = src.width; cv.height = src.height; cv.getContext('2d').drawImage(src, 0, 0);
+  cv.style.width = Math.round(p.W * RC.sc) + 'px'; cv.style.height = Math.round(p.H * RC.sc) + 'px';
+  if (!RC.boxes.has(p.id)) { $('#rcInfo').textContent = T('正在找收据…'); RC.boxes.set(p.id, await findReceipts(p, +$('#rcGap').value)); }
+  RC.sel = -1; rcDraw();
+}
+function rcDraw() {
+  const st = $('#rcStage'), bs = RC.boxes.get(RC.ids[RC.i]) || [], k = RC.sc;
+  $$('.rcBox', st).forEach(el => el.remove());
+  bs.forEach((b, i) => {
+    const el = document.createElement('div'); el.className = 'rcBox' + (i === RC.sel ? ' on' : ''); el.dataset.i = i;
+    Object.assign(el.style, { left: b.x * k + 'px', top: b.y * k + 'px', width: b.w * k + 'px', height: b.h * k + 'px' });
+    el.innerHTML = `<span class="n">${i + 1}</span><button class="x" data-x title="${T('删掉这个框')}">×</button>` + ['nw', 'ne', 'sw', 'se'].map(h => `<span class="h" data-h="${h}"></span>`).join('');
+    st.appendChild(el);
+  });
+  rcInfo();
+}
+function rcInfo() {
+  let tot = 0, pages = 0;
+  for (const id of RC.ids) { const n = (RC.boxes.get(id) || []).length; if (RC.boxes.has(id)) { tot += n; if (n) pages++; } }
+  const cur = (RC.boxes.get(RC.ids[RC.i]) || []).length, unseen = RC.ids.filter(id => !RC.boxes.has(id)).length;
+  $('#rcGo').disabled = !tot && !unseen;
+  $('#rcInfo').textContent = !cur ? T('这一页没有找到收据。可以在页面上拖拉画框，或把「空隙」调小再按「重新找框」。')
+    : RC.ids.length === 1 ? T('找到 {n} 张收据', { n: cur })
+    : T('这一页找到 {n} 张收据', { n: cur }) + (unseen ? (LANG === 'en' ? '. ' : '。') + T('其他页会在按「分开」时自动找框', {}) : (LANG === 'en' ? ' · ' : '，') + T('全部共 {n} 张', { n: tot }));
+}
+function rcPt(e) { const r = $('#rcStage').getBoundingClientRect(); return { x: (e.clientX - r.left) / RC.sc, y: (e.clientY - r.top) / RC.sc }; }
+function rcDown(e) {
+  if (e.button) return;
+  const p = pageById(RC.ids[RC.i]); if (!p) return;
+  const bs = RC.boxes.get(p.id) || []; RC.boxes.set(p.id, bs);
+  const boxEl = e.target.closest('.rcBox'), pt = rcPt(e);
+  if (e.target.closest('[data-x]')) { bs.splice(+boxEl.dataset.i, 1); RC.sel = -1; rcDraw(); return; }
+  e.preventDefault();
+  if (boxEl) {
+    RC.sel = +boxEl.dataset.i; const h = e.target.dataset.h;
+    RC.drag = { mode: h || 'move', b: bs[RC.sel], o: { ...bs[RC.sel] }, pt, W: p.W, H: p.H };
+  } else {
+    const b = { x: pt.x, y: pt.y, w: 0, h: 0 }; bs.push(b); RC.sel = bs.length - 1;
+    RC.drag = { mode: 'se', b, o: { ...b }, pt, W: p.W, H: p.H, isNew: true };
+  }
+  $('#rcStage').setPointerCapture(e.pointerId); rcDraw();
+}
+function rcMove(e) {
+  const D = RC.drag; if (!D) return;
+  const pt = rcPt(e), dx = pt.x - D.pt.x, dy = pt.y - D.pt.y, o = D.o, b = D.b;
+  if (D.mode === 'move') {
+    b.x = clamp(o.x + dx, 0, D.W - o.w); b.y = clamp(o.y + dy, 0, D.H - o.h);
+  } else {
+    let x0 = o.x, y0 = o.y, x1 = o.x + o.w, y1 = o.y + o.h;
+    if (D.mode.includes('w')) x0 += dx; else x1 += dx;
+    if (D.mode.includes('n')) y0 += dy; else y1 += dy;
+    x0 = clamp(x0, 0, D.W); x1 = clamp(x1, 0, D.W); y0 = clamp(y0, 0, D.H); y1 = clamp(y1, 0, D.H);
+    b.x = Math.min(x0, x1); b.y = Math.min(y0, y1); b.w = Math.abs(x1 - x0); b.h = Math.abs(y1 - y0);
+  }
+  const el = $(`.rcBox[data-i="${RC.sel}"]`), k = RC.sc;
+  if (el) Object.assign(el.style, { left: b.x * k + 'px', top: b.y * k + 'px', width: b.w * k + 'px', height: b.h * k + 'px' });
+}
+function rcUp() {
+  const D = RC.drag; if (!D) return; RC.drag = null;
+  const bs = RC.boxes.get(RC.ids[RC.i]) || [];
+  if (D.b.w < 12 || D.b.h < 12) { if (D.isNew) { bs.splice(bs.indexOf(D.b), 1); RC.sel = -1; } else Object.assign(D.b, D.o); }
+  rcDraw();
+}
+async function rcGo() {
+  const out = $('#rcOut').value, list = [];
+  busy(true, T('正在找收据…'));
+  try {
+    for (const id of RC.ids) {
+      const p = pageById(id); if (!p) continue;
+      if (!RC.boxes.has(id)) RC.boxes.set(id, await findReceipts(p, +$('#rcGap').value));
+      const bs = RC.boxes.get(id); if (bs.length) list.push({ p, bs });
+    }
+    if (!list.length) { busy(false); toast(T('没有找到收据')); return; }
+    let dir = null;
+    if (out === 'files' && DESK.on) {
+      busy(false);
+      try { dir = await Neutralino.os.showFolderDialog(T('选择保存收据的文件夹'), { defaultPath: S.filePath ? dirOf(S.filePath) : '' }); } catch (e) { console.warn(e); return; }
+      if (!dir) return;
+    }
+    closeModals();
+    const tot = list.reduce((s, x) => s + x.bs.length, 0);
+    busy(true, T('正在分开收据… {i}/{n}', { i: 0, n: tot }));
+    const made = [];
+    let k = 0;
+    for (const x of list) { made.push({ p: x.p, bytes: await cropPage(x.p, x.bs) }); k += x.bs.length; busy(true, T('正在分开收据… {i}/{n}', { i: k, n: tot })); }
+    if (out === 'pages') {
+      const repl = new Map();
+      for (const m of made) {
+        const di = await loadPdfBytes(m.bytes, T('收据') + '.pdf');
+        repl.set(m.p.id, await pagesFromDoc(di));
+      }
+      busy(false);
+      structural(() => { S.pages = S.pages.flatMap(p => repl.get(p.id) || [p]); S.sel.clear(); });
+      const first = S.pages.findIndex(p => p.id === repl.get(made[0].p.id)[0].id);
+      if (first >= 0) goPage(first);
+      toast(T('已分成 {n} 页，可以用「撤销」还原', { n: tot }));
+      return;
+    }
+    const pad = String(tot).length, files = [];
+    let j = 0;
+    for (const m of made) {
+      const src = await PDFLib.PDFDocument.load(m.bytes);
+      for (let i = 0; i < src.getPageCount(); i++) {
+        const one = await PDFLib.PDFDocument.create(); const [cp] = await one.copyPages(src, [i]); one.addPage(cp);
+        files.push({ name: stem() + T('_收据') + String(++j).padStart(pad, '0') + '.pdf', data: await one.save() });
+      }
+    }
+    busy(false);
+    if (dir) {
+      for (const f of files) await Neutralino.filesystem.writeBinaryFile(dir + sepOf(dir) + f.name, toAB(f.data));
+      toast(T('已存成 {n} 个文件，保存在 {dir}', { n: files.length, dir: baseName(dir) || dir }));
+    } else if (files.length === 1) await saveFile(files[0].name, new Blob([files[0].data], { type: 'application/pdf' }));
+    else { const zip = new JSZip(); files.forEach(f => zip.file(f.name, f.data)); await saveFile(stem() + T('-收据') + '.zip', await zip.generateAsync({ type: 'blob' })); }
+  } catch (e) { busy(false); console.error(e); toast(T('生成失败：{e}', { e: e.message || e })); }
+}
+function wireRcpt() {
+  const st = $('#rcStage');
+  st.addEventListener('pointerdown', rcDown); st.addEventListener('pointermove', rcMove);
+  st.addEventListener('pointerup', rcUp); st.addEventListener('pointercancel', rcUp);
+  $('#rcPrev').onclick = () => { if (RC.i > 0) { RC.i--; rcShow(); } };
+  $('#rcNext').onclick = () => { if (RC.i < RC.ids.length - 1) { RC.i++; rcShow(); } };
+  $('#rcScope').onchange = rcScope;
+  const gapV = () => { $('#rcGapV').textContent = $('#rcGap').value + ' mm'; };
+  $('#rcGap').oninput = gapV;
+  $('#rcGap').onchange = () => { gapV(); RC.boxes = new Map(); rcShow(); };
+  $('#rcAuto').onclick = () => { RC.boxes.delete(RC.ids[RC.i]); rcShow(); };
+  $('#rcClear').onclick = () => { RC.boxes.set(RC.ids[RC.i], []); RC.sel = -1; rcDraw(); };
+  $('#rcGo').onclick = rcGo;
+  document.addEventListener('keydown', e => {
+    if ($('#mRcpt').hidden || RC.sel < 0 || (e.key !== 'Delete' && e.key !== 'Backspace')) return;
+    const tg = e.target && e.target.tagName; if (tg === 'INPUT' || tg === 'SELECT') return;
+    const bs = RC.boxes.get(RC.ids[RC.i]); if (bs) { bs.splice(RC.sel, 1); RC.sel = -1; rcDraw(); }
+  });
+}
+
 /* ----- 文字识别（扫描件，v2.3）：只在用到时载入；桌面版用安装目录里的 ocr/，网页版从 CDN 下载 ----- */
 const OCR = { p: null, cache: new Map() };
 const OCR_CDN = { js: 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/', core: 'https://cdn.jsdelivr.net/npm/tesseract.js-core@5.1.1', lang: 'https://cdn.jsdelivr.net/npm/@tesseract.js-data/eng@1.0.0/4.0.0_best_int' };
@@ -3486,7 +3866,7 @@ function wire() {
   $('#gnUse').onclick = () => { const c = drawGen(); if (!c) { toast(T('请先输入文字')); return; } const u = c.toDataURL('image/png'); saveItem('stamp', u, '文字章'); armImage('stamp', u, 90); };
   ['#seamW', '#seamR', '#seamY'].forEach(id => $(id).addEventListener('input', seamInfo));
   $('#seamGo').onclick = applySeam; $('#exGo').onclick = extractGo;
-  $('#btnSplit').onclick = openSplit; $('#spGo').onclick = splitGo;
+  wireRcpt(); $('#btnSplit').onclick = openSplit; $('#spGo').onclick = splitGo;
   $$('input[name="spMode"]').forEach(r => { r.onchange = splitInfo; });
   $('#spN').oninput = () => { $$('input[name="spMode"]')[1].checked = true; splitInfo(); };
   $('#spGroups').oninput = () => { $$('input[name="spMode"]')[2].checked = true; splitInfo(); };
