@@ -62,6 +62,7 @@ Section "smartPDF"
   File "${EXE}"
   File "resources.neu"
   File "icon.ico"
+  File "pdf-file.ico"
   WriteUninstaller "$INSTDIR\uninstall.exe"
   WriteRegStr HKCU "Software\smartPDF" "InstallDir" "$INSTDIR"
 
@@ -70,7 +71,7 @@ Section "smartPDF"
 
   ; 打开方式 / Open with
   WriteRegStr HKCU "Software\Classes\smartPDF.Document" "" "$(DocName)"
-  WriteRegStr HKCU "Software\Classes\smartPDF.Document\DefaultIcon" "" "$INSTDIR\icon.ico"
+  WriteRegStr HKCU "Software\Classes\smartPDF.Document\DefaultIcon" "" "$INSTDIR\pdf-file.ico"
   WriteRegStr HKCU "Software\Classes\smartPDF.Document\shell\open\command" "" '"$INSTDIR\${EXE}" "%1"'
   WriteRegStr HKCU "Software\Classes\.pdf\OpenWithProgids" "smartPDF.Document" ""
   WriteRegStr HKCU "Software\Classes\Applications\${EXE}" "FriendlyAppName" "smartPDF"

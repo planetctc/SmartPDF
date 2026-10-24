@@ -22,7 +22,7 @@ npx -y @neutralinojs/neu@11 build --release
 
 rm -rf out && mkdir out
 node seticon.mjs dist/smartPDF/smartPDF-win_x64.exe icon.ico out/smartPDF.exe "$VER"
-cp dist/smartPDF/resources.neu icon.ico side.bmp installer.nsi out/
+cp dist/smartPDF/resources.neu icon.ico pdf-file.ico side.bmp installer.nsi out/
 sed -i "s/^!define VER .*/!define VER \"$VER\"/; s/^VIProductVersion .*/VIProductVersion \"$VER.0\"/" out/installer.nsi
 (cd out && makensis -V2 installer.nsi)
 ls -la out/smartPDF-Setup-*.exe
