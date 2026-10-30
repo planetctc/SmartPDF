@@ -44,7 +44,7 @@ button{cursor:pointer}
 .app{height:100%;display:flex;flex-direction:column;gap:8px;min-height:0}
 .bar{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--soft);padding:6px 8px;display:flex;align-items:center;gap:6px;flex-shrink:0}
 .top{justify-content:space-between;gap:10px}
-.brand{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;white-space:nowrap}
+.brand{flex-shrink:0;display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;white-space:nowrap}
 .brand .logo{width:28px;height:28px;display:block}
 .wordmark{font-weight:700;font-size:17px;letter-spacing:-.01em}.wordmark .w1{color:var(--brand)}.wordmark .w2{color:var(--brand3)}
 .ver{border:1px solid var(--line);background:var(--panel2);border-radius:999px;padding:1px 8px;font:500 11px var(--mono);color:var(--mute)}
@@ -265,8 +265,35 @@ textarea.ed{position:absolute;margin:0;padding:0;border:1px dashed var(--accent)
 .dFn span{font-size:12px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dDel{width:28px;height:28px;border:0;background:transparent;color:var(--mute);border-radius:6px;font-size:16px;cursor:pointer;opacity:0}
 .dRow:hover .dDel,.dDel:focus{opacity:1}
-@media (max-width:820px){.dash{flex-direction:column}.dNav{flex:none;flex-direction:row;flex-wrap:wrap;padding:10px}.dSp,.dTip,#dnAbout{display:none}.dMain{padding:16px}.dRecentBox{max-width:none}}
+@media (max-width:820px){.dash{flex-direction:column}.dNav{flex:none;flex-direction:row;flex-wrap:wrap;padding:10px}.dSp,.dTip,#dnSet,#dnHelp,#dnAbout{display:none}.dMain{padding:16px}.dRecentBox{max-width:none}}
 .app.empty #tools{display:none!important}
+@media (min-width:821px) and (max-width:1260px){.top .vsep{display:none}.top .search input{width:96px}.top .acts{gap:4px}.top .fname{display:none}#btnLang{display:none}}
+@media (min-width:821px) and (max-width:960px){.top .search{display:none}}
+.stLegal{margin-left:auto;font-size:11px;color:var(--mute);white-space:nowrap}
+.stLegal .linkbtn{font-size:11px;padding:0;color:var(--mute);text-decoration:underline}
+.stLegal .linkbtn:hover{color:var(--ink)}
+@media (max-width:1100px){.stLegal{display:none}}
+.dBack{height:auto;min-height:42px;padding:8px 12px;background:rgba(255,255,255,.12);margin-bottom:6px}
+.dBackT{display:flex;flex-direction:column;min-width:0;line-height:1.3}
+.dBackT span{font-size:12px;color:#c9d4ee;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px}
+.abHead{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.abHead img{flex-shrink:0;border-radius:12px;background:#fff}
+.abHead h2{margin:0;font-size:22px;font-weight:800}.abHead h2 .w1{color:var(--brand)}.abHead h2 .w2{color:var(--brand3)}
+.abHead p{margin:2px 0 0;font-size:13px}
+.hpList{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.hpList li{display:grid;grid-template-columns:130px 1fr;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px;line-height:1.55}
+.hpList b{color:var(--brand)}
+.hpKeys{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;font-size:13px;align-items:center}
+kbd{display:inline-block;min-width:20px;padding:1px 6px;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;background:var(--panel2);font:600 11px var(--mono);text-align:center}
+@media (max-width:520px){.hpList li{grid-template-columns:1fr;gap:2px}}
+.setRow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 0;border-bottom:1px solid var(--line)}
+.seg{display:inline-flex;gap:3px;padding:3px;background:var(--panel2);border:1px solid var(--line);border-radius:10px}
+.seg button{border:0;background:transparent;padding:6px 12px;border-radius:7px;color:var(--mute);cursor:pointer}
+.seg button.on{background:var(--dnav);color:#fff;font-weight:600}
+.setCo{margin:14px 0 4px;padding:14px;border-radius:12px;background:color-mix(in srgb,var(--brand) 7%,var(--panel));border:1px solid var(--line)}
+.setCo p{margin:6px 0 0;font-size:12px;line-height:1.6}
+.setCoH{font-size:15px}
+.setLinks{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 .legal{margin:14px 0 0;font-size:12px;color:var(--mute);line-height:1.6}
 .legal .linkbtn{font-size:12px;padding:0;color:var(--mute);text-decoration:underline}
 .legal .linkbtn:hover{color:var(--ink)}
@@ -380,9 +407,9 @@ body{background:var(--dbg)}
 .opt input{margin:0}
 html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
 @media (min-width:821px){.tools{flex-wrap:wrap;row-gap:2px}}
-@media (min-width:821px) and (max-width:1340px){#btnScan .t,#btnMerge .t,#btnSplit .t,#btnBatch .t,#btnCmp .t,#btnPrint .t,#btnSaveAs .t{display:none}#btnScan,#btnMerge,#btnSplit,#btnBatch,#btnCmp,#btnPrint,#btnSaveAs{padding:0 9px}}
-@media (min-width:821px) and (max-width:1490px){html[lang=en] :is(#btnScan,#btnMerge,#btnSplit,#btnBatch,#btnCmp,#btnPrint,#btnSaveAs) .t{display:none}html[lang=en] :is(#btnScan,#btnMerge,#btnSplit,#btnBatch,#btnCmp,#btnPrint,#btnSaveAs){padding:0 9px}}
-@media (min-width:821px) and (max-width:1080px){.acts .btn:not(#btnSave) .t{display:none}.acts .btn:not(#btnSave){padding:0 9px}.search input{width:130px}.brand b{display:none}}
+@media (min-width:821px) and (max-width:1640px){#btnHome .t,#btnScan .t,#btnMerge .t,#btnSplit .t,#btnBatch .t,#btnCmp .t,#btnPrint .t,#btnSaveAs .t{display:none}#btnHome,#btnScan,#btnMerge,#btnSplit,#btnBatch,#btnCmp,#btnPrint,#btnSaveAs{padding:0 9px}}
+@media (min-width:821px) and (max-width:1820px){html[lang=en] :is(#btnHome,#btnScan,#btnMerge,#btnSplit,#btnBatch,#btnCmp,#btnPrint,#btnSaveAs) .t{display:none}html[lang=en] :is(#btnHome,#btnScan,#btnMerge,#btnSplit,#btnBatch,#btnCmp,#btnPrint,#btnSaveAs){padding:0 9px}}
+@media (min-width:821px) and (max-width:1220px){.acts .btn:not(#btnSave) .t{display:none}.acts .btn:not(#btnSave){padding:0 9px}.search input{width:130px}.brand b{display:none}}
 @media (min-width:821px) and (max-width:960px){.fname,#btnCmp{display:none}.search input{width:110px}}
 @media (max-width:820px){
   .only-m{display:inline-flex}
@@ -409,7 +436,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <div class="brand">
       <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTQwLDE0IEgxMjAgTDE2Miw1NiBWMTg2IEg0MCBaIiBmaWxsPSIjRkNFQkVCIiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTEyMCwxNCBWNTYgSDE2MiBaIiBmaWxsPSIjRjdDOEM4IiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjQsNjguMzcpIHNjYWxlKDAuNTU0NCkiPjxwYXRoIGQ9Ik0xNCAxMTUuNTlINDIuODZRNDMuNDkgMTIxLjc4IDQ3LjE0IDEyNS4wM1E1MC43OCAxMjguMjggNTYuNjUgMTI4LjI4UTYyLjY4IDEyOC4yOCA2Ni4xNiAxMjUuNVE2OS42NSAxMjIuNzMgNjkuNjUgMTE3LjgxUTY5LjY1IDExMy42OSA2Ni44OCAxMTFRNjQuMSAxMDguMyA2MC4wNiAxMDYuNTZRNTYuMDIgMTA0LjgxIDQ4LjU2IDEwMi41OVEzNy43OCA5OS4yNiAzMC45NyA5NS45M1EyNC4xNSA5Mi42IDE5LjIzIDg2LjFRMTQuMzIgNzkuNiAxNC4zMiA2OS4xNFExNC4zMiA1My42IDI1LjU3IDQ0LjhRMzYuODMgMzYgNTQuOTEgMzZRNzMuMyAzNiA4NC41NiA0NC44UTk1LjgxIDUzLjYgOTYuNjEgNjkuM0g2Ny4yN1E2Ni45NiA2My45MSA2My4zMSA2MC44MVE1OS42NiA1Ny43MiA1My45NiA1Ny43MlE0OS4wNCA1Ny43MiA0Ni4wMyA2MC4zNFE0My4wMiA2Mi45NSA0My4wMiA2Ny44N1E0My4wMiA3My4yNiA0OC4wOSA3Ni4yN1E1My4xNiA3OS4yOSA2My45NCA4Mi43N1E3NC43MyA4Ni40MiA4MS40NiA4OS43NVE4OC4yIDkzLjA4IDkzLjEyIDk5LjQyUTk4LjAzIDEwNS43NiA5OC4wMyAxMTUuNzVROTguMDMgMTE1LjgzIDk4LjAzIDExNS45MUw3NC41IDE0MS4xM1E3MS41NCAxNDQuMyA3MS4wOCAxNDguMzlRNjQuODQgMTUwIDU3LjQ0IDE1MFE0NS4yNCAxNTAgMzUuNTYgMTQ2LjA0UTI1Ljg5IDE0Mi4wNyAyMC4xIDEzNC4zUTE0LjMyIDEyNi41MyAxNCAxMTUuNTlaIiBmaWxsPSIjMTIzMDdBIi8+PHBhdGggZD0iTTc4LjUyIDE0NC44OCAxMDYuNTIgMTE0Ljg4UTEwOC41OCAxMTIuNjcgMTExLjYgMTEyLjUxUTExNC42MyAxMTIuMzUgMTE2LjkxIDExNC4zM0wxMjUuODEgMTIyLjA0TDE1NC40OSA4My41M0wxNDAuNDYgNzMuMDdRMTM5LjQ1IDcyLjMzIDEzOS4zMyA3MS40NVExMzkuMiA3MC41OCAxMzkuOTQgNjkuNThRMTQwLjM0IDY5LjA1IDE0MC45NCA2OC43OEwxODcuMjcgNDguNDJRMTg5LjU2IDQ3LjQyIDE5MC41NyA0OS43UTE5MC44NSA1MC4zMyAxOTAuNzYgNTEuMDJMMTg0LjUzIDEwMS4yNFExODQuMzggMTAyLjQ4IDE4My42OCAxMDMuMDJRMTgyLjk4IDEwMy41NyAxODEuNzQgMTAzLjQxUTE4MS4wOSAxMDMuMzMgMTgwLjU2IDEwMi45NEwxNjYuNTIgOTIuNDhMMTMzLjAyIDEzNy40OFExMzIuODUgMTM3LjcgMTMyLjY3IDEzNy45MVExMzAuNjMgMTQwLjI2IDEyNy41MyAxNDAuNDhRMTI0LjQ0IDE0MC43IDEyMi4wOSAxMzguNjdMMTEyLjU1IDEzMC40TDg5LjQ4IDE1NS4xMlE4Ny4zNiAxNTcuMzkgODQuMjYgMTU3LjVRODEuMTUgMTU3LjYgNzguODggMTU1LjQ4UTc2LjYxIDE1My4zNiA3Ni41IDE1MC4yNlE3Ni40IDE0Ny4xNSA3OC41MiAxNDQuODhaIiBmaWxsPSIjRTIzQjNCIi8+PC9nPjwvc3ZnPg==" alt="">
       <span class="wordmark"><span class="w1">smart</span><span class="w2">PDF</span></span>
-      <button class="ver" id="btnAbout" title="版本记录">v2.8</button>
+      <button class="ver" id="btnAbout" title="版本记录">v2.9</button>
       <button class="ver" id="btnLang" title="Switch to English">EN</button>
     </div>
     <div class="fname" id="fname"></div>
@@ -420,6 +447,8 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
       <button class="btn sm" id="qNext" aria-label="下一个">›</button>
     </div>
     <div class="acts">
+      <button class="btn" id="btnHome" title="回到开始页"><span data-ic="home"></span><span class="t">主页</span></button>
+      <span class="vsep"></span>
       <button class="btn only-m" id="btnPages" aria-label="页面列表"><span data-ic="pages"></span></button>
       <button class="btn" id="btnOpen" title="打开 PDF (Ctrl+O)"><span data-ic="open"></span><span class="t">打开</span></button>
       <button class="btn" id="btnScan" title="用扫描仪扫纸本，变成 PDF" hidden><span data-ic="scan"></span><span class="t">扫描</span></button>
@@ -435,6 +464,8 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
       <button class="btn" id="btnPrint" title="打印 (Ctrl+P)"><span data-ic="print"></span><span class="t">打印</span></button>
       <button class="btn" id="btnSaveAs" title="另存为 (Ctrl+Shift+S)"><span data-ic="saveas"></span><span class="t">另存为</span></button>
       <button class="btn primary" id="btnSave" title="保存 (Ctrl+S)"><span data-ic="save"></span><span class="t">保存</span></button>
+      <button class="btn ghost" id="btnHelp" title="帮助" aria-label="帮助"><span data-ic="help"></span></button>
+      <button class="btn ghost" id="btnSet" title="设定" aria-label="设定"><span data-ic="gear"></span></button>
     </div>
   </header>
 
@@ -496,13 +527,16 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
       <div class="welcome" id="welcome" hidden><div class="dash">
         <nav class="dNav" aria-label="开始页">
           <button class="dNi on" type="button" aria-current="page"><span data-ic="home"></span>首页</button>
+          <button class="dNi dBack" type="button" id="dnBack" hidden><span data-ic="back"></span><span class="dBackT"><b>返回文件</b><span id="dnBackN"></span></span></button>
           <button class="dNi" type="button" id="dnOpen"><span data-ic="open"></span>打开文件</button>
           <button class="dNi" type="button" id="dnScan" hidden><span data-ic="scan"></span>扫描</button>
           <button class="dNi" type="button" id="dnBatch"><span data-ic="batch"></span>批量处理</button>
           <button class="dNi" type="button" id="wSample"><span data-ic="text"></span>试用示例合同</button>
           <div class="dSp"></div>
           <div class="dTip" id="dTip" hidden><b>新功能：扫描</b><span>直接用扫描仪扫纸本，整叠一次扫完。</span><button class="linkbtn" id="dTipGo" type="button">试试看</button></div>
-          <button class="dNi dim" type="button" id="dnAbout"><span data-ic="pgno"></span>版本记录</button>
+          <button class="dNi dim" type="button" id="dnHelp"><span data-ic="help"></span>帮助</button>
+          <button class="dNi dim" type="button" id="dnAbout"><span data-ic="info"></span>关于 smartPDF</button>
+          <button class="dNi dim" type="button" id="dnSet"><span data-ic="gear"></span>设定</button>
         </nav>
         <div class="dMain">
           <div class="dTop">
@@ -528,6 +562,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
         <div class="grp"><button class="btn" id="pgPrev" aria-label="上一页">‹</button><input id="pgIn" type="number" min="1" value="1" aria-label="页码"><span class="mono" id="pgTot">/ 1</span><button class="btn" id="pgNext" aria-label="下一页">›</button></div>
         <div class="grp"><button class="btn" id="zOut" aria-label="缩小">−</button><span class="z" id="zVal">100%</span><button class="btn" id="zIn" aria-label="放大">+</button><button class="btn" id="zFit" title="适合宽度 (Ctrl+0)">适合宽度</button><button class="btn" id="zPage" title="整页显示">整页</button><button class="btn" id="nightBtn" aria-pressed="false" title="夜间阅读模式">夜间</button></div>
         <span class="muted" id="stMsg"></span>
+        <span class="stLegal">© 2026 PLANET COMPUTER TECHNOLOGY CENTRE · <button type="button" class="linkbtn" data-lic>Copyright &amp; Licences</button> · <button type="button" class="linkbtn" data-contact>Contact us</button></span>
       </div>
     </section>
   </div>
@@ -726,14 +761,66 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
 </div></div>
 
 <div class="modal" id="mAbout" hidden><div class="card" role="dialog" aria-labelledby="abT">
-  <h2 id="abT">smartPDF <span class="mono" id="abVer"></span></h2>
-  <p class="muted" style="margin:0 0 12px">所有处理都在你的电脑上完成，PDF 不会被上传。</p>
+  <div class="abHead"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTQwLDE0IEgxMjAgTDE2Miw1NiBWMTg2IEg0MCBaIiBmaWxsPSIjRkNFQkVCIiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTEyMCwxNCBWNTYgSDE2MiBaIiBmaWxsPSIjRjdDOEM4IiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjQsNjguMzcpIHNjYWxlKDAuNTU0NCkiPjxwYXRoIGQ9Ik0xNCAxMTUuNTlINDIuODZRNDMuNDkgMTIxLjc4IDQ3LjE0IDEyNS4wM1E1MC43OCAxMjguMjggNTYuNjUgMTI4LjI4UTYyLjY4IDEyOC4yOCA2Ni4xNiAxMjUuNVE2OS42NSAxMjIuNzMgNjkuNjUgMTE3LjgxUTY5LjY1IDExMy42OSA2Ni44OCAxMTFRNjQuMSAxMDguMyA2MC4wNiAxMDYuNTZRNTYuMDIgMTA0LjgxIDQ4LjU2IDEwMi41OVEzNy43OCA5OS4yNiAzMC45NyA5NS45M1EyNC4xNSA5Mi42IDE5LjIzIDg2LjFRMTQuMzIgNzkuNiAxNC4zMiA2OS4xNFExNC4zMiA1My42IDI1LjU3IDQ0LjhRMzYuODMgMzYgNTQuOTEgMzZRNzMuMyAzNiA4NC41NiA0NC44UTk1LjgxIDUzLjYgOTYuNjEgNjkuM0g2Ny4yN1E2Ni45NiA2My45MSA2My4zMSA2MC44MVE1OS42NiA1Ny43MiA1My45NiA1Ny43MlE0OS4wNCA1Ny43MiA0Ni4wMyA2MC4zNFE0My4wMiA2Mi45NSA0My4wMiA2Ny44N1E0My4wMiA3My4yNiA0OC4wOSA3Ni4yN1E1My4xNiA3OS4yOSA2My45NCA4Mi43N1E3NC43MyA4Ni40MiA4MS40NiA4OS43NVE4OC4yIDkzLjA4IDkzLjEyIDk5LjQyUTk4LjAzIDEwNS43NiA5OC4wMyAxMTUuNzVROTguMDMgMTE1LjgzIDk4LjAzIDExNS45MUw3NC41IDE0MS4xM1E3MS41NCAxNDQuMyA3MS4wOCAxNDguMzlRNjQuODQgMTUwIDU3LjQ0IDE1MFE0NS4yNCAxNTAgMzUuNTYgMTQ2LjA0UTI1Ljg5IDE0Mi4wNyAyMC4xIDEzNC4zUTE0LjMyIDEyNi41MyAxNCAxMTUuNTlaIiBmaWxsPSIjMTIzMDdBIi8+PHBhdGggZD0iTTc4LjUyIDE0NC44OCAxMDYuNTIgMTE0Ljg4UTEwOC41OCAxMTIuNjcgMTExLjYgMTEyLjUxUTExNC42MyAxMTIuMzUgMTE2LjkxIDExNC4zM0wxMjUuODEgMTIyLjA0TDE1NC40OSA4My41M0wxNDAuNDYgNzMuMDdRMTM5LjQ1IDcyLjMzIDEzOS4zMyA3MS40NVExMzkuMiA3MC41OCAxMzkuOTQgNjkuNThRMTQwLjM0IDY5LjA1IDE0MC45NCA2OC43OEwxODcuMjcgNDguNDJRMTg5LjU2IDQ3LjQyIDE5MC41NyA0OS43UTE5MC44NSA1MC4zMyAxOTAuNzYgNTEuMDJMMTg0LjUzIDEwMS4yNFExODQuMzggMTAyLjQ4IDE4My42OCAxMDMuMDJRMTgyLjk4IDEwMy41NyAxODEuNzQgMTAzLjQxUTE4MS4wOSAxMDMuMzMgMTgwLjU2IDEwMi45NEwxNjYuNTIgOTIuNDhMMTMzLjAyIDEzNy40OFExMzIuODUgMTM3LjcgMTMyLjY3IDEzNy45MVExMzAuNjMgMTQwLjI2IDEyNy41MyAxNDAuNDhRMTI0LjQ0IDE0MC43IDEyMi4wOSAxMzguNjdMMTEyLjU1IDEzMC40TDg5LjQ4IDE1NS4xMlE4Ny4zNiAxNTcuMzkgODQuMjYgMTU3LjVRODEuMTUgMTU3LjYgNzguODggMTU1LjQ4UTc2LjYxIDE1My4zNiA3Ni41IDE1MC4yNlE3Ni40IDE0Ny4xNSA3OC41MiAxNDQuODhaIiBmaWxsPSIjRTIzQjNCIi8+PC9nPjwvc3ZnPg==" alt="" width="56" height="56"><div><h2 id="abT"><span class="w1">smart</span><span class="w2">PDF</span> <span class="mono" id="abVer"></span></h2><p class="muted">PDF 阅读、签名、修改、拆分、扫描，一个软件搞定。</p></div></div>
+  <p class="muted" style="margin:0 0 4px">所有处理都在你的电脑上完成，PDF 不会被上传。</p>
+  <div class="setCo">
+    <p style="margin:0">© 2026 PLANET COMPUTER TECHNOLOGY CENTRE. This product is the copyright of PLANET COMPUTER TECHNOLOGY CENTRE All rights reserved.</p>
+    <p class="muted">smartPDF 由 PLANET COMPUTER TECHNOLOGY CENTRE 开发，任何人都可以免费使用。</p>
+    <div class="setLinks"><button type="button" class="btn" data-lic>Copyright &amp; Licences</button><button type="button" class="btn" data-contact>Contact us</button><button type="button" class="btn" data-help>帮助</button></div>
+  </div>
   <h3>版本记录</h3>
   <ul class="chlog" id="chlog"></ul>
   <h3>已知限制</h3>
   <ul class="chlog" style="gap:4px;color:var(--mute)" id="limits"></ul>
-  <p class="legal">© 2026 PLANET COMPUTER TECHNOLOGY CENTRE. This product is the copyright of PLANET COMPUTER TECHNOLOGY CENTRE All rights reserved. · <button type="button" class="linkbtn" data-lic>Copyright &amp; Licences</button> · <button type="button" class="linkbtn" data-contact>Contact us</button></p>
-  <div class="row end"><button class="btn" data-close>关闭</button></div>
+  <div class="row end"><button class="btn primary" data-close>关闭</button></div>
+</div></div>
+
+<div class="modal" id="mHelp" hidden><div class="card" role="dialog" aria-labelledby="hpT" style="width:min(640px,100%)">
+  <h2 id="hpT">帮助</h2>
+  <h3>常用操作</h3>
+  <ul class="hpList">
+    <li><b>打开文件</b><span>按「打开」，或把 PDF 直接拖进窗口。拖几个进去会合成一个文件。</span></li>
+    <li><b>签名、盖章</b><span>在工具栏选「签名」或「印章」，在页面上点一下放上去。可以拖动，拉四个角改大小。</span></li>
+    <li><b>改原有文字</b><span>选「改字」，点页面上要改的文字，直接修改。</span></li>
+    <li><b>加文字、日期、勾选</b><span>选「文字」「日期」或「勾选」，在页面上点一下。</span></li>
+    <li><b>删掉敏感内容</b><span>「遮盖」用白色盖住；「涂黑」会在保存时把下面的文字彻底删掉。</span></li>
+    <li><b>整理页面</b><span>左边的页面栏可以左转、右转、上移、下移、复制、加空白页、删除，也可以直接拖页面换位置。</span></li>
+    <li><b>拆分、分收据</b><span>「拆分」按页数或发票号码拆成几个文件；「分收据」把一页里的几张收据分开。</span></li>
+    <li><b>合并、批量</b><span>「合并」把别的 PDF 接在后面；「批量」一次处理很多个 PDF。</span></li>
+    <li><b>转换、压缩</b><span>「转换」可以转 Word、转图片、图片转 PDF，或把文件压小。</span></li>
+    <li><b>扫描（电脑版）</b><span>按「扫描」，选扫描仪、颜色和清晰度，扫好后按「完成」变成 PDF。</span></li>
+    <li><b>保存</b><span>「保存」直接存回原文件；「另存为」存成新文件。</span></li>
+    <li><b>回到开始页</b><span>按顶栏的「主页」。文件不会关掉，左边按「返回文件」就回去。</span></li>
+  </ul>
+  <h3>快捷键</h3>
+  <div class="hpKeys">
+    <span><kbd>Ctrl</kbd>+<kbd>O</kbd></span><span>打开</span>
+    <span><kbd>Ctrl</kbd>+<kbd>S</kbd></span><span>保存</span>
+    <span><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd></span><span>另存为</span>
+    <span><kbd>Ctrl</kbd>+<kbd>P</kbd></span><span>打印</span>
+    <span><kbd>Ctrl</kbd>+<kbd>Z</kbd> / <kbd>Ctrl</kbd>+<kbd>Y</kbd></span><span>撤销 / 重做</span>
+    <span><kbd>Ctrl</kbd>+<kbd>F</kbd></span><span>搜索文字</span>
+    <span><kbd>Ctrl</kbd>+<kbd>+</kbd> / <kbd>−</kbd> / <kbd>0</kbd></span><span>放大 / 缩小 / 适合宽度</span>
+    <span><kbd>V</kbd> <kbd>E</kbd> <kbd>T</kbd> <kbd>S</kbd> <kbd>M</kbd></span><span>选择 / 改字 / 文字 / 签名 / 印章</span>
+    <span><kbd>Delete</kbd></span><span>删除选中的东西</span>
+  </div>
+  <p class="muted" style="margin:14px 0 0">还有问题？<button type="button" class="linkbtn" data-contact>联络我们</button></p>
+  <div class="row end"><button class="btn primary" data-close>关闭</button></div>
+</div></div>
+
+<div class="modal" id="mSet" hidden><div class="card" role="dialog" aria-labelledby="setT" style="width:min(520px,100%)">
+  <h2 id="setT">设定</h2>
+  <div class="setRow"><b>语言 · Language</b><div class="seg" id="setLang"><button type="button" data-v="zh">中文</button><button type="button" data-v="en">English</button></div></div>
+  <div class="setRow"><b>外观</b><div class="seg" id="setTheme"><button type="button" data-v="auto">跟随电脑</button><button type="button" data-v="light">浅色</button><button type="button" data-v="dark">深色</button></div></div>
+  <div class="setRow"><b>打开文件时显示</b><div class="seg" id="setFit"><button type="button" data-v="width">适合宽度</button><button type="button" data-v="page">整页</button></div></div>
+  <div class="setRow" id="setRecRow"><b>最近打开的文件</b><button type="button" class="btn" id="setRecClr">清除记录</button></div>
+  <div class="setCo">
+    <div class="setCoH"><b>smartPDF</b> <span class="mono" id="setVer"></span></div>
+    <p>© 2026 PLANET COMPUTER TECHNOLOGY CENTRE. This product is the copyright of PLANET COMPUTER TECHNOLOGY CENTRE All rights reserved.</p>
+    <p class="muted">smartPDF 由 PLANET COMPUTER TECHNOLOGY CENTRE 开发，任何人都可以免费使用。</p>
+    <div class="setLinks"><button type="button" class="btn" id="setLog">关于 smartPDF</button><button type="button" class="btn" data-help>帮助</button><button type="button" class="btn" data-lic>Copyright &amp; Licences</button><button type="button" class="btn" data-contact>Contact us</button></div>
+  </div>
+  <div class="row end"><button class="btn primary" data-close>关闭</button></div>
 </div></div>
 
 <div class="modal" id="mLic" hidden><div class="card" role="dialog" aria-labelledby="licT" style="width:min(560px,100%)">
@@ -876,8 +963,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '2.8';
+const VERSION = '2.9';
 const CHANGELOG = [
+  { v: '2.9', d: '2026-10-30', items: [
+    '有文件开着时也能回开始页：按顶栏的「主页」，文件不会关掉，左边按「返回文件」就回去',
+    '新的「设定」：语言、外观（跟随电脑、浅色、深色）、打开文件时显示整页还是适合宽度、清除最近打开的文件',
+    '新的「关于」和「帮助」：常用操作说明和快捷键；顶栏右边的 ? 和齿轮按钮，开始页左下角也有',
+    '编辑画面底下也有公司版权和联络资料'
+  ] },
   { v: '2.8', d: '2026-10-30', items: [
     '电脑版的「打开」「另存为」「选文件夹」窗口按了马上出来：软件一开就先在旁边准备好',
     '扫描更快：记住上次找到的扫描仪，打开扫描画面就能直接扫，同时在背景重新找；按「扫描」马上开始',
@@ -1019,6 +1112,55 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  "新的「关于」和「帮助」：常用操作说明和快捷键；顶栏右边的 ? 和齿轮按钮，开始页左下角也有": "New About and Help: how to do common tasks and keyboard shortcuts; use the ? and gear buttons at the right of the top bar, or the bottom left of the start page",
+  "PDF 阅读、签名、修改、拆分、扫描，一个软件搞定。": "Read, sign, edit, split and scan PDFs, all in one app.",
+  "帮助": "Help",
+  "关于 smartPDF": "About smartPDF",
+  "常用操作": "COMMON TASKS",
+  "快捷键": "KEYBOARD SHORTCUTS",
+  "按「打开」，或把 PDF 直接拖进窗口。拖几个进去会合成一个文件。": "Click Open, or drag a PDF into the window. Drag in several to combine them into one file.",
+  "签名、盖章": "Sign, stamp",
+  "在工具栏选「签名」或「印章」，在页面上点一下放上去。可以拖动，拉四个角改大小。": "Pick Sign or Stamp in the toolbar and click on the page to place it. Drag to move it; drag a corner to resize.",
+  "改原有文字": "Edit existing text",
+  "选「改字」，点页面上要改的文字，直接修改。": "Pick Edit text and click the text on the page you want to change.",
+  "加文字、日期、勾选": "Add text, date, tick",
+  "选「文字」「日期」或「勾选」，在页面上点一下。": "Pick Text, Date or Check and click on the page.",
+  "删掉敏感内容": "Hide sensitive content",
+  "「遮盖」用白色盖住；「涂黑」会在保存时把下面的文字彻底删掉。": "Cover hides it with white; Redact permanently removes the text underneath when you save.",
+  "整理页面": "Organise pages",
+  "左边的页面栏可以左转、右转、上移、下移、复制、加空白页、删除，也可以直接拖页面换位置。": "In the page panel on the left you can rotate, move, duplicate, add blank pages and delete, or drag pages to reorder them.",
+  "拆分、分收据": "Split, receipts",
+  "「拆分」按页数或发票号码拆成几个文件；「分收据」把一页里的几张收据分开。": "Split makes several files by page or invoice number; Receipts separates several receipts on one page.",
+  "合并、批量": "Merge, batch",
+  "「合并」把别的 PDF 接在后面；「批量」一次处理很多个 PDF。": "Merge adds other PDFs at the end; Batch processes many PDFs at once.",
+  "转换、压缩": "Convert, compress",
+  "「转换」可以转 Word、转图片、图片转 PDF，或把文件压小。": "Convert turns PDFs into Word or images, images into a PDF, or makes the file smaller.",
+  "扫描（电脑版）": "Scan (desktop)",
+  "按「扫描」，选扫描仪、颜色和清晰度，扫好后按「完成」变成 PDF。": "Click Scan, pick the scanner, colour and resolution, then click Done to make a PDF.",
+  "「保存」直接存回原文件；「另存为」存成新文件。": "Save writes back to the original file; Save as makes a new file.",
+  "按顶栏的「主页」。文件不会关掉，左边按「返回文件」就回去。": "Click Home in the top bar. The file stays open; click Back to file on the left to return.",
+  "撤销 / 重做": "Undo / redo",
+  "放大 / 缩小 / 适合宽度": "Zoom in / out / fit width",
+  "选择 / 改字 / 文字 / 签名 / 印章": "Select / edit text / text / sign / stamp",
+  "删除选中的东西": "Delete the selected item",
+  "还有问题？": "Still need help?",
+  "联络我们": "Contact us",
+  "有文件开着时也能回开始页：按顶栏的「主页」，文件不会关掉，左边按「返回文件」就回去": "You can go back to the start page while a file is open: click Home in the top bar. The file stays open; click Back to file on the left to return",
+  "新的「设定」：语言、外观（跟随电脑、浅色、深色）、打开文件时显示整页还是适合宽度、清除最近打开的文件": "New Settings: language, appearance (follow computer, light, dark), whether files open at fit width or full page, and clearing recent files",
+  "编辑画面底下也有公司版权和联络资料": "The company copyright and contact details now also appear at the bottom of the editing screen",
+  "回到开始页": "Back to the start page",
+  "主页": "Home",
+  "设定": "Settings",
+  "返回文件": "Back to file",
+  "语言 · Language": "Language",
+  "外观": "Appearance",
+  "跟随电脑": "Follow computer",
+  "浅色": "Light",
+  "深色": "Dark",
+  "打开文件时显示": "When opening a file",
+  "最近打开的文件": "Recent files",
+  "清除记录": "Clear list",
+  "已清除最近打开的文件": "Recent files cleared",
   "电脑版的「打开」「另存为」「选文件夹」窗口按了马上出来：软件一开就先在旁边准备好": "On the desktop app, the Open, Save as and folder windows appear right away: they are prepared in the background when the app starts",
   "扫描更快：记住上次找到的扫描仪，打开扫描画面就能直接扫，同时在背景重新找；按「扫描」马上开始": "Faster scanning: the app remembers the scanners it found last time, so you can scan as soon as the Scan screen opens while it checks again in the background; pressing Scan starts right away",
   "开软件更快：设定一次全部读出来": "The app starts faster: settings are loaded all at once",
@@ -1334,7 +1476,7 @@ const EN = {
 };
 const ZH_DEFAULTS = { '#gnText': '合同专用章', '#wmText': '仅供审阅', '#seamR': '全部', '#pnR': '全部', '#wmR': '全部', '#cvR': '全部', '#exRange': '' };
 let LANG = 'zh';
-function readLang() { const v = LS.get('pdfed.lang'); LANG = v === 'en' || v === 'zh' ? v : (/^zh/i.test(navigator.language || '') ? 'zh' : 'en'); }
+function readLang() { applyTheme(); const v = LS.get('pdfed.lang'); LANG = v === 'en' || v === 'zh' ? v : (/^zh/i.test(navigator.language || '') ? 'zh' : 'en'); }
 readLang();
 function T(zh, v) {
   let s = LANG === 'en' && EN[zh] != null ? EN[zh] : zh;
@@ -1396,6 +1538,10 @@ const IC = {
   pgno: '<rect x="4.5" y="3" width="11" height="14" rx="1.5"/><path d="M8 13.5h4"/>',
   wm: '<path d="M5 15l5-10 5 10M7 11.5h6"/>',
   scan: '<path d="M3 11h14M5 8V4.5A1.5 1.5 0 0 1 6.5 3h7A1.5 1.5 0 0 1 15 4.5V8M4.5 11v4.5A1.5 1.5 0 0 0 6 17h8a1.5 1.5 0 0 0 1.5-1.5V11"/>',
+  help: '<circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.8a2.3 2.3 0 1 1 3.2 2.1c-.6.3-1 .8-1 1.5v.4M10 14.2v.3"/>',
+  info: '<circle cx="10" cy="10" r="7.5"/><path d="M10 9v5M10 6.2v.3"/>',
+  gear: '<circle cx="10" cy="10" r="2.6"/><path d="M10 2.5v2M10 15.5v2M2.5 10h2M15.5 10h2M4.7 4.7l1.4 1.4M13.9 13.9l1.4 1.4M4.7 15.3l1.4-1.4M13.9 6.1l1.4-1.4"/><circle cx="10" cy="10" r="5.2"/>',
+  back: '<path d="M8 5 3 10l5 5M3.5 10H17"/>',
   home: '<path d="M3.5 9 10 3.5 16.5 9v7.5h-13zM8 16.5v-4.5h4v4.5"/>',
   search: '<circle cx="9" cy="9" r="5.5"/><path d="M13 13l4 4"/>',
   receipt: '<path d="M5 2.5h10v15l-2-1.5-1.5 1.5L10 16l-1.5 1.5L7 16l-2 1.5zM7.5 6.5h5M7.5 9.5h5M7.5 12.5h3"/>',
@@ -1753,7 +1899,7 @@ async function openFiles(files, mode, meta) {
     } else { S.dirty = true; }
     if (meta.dirty) S.dirty = true;
     updUndo(); renderAll(); buildOutline(); runPending();
-    if (mode === 'replace') fitWidth();
+    if (mode === 'replace') { if (LS.get('pdfed.fit') === 'page') fitPage(); else fitWidth(); }
     const enc = S.docs.slice(old.docs === S.docs ? -list.length : 0).some(d => d.enc);
     toast((mode === 'replace' ? T('已打开 {name}', { name: list[0].name }) : T('已合并 {n} 页', { n: added.length })) + (enc ? T('。这个文件有加密保护，保存时页面会转为图片') : ''));
   } catch (e) {
@@ -1898,7 +2044,14 @@ function recentList() { try { const a = JSON.parse(LS.get('pdfed.recent') || '[]
 function addRecent(p) { LS.set('pdfed.recent', JSON.stringify([p, ...recentList().filter(x => x !== p)].slice(0, 6))); renderRecent(); }
 function removeRecent(p) { LS.set('pdfed.recent', JSON.stringify(recentList().filter(x => x !== p))); renderRecent(); }
 function renderRecent() { if ($('#dRecent')) { renderDashRecent(); dashFilter(); } }
-function updWelcome() { $('#welcome').hidden = S.pages.length > 0; $('#app').classList.toggle('empty', !S.pages.length); }
+function updWelcome() { DASH.home = false; $('#welcome').hidden = S.pages.length > 0; $('#app').classList.toggle('empty', !S.pages.length); $('#dnBack').hidden = true; }
+// 主页（v2.9）：有文件开着时也可以回开始页，文件不会关掉，左边有「返回文件」
+function showHome() {
+  closeEditor(); DASH.home = true;
+  $('#welcome').hidden = false; $('#app').classList.add('empty');
+  $('#dnBack').hidden = !S.pages.length; $('#dnBackN').textContent = S.fileName || '';
+  renderDash();
+}
 /* ----- 保存 ----- */
 const toAB = u8 => u8.buffer.slice(u8.byteOffset, u8.byteOffset + u8.byteLength);
 async function buildCurrent() {
@@ -4261,7 +4414,7 @@ function wireScan() {
 /* ===== 开始页（v2.7）：没打开文件时显示的仪表板 =====
    点工具时还没打开文件：先选文件，打开后再接着做那件事 */
 const DASH = { pending: null };
-function dashNeedDoc(fn) { if (S.pages.length) { fn(); return; } DASH.pending = fn; pickOpen('replace'); }
+function dashNeedDoc(fn) { if (S.pages.length) { if (DASH.home) updWelcome(); fn(); return; } DASH.pending = fn; pickOpen('replace'); }
 function runPending() { const f = DASH.pending; DASH.pending = null; if (f && S.pages.length) setTimeout(f, 60); }
 function openConvAs(v) { openConv(); $$('input[name="cv"]').forEach(r => { r.checked = r.value === v; }); convOpts(); }
 const DASH_TOOLS = [
@@ -4343,19 +4496,37 @@ function dashFilter() {
 function openExt(url) { if (DESK.on) Neutralino.os.open(url).catch(() => window.open(url, '_blank')); else window.open(url, '_blank', 'noopener'); }
 function wireLegal() {
   document.addEventListener('click', e => {
-    const b = e.target.closest('[data-lic],[data-contact]'); if (!b) return;
-    $$('.modal:not([hidden])').forEach(m => { if (m.id === 'mAbout') m.hidden = true; });
-    openModal(b.hasAttribute('data-lic') ? 'mLic' : 'mContact');
+    const b = e.target.closest('[data-lic],[data-contact],[data-help]'); if (!b) return;
+    openModal(b.hasAttribute('data-lic') ? 'mLic' : b.hasAttribute('data-help') ? 'mHelp' : 'mContact');
   });
   $('#ctWa').onclick = () => openExt('https://wa.me/60125105542');
   $('#ctMail').onclick = () => openExt('mailto:planetctc@gmail.com?subject=smartPDF');
 }
+// 设定（v2.9）
+function applyTheme() { const v = LS.get('pdfed.theme'); if (v === 'light' || v === 'dark') document.documentElement.dataset.theme = v; else delete document.documentElement.dataset.theme; }
+function setUi() {
+  const mark = (id, v) => $$('#' + id + ' button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
+  mark('setLang', LANG); mark('setTheme', LS.get('pdfed.theme') || 'auto'); mark('setFit', LS.get('pdfed.fit') || 'width');
+  $('#setRecRow').hidden = !DESK.on; $('#setRecClr').disabled = !recentList().length;
+  $('#setVer').textContent = 'v' + VERSION;
+}
+function openSet() { setUi(); openModal('mSet'); }
+function wireSet() {
+  $('#btnSet').onclick = openSet; $('#dnSet').onclick = openSet;
+  $('#btnHome').onclick = showHome; $('#dnBack').onclick = updWelcome;
+  $$('#setLang button').forEach(b => b.onclick = () => { setLang(b.dataset.v); setUi(); });
+  $$('#setTheme button').forEach(b => b.onclick = () => { LS.set('pdfed.theme', b.dataset.v); applyTheme(); setUi(); });
+  $$('#setFit button').forEach(b => b.onclick = () => { LS.set('pdfed.fit', b.dataset.v); setUi(); });
+  $('#setRecClr').onclick = () => { LS.set('pdfed.recent', '[]'); renderRecent(); setUi(); toast(T('已清除最近打开的文件')); };
+  $('#setLog').onclick = () => openModal('mAbout');
+  $('#btnHelp').onclick = $('#dnHelp').onclick = () => openModal('mHelp');
+  $('#dnAbout').onclick = () => openModal('mAbout');
+}
 function wireDash() {
-  wireLegal();
+  wireLegal(); wireSet();
   $('#dQ').oninput = dashFilter;
   $('#dnBatch').onclick = openBatch;
   $('#dnScan').onclick = openScan; $('#dnScan').hidden = !DESK.on;
-  $('#dnAbout').onclick = () => openModal('mAbout');
   $('#dTipGo').onclick = openScan;
   renderDash();
   // 先在旁边启动打开/保存窗口的小帮手，之后按「打开」窗口马上出来
