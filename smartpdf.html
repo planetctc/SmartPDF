@@ -8,7 +8,7 @@
 /* Layout: 办公工作台。顶栏 / 工具栏 / 属性栏叠在上方，下面左侧缩略图，右侧是灰色桌面上的连续页面。印章红只用于印章相关的元素。 */
 :root{
   --bg:#f2f4f8; --panel:#ffffff; --panel2:#f4f6fa; --ink:#14213d; --mute:#5f6b80; --line:#e2e7ef;
-  --accent:#123f8f; --accent-ink:#ffffff; --accent-soft:#e7eefb; --brand:#12307a; --brand3:#e23b3b; --brand2:#01a982; --brand2-ink:#ffffff;
+  --accent:#123f8f; --accent-ink:#ffffff; --accent-soft:#e7eefb; --brand:#12307a; --brand3:#e23b3b; --dnav:#12307a; --dbg:#e9eef7; --dline:#c7d3ea; --chip-ink:#ffffff; --brand2:#01a982; --brand2-ink:#ffffff;
   --seal:#b3261e; --desk:#e4e8ef; --danger:#b3261e; --ok:#14865b;
   --c-blue:#1d5fd1; --c-indigo:#4f46e5; --c-teal:#0e8a8a; --c-green:#16883e; --c-amber:#b7791f; --c-orange:#d9631e; --c-red:#c62828; --c-purple:#7c3aed; --c-pink:#c2187a; --c-slate:#53627a;
   --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 28px rgba(16,24,40,.10); --soft:0 1px 2px rgba(16,24,40,.05);
@@ -18,7 +18,7 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#0f131a; --panel:#181d26; --panel2:#202633; --ink:#e8ecf3; --mute:#9aa4b5; --line:#2a3240;
-    --accent:#86a8ff; --accent-ink:#0b1430; --accent-soft:#1f2a47; --brand:#9db8ff; --brand3:#ff6b6b; --brand2:#2fd1a5; --brand2-ink:#04261d;
+    --accent:#86a8ff; --accent-ink:#0b1430; --accent-soft:#1f2a47; --brand:#9db8ff; --brand3:#ff6b6b; --dnav:#16275a; --dbg:#0d1118; --dline:#2c3850; --chip-ink:#0b1020; --brand2:#2fd1a5; --brand2-ink:#04261d;
     --seal:#ff7b72; --desk:#0b0e13; --danger:#ff7b72; --ok:#5bd394;
     --c-blue:#7fb0ff; --c-indigo:#a5a3ff; --c-teal:#4fd1c5; --c-green:#6edb8f; --c-amber:#f6c454; --c-orange:#ff9a5a; --c-red:#ff7b72; --c-purple:#c4a5ff; --c-pink:#ff8cc6; --c-slate:#a9b4c6;
     --shadow:0 1px 2px rgba(0,0,0,.5),0 8px 28px rgba(0,0,0,.45); --soft:0 1px 2px rgba(0,0,0,.4);
@@ -27,7 +27,7 @@
 }
 :root[data-theme="dark"]{
   --bg:#0f131a; --panel:#181d26; --panel2:#202633; --ink:#e8ecf3; --mute:#9aa4b5; --line:#2a3240;
-  --accent:#86a8ff; --accent-ink:#0b1430; --accent-soft:#1f2a47; --brand:#9db8ff; --brand3:#ff6b6b; --brand2:#2fd1a5; --brand2-ink:#04261d;
+  --accent:#86a8ff; --accent-ink:#0b1430; --accent-soft:#1f2a47; --brand:#9db8ff; --brand3:#ff6b6b; --dnav:#16275a; --dbg:#0d1118; --dline:#2c3850; --chip-ink:#0b1020; --brand2:#2fd1a5; --brand2-ink:#04261d;
   --seal:#ff7b72; --desk:#0b0e13; --danger:#ff7b72; --ok:#5bd394;
   --c-blue:#7fb0ff; --c-indigo:#a5a3ff; --c-teal:#4fd1c5; --c-green:#6edb8f; --c-amber:#f6c454; --c-orange:#ff9a5a; --c-red:#ff7b72; --c-purple:#c4a5ff; --c-pink:#ff8cc6; --c-slate:#a9b4c6;
   --shadow:0 1px 2px rgba(0,0,0,.5),0 8px 28px rgba(0,0,0,.45); --soft:0 1px 2px rgba(0,0,0,.4);
@@ -207,6 +207,66 @@ textarea.ed{position:absolute;margin:0;padding:0;border:1px dashed var(--accent)
 .scBar button{width:28px;height:28px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:6px;padding:0;font-size:15px;line-height:1;cursor:pointer}
 .scBar button:disabled{opacity:.35;cursor:default}
 .scBar button:hover:not(:disabled){background:var(--accent-soft)}
+.welcome{padding:0!important;display:block!important;place-items:normal!important}
+.welcome[hidden]{display:none!important}
+.dash{display:flex;width:100%;min-height:100%;background:var(--dbg)}
+.dNav{flex:0 0 208px;box-sizing:border-box;padding:16px 12px;background:var(--dnav);color:#fff;display:flex;flex-direction:column;gap:4px}
+.dNi{display:flex;align-items:center;gap:10px;height:42px;padding:0 12px;border:0;border-radius:10px;background:transparent;color:#dbe3f5;font:inherit;font-size:14px;text-align:left;cursor:pointer}
+.dNi:hover{background:rgba(255,255,255,.10);color:#fff}
+.dNi.on{background:#d42f2f;color:#fff;font-weight:700}
+.dNi.dim{color:#c3cde6;font-size:13px}
+.dNi span{display:inline-flex}
+.dSp{flex:1}
+.dTip{margin:0 2px 8px;padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.10);display:flex;flex-direction:column;gap:4px;font-size:13px}
+.dTip[hidden]{display:none}
+.dTip span{color:#c9d4ee;font-size:12px;line-height:1.5}
+.dTip .linkbtn{color:#fff;text-decoration:underline;padding:2px 0;align-self:flex-start;font-size:12px}
+.dMain{flex:1;min-width:0;box-sizing:border-box;padding:22px 26px 32px;display:flex;flex-direction:column;gap:20px;overflow:auto}
+.dTop{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.dTop h1{margin:0;font-size:26px;font-weight:800}
+.dTop p{margin:4px 0 0}
+.dSearch{display:flex;align-items:center;gap:8px;height:44px;padding:0 14px;background:var(--panel);border:2px solid var(--dline);border-radius:12px;flex:0 1 340px;min-width:220px;color:var(--brand)}
+.dSearch input{border:0;outline:0;background:transparent;font:inherit;font-size:14px;color:var(--ink);flex:1;min-width:0}
+.dSearch span{display:inline-flex}
+.dHero{position:relative;overflow:hidden;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;padding:26px 28px;background:var(--dnav);color:#fff;border-radius:18px}
+.dC1{position:absolute;right:-60px;top:-90px;width:250px;height:250px;border-radius:50%;background:#d42f2f;opacity:.92}
+.dC2{position:absolute;right:150px;bottom:-110px;width:190px;height:190px;border-radius:50%;background:#2a4ea8}
+.dHeroT{position:relative;display:flex;align-items:center;gap:16px;flex:1 1 300px}
+.dHeroT h2{margin:0;font-size:21px;font-weight:800}
+.dHeroT p{margin:5px 0 0;font-size:14px;color:#d3dcf0}
+.dHeroI{width:58px;height:58px;border-radius:15px;background:#fff;color:#d42f2f;display:grid;place-items:center;flex-shrink:0}
+.dHeroI svg{width:30px;height:30px}
+.dHeroB{position:relative;display:flex;flex-wrap:wrap;gap:10px}
+.dHeroB .btn{height:46px;padding:0 20px;border-radius:12px;font-size:15px;font-weight:700}
+.dGhost{background:rgba(255,255,255,.08)!important;border:2px solid rgba(255,255,255,.6)!important;color:#fff!important}
+.dWhite{background:#fff!important;border:0!important;color:#12307a!important;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.dCols{display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start}
+.dTools{flex:999 1 460px;min-width:0;display:flex;flex-direction:column;gap:18px}
+.dGrp h3{margin:0 0 10px;display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700}
+.dGrp[hidden],.dTool[hidden],.dRow[hidden]{display:none}
+.dDot{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.dTools{container-type:inline-size}
+.dGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@container (max-width:600px){.dGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.dTool{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:15px;min-height:108px;background:color-mix(in srgb,var(--c) 13%,var(--panel));border:0;border-radius:14px;font:inherit;color:var(--ink);text-align:left;cursor:pointer;transition:transform .12s,box-shadow .12s}
+.dTool:hover{transform:translateY(-2px);box-shadow:0 6px 16px color-mix(in srgb,var(--c) 25%,transparent)}
+.dTool b{font-size:15px}
+.dSub{font-size:12px;color:var(--mute);line-height:1.4}
+.dChip{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--c);color:var(--chip-ink);box-shadow:0 4px 10px color-mix(in srgb,var(--c) 35%,transparent)}
+.dChip svg{width:22px;height:22px;stroke-width:1.8}
+.dRecentBox{flex:1 1 250px;max-width:340px;min-width:0;background:var(--panel);border-radius:16px;padding:16px;box-shadow:0 4px 14px rgba(18,48,122,.10)}
+.dRecentBox h3{margin:0 0 6px;font-size:16px;font-weight:800}
+.dRow{display:flex;align-items:center;border-radius:10px}
+.dRow:hover{background:var(--panel2)}
+.dFile{flex:1;min-width:0;display:flex;align-items:center;gap:12px;padding:9px 8px;border:0;background:transparent;font:inherit;color:var(--ink);text-align:left;cursor:pointer}
+.dBadge{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;flex-shrink:0;background:var(--c);color:var(--chip-ink);font-size:11px;font-weight:800}
+.dFn{display:flex;flex-direction:column;min-width:0}
+.dFn b{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dFn span{font-size:12px;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dDel{width:28px;height:28px;border:0;background:transparent;color:var(--mute);border-radius:6px;font-size:16px;cursor:pointer;opacity:0}
+.dRow:hover .dDel,.dDel:focus{opacity:1}
+@media (max-width:820px){.dash{flex-direction:column}.dNav{flex:none;flex-direction:row;flex-wrap:wrap;padding:10px}.dSp,.dTip,#dnAbout{display:none}.dMain{padding:16px}.dRecentBox{max-width:none}}
+.app.empty #tools{display:none!important}
 .spList b{font-family:var(--mono);font-weight:600}
 .spList .miss{color:var(--danger,#c62828)}
 .chlog{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
@@ -310,7 +370,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <div class="brand">
       <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTQwLDE0IEgxMjAgTDE2Miw1NiBWMTg2IEg0MCBaIiBmaWxsPSIjRkNFQkVCIiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTEyMCwxNCBWNTYgSDE2MiBaIiBmaWxsPSIjRjdDOEM4IiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjQsNjguMzcpIHNjYWxlKDAuNTU0NCkiPjxwYXRoIGQ9Ik0xNCAxMTUuNTlINDIuODZRNDMuNDkgMTIxLjc4IDQ3LjE0IDEyNS4wM1E1MC43OCAxMjguMjggNTYuNjUgMTI4LjI4UTYyLjY4IDEyOC4yOCA2Ni4xNiAxMjUuNVE2OS42NSAxMjIuNzMgNjkuNjUgMTE3LjgxUTY5LjY1IDExMy42OSA2Ni44OCAxMTFRNjQuMSAxMDguMyA2MC4wNiAxMDYuNTZRNTYuMDIgMTA0LjgxIDQ4LjU2IDEwMi41OVEzNy43OCA5OS4yNiAzMC45NyA5NS45M1EyNC4xNSA5Mi42IDE5LjIzIDg2LjFRMTQuMzIgNzkuNiAxNC4zMiA2OS4xNFExNC4zMiA1My42IDI1LjU3IDQ0LjhRMzYuODMgMzYgNTQuOTEgMzZRNzMuMyAzNiA4NC41NiA0NC44UTk1LjgxIDUzLjYgOTYuNjEgNjkuM0g2Ny4yN1E2Ni45NiA2My45MSA2My4zMSA2MC44MVE1OS42NiA1Ny43MiA1My45NiA1Ny43MlE0OS4wNCA1Ny43MiA0Ni4wMyA2MC4zNFE0My4wMiA2Mi45NSA0My4wMiA2Ny44N1E0My4wMiA3My4yNiA0OC4wOSA3Ni4yN1E1My4xNiA3OS4yOSA2My45NCA4Mi43N1E3NC43MyA4Ni40MiA4MS40NiA4OS43NVE4OC4yIDkzLjA4IDkzLjEyIDk5LjQyUTk4LjAzIDEwNS43NiA5OC4wMyAxMTUuNzVROTguMDMgMTE1LjgzIDk4LjAzIDExNS45MUw3NC41IDE0MS4xM1E3MS41NCAxNDQuMyA3MS4wOCAxNDguMzlRNjQuODQgMTUwIDU3LjQ0IDE1MFE0NS4yNCAxNTAgMzUuNTYgMTQ2LjA0UTI1Ljg5IDE0Mi4wNyAyMC4xIDEzNC4zUTE0LjMyIDEyNi41MyAxNCAxMTUuNTlaIiBmaWxsPSIjMTIzMDdBIi8+PHBhdGggZD0iTTc4LjUyIDE0NC44OCAxMDYuNTIgMTE0Ljg4UTEwOC41OCAxMTIuNjcgMTExLjYgMTEyLjUxUTExNC42MyAxMTIuMzUgMTE2LjkxIDExNC4zM0wxMjUuODEgMTIyLjA0TDE1NC40OSA4My41M0wxNDAuNDYgNzMuMDdRMTM5LjQ1IDcyLjMzIDEzOS4zMyA3MS40NVExMzkuMiA3MC41OCAxMzkuOTQgNjkuNThRMTQwLjM0IDY5LjA1IDE0MC45NCA2OC43OEwxODcuMjcgNDguNDJRMTg5LjU2IDQ3LjQyIDE5MC41NyA0OS43UTE5MC44NSA1MC4zMyAxOTAuNzYgNTEuMDJMMTg0LjUzIDEwMS4yNFExODQuMzggMTAyLjQ4IDE4My42OCAxMDMuMDJRMTgyLjk4IDEwMy41NyAxODEuNzQgMTAzLjQxUTE4MS4wOSAxMDMuMzMgMTgwLjU2IDEwMi45NEwxNjYuNTIgOTIuNDhMMTMzLjAyIDEzNy40OFExMzIuODUgMTM3LjcgMTMyLjY3IDEzNy45MVExMzAuNjMgMTQwLjI2IDEyNy41MyAxNDAuNDhRMTI0LjQ0IDE0MC43IDEyMi4wOSAxMzguNjdMMTEyLjU1IDEzMC40TDg5LjQ4IDE1NS4xMlE4Ny4zNiAxNTcuMzkgODQuMjYgMTU3LjVRODEuMTUgMTU3LjYgNzguODggMTU1LjQ4UTc2LjYxIDE1My4zNiA3Ni41IDE1MC4yNlE3Ni40IDE0Ny4xNSA3OC41MiAxNDQuODhaIiBmaWxsPSIjRTIzQjNCIi8+PC9nPjwvc3ZnPg==" alt="">
       <span class="wordmark"><span class="w1">smart</span><span class="w2">PDF</span></span>
-      <button class="ver" id="btnAbout" title="版本记录">v2.6</button>
+      <button class="ver" id="btnAbout" title="版本记录">v2.7</button>
       <button class="ver" id="btnLang" title="Switch to English">EN</button>
     </div>
     <div class="fname" id="fname"></div>
@@ -394,15 +454,33 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <div class="scrim" id="scrim"></div>
     <section class="deskwrap">
       <div class="note" id="note" hidden><span><b>示例合同</b> 可以直接试：选「签名」「印章」「文字」，点页面放置；第 2 页签名处的淡蓝色框是可填写栏位，点一下就能填。点右上角「打开」换成你自己的 PDF。</span><button id="noteX" aria-label="关闭提示">×</button></div>
-      <div class="welcome" id="welcome" hidden><div class="wcard">
-        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTQwLDE0IEgxMjAgTDE2Miw1NiBWMTg2IEg0MCBaIiBmaWxsPSIjRkNFQkVCIiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTEyMCwxNCBWNTYgSDE2MiBaIiBmaWxsPSIjRjdDOEM4IiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjQsNjguMzcpIHNjYWxlKDAuNTU0NCkiPjxwYXRoIGQ9Ik0xNCAxMTUuNTlINDIuODZRNDMuNDkgMTIxLjc4IDQ3LjE0IDEyNS4wM1E1MC43OCAxMjguMjggNTYuNjUgMTI4LjI4UTYyLjY4IDEyOC4yOCA2Ni4xNiAxMjUuNVE2OS42NSAxMjIuNzMgNjkuNjUgMTE3LjgxUTY5LjY1IDExMy42OSA2Ni44OCAxMTFRNjQuMSAxMDguMyA2MC4wNiAxMDYuNTZRNTYuMDIgMTA0LjgxIDQ4LjU2IDEwMi41OVEzNy43OCA5OS4yNiAzMC45NyA5NS45M1EyNC4xNSA5Mi42IDE5LjIzIDg2LjFRMTQuMzIgNzkuNiAxNC4zMiA2OS4xNFExNC4zMiA1My42IDI1LjU3IDQ0LjhRMzYuODMgMzYgNTQuOTEgMzZRNzMuMyAzNiA4NC41NiA0NC44UTk1LjgxIDUzLjYgOTYuNjEgNjkuM0g2Ny4yN1E2Ni45NiA2My45MSA2My4zMSA2MC44MVE1OS42NiA1Ny43MiA1My45NiA1Ny43MlE0OS4wNCA1Ny43MiA0Ni4wMyA2MC4zNFE0My4wMiA2Mi45NSA0My4wMiA2Ny44N1E0My4wMiA3My4yNiA0OC4wOSA3Ni4yN1E1My4xNiA3OS4yOSA2My45NCA4Mi43N1E3NC43MyA4Ni40MiA4MS40NiA4OS43NVE4OC4yIDkzLjA4IDkzLjEyIDk5LjQyUTk4LjAzIDEwNS43NiA5OC4wMyAxMTUuNzVROTguMDMgMTE1LjgzIDk4LjAzIDExNS45MUw3NC41IDE0MS4xM1E3MS41NCAxNDQuMyA3MS4wOCAxNDguMzlRNjQuODQgMTUwIDU3LjQ0IDE1MFE0NS4yNCAxNTAgMzUuNTYgMTQ2LjA0UTI1Ljg5IDE0Mi4wNyAyMC4xIDEzNC4zUTE0LjMyIDEyNi41MyAxNCAxMTUuNTlaIiBmaWxsPSIjMTIzMDdBIi8+PHBhdGggZD0iTTc4LjUyIDE0NC44OCAxMDYuNTIgMTE0Ljg4UTEwOC41OCAxMTIuNjcgMTExLjYgMTEyLjUxUTExNC42MyAxMTIuMzUgMTE2LjkxIDExNC4zM0wxMjUuODEgMTIyLjA0TDE1NC40OSA4My41M0wxNDAuNDYgNzMuMDdRMTM5LjQ1IDcyLjMzIDEzOS4zMyA3MS40NVExMzkuMiA3MC41OCAxMzkuOTQgNjkuNThRMTQwLjM0IDY5LjA1IDE0MC45NCA2OC43OEwxODcuMjcgNDguNDJRMTg5LjU2IDQ3LjQyIDE5MC41NyA0OS43UTE5MC44NSA1MC4zMyAxOTAuNzYgNTEuMDJMMTg0LjUzIDEwMS4yNFExODQuMzggMTAyLjQ4IDE4My42OCAxMDMuMDJRMTgyLjk4IDEwMy41NyAxODEuNzQgMTAzLjQxUTE4MS4wOSAxMDMuMzMgMTgwLjU2IDEwMi45NEwxNjYuNTIgOTIuNDhMMTMzLjAyIDEzNy40OFExMzIuODUgMTM3LjcgMTMyLjY3IDEzNy45MVExMzAuNjMgMTQwLjI2IDEyNy41MyAxNDAuNDhRMTI0LjQ0IDE0MC43IDEyMi4wOSAxMzguNjdMMTEyLjU1IDEzMC40TDg5LjQ4IDE1NS4xMlE4Ny4zNiAxNTcuMzkgODQuMjYgMTU3LjVRODEuMTUgMTU3LjYgNzguODggMTU1LjQ4UTc2LjYxIDE1My4zNiA3Ni41IDE1MC4yNlE3Ni40IDE0Ny4xNSA3OC41MiAxNDQuODhaIiBmaWxsPSIjRTIzQjNCIi8+PC9nPjwvc3ZnPg==" alt="">
-        <h1><span class="w1">smart</span><span class="w2">PDF</span></h1>
-        <p class="muted" style="margin:0">阅读、签署、编辑 PDF</p>
-        <button class="btn primary lg" id="wOpen"><span data-ic="open"></span>打开 PDF</button>
-        <p class="muted" style="margin:0">或把 PDF 文件拖到这个窗口</p>
-        <p style="margin:10px 0 0"><button class="btn" id="wScan" hidden><span data-ic="scan"></span>扫描纸本</button></p>
-        <div class="recent" id="recent" hidden></div>
-        <p style="margin:14px 0 0"><button class="linkbtn" id="wSample">试用示例合同</button></p>
+      <div class="welcome" id="welcome" hidden><div class="dash">
+        <nav class="dNav" aria-label="开始页">
+          <button class="dNi on" type="button" aria-current="page"><span data-ic="home"></span>首页</button>
+          <button class="dNi" type="button" id="dnOpen"><span data-ic="open"></span>打开文件</button>
+          <button class="dNi" type="button" id="dnScan" hidden><span data-ic="scan"></span>扫描</button>
+          <button class="dNi" type="button" id="dnBatch"><span data-ic="batch"></span>批量处理</button>
+          <button class="dNi" type="button" id="wSample"><span data-ic="text"></span>试用示例合同</button>
+          <div class="dSp"></div>
+          <div class="dTip" id="dTip" hidden><b>新功能：扫描</b><span>直接用扫描仪扫纸本，整叠一次扫完。</span><button class="linkbtn" id="dTipGo" type="button">试试看</button></div>
+          <button class="dNi dim" type="button" id="dnAbout"><span data-ic="pgno"></span>版本记录</button>
+        </nav>
+        <div class="dMain">
+          <div class="dTop">
+            <div><h1 id="dHello">早上好</h1><p class="muted">打开一个 PDF，或直接选下面的工具。</p></div>
+            <label class="dSearch"><span data-ic="search"></span><input id="dQ" type="search" placeholder="搜索工具或最近的文件" aria-label="搜索工具或最近的文件"></label>
+          </div>
+          <section class="dHero" aria-label="打开文件">
+            <span class="dC1" aria-hidden="true"></span><span class="dC2" aria-hidden="true"></span>
+            <div class="dHeroT"><span class="dHeroI"><span data-ic="open"></span></span><div><h2>把 PDF 拖到这里</h2><p>也可以一次拖好几个，会合成一个文件。</p></div></div>
+            <div class="dHeroB"><button class="btn dGhost" id="wScan" hidden><span data-ic="scan"></span>扫描纸本</button><button class="btn dWhite" id="wOpen"><span data-ic="open"></span>打开 PDF</button></div>
+          </section>
+          <div class="dCols">
+            <div class="dTools" id="dTools"></div>
+            <aside class="dRecentBox" aria-labelledby="dRecT"><h3 id="dRecT">最近打开</h3><div id="dRecent"></div><p class="muted" id="dNoRecent" style="margin:6px 0 0"></p></aside>
+          </div>
+          <p class="muted" id="dNone" hidden>没有找到相符的工具或文件</p>
+        </div>
       </div></div>
       <div class="desk" id="desk" data-tool="select"><div id="pages"></div></div>
       <div class="status">
@@ -726,8 +804,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '2.6';
+const VERSION = '2.7';
 const CHANGELOG = [
+  { v: '2.7', d: '2026-10-30', items: [
+    '新的开始页：没打开文件时，一眼看到常用工具（按颜色分组）、拖文件的地方和最近打开的文件，还可以搜索工具；点工具会先请你选文件，再接着做'
+  ] },
   { v: '2.6', d: '2026-10-30', items: [
     '「扫描」改成 smartPDF 自己的画面：直接选扫描仪、颜色、清晰度、纸张大小，有自动进纸器可以一次扫整叠；扫好的页面可以转向、删除、调顺序，设定会记住'
   ] },
@@ -853,6 +934,44 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  "新的开始页：没打开文件时，一眼看到常用工具（按颜色分组）、拖文件的地方和最近打开的文件，还可以搜索工具；点工具会先请你选文件，再接着做": "New start page: color-grouped tools, a drop area and recent files at a glance, plus tool search. Picking a tool asks for a file first, then carries on",
+  "开始页": "Start",
+  "首页": "Home",
+  "打开文件": "Open file",
+  "新功能：扫描": "New: Scan",
+  "直接用扫描仪扫纸本，整叠一次扫完。": "Scan paper straight from your scanner, a whole stack at once.",
+  "试试看": "Try it",
+  "晚上好": "Good evening",
+  "早上好": "Good morning",
+  "下午好": "Good afternoon",
+  "打开一个 PDF，或直接选下面的工具。": "Open a PDF, or pick a tool below.",
+  "搜索工具或最近的文件": "Search tools or recent files",
+  "把 PDF 拖到这里": "Drop PDFs here",
+  "也可以一次拖好几个，会合成一个文件。": "Drop several at once to combine them into one file.",
+  "没有找到相符的工具或文件": "No matching tools or files",
+  "签署和编辑": "Sign and edit",
+  "页面和拆分": "Pages and splitting",
+  "转换和压缩": "Convert and compress",
+  "手写、打字或上传": "Draw, type or upload",
+  "公司章、骑缝章": "Company and seam stamps",
+  "直接修改原有文字": "Change the existing text",
+  "永久删掉敏感内容": "Remove sensitive content for good",
+  "几个 PDF 接成一个": "Combine several PDFs",
+  "按页或按发票号码": "By page or invoice number",
+  "一页几张收据分开": "Separate receipts on one page",
+  "两份合同差在哪里": "Find what changed between two contracts",
+  "转 Word": "To Word",
+  "取出文字和段落": "Pull out text and paragraphs",
+  "转图片": "To images",
+  "JPG 或 PNG": "JPG or PNG",
+  "照片合成一个 PDF": "Combine photos into a PDF",
+  "压缩": "Compress",
+  "把文件变小": "Make the file smaller",
+  "发票": "Invoice",
+  "合同": "Contract",
+  "从列表移除": "Remove from list",
+  "打开过的文件会列在这里": "Files you open will be listed here",
+  "网页版不会记住打开过的文件": "The web version does not remember opened files",
   "「扫描」改成 smartPDF 自己的画面：直接选扫描仪、颜色、清晰度、纸张大小，有自动进纸器可以一次扫整叠；扫好的页面可以转向、删除、调顺序，设定会记住": "Scan now has its own screen in smartPDF: pick the scanner, color, resolution and paper size, scan a whole stack with a document feeder, then rotate, remove or reorder pages. Settings are remembered",
   "扫描仪": "Scanner",
   "重新找": "Refresh",
@@ -1127,7 +1246,7 @@ function T(zh, v) {
 const I18N = { texts: [], attrs: [] };
 function collectI18n() {
   const cjk = /[㐀-鿿]/;
-  const skip = el => !el || el.closest('#pages,#thumbs,#outline,#cmpOut,#recent,#chlog,#limits,script,style,textarea,#toast,#fname,#hint,#cfMsg,#signSaved,#stampSaved,#seamSaved,#seamInfo,#spInfo,#spList,#scInfo,#scThumbs,#scGo,#scDone,#scDev,#rcInfo,#rcPg,#rcStage,#rcGapV,#btList,#btCnt,#btInfo,#cmpSum,#pnInfo,#qCnt,#stMsg,#pwName,#cmpOld,#gnPv,#swatches,#padInk');
+  const skip = el => !el || el.closest('#pages,#thumbs,#outline,#cmpOut,#recent,#dTools,#dRecent,#dNoRecent,#dHello,#chlog,#limits,script,style,textarea,#toast,#fname,#hint,#cfMsg,#signSaved,#stampSaved,#seamSaved,#seamInfo,#spInfo,#spList,#scInfo,#scThumbs,#scGo,#scDone,#scDev,#rcInfo,#rcPg,#rcStage,#rcGapV,#btList,#btCnt,#btInfo,#cmpSum,#pnInfo,#qCnt,#stMsg,#pwName,#cmpOld,#gnPv,#swatches,#padInk');
   const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   let n;
   while ((n = w.nextNode())) {
@@ -1152,7 +1271,7 @@ function applyLang() {
 function setLang(l) {
   LANG = l;
   LS.set('pdfed.lang', l);
-  applyLang(); fillAbout(); refreshProps(); updStatus(); updSearchUi(); buildOutline(); renderRecent();
+  applyLang(); fillAbout(); refreshProps(); updStatus(); updSearchUi(); buildOutline(); renderDash();
   if (S.sample) S.fileName = T('合同示例.pdf');
   updStatus();
 }
@@ -1179,6 +1298,12 @@ const IC = {
   pgno: '<rect x="4.5" y="3" width="11" height="14" rx="1.5"/><path d="M8 13.5h4"/>',
   wm: '<path d="M5 15l5-10 5 10M7 11.5h6"/>',
   scan: '<path d="M3 11h14M5 8V4.5A1.5 1.5 0 0 1 6.5 3h7A1.5 1.5 0 0 1 15 4.5V8M4.5 11v4.5A1.5 1.5 0 0 0 6 17h8a1.5 1.5 0 0 0 1.5-1.5V11"/>',
+  home: '<path d="M3.5 9 10 3.5 16.5 9v7.5h-13zM8 16.5v-4.5h4v4.5"/>',
+  search: '<circle cx="9" cy="9" r="5.5"/><path d="M13 13l4 4"/>',
+  receipt: '<path d="M5 2.5h10v15l-2-1.5-1.5 1.5L10 16l-1.5 1.5L7 16l-2 1.5zM7.5 6.5h5M7.5 9.5h5M7.5 12.5h3"/>',
+  word: '<path d="M5 2.5h7l4 4v11H5zM12 2.5v4h4M7.5 10l1 4 1.5-3 1.5 3 1-4"/>',
+  zip: '<path d="M10 2v6M7 5l3 3 3-3M10 18v-6M7 15l3-3 3 3M3 10h14"/>',
+  fromimg: '<rect x="3" y="4.5" width="14" height="11" rx="1.5"/><path d="M10 7v6M7 10h6"/>',
   open: '<path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H8l1.5 2h6A1.5 1.5 0 0 1 17 8.5v6A1.5 1.5 0 0 1 15.5 16h-11A1.5 1.5 0 0 1 3 14.5z"/>',
   cmp: '<rect x="2.5" y="4" width="6.5" height="12" rx="1"/><rect x="11" y="4" width="6.5" height="12" rx="1"/><path d="M5 8h2M13.5 8h2M5 11h2M13.5 11h2"/>',
   batch: '<rect x="7" y="3" width="10" height="12" rx="1.5"/><path d="M4.5 6v9.5A1.5 1.5 0 0 0 6 17h8"/>',
@@ -1529,7 +1654,7 @@ async function openFiles(files, mode, meta) {
       $('#note').hidden = true;
     } else { S.dirty = true; }
     if (meta.dirty) S.dirty = true;
-    updUndo(); renderAll(); buildOutline();
+    updUndo(); renderAll(); buildOutline(); runPending();
     if (mode === 'replace') fitWidth();
     const enc = S.docs.slice(old.docs === S.docs ? -list.length : 0).some(d => d.enc);
     toast((mode === 'replace' ? T('已打开 {name}', { name: list[0].name }) : T('已合并 {n} 页', { n: added.length })) + (enc ? T('。这个文件有加密保护，保存时页面会转为图片') : ''));
@@ -1580,18 +1705,7 @@ async function openPaths(paths, mode) {
 function recentList() { try { const a = JSON.parse(LS.get('pdfed.recent') || '[]'); return Array.isArray(a) ? a.filter(x => typeof x === 'string') : []; } catch (e) { return []; } }
 function addRecent(p) { LS.set('pdfed.recent', JSON.stringify([p, ...recentList().filter(x => x !== p)].slice(0, 6))); renderRecent(); }
 function removeRecent(p) { LS.set('pdfed.recent', JSON.stringify(recentList().filter(x => x !== p))); renderRecent(); }
-function renderRecent() {
-  const host = $('#recent'), list = DESK.on ? recentList() : [];
-  host.textContent = ''; host.hidden = !list.length;
-  if (!list.length) return;
-  const h = document.createElement('h3'); h.textContent = T('最近打开'); host.appendChild(h);
-  for (const p of list) {
-    const b = document.createElement('button'), n = document.createElement('b'), d = document.createElement('span');
-    n.textContent = baseName(p); d.textContent = dirOf(p); b.title = p; b.append(n, d);
-    b.onclick = () => openPaths([p], 'replace');
-    host.appendChild(b);
-  }
-}
+function renderRecent() { if ($('#dRecent')) { renderDashRecent(); dashFilter(); } }
 function updWelcome() { $('#welcome').hidden = S.pages.length > 0; $('#app').classList.toggle('empty', !S.pages.length); }
 /* ----- 保存 ----- */
 const toAB = u8 => u8.buffer.slice(u8.byteOffset, u8.byteOffset + u8.byteLength);
@@ -3920,6 +4034,96 @@ function wireScan() {
   $('#btnScan').hidden = $('#wScan').hidden = !DESK.on;
 }
 
+/* ===== 开始页（v2.7）：没打开文件时显示的仪表板 =====
+   点工具时还没打开文件：先选文件，打开后再接着做那件事 */
+const DASH = { pending: null };
+function dashNeedDoc(fn) { if (S.pages.length) { fn(); return; } DASH.pending = fn; pickOpen('replace'); }
+function runPending() { const f = DASH.pending; DASH.pending = null; if (f && S.pages.length) setTimeout(f, 60); }
+function openConvAs(v) { openConv(); $$('input[name="cv"]').forEach(r => { r.checked = r.value === v; }); convOpts(); }
+const DASH_TOOLS = [
+  { g: '签署和编辑', c: 'pink', items: [
+    ['sign', '签名', '手写、打字或上传', 'pink', () => dashNeedDoc(() => openLib('sign'))],
+    ['stamp', '印章', '公司章、骑缝章', 'red', () => dashNeedDoc(() => openLib('stamp'))],
+    ['edit', '改字', '直接修改原有文字', 'blue', () => dashNeedDoc(() => setTool('edit'))],
+    ['redact', '涂黑', '永久删掉敏感内容', 'amber', () => dashNeedDoc(() => setTool('redact'))]
+  ] },
+  { g: '页面和拆分', c: 'purple', items: [
+    ['merge', '合并', '几个 PDF 接成一个', 'indigo', () => { openBatch(); $$('input[name="bt"]').forEach(r => { r.checked = r.value === 'merge'; }); batchUi(); }],
+    ['split', '拆分', '按页或按发票号码', 'purple', () => dashNeedDoc(openSplit)],
+    ['receipt', '分收据', '一页几张收据分开', 'pink', () => dashNeedDoc(openRcpt)],
+    ['cmp', '对比', '两份合同差在哪里', 'teal', () => dashNeedDoc(openCmp)]
+  ] },
+  { g: '转换和压缩', c: 'orange', items: [
+    ['word', '转 Word', '取出文字和段落', 'blue', () => dashNeedDoc(() => openConvAs('docx'))],
+    ['image', '转图片', 'JPG 或 PNG', 'teal', () => dashNeedDoc(() => openConvAs('img'))],
+    ['fromimg', '图片转 PDF', '照片合成一个 PDF', 'green', () => openConvAs('fromimg')],
+    ['zip', '压缩', '把文件变小', 'orange', () => dashNeedDoc(() => openConvAs('zip'))]
+  ] }
+];
+function fileTag(name) {
+  const n = name.toLowerCase();
+  if (/发票|invoice|inv[\s_\-.]|^inv\d|收据|receipt/.test(n)) return ['发票', 'purple'];
+  if (/合同|合约|contract|agreement|租约|lease/.test(n)) return ['合同', 'blue'];
+  if (/扫描|scan/.test(n)) return ['扫描', 'green'];
+  return ['PDF', 'red'];
+}
+function renderDash() {
+  const h = new Date().getHours();
+  $('#dHello').textContent = h < 5 ? T('晚上好') : h < 12 ? T('早上好') : h < 18 ? T('下午好') : T('晚上好');
+  $('#dTip').hidden = !DESK.on;
+  const host = $('#dTools'); host.textContent = '';
+  for (const grp of DASH_TOOLS) {
+    const sec = document.createElement('section'); sec.className = 'dGrp';
+    const hd = document.createElement('h3'); hd.innerHTML = `<span class="dDot" style="--c:var(--c-${grp.c})"></span>`; hd.append(T(grp.g));
+    const grid = document.createElement('div'); grid.className = 'dGrid';
+    for (const [ic, label, sub, c, fn] of grp.items) {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'dTool'; b.style.setProperty('--c', `var(--c-${c})`);
+      b.dataset.q = (label + ' ' + sub + ' ' + T(label) + ' ' + T(sub)).toLowerCase();
+      b.innerHTML = `<span class="dChip">${icon(ic)}</span><b></b><span class="dSub"></span>`;
+      b.querySelector('b').textContent = T(label); b.querySelector('.dSub').textContent = T(sub);
+      b.onclick = fn;
+      grid.appendChild(b);
+    }
+    sec.append(hd, grid); host.appendChild(sec);
+  }
+  renderDashRecent(); dashFilter();
+}
+function renderDashRecent() {
+  const host = $('#dRecent'), list = DESK.on ? recentList() : [];
+  host.textContent = '';
+  for (const p of list) {
+    const [tag, c] = fileTag(baseName(p));
+    const a = document.createElement('button'); a.type = 'button'; a.className = 'dFile'; a.title = p;
+    a.dataset.q = baseName(p).toLowerCase();
+    a.innerHTML = `<span class="dBadge" style="--c:var(--c-${c})"></span><span class="dFn"><b></b><span></span></span>`;
+    a.querySelector('.dBadge').textContent = T(tag);
+    a.querySelector('b').textContent = baseName(p); a.querySelector('.dFn span').textContent = baseName(dirOf(p)) || dirOf(p);
+    a.onclick = () => openPaths([p], 'replace');
+    const x = document.createElement('button'); x.type = 'button'; x.className = 'dDel'; x.textContent = '×'; x.title = T('从列表移除'); x.setAttribute('aria-label', T('从列表移除'));
+    x.onclick = () => removeRecent(p);
+    const row = document.createElement('div'); row.className = 'dRow'; row.append(a, x);
+    host.appendChild(row);
+  }
+  $('#dNoRecent').hidden = list.length > 0;
+  $('#dNoRecent').textContent = DESK.on ? T('打开过的文件会列在这里') : T('网页版不会记住打开过的文件');
+}
+function dashFilter() {
+  const q = $('#dQ').value.trim().toLowerCase();
+  let n = 0;
+  $$('.dTool').forEach(b => { const ok = !q || b.dataset.q.includes(q); b.hidden = !ok; if (ok) n++; });
+  $$('.dGrp').forEach(s => { s.hidden = !$$('.dTool', s).some(b => !b.hidden); });
+  $$('#dRecent .dRow').forEach(r => { const ok = !q || r.firstChild.dataset.q.includes(q); r.hidden = !ok; if (ok) n++; });
+  $('#dNone').hidden = !q || n > 0;
+}
+function wireDash() {
+  $('#dQ').oninput = dashFilter;
+  $('#dnBatch').onclick = openBatch;
+  $('#dnScan').onclick = openScan; $('#dnScan').hidden = !DESK.on;
+  $('#dnAbout').onclick = () => openModal('mAbout');
+  $('#dTipGo').onclick = openScan;
+  renderDash();
+}
+
 /* ----- 文字识别（扫描件，v2.3）：只在用到时载入；桌面版用安装目录里的 ocr/，网页版从 CDN 下载 ----- */
 const OCR = { p: null, cache: new Map() };
 const OCR_CDN = { js: 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/', core: 'https://cdn.jsdelivr.net/npm/tesseract.js-core@5.1.1', lang: 'https://cdn.jsdelivr.net/npm/@tesseract.js-data/eng@1.0.0/4.0.0_best_int' };
@@ -4149,8 +4353,8 @@ function fillAbout() {
 }
 function wire() {
   $$('.tool').forEach(b => { b.onclick = () => setTool(b.dataset.tool); });
-  $('#btnOpen').onclick = () => pickOpen('replace'); $('#wOpen').onclick = () => pickOpen('replace');
-  $('#wSample').onclick = () => loadSample().catch(e => { console.error(e); toast(T('示例合同没有加载成功，请点「打开」选择 PDF')); });
+  $('#btnOpen').onclick = () => { DASH.pending = null; pickOpen('replace'); }; $('#wOpen').onclick = $('#dnOpen').onclick = () => { DASH.pending = null; pickOpen('replace'); };
+  $('#wSample').onclick = () => { DASH.pending = null; loadSample().catch(e => { console.error(e); toast(T('示例合同没有加载成功，请点「打开」选择 PDF')); }); };
   $('#fOpen').onchange = e => { if (e.target.files.length) requestOpen(e.target.files, 'replace'); e.target.value = ''; };
   $('#btnMerge').onclick = () => { if (S.pages.length) pickOpen('append'); else pickOpen('replace'); };
   $('#btnConv').onclick = openConv; $('#cvGo').onclick = convGo;
@@ -4197,7 +4401,7 @@ function wire() {
   $('#gnUse').onclick = () => { const c = drawGen(); if (!c) { toast(T('请先输入文字')); return; } const u = c.toDataURL('image/png'); saveItem('stamp', u, '文字章'); armImage('stamp', u, 90); };
   ['#seamW', '#seamR', '#seamY'].forEach(id => $(id).addEventListener('input', seamInfo));
   $('#seamGo').onclick = applySeam; $('#exGo').onclick = extractGo;
-  wireRcpt(); wireScan(); $('#btnSplit').onclick = openSplit; $('#spGo').onclick = splitGo;
+  wireRcpt(); wireScan(); wireDash(); $('#btnSplit').onclick = openSplit; $('#spGo').onclick = splitGo;
   $$('input[name="spMode"]').forEach(r => { r.onchange = splitInfo; });
   $('#spN').oninput = () => { $$('input[name="spMode"]')[1].checked = true; splitInfo(); };
   $('#spGroups').oninput = () => { $$('input[name="spMode"]')[2].checked = true; splitInfo(); };
