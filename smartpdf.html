@@ -8,7 +8,7 @@
 /* Layout: 办公工作台。顶栏 / 工具栏 / 属性栏叠在上方，下面左侧缩略图，右侧是灰色桌面上的连续页面。印章红只用于印章相关的元素。 */
 :root{
   --bg:#f2f4f8; --panel:#ffffff; --panel2:#f4f6fa; --ink:#14213d; --mute:#5f6b80; --line:#e2e7ef;
-  --accent:#123f8f; --accent-ink:#ffffff; --accent-soft:#e7eefb; --brand:#12307a; --brand3:#e23b3b; --dnav:#12307a; --dbg:#e9eef7; --dline:#c7d3ea; --chip-ink:#ffffff; --brand2:#01a982; --brand2-ink:#ffffff;
+  --accent:#123f8f; --accent-ink:#ffffff; --accent-soft:#e7eefb; --brand:#12307a; --brand3:#e23b3b; --dnav:#12307a; --dbg:#e9eef7; --dline:#c7d3ea; --chip-ink:#ffffff; --brand2:#12307a; --brand2-ink:#ffffff;
   --seal:#b3261e; --desk:#e4e8ef; --danger:#b3261e; --ok:#14865b;
   --c-blue:#1d5fd1; --c-indigo:#4f46e5; --c-teal:#0e8a8a; --c-green:#16883e; --c-amber:#b7791f; --c-orange:#d9631e; --c-red:#c62828; --c-purple:#7c3aed; --c-pink:#c2187a; --c-slate:#53627a;
   --shadow:0 1px 2px rgba(16,24,40,.06),0 8px 28px rgba(16,24,40,.10); --soft:0 1px 2px rgba(16,24,40,.05);
@@ -18,7 +18,7 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     --bg:#0f131a; --panel:#181d26; --panel2:#202633; --ink:#e8ecf3; --mute:#9aa4b5; --line:#2a3240;
-    --accent:#86a8ff; --accent-ink:#0b1430; --accent-soft:#1f2a47; --brand:#9db8ff; --brand3:#ff6b6b; --dnav:#16275a; --dbg:#0d1118; --dline:#2c3850; --chip-ink:#0b1020; --brand2:#2fd1a5; --brand2-ink:#04261d;
+    --accent:#86a8ff; --accent-ink:#0b1430; --accent-soft:#1f2a47; --brand:#9db8ff; --brand3:#ff6b6b; --dnav:#16275a; --dbg:#0d1118; --dline:#2c3850; --chip-ink:#0b1020; --brand2:#86a8ff; --brand2-ink:#0b1430;
     --seal:#ff7b72; --desk:#0b0e13; --danger:#ff7b72; --ok:#5bd394;
     --c-blue:#7fb0ff; --c-indigo:#a5a3ff; --c-teal:#4fd1c5; --c-green:#6edb8f; --c-amber:#f6c454; --c-orange:#ff9a5a; --c-red:#ff7b72; --c-purple:#c4a5ff; --c-pink:#ff8cc6; --c-slate:#a9b4c6;
     --shadow:0 1px 2px rgba(0,0,0,.5),0 8px 28px rgba(0,0,0,.45); --soft:0 1px 2px rgba(0,0,0,.4);
@@ -27,7 +27,7 @@
 }
 :root[data-theme="dark"]{
   --bg:#0f131a; --panel:#181d26; --panel2:#202633; --ink:#e8ecf3; --mute:#9aa4b5; --line:#2a3240;
-  --accent:#86a8ff; --accent-ink:#0b1430; --accent-soft:#1f2a47; --brand:#9db8ff; --brand3:#ff6b6b; --dnav:#16275a; --dbg:#0d1118; --dline:#2c3850; --chip-ink:#0b1020; --brand2:#2fd1a5; --brand2-ink:#04261d;
+  --accent:#86a8ff; --accent-ink:#0b1430; --accent-soft:#1f2a47; --brand:#9db8ff; --brand3:#ff6b6b; --dnav:#16275a; --dbg:#0d1118; --dline:#2c3850; --chip-ink:#0b1020; --brand2:#86a8ff; --brand2-ink:#0b1430;
   --seal:#ff7b72; --desk:#0b0e13; --danger:#ff7b72; --ok:#5bd394;
   --c-blue:#7fb0ff; --c-indigo:#a5a3ff; --c-teal:#4fd1c5; --c-green:#6edb8f; --c-amber:#f6c454; --c-orange:#ff9a5a; --c-red:#ff7b72; --c-purple:#c4a5ff; --c-pink:#ff8cc6; --c-slate:#a9b4c6;
   --shadow:0 1px 2px rgba(0,0,0,.5),0 8px 28px rgba(0,0,0,.45); --soft:0 1px 2px rgba(0,0,0,.4);
@@ -267,6 +267,12 @@ textarea.ed{position:absolute;margin:0;padding:0;border:1px dashed var(--accent)
 .dRow:hover .dDel,.dDel:focus{opacity:1}
 @media (max-width:820px){.dash{flex-direction:column}.dNav{flex:none;flex-direction:row;flex-wrap:wrap;padding:10px}.dSp,.dTip,#dnAbout{display:none}.dMain{padding:16px}.dRecentBox{max-width:none}}
 .app.empty #tools{display:none!important}
+.legal{margin:14px 0 0;font-size:12px;color:var(--mute);line-height:1.6}
+.legal .linkbtn{font-size:12px;padding:0;color:var(--mute);text-decoration:underline}
+.legal .linkbtn:hover{color:var(--ink)}
+.dMain .legal{margin-top:6px;padding-top:12px;border-top:1px solid var(--dline);text-align:center}
+.licList{margin:0 0 6px;padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.ctRow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px;background:var(--panel2)}
 /* v2.7.1：编辑画面跟开始页同一套配色（深蓝顶栏、彩色图标块、红色主按钮） */
 body{background:var(--dbg)}
 :root{--desk:#dde4f0}
@@ -403,7 +409,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <div class="brand">
       <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTQwLDE0IEgxMjAgTDE2Miw1NiBWMTg2IEg0MCBaIiBmaWxsPSIjRkNFQkVCIiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTEyMCwxNCBWNTYgSDE2MiBaIiBmaWxsPSIjRjdDOEM4IiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjQsNjguMzcpIHNjYWxlKDAuNTU0NCkiPjxwYXRoIGQ9Ik0xNCAxMTUuNTlINDIuODZRNDMuNDkgMTIxLjc4IDQ3LjE0IDEyNS4wM1E1MC43OCAxMjguMjggNTYuNjUgMTI4LjI4UTYyLjY4IDEyOC4yOCA2Ni4xNiAxMjUuNVE2OS42NSAxMjIuNzMgNjkuNjUgMTE3LjgxUTY5LjY1IDExMy42OSA2Ni44OCAxMTFRNjQuMSAxMDguMyA2MC4wNiAxMDYuNTZRNTYuMDIgMTA0LjgxIDQ4LjU2IDEwMi41OVEzNy43OCA5OS4yNiAzMC45NyA5NS45M1EyNC4xNSA5Mi42IDE5LjIzIDg2LjFRMTQuMzIgNzkuNiAxNC4zMiA2OS4xNFExNC4zMiA1My42IDI1LjU3IDQ0LjhRMzYuODMgMzYgNTQuOTEgMzZRNzMuMyAzNiA4NC41NiA0NC44UTk1LjgxIDUzLjYgOTYuNjEgNjkuM0g2Ny4yN1E2Ni45NiA2My45MSA2My4zMSA2MC44MVE1OS42NiA1Ny43MiA1My45NiA1Ny43MlE0OS4wNCA1Ny43MiA0Ni4wMyA2MC4zNFE0My4wMiA2Mi45NSA0My4wMiA2Ny44N1E0My4wMiA3My4yNiA0OC4wOSA3Ni4yN1E1My4xNiA3OS4yOSA2My45NCA4Mi43N1E3NC43MyA4Ni40MiA4MS40NiA4OS43NVE4OC4yIDkzLjA4IDkzLjEyIDk5LjQyUTk4LjAzIDEwNS43NiA5OC4wMyAxMTUuNzVROTguMDMgMTE1LjgzIDk4LjAzIDExNS45MUw3NC41IDE0MS4xM1E3MS41NCAxNDQuMyA3MS4wOCAxNDguMzlRNjQuODQgMTUwIDU3LjQ0IDE1MFE0NS4yNCAxNTAgMzUuNTYgMTQ2LjA0UTI1Ljg5IDE0Mi4wNyAyMC4xIDEzNC4zUTE0LjMyIDEyNi41MyAxNCAxMTUuNTlaIiBmaWxsPSIjMTIzMDdBIi8+PHBhdGggZD0iTTc4LjUyIDE0NC44OCAxMDYuNTIgMTE0Ljg4UTEwOC41OCAxMTIuNjcgMTExLjYgMTEyLjUxUTExNC42MyAxMTIuMzUgMTE2LjkxIDExNC4zM0wxMjUuODEgMTIyLjA0TDE1NC40OSA4My41M0wxNDAuNDYgNzMuMDdRMTM5LjQ1IDcyLjMzIDEzOS4zMyA3MS40NVExMzkuMiA3MC41OCAxMzkuOTQgNjkuNThRMTQwLjM0IDY5LjA1IDE0MC45NCA2OC43OEwxODcuMjcgNDguNDJRMTg5LjU2IDQ3LjQyIDE5MC41NyA0OS43UTE5MC44NSA1MC4zMyAxOTAuNzYgNTEuMDJMMTg0LjUzIDEwMS4yNFExODQuMzggMTAyLjQ4IDE4My42OCAxMDMuMDJRMTgyLjk4IDEwMy41NyAxODEuNzQgMTAzLjQxUTE4MS4wOSAxMDMuMzMgMTgwLjU2IDEwMi45NEwxNjYuNTIgOTIuNDhMMTMzLjAyIDEzNy40OFExMzIuODUgMTM3LjcgMTMyLjY3IDEzNy45MVExMzAuNjMgMTQwLjI2IDEyNy41MyAxNDAuNDhRMTI0LjQ0IDE0MC43IDEyMi4wOSAxMzguNjdMMTEyLjU1IDEzMC40TDg5LjQ4IDE1NS4xMlE4Ny4zNiAxNTcuMzkgODQuMjYgMTU3LjVRODEuMTUgMTU3LjYgNzguODggMTU1LjQ4UTc2LjYxIDE1My4zNiA3Ni41IDE1MC4yNlE3Ni40IDE0Ny4xNSA3OC41MiAxNDQuODhaIiBmaWxsPSIjRTIzQjNCIi8+PC9nPjwvc3ZnPg==" alt="">
       <span class="wordmark"><span class="w1">smart</span><span class="w2">PDF</span></span>
-      <button class="ver" id="btnAbout" title="版本记录">v2.7.2</button>
+      <button class="ver" id="btnAbout" title="版本记录">v2.8</button>
       <button class="ver" id="btnLang" title="Switch to English">EN</button>
     </div>
     <div class="fname" id="fname"></div>
@@ -513,6 +519,8 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
             <aside class="dRecentBox" aria-labelledby="dRecT"><h3 id="dRecT">最近打开</h3><div id="dRecent"></div><p class="muted" id="dNoRecent" style="margin:6px 0 0"></p></aside>
           </div>
           <p class="muted" id="dNone" hidden>没有找到相符的工具或文件</p>
+          <div class="dSp"></div>
+          <p class="legal">© 2026 PLANET COMPUTER TECHNOLOGY CENTRE. This product is the copyright of PLANET COMPUTER TECHNOLOGY CENTRE All rights reserved. · <button type="button" class="linkbtn" data-lic>Copyright &amp; Licences</button> · <button type="button" class="linkbtn" data-contact>Contact us</button></p>
         </div>
       </div></div>
       <div class="desk" id="desk" data-tool="select"><div id="pages"></div></div>
@@ -718,13 +726,44 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
 </div></div>
 
 <div class="modal" id="mAbout" hidden><div class="card" role="dialog" aria-labelledby="abT">
-  <h2 id="abT">PDF 编辑器 <span class="mono" id="abVer"></span></h2>
+  <h2 id="abT">smartPDF <span class="mono" id="abVer"></span></h2>
   <p class="muted" style="margin:0 0 12px">所有处理都在你的电脑上完成，PDF 不会被上传。</p>
   <h3>版本记录</h3>
   <ul class="chlog" id="chlog"></ul>
   <h3>已知限制</h3>
   <ul class="chlog" style="gap:4px;color:var(--mute)" id="limits"></ul>
+  <p class="legal">© 2026 PLANET COMPUTER TECHNOLOGY CENTRE. This product is the copyright of PLANET COMPUTER TECHNOLOGY CENTRE All rights reserved. · <button type="button" class="linkbtn" data-lic>Copyright &amp; Licences</button> · <button type="button" class="linkbtn" data-contact>Contact us</button></p>
   <div class="row end"><button class="btn" data-close>关闭</button></div>
+</div></div>
+
+<div class="modal" id="mLic" hidden><div class="card" role="dialog" aria-labelledby="licT" style="width:min(560px,100%)">
+  <h2 id="licT">Copyright &amp; Licences</h2>
+  <p style="margin:0 0 6px"><b>smartPDF</b> © 2026 PLANET COMPUTER TECHNOLOGY CENTRE. This product is the copyright of PLANET COMPUTER TECHNOLOGY CENTRE All rights reserved.</p>
+  <p class="muted" style="margin:0 0 14px">smartPDF 由 PLANET COMPUTER TECHNOLOGY CENTRE 开发，任何人都可以免费使用。</p>
+  <h3>使用的开源组件</h3>
+  <p class="muted" style="margin:0 0 8px">smartPDF 用到以下开源软件，感谢它们的作者。各组件依照自己的授权条款使用。</p>
+  <ul class="licList">
+    <li><b>PDF.js</b> 3.11.174 · Mozilla Foundation · Apache License 2.0</li>
+    <li><b>pdf-lib</b> · Andrew Dillon · MIT License</li>
+    <li><b>@pdf-lib/fontkit</b> · Devon Govett, Andrew Dillon · MIT License</li>
+    <li><b>JSZip</b> 3.10.1 · Stuart Knightley and contributors · MIT License</li>
+    <li><b>Tesseract.js</b> 5.1.1 · Jerome Wu and contributors · Apache License 2.0</li>
+    <li><b>Neutralinojs</b> 6.10 · Neutralinojs team · MIT License</li>
+    <li><b>Caveat</b>, <b>Ma Shan Zheng</b> fonts · SIL Open Font License 1.1</li>
+  </ul>
+  <div class="row end"><button class="btn" data-close>关闭</button></div>
+</div></div>
+
+<div class="modal" id="mContact" hidden><div class="card" role="dialog" aria-labelledby="ctT" style="width:min(420px,100%)">
+  <h2 id="ctT">Contact us</h2>
+  <p style="margin:0 0 14px"><b>PLANET COMPUTER TECHNOLOGY CENTRE</b></p>
+  <div class="ctRow"><span class="lbl">电话 / WhatsApp</span><b class="mono">012-510 5542</b></div>
+  <div class="ctRow"><span class="lbl">电邮</span><b>planetctc@gmail.com</b></div>
+  <div class="row end" style="margin-top:16px;flex-wrap:wrap">
+    <button class="btn" id="ctWa">WhatsApp</button>
+    <button class="btn" id="ctMail">发电邮</button>
+    <button class="btn primary" data-close>关闭</button>
+  </div>
 </div></div>
 
 <div class="modal" id="mPwd" hidden><div class="card" role="dialog" aria-labelledby="pwT" style="width:min(400px,100%)">
@@ -837,8 +876,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '2.7.2';
+const VERSION = '2.8';
 const CHANGELOG = [
+  { v: '2.8', d: '2026-10-30', items: [
+    '电脑版的「打开」「另存为」「选文件夹」窗口按了马上出来：软件一开就先在旁边准备好',
+    '扫描更快：记住上次找到的扫描仪，打开扫描画面就能直接扫，同时在背景重新找；按「扫描」马上开始',
+    '开软件更快：设定一次全部读出来',
+    '加入版权和授权说明、联络我们（电话、WhatsApp、电邮）'
+  ] },
   { v: '2.7.2', d: '2026-10-30', items: [
     '修正：开过「扫描」画面后，「打开」「另存为」要等很久或完全没反应'
   ] },
@@ -974,6 +1019,16 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  "电脑版的「打开」「另存为」「选文件夹」窗口按了马上出来：软件一开就先在旁边准备好": "On the desktop app, the Open, Save as and folder windows appear right away: they are prepared in the background when the app starts",
+  "扫描更快：记住上次找到的扫描仪，打开扫描画面就能直接扫，同时在背景重新找；按「扫描」马上开始": "Faster scanning: the app remembers the scanners it found last time, so you can scan as soon as the Scan screen opens while it checks again in the background; pressing Scan starts right away",
+  "开软件更快：设定一次全部读出来": "The app starts faster: settings are loaded all at once",
+  "加入版权和授权说明、联络我们（电话、WhatsApp、电邮）": "Added copyright and licence information, and Contact us (phone, WhatsApp, email)",
+  "smartPDF 由 PLANET COMPUTER TECHNOLOGY CENTRE 开发，任何人都可以免费使用。": "smartPDF is made by PLANET COMPUTER TECHNOLOGY CENTRE and is free for anyone to use.",
+  "使用的开源组件": "Open-source components",
+  "smartPDF 用到以下开源软件，感谢它们的作者。各组件依照自己的授权条款使用。": "smartPDF uses the following open-source software. Thanks to their authors. Each component is used under its own licence.",
+  "电话 / WhatsApp": "Phone / WhatsApp",
+  "电邮": "Email",
+  "发电邮": "Send email",
   "修正：开过「扫描」画面后，「打开」「另存为」要等很久或完全没反应": "Fixed: after using the Scan screen, Open and Save as took a long time or did nothing",
   "编辑画面换成开始页的配色：深蓝顶栏、彩色图标、红色保存按钮": "The editing screen now uses the start page colours: dark blue top bar, coloured icons, red Save button",
   "电脑版的「打开」「保存」「选文件夹」窗口改成马上出现在最前面，不用再等": "On the desktop app, the Open, Save and folder windows now appear in front right away instead of after a long wait",
@@ -1727,9 +1782,10 @@ const sepOf = p => (String(p).includes('\\') ? '\\' : '/');
    PowerShell 不行时退回 Neutralino 的窗口。 */
 const DLG = { ps: true };
 const dlgFilter = fs => (fs || []).map(f => { const ex = [...new Set(f.extensions.map(e => e.toLowerCase()))].map(e => '*.' + e).join(';'); return f.name + ' (' + ex + ')|' + ex; }).join('|');
-const PS_OWNER = `Add-Type -AssemblyName System.Windows.Forms
+const PS_FORMS = `Add-Type -AssemblyName System.Windows.Forms
 [Windows.Forms.Application]::EnableVisualStyles()
-$w=New-Object Windows.Forms.Form; $w.TopMost=$true; $w.ShowInTaskbar=$false; $w.FormBorderStyle='None'; $w.Opacity=0
+`;
+const PS_OWNER = `$w=New-Object Windows.Forms.Form; $w.TopMost=$true; $w.ShowInTaskbar=$false; $w.FormBorderStyle='None'; $w.Opacity=0
 $w.StartPosition='CenterScreen'; $w.Size=New-Object Drawing.Size(1,1); $w.Show(); $w.Activate()
 `;
 async function psDlg(kind, title, o) {
@@ -1746,17 +1802,65 @@ $flt=${psq(dlgFilter(o.filters))}; if($flt -ne ''){ $d.Filter=$flt }
 if(${psq(dir)} -ne ''){ $d.InitialDirectory=${psq(dir)} }
 ${kind === 'save' ? `$d.FileName=${psq(file)}; $d.OverwritePrompt=$true; $d.AddExtension=$true` : `$d.Multiselect=$${o.multiSelections ? 'true' : 'false'}`}
 if($d.ShowDialog($w) -eq 'OK'){ $res.paths=@($d.FileNames) }`;
-  const script = PS_HEAD + `$res=@{ok=$true;paths=@()}
+  const req = `$res=@{ok=$true;paths=@()}
 try{
 ${PS_OWNER}${body}
 $w.Close()
 }catch{ $res=Err $_ }
 Done $res ${psq(res)}`;
-  await psRun(psCmd(script));
+  try { await psdRun(req); } catch (e) { console.warn('dialog helper', e); await psRun(psCmd(PS_HEAD + PS_FORMS + req)); }
   const r = await readRes(res);
   if (!r || !r.ok) { console.warn('ps dialog', r); DLG.ps = false; throw new Error('ps failed'); }
   return arr(r.paths);
 }
+/* 常驻的 PowerShell 小帮手（v2.8）：软件一开就在旁边启动、先载入窗口组件，
+   之后每次「打开」「另存为」只要把指令传给它，窗口马上出现，不用每次重新启动 PowerShell。
+   帮手不回应时，退回每次启动一个 PowerShell。 */
+const psServer = () => PS_HEAD + PS_FORMS + `[Console]::Out.WriteLine('READY'); [Console]::Out.Flush()
+while($true){
+  $l=[Console]::In.ReadLine(); if($l -eq $null){ break }
+  $q=$l.Split(' ',2); [Console]::Out.WriteLine('GOT '+$q[0]); [Console]::Out.Flush()
+  try{ Invoke-Expression ([Text.Encoding]::Unicode.GetString([Convert]::FromBase64String($q[1]))) }catch{}
+  [Console]::Out.WriteLine('DONE '+$q[0]); [Console]::Out.Flush()
+}`;
+// 两个帮手：一个专门开窗口（打开/保存），一个专门扫描（扫描可能很久，不能挡住开窗口）
+function mkHelper() {
+  const H = { p: null, ready: false, broken: false, wait: new Map(), n: 0 };
+  H.start = () => {
+    if (H.p || H.broken || !DESK.on || window.NL_OS !== 'Windows') return;
+    H.ready = false; H.p = { pending: true };
+    psRun(psCmd(psServer()), line => {
+      const t = line.trim();
+      if (t === 'READY') { H.ready = true; return; }
+      const m = /^(GOT|DONE) (\d+)$/.exec(t), w = m && H.wait.get(+m[2]);
+      if (w) w[m[1] === 'GOT' ? 'got' : 'done']();
+      else for (const x of H.wait.values()) if (x.onLine) x.onLine(line);
+    }, p => { H.p = p; }).catch(e => console.warn(e)).finally(() => {
+      H.p = null; H.ready = false;
+      for (const w of [...H.wait.values()]) w.fail();
+    });
+  };
+  // 跑一段 PowerShell；帮手不能用时丢出错误，让呼叫的地方改用一次性的 PowerShell
+  H.run = async (script, onLine) => {
+    if (H.broken) throw new Error('helper broken');
+    if (H.wait.size) throw new Error('helper busy');
+    H.start();
+    for (let i = 0; i < 160 && !(H.ready && H.p && H.p.id != null); i++) await new Promise(r => setTimeout(r, 50));
+    if (!H.ready || !H.p || H.p.id == null) throw new Error('helper not ready');
+    const id = ++H.n, proc = H.p;
+    const done = new Promise((res, rej) => {
+      const t = setTimeout(() => { H.wait.delete(id); H.broken = true; psKill(proc); rej(new Error('helper no answer')); }, 3000);
+      H.wait.set(id, { onLine, got: () => clearTimeout(t), done: () => { H.wait.delete(id); res(); }, fail: () => { clearTimeout(t); H.wait.delete(id); rej(Object.assign(new Error('helper exited'), { started: true })); } });
+    });
+    await Neutralino.os.updateSpawnedProcess(proc.id, 'stdIn', id + ' ' + psEncode(script) + '\n');
+    return done;
+  };
+  H.kill = () => { if (H.p && H.p.id != null) psKill(H.p); };
+  return H;
+}
+const PSD = mkHelper(), PSS = mkHelper();
+const psdStart = () => PSD.start();
+const psdRun = s => PSD.run(s);
 async function deskOpenDlg(title, o) {
   try { return await psDlg('open', title, o); } catch (e) { return Neutralino.os.showOpenDialog(title, o); }
 }
@@ -3978,21 +4082,28 @@ function scanErr(r) {
   const known = { '80210015': T('找不到扫描仪。请确认扫描仪已开机、连上电脑，并在 Windows 的「打印机和扫描仪」里看得到它。'), '80210006': T('扫描仪正在忙，请稍后再试。'), '80210003': T('进纸器没有纸，请放好纸再扫。'), '80210002': T('扫描仪卡纸了，请处理好再扫。'), '80210005': T('扫描仪没有连上，请检查线或网络。'), '80210016': T('扫描仪的盖子开着，请盖好再扫。') };
   return known[r && r.code] || T('扫描失败：{e}', { e: (r && (r.msg || r.code)) || T('没有回应') });
 }
-async function scanFind() {
+async function scanFind(quiet) {
   const sel = $('#scDev');
-  sel.innerHTML = `<option>${escHtml(T('正在找扫描仪…'))}</option>`; sel.disabled = true; $('#scInfo').textContent = '';
+  if (!quiet) { sel.innerHTML = `<option>${escHtml(T('正在找扫描仪…'))}</option>`; sel.disabled = true; $('#scInfo').textContent = ''; }
   const base = await scanTmp(), res = base + '.json', gen = ++SCAN.listGen;
   psKill(SCAN.listProc);
   try { await psRun(psCmd(PS_LIST(res)), null, p => { SCAN.listProc = p; }); } catch (e) { console.warn(e); }
   if (gen !== SCAN.listGen) return;
   SCAN.listProc = null;
   const r = await readRes(res);
+  if (quiet && !(r && r.ok)) return;   // 背景更新失败：保留原来的清单
   SCAN.devs = r && r.ok ? arr(r.devices) : [];
-  const st = scanPrefs();
+  if (r && r.ok) LS.set('pdfed.scandevs', JSON.stringify(SCAN.devs));
+  if (quiet && SCAN.busy) return;
+  scanFill(r);
+}
+// 把扫描仪清单放进下拉选单（保留目前选的那台）
+function scanFill(r) {
+  const sel = $('#scDev'), cur = sel.value, st = scanPrefs();
   sel.innerHTML = SCAN.devs.length ? SCAN.devs.map(d => `<option value="${escHtml(d.id)}">${escHtml(d.name || T('扫描仪'))}</option>`).join('') : `<option value="">${escHtml(T('没有找到扫描仪'))}</option>`;
   sel.disabled = !SCAN.devs.length;
-  if (SCAN.devs.some(d => d.id === st.dev)) sel.value = st.dev;
-  if (!SCAN.devs.length) $('#scInfo').textContent = r && !r.ok ? scanErr(r) : T('找不到扫描仪。请确认扫描仪已开机、连上电脑，并在 Windows 的「打印机和扫描仪」里看得到它。');
+  if (SCAN.devs.some(d => d.id === cur)) sel.value = cur; else if (SCAN.devs.some(d => d.id === st.dev)) sel.value = st.dev;
+  if (!SCAN.devs.length && !SCAN.busy) $('#scInfo').textContent = r && !r.ok ? scanErr(r) : T('找不到扫描仪。请确认扫描仪已开机、连上电脑，并在 Windows 的「打印机和扫描仪」里看得到它。');
   scanSrcUi(); scanUi();
 }
 function scanPrefs() { try { return JSON.parse(LS.get('pdfed.scan') || '{}') || {}; } catch (e) { return {}; } }
@@ -4013,7 +4124,10 @@ function openScan() {
   $('#scWhere').value = 'new'; $('#scWhere').disabled = !S.pages.length;
   $('#scInfo').textContent = '';
   openModal('mScan'); scanUi();
-  if (!SCAN.devs || !SCAN.devs.length) scanFind(); else scanSrcUi();
+  PSS.start();   // 先准备好扫描帮手，按「扫描」时马上开始
+  // 先用上次找到的扫描仪（马上可以扫），同时在背景重新找一次
+  if (!SCAN.devs) { try { const c = JSON.parse(LS.get('pdfed.scandevs') || 'null'); if (Array.isArray(c) && c.length) SCAN.devs = c; } catch (e) { /* ignore */ } }
+  if (SCAN.devs && SCAN.devs.length) { scanFill(null); if (!SCAN.listProc) scanFind(true); } else scanFind();
 }
 function scanUi() {
   const n = SCAN.imgs.length;
@@ -4067,9 +4181,18 @@ const psKill = p => { if (p) Neutralino.os.updateSpawnedProcess(p.id, 'exit').ca
 function scanRun(cmd, onLine) {
   return psRun(cmd, onLine, p => { SCAN.proc = p; }).finally(() => { SCAN.proc = null; });
 }
+// 扫描优先交给已经准备好的扫描帮手（按了马上开始）；帮手不能用才另外启动 PowerShell
+async function scanExec(script, onLine) {
+  SCAN.helper = true;
+  try { await PSS.run(script, onLine); return; }
+  catch (e) { if (e.started) return; console.warn('scan helper', e); }
+  finally { SCAN.helper = false; }
+  await scanRun(psCmd(script), onLine);
+}
+function scanStopList() { if (SCAN.listProc) { SCAN.listGen++; psKill(SCAN.listProc); SCAN.listProc = null; } }   // 扫描时不要同时去连扫描仪
 async function scanGo() {
-  if (SCAN.busy) { if (SCAN.proc) { SCAN.stopped = true; Neutralino.os.updateSpawnedProcess(SCAN.proc.id, 'exit').catch(() => {}); } return; }
-  scanSave();
+  if (SCAN.busy) { SCAN.stopped = true; if (SCAN.proc) psKill(SCAN.proc); else if (SCAN.helper) PSS.kill(); return; }
+  scanSave(); scanStopList();
   const src = $('#scSrc').value, color = $('#scColor').value, dpi = +$('#scDpi').value || 200, [pw, ph] = SCAN_PAPER[$('#scPaper').value] || [0, 0];
   const base = await scanTmp();
   const o = { dev: $('#scDev').value, feed: src === 'feed' ? 1 : src === 'dup' ? 5 : 0, intent: color === 'bw' ? 4 : color === 'gray' ? 2 : 1, dpi, w: Math.round(pw * dpi), h: Math.round(ph * dpi), png: color === 'bw', out: base, res: base + '.json' };
@@ -4077,7 +4200,7 @@ async function scanGo() {
   const before = SCAN.imgs.length;
   $('#scInfo').textContent = T('正在扫描…');
   try {
-    await scanRun(psCmd(PS_SCAN(o)), l => { const m = /^PAGE (\d+)/.exec(l.trim()); if (m) $('#scInfo').textContent = T('正在扫描… 已扫 {n} 页', { n: +m[1] }); });
+    await scanExec(PS_SCAN(o), l => { const m = /^PAGE (\d+)/.exec(l.trim()); if (m) $('#scInfo').textContent = T('正在扫描… 已扫 {n} 页', { n: +m[1] }); });
     const r = await readRes(o.res);
     for (const f of arr(r && r.pages)) await scanAdd(f, dpi, o.png);
     const got = SCAN.imgs.length - before;
@@ -4089,7 +4212,7 @@ async function scanGo() {
 }
 /* 退回用 Windows 的扫描窗口（扫描仪不接受上面的设定时用） */
 async function scanWin() {
-  SCAN.busy = true; scanUi(); $('#scInfo').textContent = T('已打开 Windows 扫描窗口，请在那里按「扫描」。看不到的话，看看任务栏。');
+  scanStopList(); SCAN.busy = true; scanUi(); $('#scInfo').textContent = T('已打开 Windows 扫描窗口，请在那里按「扫描」。看不到的话，看看任务栏。');
   try {
     const base = await scanTmp(), path = base + '.jpg', res = base + '.json';
     const ps = PS_HEAD + `try{
@@ -4101,7 +4224,7 @@ async function scanWin() {
   }
 }catch{ $res=Err $_ }
 Done $res ${psq(res)}`;
-    await scanRun(psCmd(ps));
+    await scanExec(ps);
     const r = await readRes(res);
     if (r && r.ok && !r.cancel) { await scanAdd(path, +r.dpi || 200, false); $('#scInfo').textContent = ''; }
     else $('#scInfo').textContent = r && r.cancel ? '' : scanErr(r);
@@ -4129,7 +4252,7 @@ async function scanDone() {
 }
 function wireScan() {
   $('#btnScan').onclick = openScan; $('#wScan').onclick = openScan;
-  $('#scGo').onclick = scanGo; $('#scDone').onclick = scanDone; $('#scFind').onclick = scanFind; $('#scWin').onclick = scanWin;
+  $('#scGo').onclick = scanGo; $('#scDone').onclick = scanDone; $('#scFind').onclick = () => scanFind(); $('#scWin').onclick = scanWin;
   $('#scDev').onchange = () => { scanSrcUi(); scanSave(); };
   for (const id of ['#scSrc', '#scColor', '#scDpi', '#scPaper']) $(id).onchange = scanSave;
   $('#btnScan').hidden = $('#wScan').hidden = !DESK.on;
@@ -4216,15 +4339,27 @@ function dashFilter() {
   $$('#dRecent .dRow').forEach(r => { const ok = !q || r.firstChild.dataset.q.includes(q); r.hidden = !ok; if (ok) n++; });
   $('#dNone').hidden = !q || n > 0;
 }
+// 版权、授权和联络（v2.8）
+function openExt(url) { if (DESK.on) Neutralino.os.open(url).catch(() => window.open(url, '_blank')); else window.open(url, '_blank', 'noopener'); }
+function wireLegal() {
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-lic],[data-contact]'); if (!b) return;
+    $$('.modal:not([hidden])').forEach(m => { if (m.id === 'mAbout') m.hidden = true; });
+    openModal(b.hasAttribute('data-lic') ? 'mLic' : 'mContact');
+  });
+  $('#ctWa').onclick = () => openExt('https://wa.me/60125105542');
+  $('#ctMail').onclick = () => openExt('mailto:planetctc@gmail.com?subject=smartPDF');
+}
 function wireDash() {
+  wireLegal();
   $('#dQ').oninput = dashFilter;
   $('#dnBatch').onclick = openBatch;
   $('#dnScan').onclick = openScan; $('#dnScan').hidden = !DESK.on;
   $('#dnAbout').onclick = () => openModal('mAbout');
   $('#dTipGo').onclick = openScan;
   renderDash();
-  // 先让 Windows 把 PowerShell 和窗口组件读进记忆体，第一次按「打开」就比较快
-  if (DESK.on && window.NL_OS === 'Windows') setTimeout(() => psRun(psCmd('Add-Type -AssemblyName System.Windows.Forms')).catch(() => {}), 2500);
+  // 先在旁边启动打开/保存窗口的小帮手，之后按「打开」窗口马上出来
+  if (DESK.on && window.NL_OS === 'Windows') setTimeout(psdStart, 1200);
 }
 
 /* ----- 文字识别（扫描件，v2.3）：只在用到时载入；桌面版用安装目录里的 ocr/，网页版从 CDN 下载 ----- */
@@ -4544,7 +4679,9 @@ async function boot() {
       Neutralino.init(); DESK.on = true;
       await new Promise(r => { Neutralino.events.on('ready', r); setTimeout(r, 3000); });
       try {
-        for (const k of await Neutralino.storage.getKeys()) if (/^pdfed_/.test(k)) { try { localStorage.setItem(k.replace(/^pdfed_/, 'pdfed.'), await Neutralino.storage.getData(k)); } catch (e) { /* ignore */ } }
+        // 一次全部读出来（以前一个一个读，设定多了开软件会慢）
+        const ks = (await Neutralino.storage.getKeys()).filter(k => /^pdfed_/.test(k));
+        await Promise.all(ks.map(k => Neutralino.storage.getData(k).then(v => { try { localStorage.setItem(k.replace(/^pdfed_/, 'pdfed.'), v); } catch (e) { /* ignore */ } }, () => {})));
       } catch (e) { /* 第一次运行没有数据 */ }
       if (window.NL_MODE === 'window') Neutralino.events.on('windowClose', onDeskClose);
     } catch (e) { console.error(e); DESK.on = false; }
