@@ -191,10 +191,22 @@ textarea.ed{position:absolute;margin:0;padding:0;border:1px dashed var(--accent)
 .rcBox.on .h{border-color:var(--c-orange)}
 .rcBox .h[data-h=nw]{left:-7px;top:-7px;cursor:nwse-resize}.rcBox .h[data-h=ne]{right:-7px;top:-7px;cursor:nesw-resize}
 .rcBox .h[data-h=sw]{left:-7px;bottom:-7px;cursor:nesw-resize}.rcBox .h[data-h=se]{right:-7px;bottom:-7px;cursor:nwse-resize}
-.scThumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.scThumbs:empty{display:none}
-.scT{position:relative;width:76px;height:100px;border:1px solid var(--line);border-radius:6px;background:#fff;display:grid;place-items:center;overflow:visible}
-.scT img{max-width:100%;max-height:100%;display:block}
-.scT .x{position:absolute;right:-8px;top:-8px;width:20px;height:20px;border-radius:50%;border:0;background:var(--c-red);color:#fff;font:600 13px/20px sans-serif;padding:0;cursor:pointer}
+.card.scan{width:min(940px,100%)}
+.scBody{display:flex;flex-wrap:wrap;gap:16px}
+.scSet{flex:1 1 260px;max-width:320px;display:flex;flex-direction:column;gap:10px}
+.scSet .field{margin:0}
+.scGo{height:44px;font-size:15px;margin-top:4px;justify-content:center}
+.scPages{flex:999 1 320px;min-width:0;min-height:340px;max-height:60vh;overflow:auto;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column}
+.scPages #scEmpty{margin:auto;text-align:center}
+.scThumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px}.scThumbs:empty{display:none}
+.scT{position:relative;display:flex;flex-direction:column;gap:4px}
+.scImg{height:160px;background:#fff;border:1px solid var(--line);border-radius:6px;display:grid;place-items:center;overflow:hidden}
+.scImg img{max-width:100%;max-height:100%;display:block;transition:transform .15s}
+.scNo{position:absolute;left:6px;top:6px;background:var(--accent);color:var(--accent-ink);font:600 11px/18px var(--mono);padding:0 6px;border-radius:9px}
+.scBar{display:flex;justify-content:center;gap:4px}
+.scBar button{width:28px;height:28px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:6px;padding:0;font-size:15px;line-height:1;cursor:pointer}
+.scBar button:disabled{opacity:.35;cursor:default}
+.scBar button:hover:not(:disabled){background:var(--accent-soft)}
 .spList b{font-family:var(--mono);font-weight:600}
 .spList .miss{color:var(--danger,#c62828)}
 .chlog{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
@@ -298,7 +310,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <div class="brand">
       <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTQwLDE0IEgxMjAgTDE2Miw1NiBWMTg2IEg0MCBaIiBmaWxsPSIjRkNFQkVCIiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTEyMCwxNCBWNTYgSDE2MiBaIiBmaWxsPSIjRjdDOEM4IiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjQsNjguMzcpIHNjYWxlKDAuNTU0NCkiPjxwYXRoIGQ9Ik0xNCAxMTUuNTlINDIuODZRNDMuNDkgMTIxLjc4IDQ3LjE0IDEyNS4wM1E1MC43OCAxMjguMjggNTYuNjUgMTI4LjI4UTYyLjY4IDEyOC4yOCA2Ni4xNiAxMjUuNVE2OS42NSAxMjIuNzMgNjkuNjUgMTE3LjgxUTY5LjY1IDExMy42OSA2Ni44OCAxMTFRNjQuMSAxMDguMyA2MC4wNiAxMDYuNTZRNTYuMDIgMTA0LjgxIDQ4LjU2IDEwMi41OVEzNy43OCA5OS4yNiAzMC45NyA5NS45M1EyNC4xNSA5Mi42IDE5LjIzIDg2LjFRMTQuMzIgNzkuNiAxNC4zMiA2OS4xNFExNC4zMiA1My42IDI1LjU3IDQ0LjhRMzYuODMgMzYgNTQuOTEgMzZRNzMuMyAzNiA4NC41NiA0NC44UTk1LjgxIDUzLjYgOTYuNjEgNjkuM0g2Ny4yN1E2Ni45NiA2My45MSA2My4zMSA2MC44MVE1OS42NiA1Ny43MiA1My45NiA1Ny43MlE0OS4wNCA1Ny43MiA0Ni4wMyA2MC4zNFE0My4wMiA2Mi45NSA0My4wMiA2Ny44N1E0My4wMiA3My4yNiA0OC4wOSA3Ni4yN1E1My4xNiA3OS4yOSA2My45NCA4Mi43N1E3NC43MyA4Ni40MiA4MS40NiA4OS43NVE4OC4yIDkzLjA4IDkzLjEyIDk5LjQyUTk4LjAzIDEwNS43NiA5OC4wMyAxMTUuNzVROTguMDMgMTE1LjgzIDk4LjAzIDExNS45MUw3NC41IDE0MS4xM1E3MS41NCAxNDQuMyA3MS4wOCAxNDguMzlRNjQuODQgMTUwIDU3LjQ0IDE1MFE0NS4yNCAxNTAgMzUuNTYgMTQ2LjA0UTI1Ljg5IDE0Mi4wNyAyMC4xIDEzNC4zUTE0LjMyIDEyNi41MyAxNCAxMTUuNTlaIiBmaWxsPSIjMTIzMDdBIi8+PHBhdGggZD0iTTc4LjUyIDE0NC44OCAxMDYuNTIgMTE0Ljg4UTEwOC41OCAxMTIuNjcgMTExLjYgMTEyLjUxUTExNC42MyAxMTIuMzUgMTE2LjkxIDExNC4zM0wxMjUuODEgMTIyLjA0TDE1NC40OSA4My41M0wxNDAuNDYgNzMuMDdRMTM5LjQ1IDcyLjMzIDEzOS4zMyA3MS40NVExMzkuMiA3MC41OCAxMzkuOTQgNjkuNThRMTQwLjM0IDY5LjA1IDE0MC45NCA2OC43OEwxODcuMjcgNDguNDJRMTg5LjU2IDQ3LjQyIDE5MC41NyA0OS43UTE5MC44NSA1MC4zMyAxOTAuNzYgNTEuMDJMMTg0LjUzIDEwMS4yNFExODQuMzggMTAyLjQ4IDE4My42OCAxMDMuMDJRMTgyLjk4IDEwMy41NyAxODEuNzQgMTAzLjQxUTE4MS4wOSAxMDMuMzMgMTgwLjU2IDEwMi45NEwxNjYuNTIgOTIuNDhMMTMzLjAyIDEzNy40OFExMzIuODUgMTM3LjcgMTMyLjY3IDEzNy45MVExMzAuNjMgMTQwLjI2IDEyNy41MyAxNDAuNDhRMTI0LjQ0IDE0MC43IDEyMi4wOSAxMzguNjdMMTEyLjU1IDEzMC40TDg5LjQ4IDE1NS4xMlE4Ny4zNiAxNTcuMzkgODQuMjYgMTU3LjVRODEuMTUgMTU3LjYgNzguODggMTU1LjQ4UTc2LjYxIDE1My4zNiA3Ni41IDE1MC4yNlE3Ni40IDE0Ny4xNSA3OC41MiAxNDQuODhaIiBmaWxsPSIjRTIzQjNCIi8+PC9nPjwvc3ZnPg==" alt="">
       <span class="wordmark"><span class="w1">smart</span><span class="w2">PDF</span></span>
-      <button class="ver" id="btnAbout" title="版本记录">v2.5</button>
+      <button class="ver" id="btnAbout" title="版本记录">v2.6</button>
       <button class="ver" id="btnLang" title="Switch to English">EN</button>
     </div>
     <div class="fname" id="fname"></div>
@@ -551,13 +563,22 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
   <div class="row end"><button class="btn" data-close>取消</button><button class="btn primary" id="rcGo">分开</button></div>
 </div></div>
 
-<div class="modal" id="mScan" hidden><div class="card" role="dialog" aria-labelledby="scT">
+<div class="modal" id="mScan" hidden><div class="card scan" role="dialog" aria-labelledby="scT">
   <h2 id="scT">扫描</h2>
-  <p class="muted" style="margin:0">按「开始扫描」会打开 Windows 的扫描窗口，在那里选彩色或黑白、清晰度，再按「扫描」。扫完一页可以接着扫下一页。</p>
-  <div class="scThumbs" id="scThumbs"></div>
-  <div class="row" style="align-items:center;gap:10px;margin-top:10px"><button class="btn" id="scOne">开始扫描</button><span class="muted" id="scCnt"></span></div>
-  <div class="field" style="margin-top:10px"><label class="lbl" for="scWhere">扫好后</label><select id="scWhere"><option value="new">变成一个新的 PDF</option><option value="add">接在现在这个文件后面</option></select></div>
-  <p class="muted" id="scInfo" style="margin:8px 0 0;min-height:1.4em"></p>
+  <div class="scBody">
+    <div class="scSet">
+      <div class="field"><label class="lbl" for="scDev">扫描仪</label><div class="row" style="gap:6px"><select id="scDev" style="flex:1;min-width:0"></select><button class="btn sm" id="scFind" title="重新找扫描仪">重新找</button></div></div>
+      <div class="field" id="scSrcF"><label class="lbl" for="scSrc">放纸的地方</label><select id="scSrc"><option value="flat">玻璃面（一张一张放）</option><option value="feed">自动进纸器（整叠）</option><option value="dup">自动进纸器，双面</option></select></div>
+      <div class="field"><label class="lbl" for="scColor">颜色</label><select id="scColor"><option value="color">彩色</option><option value="gray">灰色</option><option value="bw">黑白（文件最小）</option></select></div>
+      <div class="field"><label class="lbl" for="scDpi">清晰度</label><select id="scDpi"><option value="150">150 dpi · 一般</option><option value="200" selected>200 dpi · 推荐</option><option value="300">300 dpi · 清楚</option><option value="600">600 dpi · 很清楚（慢）</option></select></div>
+      <div class="field"><label class="lbl" for="scPaper">纸张大小</label><select id="scPaper"><option value="a4">A4</option><option value="letter">Letter</option><option value="legal">Legal</option><option value="max">扫描仪最大范围</option></select></div>
+      <div class="field"><label class="lbl" for="scWhere">扫好后</label><select id="scWhere"><option value="new">变成一个新的 PDF</option><option value="add">接在现在这个文件后面</option></select></div>
+      <button class="btn primary scGo" id="scGo">扫描</button>
+      <p class="muted" id="scInfo" style="margin:0;min-height:1.4em"></p>
+      <button class="linkbtn" id="scWin" style="align-self:flex-start">用 Windows 扫描窗口</button>
+    </div>
+    <div class="scPages"><div class="scThumbs" id="scThumbs"></div><p class="muted" id="scEmpty">扫好的页面会显示在这里</p></div>
+  </div>
   <div class="row end"><button class="btn" data-close>取消</button><button class="btn primary" id="scDone">完成</button></div>
 </div></div>
 
@@ -705,8 +726,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '2.5';
+const VERSION = '2.6';
 const CHANGELOG = [
+  { v: '2.6', d: '2026-10-30', items: [
+    '「扫描」改成 smartPDF 自己的画面：直接选扫描仪、颜色、清晰度、纸张大小，有自动进纸器可以一次扫整叠；扫好的页面可以转向、删除、调顺序，设定会记住'
+  ] },
   { v: '2.5', d: '2026-10-27', items: [
     '新增「扫描」（电脑版）：直接叫出 Windows 的扫描窗口，一页一页扫，扫完合成 PDF，也可以接在现在的文件后面'
   ] },
@@ -829,6 +853,41 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  "「扫描」改成 smartPDF 自己的画面：直接选扫描仪、颜色、清晰度、纸张大小，有自动进纸器可以一次扫整叠；扫好的页面可以转向、删除、调顺序，设定会记住": "Scan now has its own screen in smartPDF: pick the scanner, color, resolution and paper size, scan a whole stack with a document feeder, then rotate, remove or reorder pages. Settings are remembered",
+  "扫描仪": "Scanner",
+  "重新找": "Refresh",
+  "重新找扫描仪": "Look for scanners again",
+  "放纸的地方": "Paper source",
+  "玻璃面（一张一张放）": "Flatbed (one sheet at a time)",
+  "自动进纸器（整叠）": "Document feeder (whole stack)",
+  "自动进纸器，双面": "Document feeder, both sides",
+  "彩色": "Color",
+  "黑白（文件最小）": "Black and white (smallest file)",
+  "150 dpi · 一般": "150 dpi · basic",
+  "200 dpi · 推荐": "200 dpi · recommended",
+  "300 dpi · 清楚": "300 dpi · sharp",
+  "600 dpi · 很清楚（慢）": "600 dpi · very sharp (slow)",
+  "纸张大小": "Paper size",
+  "扫描仪最大范围": "Full scanner area",
+  "用 Windows 扫描窗口": "Use the Windows scan window",
+  "扫好的页面会显示在这里": "Scanned pages appear here",
+  "扫描失败：{e}": "Scan failed: {e}",
+  "没有回应": "no response",
+  "扫描仪的盖子开着，请盖好再扫。": "The scanner lid is open. Close it and try again.",
+  "正在找扫描仪…": "Looking for scanners…",
+  "没有找到扫描仪": "No scanner found",
+  "完成（{n} 页）": "Done ({n} pages)",
+  "停止": "Stop",
+  "继续扫描": "Scan more",
+  "往前移": "Move earlier",
+  "转 90°": "Rotate 90°",
+  "往后移": "Move later",
+  "正在扫描…": "Scanning…",
+  "正在扫描… 已扫 {n} 页": "Scanning… {n} pages so far",
+  "已停止，扫好的 {n} 页留着": "Stopped. The {n} pages already scanned are kept",
+  "扫好了 {n} 页": "Scanned {n} pages",
+  "扫好了。换下一张纸，再按「继续扫描」。": "Done. Put in the next sheet and click Scan more.",
+  "（扫好的 {n} 页留着）": "(the {n} pages already scanned are kept)",
   "新增「扫描」（电脑版）：直接叫出 Windows 的扫描窗口，一页一页扫，扫完合成 PDF，也可以接在现在的文件后面": "New Scan (desktop app): opens the Windows scan window, scan page by page, then make a PDF or add the pages to the open file",
   "扫描": "Scan",
   "用扫描仪扫纸本，变成 PDF": "Scan paper documents into a PDF",
@@ -1068,7 +1127,7 @@ function T(zh, v) {
 const I18N = { texts: [], attrs: [] };
 function collectI18n() {
   const cjk = /[㐀-鿿]/;
-  const skip = el => !el || el.closest('#pages,#thumbs,#outline,#cmpOut,#recent,#chlog,#limits,script,style,textarea,#toast,#fname,#hint,#cfMsg,#signSaved,#stampSaved,#seamSaved,#seamInfo,#spInfo,#spList,#scCnt,#scInfo,#scThumbs,#scOne,#rcInfo,#rcPg,#rcStage,#rcGapV,#btList,#btCnt,#btInfo,#cmpSum,#pnInfo,#qCnt,#stMsg,#pwName,#cmpOld,#gnPv,#swatches,#padInk');
+  const skip = el => !el || el.closest('#pages,#thumbs,#outline,#cmpOut,#recent,#chlog,#limits,script,style,textarea,#toast,#fname,#hint,#cfMsg,#signSaved,#stampSaved,#seamSaved,#seamInfo,#spInfo,#spList,#scInfo,#scThumbs,#scGo,#scDone,#scDev,#rcInfo,#rcPg,#rcStage,#rcGapV,#btList,#btCnt,#btInfo,#cmpSum,#pnInfo,#qCnt,#stMsg,#pwName,#cmpOld,#gnPv,#swatches,#padInk');
   const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   let n;
   while ((n = w.nextNode())) {
@@ -3635,88 +3694,215 @@ function wireRcpt() {
   });
 }
 
-/* ----- 扫描（v2.5，只有电脑版）：用 PowerShell 叫出 Windows 自带的扫描窗口（WIA），
-   每扫一页存成临时 JPG，读进来后删掉；全部扫完合成一个 PDF，页面大小照扫描的实际尺寸 ----- */
-const SCAN = { imgs: [], busy: false };
-const SCAN_PS = out => `$ErrorActionPreference='Stop'
-try {
-  $jpg='{B96B3CAE-0728-11D3-9D7B-0000F81EF32E}'
-  $dlg=New-Object -ComObject WIA.CommonDialog
-  $img=$dlg.ShowAcquireImage(1,0,131072,$jpg,$false,$true,$false)
-  if($img -eq $null){'CANCEL';exit}
-  if($img.FormatID -ne $jpg){
-    $ip=New-Object -ComObject WIA.ImageProcess
-    $ip.Filters.Add($ip.FilterInfos.Item('Convert').FilterID)
-    $ip.Filters.Item(1).Properties.Item('FormatID').Value=$jpg
-    $ip.Filters.Item(1).Properties.Item('Quality').Value=92
-    $img=$ip.Apply($img)
+/* ----- 扫描（v2.6，只有电脑版）：smartPDF 自己的扫描画面。
+   用 PowerShell 直接操作 Windows 的扫描接口（WIA），不跳出 Windows 的窗口；
+   结果写进临时文件夹（JSON 用 UTF-8，扫描仪名字是中文也不会乱码），进度用 stdout 的 PAGE n 回报。
+   有些扫描仪不接受某些设定，还可以退回用 Windows 的扫描窗口。 ----- */
+const SCAN = { imgs: [], devs: null, busy: false, proc: null };
+const WIA_JPG = '{B96B3CAE-0728-11D3-9D7B-0000F81EF32E}', WIA_PNG = '{B96B3CAF-0728-11D3-9D7B-0000F81EF32E}';
+const SCAN_PAPER = { a4: [8.27, 11.69], letter: [8.5, 11], legal: [8.5, 14], max: [0, 0] };
+const psq = s => "'" + String(s).replace(/'/g, "''") + "'";
+const PS_HEAD = `$ErrorActionPreference='Stop'
+function SetP($props,[int]$id,$v){ foreach($p in $props){ if($p.PropertyID -eq $id){ try{$p.Value=$v}catch{}; return } } }
+function MaxP($props,[int]$id){ foreach($p in $props){ if($p.PropertyID -eq $id){ try{return [int]$p.SubTypeMax}catch{return 0} } }; return 0 }
+function Done($res,$f){ [IO.File]::WriteAllText($f,(ConvertTo-Json $res -Depth 5 -Compress),(New-Object Text.UTF8Encoding $false)) }
+function Err($e){ $h=$e.Exception.HResult; if($e.Exception.InnerException){ $h=$e.Exception.InnerException.HResult }; return @{ok=$false;code=('{0:X8}' -f $h);msg=$e.Exception.Message} }
+`;
+const PS_LIST = res => PS_HEAD + `$res=@{ok=$true;devices=@()}
+try{
+  $dm=New-Object -ComObject WIA.DeviceManager
+  foreach($d in $dm.DeviceInfos){ if($d.Type -eq 1){
+    $nm=''; try{ $nm=[string]$d.Properties.Item('Name').Value }catch{}
+    $caps=0; try{ $dev=$d.Connect(); foreach($p in $dev.Properties){ if($p.PropertyID -eq 3086){ $caps=[int]$p.Value } } }catch{}
+    $res.devices+=@{id=[string]$d.DeviceID;name=$nm;caps=$caps}
+  }}
+}catch{ $res=Err $_ }
+Done $res ${psq(res)}`;
+// o: {dev, feed(0 玻璃面/1 进纸器/5 双面), intent(1 彩色/2 灰色/4 黑白), dpi, w, h(像素，0=最大), png, out, res}
+const PS_SCAN = o => PS_HEAD + `$fmt=${psq(o.png ? WIA_PNG : WIA_JPG)}; $feed=${o.feed}; $res=@{ok=$true;pages=@()}
+try{
+  $dm=New-Object -ComObject WIA.DeviceManager; $info=$null
+  foreach($d in $dm.DeviceInfos){ if($d.DeviceID -eq ${psq(o.dev)}){ $info=$d } }
+  if($info -eq $null){ throw (New-Object Runtime.InteropServices.COMException('no device',-2145320939)) }
+  $dev=$info.Connect()
+  if($feed -gt 0){ SetP $dev.Properties 3088 $feed; SetP $dev.Properties 3096 1 } else { SetP $dev.Properties 3088 2 }
+  $n=0
+  while($true){
+    $item=$dev.Items(1)
+    SetP $item.Properties 6146 ${o.intent}
+    SetP $item.Properties 6147 ${o.dpi}; SetP $item.Properties 6148 ${o.dpi}
+    SetP $item.Properties 6149 0; SetP $item.Properties 6150 0
+    $w=${o.w}; $h=${o.h}; $mw=MaxP $item.Properties 6151; $mh=MaxP $item.Properties 6152
+    if($w -le 0 -or ($mw -gt 0 -and $w -gt $mw)){ $w=$mw }; if($h -le 0 -or ($mh -gt 0 -and $h -gt $mh)){ $h=$mh }
+    if($w -gt 0){ SetP $item.Properties 6151 $w }; if($h -gt 0){ SetP $item.Properties 6152 $h }
+    try{ $img=$item.Transfer($fmt) }catch{
+      $c=(Err $_).code
+      if($feed -gt 0 -and $n -gt 0 -and $c -eq '80210003'){ break } else { throw }
+    }
+    if($img.FormatID -ne $fmt){
+      $ip=New-Object -ComObject WIA.ImageProcess
+      $ip.Filters.Add($ip.FilterInfos.Item('Convert').FilterID)
+      $ip.Filters.Item(1).Properties.Item('FormatID').Value=$fmt
+      if($fmt -eq ${psq(WIA_JPG)}){ $ip.Filters.Item(1).Properties.Item('Quality').Value=92 }
+      $img=$ip.Apply($img)
+    }
+    $f=${psq(o.out)}+'-'+$n+${psq(o.png ? '.png' : '.jpg')}
+    $img.SaveFile($f); $res.pages+=$f; $n++
+    [Console]::Out.WriteLine('PAGE '+$n); [Console]::Out.Flush()
+    if($feed -eq 0){ break }
   }
-  $img.SaveFile('${out.replace(/'/g, "''")}')
-  'OK '+[int]$img.HorizontalResolution+' '+[int]$img.VerticalResolution
-} catch { 'ERR '+('{0:X8}' -f $_.Exception.HResult)+' '+$_.Exception.Message }`;
+}catch{ $e=Err $_; $e.pages=$res.pages; $res=$e }
+Done $res ${psq(o.res)}`;
 function psEncode(s) {
   let bin = '';
   for (let i = 0; i < s.length; i++) { const c = s.charCodeAt(i); bin += String.fromCharCode(c & 255, c >> 8); }
   return btoa(bin);
 }
-async function scanOnce() {
+const psCmd = s => 'powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -STA -WindowStyle Hidden -EncodedCommand ' + psEncode(s);
+async function scanTmp() {
   let tmp = '';
   try { tmp = await Neutralino.os.getEnv('TEMP'); } catch (e) { /* ignore */ }
   if (!tmp) tmp = await Neutralino.os.getPath('temp');
-  const path = tmp + sepOf(tmp) + 'smartpdf-scan-' + Date.now() + '.jpg';
-  const r = await Neutralino.os.execCommand('powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -STA -WindowStyle Hidden -EncodedCommand ' + psEncode(SCAN_PS(path)));
-  const out = String(r.stdOut || '').trim().split(/\r?\n/).pop() || '';
-  if (/^CANCEL/.test(out)) return null;
-  const m = out.match(/^OK (\d+) (\d+)/);
-  if (!m) {
-    const code = (out.match(/^ERR ([0-9A-F]{8})/) || [])[1];
-    const known = { '80210015': T('找不到扫描仪。请确认扫描仪已开机、连上电脑，并在 Windows 的「打印机和扫描仪」里看得到它。'), '80210006': T('扫描仪正在忙，请稍后再试。'), '80210003': T('进纸器没有纸，请放好纸再扫。'), '80210002': T('扫描仪卡纸了，请处理好再扫。'), '80210005': T('扫描仪没有连上，请检查线或网络。') };
-    throw new Error(known[code] || (out.replace(/^ERR [0-9A-F]{8}\s*/, '') || String(r.stdErr || '').trim() || T('扫描失败')));
-  }
-  const data = new Uint8Array(await Neutralino.filesystem.readBinaryFile(path));
-  Neutralino.filesystem.remove(path).catch(() => {});
-  return { data, dpi: +m[1] || 200, dpiY: +m[2] || +m[1] || 200 };
+  return tmp + sepOf(tmp) + 'smartpdf-scan-' + Date.now();
+}
+async function readRes(f) {
+  let txt = '';
+  try { txt = await Neutralino.filesystem.readFile(f); } catch (e) { return null; }
+  Neutralino.filesystem.remove(f).catch(() => {});
+  try { return JSON.parse(txt.replace(/^﻿/, '')); } catch (e) { return null; }
+}
+const arr = v => (Array.isArray(v) ? v : v == null ? [] : [v]);
+function scanErr(r) {
+  const known = { '80210015': T('找不到扫描仪。请确认扫描仪已开机、连上电脑，并在 Windows 的「打印机和扫描仪」里看得到它。'), '80210006': T('扫描仪正在忙，请稍后再试。'), '80210003': T('进纸器没有纸，请放好纸再扫。'), '80210002': T('扫描仪卡纸了，请处理好再扫。'), '80210005': T('扫描仪没有连上，请检查线或网络。'), '80210016': T('扫描仪的盖子开着，请盖好再扫。') };
+  return known[r && r.code] || T('扫描失败：{e}', { e: (r && (r.msg || r.code)) || T('没有回应') });
+}
+async function scanFind() {
+  const sel = $('#scDev');
+  sel.innerHTML = `<option>${escHtml(T('正在找扫描仪…'))}</option>`; sel.disabled = true; $('#scInfo').textContent = '';
+  const base = await scanTmp(), res = base + '.json';
+  try { await Neutralino.os.execCommand(psCmd(PS_LIST(res))); } catch (e) { console.warn(e); }
+  const r = await readRes(res);
+  SCAN.devs = r && r.ok ? arr(r.devices) : [];
+  const st = scanPrefs();
+  sel.innerHTML = SCAN.devs.length ? SCAN.devs.map(d => `<option value="${escHtml(d.id)}">${escHtml(d.name || T('扫描仪'))}</option>`).join('') : `<option value="">${escHtml(T('没有找到扫描仪'))}</option>`;
+  sel.disabled = !SCAN.devs.length;
+  if (SCAN.devs.some(d => d.id === st.dev)) sel.value = st.dev;
+  if (!SCAN.devs.length) $('#scInfo').textContent = r && !r.ok ? scanErr(r) : T('找不到扫描仪。请确认扫描仪已开机、连上电脑，并在 Windows 的「打印机和扫描仪」里看得到它。');
+  scanSrcUi(); scanUi();
+}
+function scanPrefs() { try { return JSON.parse(LS.get('pdfed.scan') || '{}') || {}; } catch (e) { return {}; } }
+function scanSave() { LS.set('pdfed.scan', JSON.stringify({ dev: $('#scDev').value, src: $('#scSrc').value, color: $('#scColor').value, dpi: $('#scDpi').value, paper: $('#scPaper').value })); }
+function scanSrcUi() {
+  const d = (SCAN.devs || []).find(x => x.id === $('#scDev').value), caps = d ? +d.caps || 0 : 0, src = $('#scSrc');
+  // 3086 Document Handling Capabilities：1 进纸器，2 玻璃面，4 双面
+  const hasFeed = !!(caps & 1), hasDup = !!(caps & 4), hasFlat = !caps || !!(caps & 2);
+  src.options[0].hidden = !hasFlat; src.options[1].hidden = !hasFeed; src.options[2].hidden = !hasDup;
+  if (src.selectedOptions[0] && src.selectedOptions[0].hidden) src.value = hasFlat ? 'flat' : 'feed';
+  $('#scSrcF').hidden = !hasFeed;
 }
 function openScan() {
   if (!DESK.on) { toast(T('扫描只能在电脑版使用')); return; }
-  SCAN.imgs = []; closeEditor();
+  closeEditor(); SCAN.imgs.forEach(im => URL.revokeObjectURL(im.url)); SCAN.imgs = [];
+  const st = scanPrefs();
+  for (const [id, k] of [['#scSrc', 'src'], ['#scColor', 'color'], ['#scDpi', 'dpi'], ['#scPaper', 'paper']]) if (st[k] && $(id).querySelector(`option[value="${st[k]}"]`)) $(id).value = st[k];
   $('#scWhere').value = 'new'; $('#scWhere').disabled = !S.pages.length;
-  scanUi(); openModal('mScan');
+  $('#scInfo').textContent = '';
+  openModal('mScan'); scanUi();
+  if (!SCAN.devs || !SCAN.devs.length) scanFind(); else scanSrcUi();
 }
 function scanUi() {
   const n = SCAN.imgs.length;
-  $('#scCnt').textContent = n ? T('已扫描 {n} 页', { n }) : T('还没有扫描');
-  $('#scOne').textContent = n ? T('再扫一页') : T('开始扫描');
-  $('#scDone').disabled = !n;
-  $('#scThumbs').innerHTML = '';
+  $('#scDone').disabled = !n || SCAN.busy;
+  $('#scDone').textContent = n ? T('完成（{n} 页）', { n }) : T('完成');
+  $('#scGo').textContent = SCAN.busy ? T('停止') : n ? T('继续扫描') : T('扫描');
+  $('#scGo').disabled = !SCAN.busy && !$('#scDev').value;
+  for (const id of ['#scDev', '#scFind', '#scSrc', '#scColor', '#scDpi', '#scPaper', '#scWin']) $(id).disabled = SCAN.busy || (id === '#scDev' && !(SCAN.devs || []).length);
+  $('#scEmpty').hidden = n > 0;
+  const host = $('#scThumbs'); host.innerHTML = '';
   SCAN.imgs.forEach((im, i) => {
     const d = document.createElement('div'); d.className = 'scT';
-    const img = document.createElement('img'); img.src = im.url; img.alt = T('第 {p} 页', { p: i + 1 });
-    const x = document.createElement('button'); x.className = 'x'; x.textContent = '×'; x.title = T('删掉这一页');
-    x.onclick = () => { URL.revokeObjectURL(im.url); SCAN.imgs.splice(i, 1); scanUi(); };
-    d.append(img, x); $('#scThumbs').appendChild(d);
+    const fr = document.createElement('div'); fr.className = 'scImg';
+    const img = document.createElement('img'); img.src = im.url; img.alt = T('第 {p} 页', { p: i + 1 }); img.style.transform = `rotate(${im.rot}deg)` + (im.rot % 180 ? ' scale(0.7)' : '');
+    fr.appendChild(img);
+    const bar = document.createElement('div'); bar.className = 'scBar';
+    const mk = (txt, title, fn, dis) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = txt; b.title = title; b.setAttribute('aria-label', title); b.disabled = !!dis || SCAN.busy; b.onclick = fn; bar.appendChild(b); };
+    mk('‹', T('往前移'), () => { [SCAN.imgs[i - 1], SCAN.imgs[i]] = [SCAN.imgs[i], SCAN.imgs[i - 1]]; scanUi(); }, i === 0);
+    mk('↻', T('转 90°'), () => { im.rot = (im.rot + 90) % 360; scanUi(); });
+    mk('×', T('删掉这一页'), () => { URL.revokeObjectURL(im.url); SCAN.imgs.splice(i, 1); scanUi(); });
+    mk('›', T('往后移'), () => { [SCAN.imgs[i + 1], SCAN.imgs[i]] = [SCAN.imgs[i], SCAN.imgs[i + 1]]; scanUi(); }, i === SCAN.imgs.length - 1);
+    const no = document.createElement('span'); no.className = 'scNo'; no.textContent = i + 1;
+    d.append(fr, no, bar); host.appendChild(d);
   });
 }
-async function scanOne() {
-  if (SCAN.busy) return;
-  SCAN.busy = true; $('#scOne').disabled = true;
-  $('#scInfo').textContent = T('已打开 Windows 扫描窗口，请在那里按「扫描」。看不到的话，看看任务栏。');
+async function scanAdd(path, dpi, png) {
+  const data = new Uint8Array(await Neutralino.filesystem.readBinaryFile(path));
+  Neutralino.filesystem.remove(path).catch(() => {});
+  const type = png ? 'image/png' : 'image/jpeg';
+  SCAN.imgs.push({ data, dpi, dpiY: dpi, png, rot: 0, url: URL.createObjectURL(new Blob([data], { type })) });
+}
+function scanRun(cmd, onLine) {
+  return new Promise((res, rej) => {
+    let id = null, buf = '';
+    const h = e => {
+      const d = e.detail || {}; if (d.id !== id) return;
+      if (d.action === 'stdOut') { buf += d.data; const ls = buf.split(/\r?\n/); buf = ls.pop(); ls.forEach(onLine); }
+      else if (d.action === 'exit') { Neutralino.events.off('spawnedProcess', h); SCAN.proc = null; res(d.data); }
+    };
+    Neutralino.events.on('spawnedProcess', h);
+    Neutralino.os.spawnProcess(cmd).then(p => { id = p.id; SCAN.proc = p; }, e => { Neutralino.events.off('spawnedProcess', h); rej(e); });
+  });
+}
+async function scanGo() {
+  if (SCAN.busy) { if (SCAN.proc) { SCAN.stopped = true; Neutralino.os.updateSpawnedProcess(SCAN.proc.id, 'exit').catch(() => {}); } return; }
+  scanSave();
+  const src = $('#scSrc').value, color = $('#scColor').value, dpi = +$('#scDpi').value || 200, [pw, ph] = SCAN_PAPER[$('#scPaper').value] || [0, 0];
+  const base = await scanTmp();
+  const o = { dev: $('#scDev').value, feed: src === 'feed' ? 1 : src === 'dup' ? 5 : 0, intent: color === 'bw' ? 4 : color === 'gray' ? 2 : 1, dpi, w: Math.round(pw * dpi), h: Math.round(ph * dpi), png: color === 'bw', out: base, res: base + '.json' };
+  SCAN.busy = true; SCAN.stopped = false; scanUi();
+  const before = SCAN.imgs.length;
+  $('#scInfo').textContent = T('正在扫描…');
   try {
-    const r = await scanOnce();
-    if (r) { r.url = URL.createObjectURL(new Blob([r.data], { type: 'image/jpeg' })); SCAN.imgs.push(r); }
-    $('#scInfo').textContent = '';
-  } catch (e) { console.error(e); $('#scInfo').textContent = e.message || String(e); }
-  SCAN.busy = false; $('#scOne').disabled = false; scanUi();
+    await scanRun(psCmd(PS_SCAN(o)), l => { const m = /^PAGE (\d+)/.exec(l.trim()); if (m) $('#scInfo').textContent = T('正在扫描… 已扫 {n} 页', { n: +m[1] }); });
+    const r = await readRes(o.res);
+    for (const f of arr(r && r.pages)) await scanAdd(f, dpi, o.png);
+    const got = SCAN.imgs.length - before;
+    $('#scInfo').textContent = SCAN.stopped ? T('已停止，扫好的 {n} 页留着', { n: got })
+      : r && r.ok ? (o.feed ? T('扫好了 {n} 页', { n: got }) : T('扫好了。换下一张纸，再按「继续扫描」。'))
+        : scanErr(r) + (got ? (LANG === 'en' ? ' ' : '') + T('（扫好的 {n} 页留着）', { n: got }) : '');
+  } catch (e) { console.error(e); $('#scInfo').textContent = scanErr({ msg: e.message || String(e) }); }
+  SCAN.busy = false; scanUi();
+}
+/* 退回用 Windows 的扫描窗口（扫描仪不接受上面的设定时用） */
+async function scanWin() {
+  SCAN.busy = true; scanUi(); $('#scInfo').textContent = T('已打开 Windows 扫描窗口，请在那里按「扫描」。看不到的话，看看任务栏。');
+  try {
+    const base = await scanTmp(), path = base + '.jpg', res = base + '.json';
+    const ps = PS_HEAD + `try{
+  $dlg=New-Object -ComObject WIA.CommonDialog
+  $img=$dlg.ShowAcquireImage(1,0,131072,${psq(WIA_JPG)},$false,$true,$false)
+  if($img -eq $null){ $res=@{ok=$true;cancel=$true} } else {
+    if($img.FormatID -ne ${psq(WIA_JPG)}){ $ip=New-Object -ComObject WIA.ImageProcess; $ip.Filters.Add($ip.FilterInfos.Item('Convert').FilterID); $ip.Filters.Item(1).Properties.Item('FormatID').Value=${psq(WIA_JPG)}; $ip.Filters.Item(1).Properties.Item('Quality').Value=92; $img=$ip.Apply($img) }
+    $img.SaveFile(${psq(path)}); $res=@{ok=$true;dpi=[int]$img.HorizontalResolution}
+  }
+}catch{ $res=Err $_ }
+Done $res ${psq(res)}`;
+    await Neutralino.os.execCommand(psCmd(ps));
+    const r = await readRes(res);
+    if (r && r.ok && !r.cancel) { await scanAdd(path, +r.dpi || 200, false); $('#scInfo').textContent = ''; }
+    else $('#scInfo').textContent = r && r.cancel ? '' : scanErr(r);
+  } catch (e) { console.error(e); $('#scInfo').textContent = scanErr({ msg: e.message || String(e) }); }
+  SCAN.busy = false; scanUi();
 }
 async function scanDone() {
-  if (!SCAN.imgs.length) return;
+  if (!SCAN.imgs.length || SCAN.busy) return;
   const append = $('#scWhere').value === 'add' && S.pages.length;
   closeModals(); busy(true, T('正在生成 PDF…'));
   try {
     const doc = await PDFLib.PDFDocument.create();
     for (const im of SCAN.imgs) {
-      const j = await doc.embedJpg(im.data), w = j.width / im.dpi * 72, h = j.height / im.dpiY * 72;
-      doc.addPage([w, h]).drawImage(j, { x: 0, y: 0, width: w, height: h });
+      const j = im.png ? await doc.embedPng(im.data) : await doc.embedJpg(im.data), w = j.width / im.dpi * 72, h = j.height / im.dpiY * 72;
+      const pg = doc.addPage([w, h]); pg.drawImage(j, { x: 0, y: 0, width: w, height: h });
+      if (im.rot) pg.setRotation(PDFLib.degrees(im.rot));
     }
     const bytes = await doc.save(), n = SCAN.imgs.length;
     SCAN.imgs.forEach(im => URL.revokeObjectURL(im.url)); SCAN.imgs = [];
@@ -3728,7 +3914,9 @@ async function scanDone() {
 }
 function wireScan() {
   $('#btnScan').onclick = openScan; $('#wScan').onclick = openScan;
-  $('#scOne').onclick = scanOne; $('#scDone').onclick = scanDone;
+  $('#scGo').onclick = scanGo; $('#scDone').onclick = scanDone; $('#scFind').onclick = scanFind; $('#scWin').onclick = scanWin;
+  $('#scDev').onchange = () => { scanSrcUi(); scanSave(); };
+  for (const id of ['#scSrc', '#scColor', '#scDpi', '#scPaper']) $(id).onchange = scanSave;
   $('#btnScan').hidden = $('#wScan').hidden = !DESK.on;
 }
 
