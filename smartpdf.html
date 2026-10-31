@@ -413,6 +413,33 @@ body{background:var(--dbg)}
 .conv{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .optWide{grid-column:1/-1}
 @media (max-width:620px){.conv{grid-template-columns:1fr}}
+.imgMenu{position:absolute;z-index:6;display:flex;gap:6px;padding:6px;background:var(--panel);border:1px solid var(--line);border-radius:9px;box-shadow:var(--shadow)}
+.imgMenu.choice{flex-direction:column;gap:0;padding:4px;max-height:240px;overflow:auto}
+.imgMenu.choice button{border:0;background:transparent;text-align:left;padding:6px 10px;border-radius:6px;font-size:13px;color:var(--ink)}
+.imgMenu.choice button:hover{background:var(--accent-soft)}
+.cmts{flex:1;overflow:auto;display:flex;flex-direction:column;min-height:0}
+.cmBar{display:flex;align-items:center;gap:8px;padding:8px;border-bottom:1px solid var(--line)}
+.cmBar .btn [data-ic]{margin-right:4px}
+.cmH{font-size:11px;font-weight:700;color:var(--mute);padding:10px 10px 4px;text-transform:uppercase}
+.cm{margin:4px 8px;border:1px solid var(--line);border-radius:9px;background:var(--panel);padding:7px 8px;font-size:12px}
+.cm.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.cm.orig{background:var(--panel2)}
+.cmTop{display:flex;align-items:center;gap:6px;cursor:pointer;min-width:0}
+.cmTop b{flex-shrink:0}
+.cmS{color:var(--mute);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}
+.cmIc{display:inline-flex;width:16px;height:16px;color:var(--accent);flex-shrink:0}
+.cmIc svg{width:16px;height:16px}
+.cmX{border:0;background:transparent;color:var(--mute);font-size:15px;line-height:1;padding:0 3px;margin-left:auto}
+.cmX:hover{color:var(--danger)}
+.cmM{color:var(--mute);font-size:11px;margin:3px 0 0 22px}
+.cmT{width:100%;margin-top:6px;border:1px solid var(--line);border-radius:6px;background:var(--panel2);color:var(--ink);font:inherit;font-size:12px;padding:5px 7px;resize:vertical}
+.cmR{display:flex;gap:4px;align-items:baseline;margin:5px 0 0 12px;padding-left:8px;border-left:2px solid var(--line)}
+.cmR span{flex:1;white-space:pre-wrap;word-break:break-word}
+.cmRe{display:flex;gap:6px;margin-top:6px}
+.cmRe input{flex:1;min-width:0;height:26px;border:1px solid var(--line);border-radius:6px;background:var(--panel2);color:var(--ink);padding:0 7px;font-size:12px}
+.fdW{display:inline-flex;align-items:center;gap:6px;margin-left:8px}
+.fdW input,#fdKind{height:26px;border:1px solid var(--line);border-radius:6px;background:var(--panel2);color:var(--ink);padding:0 6px;font-size:12px}
+#gEd{display:inline-flex;gap:0}
 .lkBox{flex:1 1 100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel2)}
 .lkBox input[type=password]{height:32px;border:1px solid var(--line);border-radius:7px;background:var(--panel);padding:0 9px;width:100%}
 .scChk{font-size:12.5px;gap:6px;flex-wrap:nowrap;align-items:flex-start}
@@ -455,7 +482,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <div class="brand">
       <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTQwLDE0IEgxMjAgTDE2Miw1NiBWMTg2IEg0MCBaIiBmaWxsPSIjRkNFQkVCIiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTEyMCwxNCBWNTYgSDE2MiBaIiBmaWxsPSIjRjdDOEM4IiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjQsNjguMzcpIHNjYWxlKDAuNTU0NCkiPjxwYXRoIGQ9Ik0xNCAxMTUuNTlINDIuODZRNDMuNDkgMTIxLjc4IDQ3LjE0IDEyNS4wM1E1MC43OCAxMjguMjggNTYuNjUgMTI4LjI4UTYyLjY4IDEyOC4yOCA2Ni4xNiAxMjUuNVE2OS42NSAxMjIuNzMgNjkuNjUgMTE3LjgxUTY5LjY1IDExMy42OSA2Ni44OCAxMTFRNjQuMSAxMDguMyA2MC4wNiAxMDYuNTZRNTYuMDIgMTA0LjgxIDQ4LjU2IDEwMi41OVEzNy43OCA5OS4yNiAzMC45NyA5NS45M1EyNC4xNSA5Mi42IDE5LjIzIDg2LjFRMTQuMzIgNzkuNiAxNC4zMiA2OS4xNFExNC4zMiA1My42IDI1LjU3IDQ0LjhRMzYuODMgMzYgNTQuOTEgMzZRNzMuMyAzNiA4NC41NiA0NC44UTk1LjgxIDUzLjYgOTYuNjEgNjkuM0g2Ny4yN1E2Ni45NiA2My45MSA2My4zMSA2MC44MVE1OS42NiA1Ny43MiA1My45NiA1Ny43MlE0OS4wNCA1Ny43MiA0Ni4wMyA2MC4zNFE0My4wMiA2Mi45NSA0My4wMiA2Ny44N1E0My4wMiA3My4yNiA0OC4wOSA3Ni4yN1E1My4xNiA3OS4yOSA2My45NCA4Mi43N1E3NC43MyA4Ni40MiA4MS40NiA4OS43NVE4OC4yIDkzLjA4IDkzLjEyIDk5LjQyUTk4LjAzIDEwNS43NiA5OC4wMyAxMTUuNzVROTguMDMgMTE1LjgzIDk4LjAzIDExNS45MUw3NC41IDE0MS4xM1E3MS41NCAxNDQuMyA3MS4wOCAxNDguMzlRNjQuODQgMTUwIDU3LjQ0IDE1MFE0NS4yNCAxNTAgMzUuNTYgMTQ2LjA0UTI1Ljg5IDE0Mi4wNyAyMC4xIDEzNC4zUTE0LjMyIDEyNi41MyAxNCAxMTUuNTlaIiBmaWxsPSIjMTIzMDdBIi8+PHBhdGggZD0iTTc4LjUyIDE0NC44OCAxMDYuNTIgMTE0Ljg4UTEwOC41OCAxMTIuNjcgMTExLjYgMTEyLjUxUTExNC42MyAxMTIuMzUgMTE2LjkxIDExNC4zM0wxMjUuODEgMTIyLjA0TDE1NC40OSA4My41M0wxNDAuNDYgNzMuMDdRMTM5LjQ1IDcyLjMzIDEzOS4zMyA3MS40NVExMzkuMiA3MC41OCAxMzkuOTQgNjkuNThRMTQwLjM0IDY5LjA1IDE0MC45NCA2OC43OEwxODcuMjcgNDguNDJRMTg5LjU2IDQ3LjQyIDE5MC41NyA0OS43UTE5MC44NSA1MC4zMyAxOTAuNzYgNTEuMDJMMTg0LjUzIDEwMS4yNFExODQuMzggMTAyLjQ4IDE4My42OCAxMDMuMDJRMTgyLjk4IDEwMy41NyAxODEuNzQgMTAzLjQxUTE4MS4wOSAxMDMuMzMgMTgwLjU2IDEwMi45NEwxNjYuNTIgOTIuNDhMMTMzLjAyIDEzNy40OFExMzIuODUgMTM3LjcgMTMyLjY3IDEzNy45MVExMzAuNjMgMTQwLjI2IDEyNy41MyAxNDAuNDhRMTI0LjQ0IDE0MC43IDEyMi4wOSAxMzguNjdMMTEyLjU1IDEzMC40TDg5LjQ4IDE1NS4xMlE4Ny4zNiAxNTcuMzkgODQuMjYgMTU3LjVRODEuMTUgMTU3LjYgNzguODggMTU1LjQ4UTc2LjYxIDE1My4zNiA3Ni41IDE1MC4yNlE3Ni40IDE0Ny4xNSA3OC41MiAxNDQuODhaIiBmaWxsPSIjRTIzQjNCIi8+PC9nPjwvc3ZnPg==" alt="">
       <span class="wordmark"><span class="w1">smart</span><span class="w2">PDF</span></span>
-      <button class="ver" id="btnAbout" title="版本记录">v3.0.1</button>
+      <button class="ver" id="btnAbout" title="版本记录">v3.1</button>
       <button class="ver" id="btnLang" title="Switch to English">EN</button>
     </div>
     <div class="fname" id="fname"></div>
@@ -506,6 +533,9 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <button class="tool" data-tool="white" title="用白色盖住原有内容 (W)"><span data-ic="white"></span>遮盖</button>
     <button class="tool" data-tool="redact" title="永久涂黑，导出时彻底移除下面的文字 (X)"><span data-ic="redact"></span>涂黑</button>
     <span class="sep"></span>
+    <button class="tool" data-tool="field" title="做可以填写的表格栏位 (F)"><span data-ic="form"></span>表格栏位</button>
+    <button class="tool" data-tool="note" title="贴便签批注 (N)"><span data-ic="note"></span>便签</button>
+    <span class="sep"></span>
     <button class="tool" data-tool="pgno" title="给页面加页码"><span data-ic="pgno"></span>页码</button>
     <button class="tool" data-tool="wm" title="加水印"><span data-ic="wm"></span>水印</button>
   </nav>
@@ -516,6 +546,10 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <div class="grp" id="gSw"><span class="lbl">线宽</span>
       <select id="swSel" aria-label="线宽"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="5">5</option><option value="8">8</option></select></div>
     <div class="grp" id="gOp"><span class="lbl">透明度</span><input type="range" id="opRng" min="20" max="100" value="100" aria-label="透明度"><span class="mono" id="opVal">100%</span></div>
+    <div class="grp" id="gFld"><span class="lbl">栏位</span><select id="fdKind" aria-label="栏位种类"><option value="text">文字栏</option><option value="multi">多行文字栏</option><option value="check">勾选框</option><option value="drop">下拉选单</option></select>
+      <label class="fdW" id="fdNameW"><span class="lbl">名字</span><input type="text" id="fdName" style="width:110px"></label>
+      <label class="fdW" id="fdOptW"><span class="lbl">选项</span><input type="text" id="fdOpt" placeholder="用逗号分开，例如：是, 否" style="width:200px"></label></div>
+    <div class="grp seg" id="gEd"><button type="button" data-v="para">整段改</button><button type="button" data-v="line">一行一行改</button></div>
     <div class="grp" id="gChk"><button class="btn sm" id="chkTog">切换 ✓ / ✗</button></div>
     <div class="grp" id="gAct"><button class="btn sm" id="btnDup">复制</button><button class="btn sm danger" id="btnDel">删除</button></div>
     <span class="hint" id="hint"></span>
@@ -523,7 +557,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
 
   <div class="main">
     <aside class="side" id="side" aria-label="页面">
-      <div class="stabs" id="stabs"><button class="on" data-st="thumbs">页面</button><button data-st="outline">目录</button></div>
+      <div class="stabs" id="stabs"><button class="on" data-st="thumbs">页面</button><button data-st="outline">目录</button><button data-st="cmts">批注</button></div>
       <div class="ops" id="pageOps">
         <button class="btn sm" data-op="rotL" title="向左转 90°">左转</button>
         <button class="btn sm" data-op="rotR" title="向右转 90°">右转</button>
@@ -538,6 +572,11 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
       </div>
       <div class="thumbs" id="thumbs"></div>
       <nav class="outline" id="outline" aria-label="目录" hidden></nav>
+      <div class="cmts" id="cmts" hidden>
+        <div class="cmBar"><button type="button" class="btn sm" id="cmtAdd"><span data-ic="note"></span>贴便签</button><span class="muted" id="cmtCnt"></span></div>
+        <div id="cmtList"></div>
+        <p class="muted" id="cmtEmpty" style="padding:10px;margin:0">还没有批注。按「贴便签」再点页面，就可以写批注；你加的签名、文字、高亮也会列在这里。</p>
+      </div>
     </aside>
     <div class="sizer" id="sizer" role="separator" aria-orientation="vertical" title="拖拉调整页面栏宽度，双击恢复"></div>
     <div class="scrim" id="scrim"></div>
@@ -591,6 +630,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
 <input type="file" id="fOpen" accept="application/pdf,.pdf" hidden>
 <input type="file" id="fMerge" accept="application/pdf,.pdf" multiple hidden>
 <input type="file" id="fImg" accept="image/*" hidden>
+<input type="file" id="fImgRep" accept="image/*" hidden>
 <input type="file" id="fImgs" accept="image/*" multiple hidden>
 <input type="file" id="fBatch" accept="application/pdf,.pdf" multiple hidden>
 
@@ -809,7 +849,10 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <li><b>整理页面</b><span>左边的页面栏可以左转、右转、上移、下移、复制、加空白页、删除，也可以直接拖页面换位置。</span></li>
     <li><b>拆分、分收据</b><span>「拆分」按页数或发票号码拆成几个文件；「分收据」把一页里的几张收据分开。</span></li>
     <li><b>合并、批量</b><span>「合并」把别的 PDF 接在后面；「批量」一次处理很多个 PDF。</span></li>
-    <li><b>转换、压缩</b><span>「转换」可以转 Word、转图片、图片转 PDF，或把文件压小。</span></li>
+    <li><b>转换、压缩</b><span>「转换」可以转 Word、Excel、图片，图片转 PDF，或把文件压小。</span></li>
+    <li><b>做表格</b><span>选「表格栏位」，选种类（文字栏、勾选框、下拉选单），在页面上拖出栏位。保存后别人用任何 PDF 软件都能填。</span></li>
+    <li><b>批注</b><span>选「便签」点页面贴批注；左边「批注」列出所有批注和你加的东西，可以回复、跳过去、删掉。</span></li>
+    <li><b>整段改字、换图片</b><span>「改字」点一段文字会整段一起改，自动换行；点 PDF 里的图片可以换掉或删掉。</span></li>
     <li><b>扫描（电脑版）</b><span>按「扫描」，选扫描仪、颜色和清晰度，扫好后按「完成」变成 PDF。</span></li>
     <li><b>保存</b><span>「保存」直接存回原文件；「另存为」存成新文件。</span></li>
     <li><b>回到开始页</b><span>按顶栏的「主页」。文件不会关掉，左边按「返回文件」就回去。</span></li>
@@ -824,6 +867,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <span><kbd>Ctrl</kbd>+<kbd>F</kbd></span><span>搜索文字</span>
     <span><kbd>Ctrl</kbd>+<kbd>+</kbd> / <kbd>−</kbd> / <kbd>0</kbd></span><span>放大 / 缩小 / 适合宽度</span>
     <span><kbd>V</kbd> <kbd>E</kbd> <kbd>T</kbd> <kbd>S</kbd> <kbd>M</kbd></span><span>选择 / 改字 / 文字 / 签名 / 印章</span>
+    <span><kbd>F</kbd> <kbd>N</kbd></span><span>表格栏位 / 便签</span>
     <span><kbd>Delete</kbd></span><span>删除选中的东西</span>
   </div>
   <p class="muted" style="margin:14px 0 0">还有问题？<button type="button" class="linkbtn" data-contact>联络我们</button></p>
@@ -845,6 +889,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
   <div class="setRow"><b>打开文件时显示</b><div class="seg" id="setFit"><button type="button" data-v="width">适合宽度</button><button type="button" data-v="page">整页</button></div></div>
   <div class="setRow"><b>文字识别语言</b><div class="seg" id="setOcr"><button type="button" data-v="chi">中文＋英文</button><button type="button" data-v="eng">只有英文</button></div></div>
   <div class="setRow" id="setUpdRow"><b>软件更新</b><span class="setUpdR"><span class="muted" id="setUpdMsg"></span><button type="button" class="btn" id="setUpd">检查更新</button></span></div>
+  <div class="setRow"><b>批注署名</b><input type="text" id="setAuthor" placeholder="我" maxlength="40" style="height:30px;width:180px;border:1px solid var(--line);border-radius:7px;background:var(--panel2);padding:0 9px"></div>
   <div class="setRow" id="setRecRow"><b>最近打开的文件</b><button type="button" class="btn" id="setRecClr">清除记录</button></div>
   <div class="setCo">
     <div class="setCoH"><b>smartPDF</b> <span class="mono" id="setVer"></span></div>
@@ -898,11 +943,12 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
   <div class="conv">
     <label class="opt"><input type="radio" name="cv" value="img" checked><b>PDF 转图片</b><span>每一页存成一张 JPG 或 PNG，包括你加上的签名和印章</span></label>
     <label class="opt"><input type="radio" name="cv" value="docx"><b>PDF 转 Word</b><span>保留段落、对齐和表格；扫描件会先识别文字</span></label>
+    <label class="opt"><input type="radio" name="cv" value="xlsx"><b>PDF 转 Excel</b><span>表格、报表变成试算表，数字可以直接计算；扫描件会先识别文字</span></label>
     <label class="opt"><input type="radio" name="cv" value="txt"><b>PDF 转文字</b><span>存成 .txt 纯文字</span></label>
     <label class="opt"><input type="radio" name="cv" value="fromimg"><b>图片转 PDF</b><span>选几张图片，合成一个新 PDF</span></label>
     <label class="opt"><input type="radio" name="cv" value="ocr"><b>识别文字（扫描件）</b><span>认出扫描件上的中文和英文，之后可以搜索、复制，保存的 PDF 也带文字</span></label>
     <label class="opt"><input type="radio" name="cv" value="zip"><b>压缩 PDF</b><span>把 PDF 里的图片压小，文件变小，适合电邮或上传</span></label>
-    <label class="opt optWide"><input type="radio" name="cv" value="lock"><b>加密码保护</b><span>设打开密码，或禁止打印、复制、修改</span></label>
+    <label class="opt"><input type="radio" name="cv" value="lock"><b>加密码保护</b><span>设打开密码，或禁止打印、复制、修改</span></label>
   </div>
   <div class="row" id="cvOpts" style="margin-top:12px;align-items:flex-end">
     <div class="field" id="cvFmtF"><label class="lbl" for="cvFmt">格式</label><select id="cvFmt"><option value="jpg">JPG</option><option value="png">PNG</option></select></div>
@@ -917,6 +963,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
       <p class="muted" id="lkMsg" style="margin:6px 0 0;min-height:1.3em;color:var(--danger)"></p>
       <p class="muted" style="margin:0;font-size:11.5px">用 AES 加密，Adobe、Edge、Chrome 等都认得。请记好密码，忘了就打不开。</p>
     </div>
+    <label class="row" id="cvOneF" hidden style="flex:1 1 100%"><input type="checkbox" id="cvOneSheet"> 全部放在同一个工作表（不勾就每页一个工作表）</label>
     <label class="row" id="cvCleanF" hidden style="flex:1 1 100%"><input type="checkbox" id="cvClean"> 照片是文件或收据：自动拉正、去灰底</label>
     <div class="field" id="cvLvlF" style="flex:1"><label class="lbl" for="cvLvl">压缩程度</label><select id="cvLvl"><option value="strong">强（文件最小，图片较模糊）</option><option value="mid" selected>中（推荐）</option><option value="light">轻（图片较清楚）</option></select></div>
   </div>
@@ -1007,8 +1054,16 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '3.0.1';
+const VERSION = '3.1';
 const CHANGELOG = [
+  { v: '3.1', d: '2026-10-31', items: [
+    "做可以填写的表格：选「表格栏位」，拖出文字栏、多行文字栏、勾选框或下拉选单；保存后别人用 Adobe、Edge、Chrome 等都能直接填写",
+    "PDF 转 Excel：表格和报表变成试算表，数字是真的数字可以计算；可以每页一个工作表或全部放一起；扫描件会先识别文字",
+    "批注：用「便签」贴批注、写回复；左边新的「批注」列出所有批注和你加的签名、文字、高亮，点一下就跳过去，也可以删掉。保存后别的 PDF 软件也看得到。原文件里别人写的批注也会列出来",
+    "整段改字：「改字」点一段文字会整段一起改，自动换行、保持原来的行距；也可以切回一行一行改",
+    "换图片：在「改字」时点 PDF 里的图片，可以换成另一张或删掉",
+    "PDF 自带的下拉选单现在也能直接点选填写；设定里可以写批注署名"
+  ] },
   { v: '3.0.1', d: '2026-10-31', items: [
     "顶栏的「扫描」按钮现在有字，图标换成扫描仪的样子，放在「打印」旁边"
   ] },
@@ -1167,6 +1222,68 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  "做可以填写的表格：选「表格栏位」，拖出文字栏、多行文字栏、勾选框或下拉选单；保存后别人用 Adobe、Edge、Chrome 等都能直接填写": "Make fillable forms: choose \"Form field\" and drag out text fields, multi-line fields, checkboxes or dropdowns; after saving anyone can fill them in with Adobe, Edge, Chrome and others",
+  "PDF 转 Excel：表格和报表变成试算表，数字是真的数字可以计算；可以每页一个工作表或全部放一起；扫描件会先识别文字": "PDF to Excel: tables and reports become a spreadsheet with real numbers you can calculate with; one sheet per page or all on one sheet; scans are recognised first",
+  "批注：用「便签」贴批注、写回复；左边新的「批注」列出所有批注和你加的签名、文字、高亮，点一下就跳过去，也可以删掉。保存后别的 PDF 软件也看得到。原文件里别人写的批注也会列出来": "Comments: add sticky notes and replies with \"Note\"; the new \"Comments\" tab on the left lists all comments plus the signatures, text and highlights you added, so you can jump to or delete them. Other PDF apps see the comments after saving, and comments already in the file are listed too",
+  "整段改字：「改字」点一段文字会整段一起改，自动换行、保持原来的行距；也可以切回一行一行改": "Edit whole paragraphs: with \"Edit text\", click a paragraph to edit it as a whole with automatic wrapping and the original line spacing; you can switch back to line by line",
+  "换图片：在「改字」时点 PDF 里的图片，可以换成另一张或删掉": "Replace images: with \"Edit text\", click an image in the PDF to replace it or delete it",
+  "PDF 自带的下拉选单现在也能直接点选填写；设定里可以写批注署名": "Dropdowns already in a PDF can now be filled in by clicking; set your comment author name in Settings",
+  "第{n}页": "Page {n}",
+  "换一张图片": "Replace image",
+  "删掉这张图片": "Delete image",
+  "已换图片。可以拖动或缩放新图片": "Image replaced. You can move or resize the new image",
+  "已删掉这张图片": "Image deleted",
+  "栏位": "Field",
+  "已经有同名的栏位": "A field with this name already exists",
+  "我": "Me",
+  "第 {n} 页": "Page {n}",
+  "写下批注…": "Write a comment…",
+  "回复…": "Reply…",
+  "回复": "Reply",
+  "原文件批注": "Comment in file",
+  "{n} 条回复": "{n} replies",
+  "共 {n} 项": "{n} items",
+  "点击页面，贴上便签": "Click the page to add a note",
+  "表格栏位": "Form field",
+  "便签": "Note",
+  "文字栏": "Text field",
+  "多行文字栏": "Multi-line text",
+  "勾选框": "Checkbox",
+  "下拉选单": "Dropdown",
+  "名字": "Name",
+  "选项": "Options",
+  "整段改": "Whole paragraph",
+  "一行一行改": "Line by line",
+  "批注": "Comments",
+  "贴便签": "Add note",
+  "还没有批注。按「贴便签」再点页面，就可以写批注；你加的签名、文字、高亮也会列在这里。": "No comments yet. Press \"Add note\" and click the page to write one; signatures, text and highlights you add are listed here too.",
+  "「转换」可以转 Word、Excel、图片，图片转 PDF，或把文件压小。": "\"Convert\" turns PDFs into Word, Excel or images, turns images into a PDF, or makes files smaller.",
+  "做表格": "Make a form",
+  "选「表格栏位」，选种类（文字栏、勾选框、下拉选单），在页面上拖出栏位。保存后别人用任何 PDF 软件都能填。": "Choose \"Form field\", pick a type (text, checkbox, dropdown) and drag on the page. After saving, anyone can fill it in with any PDF app.",
+  "选「便签」点页面贴批注；左边「批注」列出所有批注和你加的东西，可以回复、跳过去、删掉。": "Choose \"Note\" and click the page to comment. The \"Comments\" tab on the left lists all comments and everything you added; reply, jump to it or delete it.",
+  "整段改字、换图片": "Edit paragraphs, replace images",
+  "「改字」点一段文字会整段一起改，自动换行；点 PDF 里的图片可以换掉或删掉。": "With \"Edit text\", click a paragraph to edit it as a whole with automatic line wrapping; click an image in the PDF to replace or delete it.",
+  "表格栏位 / 便签": "Form field / Note",
+  "批注署名": "Comment author",
+  "PDF 转 Excel": "PDF to Excel",
+  "表格、报表变成试算表，数字可以直接计算；扫描件会先识别文字": "Tables and reports become a spreadsheet with real numbers; scans are recognised first",
+  "全部放在同一个工作表（不勾就每页一个工作表）": "Put everything on one sheet (otherwise one sheet per page)",
+  "做可以填写的表格栏位 (F)": "Add fillable form fields (F)",
+  "贴便签批注 (N)": "Add a sticky note (N)",
+  "栏位种类": "Field type",
+  "用逗号分开，例如：是, 否": "Separate with commas, e.g. Yes, No",
+  "表格和批注": "Forms and comments",
+  "做别人能填写的表格": "Make fillable forms",
+  "便签、回复、列表": "Notes, replies, list",
+  "换图片": "Replace image",
+  "换掉或删掉 PDF 里的图": "Swap or remove PDF images",
+  "标出重点": "Mark key points",
+  "转 Excel": "To Excel",
+  "表格变成试算表": "Tables to spreadsheet",
+  "识别、加密和压缩": "Recognise, protect, compress",
+  "先选栏位种类，再在页面上拖出栏位（点一下用默认大小）。保存后别人可以用任何 PDF 软件填写": "Pick a field type, then drag on the page (or click for the default size). After saving, anyone can fill it in with any PDF app",
+  "点击页面贴一张便签，在左边「批注」写内容和回复": "Click the page to add a note, then write it and reply in \"Comments\" on the left",
+  "点击原有的文字直接修改，点空白处完成；点图片可以换掉或删掉": "Click existing text to edit it, click elsewhere to finish; click an image to replace or delete it",
   "顶栏的「扫描」按钮现在有字，图标换成扫描仪的样子，放在「打印」旁边": "The Scan button in the top bar now has a label and a scanner icon, and sits next to Print",
   "保留版面和表格": "Keeps layout and tables",
   "扫描件可以「识别文字」：认出中文和英文，之后能搜索、复制，保存的 PDF 用别的软件打开也有文字；打开扫描件时上方会提示": "Scanned files can now be \"recognised\": Chinese and English text becomes searchable and copyable, also in other apps after saving; a hint appears when you open a scan",
@@ -1648,6 +1765,9 @@ function setLang(l) {
 }
 /* ----- 图标 ----- */
 const IC = {
+  form: '<rect x="3" y="4" width="14" height="12" rx="1.6"/><path d="M6 8h3M6 12h3"/><rect x="11" y="7" width="3.5" height="2.2" rx=".5"/><rect x="11" y="11" width="3.5" height="2.2" rx=".5"/>',
+  note: '<path d="M4 4.5A1.5 1.5 0 0 1 5.5 3h9A1.5 1.5 0 0 1 16 4.5v7a1.5 1.5 0 0 1-1.5 1.5H9l-3.5 3.5V13h0A1.5 1.5 0 0 1 4 11.5z"/><path d="M7 7h6M7 9.8h4"/>',
+  xls: '<rect x="3" y="3" width="14" height="14" rx="1.6"/><path d="M3 8h14M3 12.5h14M8.5 3v14"/>',
   download: '<path d="M10 3v9.5M6 9l4 4 4-4"/><path d="M4 14.5v1A1.5 1.5 0 0 0 5.5 17h9a1.5 1.5 0 0 0 1.5-1.5v-1"/>',
   ocr: '<path d="M3 7V4.5A1.5 1.5 0 0 1 4.5 3H7M13 3h2.5A1.5 1.5 0 0 1 17 4.5V7M17 13v2.5a1.5 1.5 0 0 1-1.5 1.5H13M7 17H4.5A1.5 1.5 0 0 1 3 15.5V13"/><path d="M7 7.5h6M10 7.5v5.5"/>',
   lock: '<rect x="4" y="9" width="12" height="8" rx="1.6"/><path d="M7 9V6.5a3 3 0 0 1 6 0V9"/><path d="M10 12.2v1.8"/>',
@@ -1726,16 +1846,17 @@ function mmul(m1, m2) {
 /* ----- 标注：尺寸、命中、绘制 ----- */
 const mctx = document.createElement('canvas').getContext('2d');
 function textBox(a) {
+  const lines = wrapLines(a);
   mctx.font = `${a.size}px ${fontOf(a)}`;
-  const lines = String(a.text).split('\n');
   let w = 0;
   for (const l of lines) w = Math.max(w, mctx.measureText(l).width);
-  return { w: Math.max(w, a.size * 0.6), h: lines.length * a.size * LH };
+  return { w: a.wrap ? a.wrap : Math.max(w, a.size * 0.6), h: lines.length * a.size * lhOf(a) };
 }
 function bbox(a) {
   switch (a.t) {
     case 'text': { const m = textBox(a); return { x: a.x, y: a.y, w: m.w, h: m.h }; }
     case 'check': return { x: a.x, y: a.y, w: a.s, h: a.s };
+    case 'note': return { x: a.x, y: a.y, w: 18, h: 18 };
     case 'wm': { const m = textBox({ text: a.text, size: a.size }); return { x: a.x - m.w / 2, y: a.y - m.h / 2, w: m.w, h: m.h }; }
     case 'ink': {
       let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
@@ -1783,9 +1904,12 @@ function drawAnn(ctx, a) {
   switch (a.t) {
     case 'text': {
       ctx.fillStyle = a.c; ctx.font = `${a.size}px ${fontOf(a)}`; ctx.textBaseline = 'top';
-      String(a.text).split('\n').forEach((l, i) => ctx.fillText(l, a.x, a.y + i * a.size * LH + a.size * (LH - 1) / 2));
+      const lh = lhOf(a);
+      wrapLines(a).forEach((l, i) => ctx.fillText(l, a.x, a.y + i * a.size * lh + a.size * (lh - 1) / 2));
       break;
     }
+    case 'fld': drawFld(ctx, a); break;
+    case 'note': drawNote(ctx, a); break;
     case 'check': {
       ctx.strokeStyle = a.c; ctx.lineWidth = Math.max(1.4, a.s * 0.12); ctx.lineCap = 'round'; ctx.lineJoin = 'round';
       ctx.beginPath();
@@ -1857,6 +1981,7 @@ async function loadFields(p) {
       if (a.subtype !== 'Widget' || a.readOnly || a.hidden || !a.rect) continue;
       if (a.fieldType === 'Tx') out.push({ id: a.id, kind: 'text', r: a.rect, multi: !!a.multiLine });
       else if (a.fieldType === 'Btn' && a.checkBox) out.push({ id: a.id, kind: 'check', r: a.rect });
+      else if (a.fieldType === 'Ch' && Array.isArray(a.options) && a.options.length) out.push({ id: a.id, kind: 'choice', r: a.rect, opts: a.options.map(o => o.displayValue || o.exportValue).filter(Boolean) });
     }
     fieldCache.set(key, out); linkCache.set(key, links);
   } catch (e) { console.warn(e); }
@@ -1867,7 +1992,7 @@ function fieldsOf(p) {
   const t = p.vt, ap = (x, y) => [t[0] * x + t[2] * y + t[4], t[1] * x + t[3] * y + t[5]];
   return raw.map(f => {
     const A = ap(f.r[0], f.r[1]), B = ap(f.r[2], f.r[3]);
-    return { id: f.id, kind: f.kind, multi: f.multi, x: Math.min(A[0], B[0]), y: Math.min(A[1], B[1]), w: Math.abs(A[0] - B[0]), h: Math.abs(A[1] - B[1]) };
+    return { id: f.id, kind: f.kind, multi: f.multi, opts: f.opts, x: Math.min(A[0], B[0]), y: Math.min(A[1], B[1]), w: Math.abs(A[0] - B[0]), h: Math.abs(A[1] - B[1]) };
   }).filter(f => f.w > 2 && f.h > 2 && !p.ann.some(a => a.fk === f.id));
 }
 function fieldAt(p, pt) {
@@ -1935,7 +2060,7 @@ const snap = () => JSON.stringify(S.pages);
 function commit(before) {
   if (before === snap()) return;
   S.undo.push(before); if (S.undo.length > 60) S.undo.shift();
-  S.redo = []; S.dirty = true; updUndo(); updStatus();
+  S.redo = []; S.dirty = true; updUndo(); updStatus(); cmtSoon();
 }
 function updUndo() { $('#btnUndo').disabled = !S.undo.length; $('#btnRedo').disabled = !S.redo.length; }
 function restore(str) {
@@ -1947,7 +2072,7 @@ function restore(str) {
   for (const id of [...S.sel]) if (!pageById(id)) S.sel.delete(id);
   S.cur = clamp(S.cur, 0, S.pages.length - 1);
   if (same) redrawAll(); else renderAll();
-  refreshProps(); S.dirty = true;
+  refreshProps(); S.dirty = true; cmtSoon();
 }
 function undo() { if (!S.undo.length) return; S.redo.push(snap()); restore(S.undo.pop()); updUndo(); }
 function redo() { if (!S.redo.length) return; S.undo.push(snap()); restore(S.redo.pop()); updUndo(); }
@@ -2028,7 +2153,7 @@ async function openFiles(files, mode, meta) {
       S.filePath = list.length === 1 ? meta.path || null : null; S.fileHandle = list.length === 1 ? meta.handle || null : null;
       if (S.filePath) addRecent(S.filePath);
       S.undo = []; S.redo = []; S.sel.clear(); S.selAnn = null; S.cur = 0; S.dirty = false; S.sample = false;
-      textCache.clear(); OCR.cache.clear(); fieldCache.clear(); linkCache.clear(); S.search = { q: '', hits: [], i: -1 }; $('#q').value = ''; updSearchUi();
+      textCache.clear(); OCR.cache.clear(); fieldCache.clear(); linkCache.clear(); imgBoxCache.clear(); CMT.orig.clear(); S.search = { q: '', hits: [], i: -1 }; $('#q').value = ''; updSearchUi();
       $('#note').hidden = true; $('#ocrNote').hidden = true;
       setTimeout(() => ocrHint().catch(() => {}), 300);
     } else { S.dirty = true; }
@@ -2300,7 +2425,7 @@ async function loadSample() {
   const di = await loadPdfBytes(bytes, T('合同示例.pdf'));
   S.pages = await pagesFromDoc(di);
   S.fileName = T('合同示例.pdf'); S.sample = true; S.dirty = false; S.filePath = null; S.fileHandle = null;
-  S.undo = []; S.redo = []; S.sel.clear(); S.selAnn = null; S.cur = 0; textCache.clear(); OCR.cache.clear(); fieldCache.clear(); linkCache.clear(); updUndo();
+  S.undo = []; S.redo = []; S.sel.clear(); S.selAnn = null; S.cur = 0; textCache.clear(); OCR.cache.clear(); fieldCache.clear(); linkCache.clear(); imgBoxCache.clear(); CMT.orig.clear(); updUndo();
   $('#note').hidden = false;
   renderAll(); buildOutline(); fitWidth();
 }
@@ -2586,7 +2711,8 @@ function outlineList(di, items, depth) {
 }
 function sideTab(t) {
   $$('#stabs button').forEach(b => b.classList.toggle('on', b.dataset.st === t));
-  $('#thumbs').hidden = t !== 'thumbs'; $('#pageOps').hidden = t !== 'thumbs'; $('#outline').hidden = t !== 'outline';
+  $('#thumbs').hidden = t !== 'thumbs'; $('#pageOps').hidden = t !== 'thumbs'; $('#outline').hidden = t !== 'outline'; $('#cmts').hidden = t !== 'cmts';
+  if (t === 'cmts') renderCmts();
 }
 function fitPage() {
   const desk = $('#desk'), p = S.pages[S.cur]; if (!p) return;
@@ -2624,7 +2750,7 @@ function convOpts() {
   $('#cvOpts').hidden = false;
   $('#cvFmtF').hidden = $('#cvDpiF').hidden = v !== 'img';
   $('#cvRF').hidden = v === 'zip' || v === 'fromimg'; $('#cvLvlF').hidden = v !== 'zip';
-  $('#cvLock').hidden = v !== 'lock'; $('#cvCleanF').hidden = v !== 'fromimg';
+  $('#cvLock').hidden = v !== 'lock'; $('#cvCleanF').hidden = v !== 'fromimg'; $('#cvOneF').hidden = v !== 'xlsx';
   $('#cvClean').checked = LS.get('pdfed.imgClean') === '1';
   $('#cvGo').textContent = v === 'fromimg' ? T('选择图片') : v === 'ocr' ? T('开始识别') : v === 'lock' ? T('加密并保存') : T('开始转换');
   if (v === 'lock') { lockUi(); setTimeout(() => $('#lkPw').focus(), 30); }
@@ -2793,6 +2919,12 @@ async function convGo() {
     const pages = [];
     for (let k = 0; k < idx.length; k++) { busy(true, T('正在转换… {i}/{n}', { i: k + 1, n: idx.length })); pages.push(await pageLines(S.pages[idx[k]])); }
     if (!pages.some(p => p.length)) { busy(false); toast(T('这些页面读不到文字，可能是扫描件')); return; }
+    if (kind === 'xlsx') {
+      const sheets = pages.map((ls, k) => ({ name: T('第{n}页', { n: idx[k] + 1 }), rows: pageGrid(ls) })).filter(sh => sh.rows.length);
+      const one = $('#cvOneSheet').checked && sheets.length > 1 ? [{ name: stem().slice(0, 31), rows: sheets.flatMap((sh, k) => k ? [[], ...sh.rows] : sh.rows) }] : sheets;
+      const blob = await makeXlsx(one);
+      busy(false); await saveFile(stem() + '.xlsx', blob); return;
+    }
     if (kind === 'txt') {
       const txt = '﻿' + pages.map(ls => ls.map(l => l.text).join('\r\n')).join('\r\n\r\n');
       busy(false); await saveFile(stem() + '.txt', new Blob([txt], { type: 'text/plain;charset=utf-8' })); return;
@@ -2897,7 +3029,10 @@ function ascentRatio() {
 }
 async function editOriginal(el, p, pt, quiet) {
   if (p.blank) return;
-  const items = await getItems(p), r = runAt(p, items, pt);
+  const items = await getItems(p);
+  if (S.opts.edPara !== false) { const pr = paraAt(p, items, pt); if (pr) { editPara(el, p, pr); return; } }
+  const r = runAt(p, items, pt);
+  if (!r) { await imgBoxes(p); const ib = imgBoxAt(p, pt); if (ib) { imgMenu(el, p, ib); return; } }
   if (!r) { if (!quiet) toast(T('这里没有可修改的文字。扫描件的文字是图片，可以用「遮盖」再用「文字」重写')); return; }
   const col = sampleColors(el, r.box), size = Math.round(r.fh * 10) / 10, g = uid();
   const before = snap();
@@ -2912,7 +3047,9 @@ function onHoverEdit(e, el) {
   const p = pageById(el.dataset.id); if (!p || p.blank) return;
   const items = textCache.get(p.doc + ':' + p.idx);
   if (!items) { getItems(p); return; }
-  const pt = ptOf(e, el), onAnn = hitAnn(p, pt), r = onAnn ? null : runAt(p, items, pt);
+  const pt = ptOf(e, el), onAnn = hitAnn(p, pt);
+  let r = onAnn ? null : (S.opts.edPara !== false && paraAt(p, items, pt)) || runAt(p, items, pt);
+  if (!r && !onAnn) { const ib = imgBoxAt(p, pt); if (ib) r = { box: ib }; }
   const prev = S.hover, next = r ? { pid: p.id, box: r.box } : null;
   if (JSON.stringify(prev) === JSON.stringify(next)) return;
   S.hover = next;
@@ -2966,12 +3103,12 @@ function onDown(e, el) {
   if (e.button !== undefined && e.button !== 0) return;
   const p = pageById(el.dataset.id); if (!p) return;
   const pt = ptOf(e, el), tool = S.tool, wasEditing = !!ED;
-  closeEditor();
+  closeEditor(); closeImgMenu();
   if (tool === 'select') {
     const sa = S.selAnn && S.selAnn.pid === p.id ? p.ann.find(a => a.id === S.selAnn.aid) : null;
     if (sa && onHandle(sa, pt)) { startDrag('resize', el, p, sa, pt, e); return; }
     const a = hitAnn(p, pt);
-    if (a) { select(p.id, a.id); startDrag('move', el, p, a, pt, e); }
+    if (a) { select(p.id, a.id); startDrag('move', el, p, a, pt, e); if (a.t === 'note') focusNote(a); }
     else {
       const f = fieldAt(p, pt);
       if (f) { fillField(el, p, f); return; }
@@ -2998,6 +3135,11 @@ function onDown(e, el) {
     editOriginal(el, p, pt, wasEditing);
     return;
   }
+  if (tool === 'note') {
+    const a = { id: uid(), t: 'note', x: clamp(pt.x - 4, 0, p.W - 18), y: clamp(pt.y - 16, 0, p.H - 18), text: '', au: noteAuthor(), d: Date.now(), rep: [] };
+    addAnn(p, a, () => { setTool('select'); select(p.id, a.id); focusNote(a); });
+    return;
+  }
   if (tool === 'date') {
     const s = S.opts.size;
     addAnn(p, { id: uid(), t: 'text', x: pt.x, y: pt.y - s * 0.7, text: todayStr(), size: s, c: S.opts.color }, () => setTool('select'));
@@ -3012,7 +3154,7 @@ function onDown(e, el) {
     if (!S.armed) { if (tool === 'image') $('#fImg').click(); else openLib(tool); return; }
     const im = imgs.get(S.armed.k); if (!im) return;
     const w = S.armed.w, h = w * im.h / im.w;
-    const a = { id: uid(), t: 'img', k: S.armed.k, x: clamp(pt.x - w / 2, 0, Math.max(0, p.W - w)), y: clamp(pt.y - h / 2, 0, Math.max(0, p.H - h)), w, h, op: 1 };
+    const a = { id: uid(), t: 'img', k: S.armed.k, ik: S.armed.kind, x: clamp(pt.x - w / 2, 0, Math.max(0, p.W - w)), y: clamp(pt.y - h / 2, 0, Math.max(0, p.H - h)), w, h, op: 1 };
     S.armed = null;
     addAnn(p, a, () => setTool('select'));
     return;
@@ -3025,6 +3167,7 @@ function onDown(e, el) {
   else if (tool === 'white') a = { id: uid(), t: 'rect', x: pt.x, y: pt.y, w: 0, h: 0, c: null, sw: 0, f: '#ffffff' };
   else if (tool === 'redact') a = { id: uid(), t: 'rect', x: pt.x, y: pt.y, w: 0, h: 0, c: null, sw: 0, f: '#000000', rd: true };
   else if (tool === 'pen') a = { id: uid(), t: 'ink', pts: [[pt.x, pt.y]], c: S.opts.color, sw: S.opts.sw };
+  else if (tool === 'field') a = { id: uid(), t: 'fld', k: S.opts.fk || 'text', x: pt.x, y: pt.y, w: 0, h: 0, name: '' };
   else return;
   S.draft = { pid: p.id, a };
   D = { type: 'draw', pid: p.id, sx: pt.x, sy: pt.y, before: snap(), el };
@@ -3038,10 +3181,29 @@ function fillField(el, p, f) {
     const a = { id: uid(), t: 'check', x: f.x + (f.w - s) / 2, y: f.y + (f.h - s) / 2, s, c: S.opts.color, m: 'v', fk: f.id };
     p.ann.push(a); commit(b); select(p.id, a.id); return;
   }
+  if (f.kind === 'choice') { pickChoice(el, p, f, b); return; }
   const size = clamp(Math.round(f.h * 0.62), 8, 16);
   const a = { id: uid(), t: 'text', x: f.x + 2, y: f.multi ? f.y + 2 : f.y + (f.h - size * LH) / 2, text: '', size, c: S.opts.color, fk: f.id };
   p.ann.push(a); S.selAnn = { pid: p.id, aid: a.id };
   openEditor(el, p, a, true, b);
+}
+// PDF 自带的下拉选单：选一项，写进栏位
+function pickChoice(el, p, f, b) {
+  closeImgMenu();
+  const m = document.createElement('div'); m.className = 'imgMenu choice';
+  m.style.left = f.x * S.zoom + 'px'; m.style.top = (f.y + f.h) * S.zoom + 2 + 'px'; m.style.minWidth = f.w * S.zoom + 'px';
+  for (const o of f.opts) {
+    const bt = document.createElement('button'); bt.type = 'button'; bt.textContent = o;
+    bt.onclick = () => {
+      closeImgMenu();
+      const size = clamp(Math.round(f.h * 0.62), 8, 16);
+      const a = { id: uid(), t: 'text', x: f.x + 2, y: f.y + (f.h - size * LH) / 2, text: o, size, c: S.opts.color, fk: f.id };
+      p.ann.push(a); commit(b); select(p.id, a.id);
+    };
+    m.appendChild(bt);
+  }
+  m.addEventListener('pointerdown', e => e.stopPropagation());
+  el.appendChild(m);
 }
 function onMove(e, el) {
   if (!D || D.el !== el) return;
@@ -3062,7 +3224,9 @@ function onMove(e, el) {
     else { a.x = o.x + dx; a.y = o.y + dy; }
   } else if (D.type === 'resize') {
     if (a.t === 'img') { a.w = Math.max(12, pt.x - o.x); a.h = a.w * o.h / o.w; }
-    else if (a.t === 'rect' || a.t === 'hl') { a.w = Math.max(4, pt.x - o.x); a.h = Math.max(4, pt.y - o.y); }
+    else if (a.t === 'rect' || a.t === 'hl' || (a.t === 'fld' && a.k !== 'check')) { a.w = Math.max(4, pt.x - o.x); a.h = Math.max(4, pt.y - o.y); }
+    else if (a.t === 'fld') a.w = a.h = Math.max(8, Math.max(pt.x - o.x, pt.y - o.y));
+    else if (a.t === 'text' && a.wrap) a.wrap = Math.max(a.size * 2, pt.x - o.x);
     else if (a.t === 'text') { const b0 = bbox(o); a.size = clamp(Math.round(o.size * Math.max(0.3, (pt.y - o.y) / b0.h) * 2) / 2, 4, 200); }
     else if (a.t === 'check') a.s = Math.max(8, Math.max(pt.x - o.x, pt.y - o.y));
   }
@@ -3074,6 +3238,12 @@ function onUp(e, el) {
   const p = pageById(d.pid);
   if (d.type === 'draw' && S.draft) {
     const a = S.draft.a; S.draft = null;
+    if (a.t === 'fld') {
+      const [dw, dh] = FLD_DEF[a.k] || FLD_DEF.text;
+      if (a.w < 6 || a.h < 6) { a.w = dw; a.h = dh; a.y -= dh / 2; }
+      if (a.k === 'check') a.w = a.h = Math.min(Math.max(a.w, a.h), 24);
+      a.name = fldName(); if (a.k === 'drop') a.opts = [];
+    }
     const ok = a.t === 'ink' || (a.w > 3 && a.h > 3);
     if (ok && p) { p.ann.push(a); S.selAnn = { pid: p.id, aid: a.id }; if (a.rd && !S.rdTold) { S.rdTold = true; toast(T('涂黑所在的页导出后会变成图片，原文字被彻底移除')); } }
   }
@@ -3093,12 +3263,14 @@ function openEditor(el, p, a, isNew, before, grp) {
   redrawPage(el);
   const ta = document.createElement('textarea');
   ta.className = 'ed'; ta.value = a.text; ta.spellcheck = false; ta.rows = 1;
-  Object.assign(ta.style, { left: a.x * S.zoom + 'px', top: a.y * S.zoom + 'px', fontSize: a.size * S.zoom + 'px', color: a.c, fontFamily: fontOf(a) });
+  Object.assign(ta.style, { left: a.x * S.zoom + 'px', top: a.y * S.zoom + 'px', fontSize: a.size * S.zoom + 'px', color: a.c, fontFamily: fontOf(a), lineHeight: String(lhOf(a)) });
+  if (a.wrap) Object.assign(ta.style, { whiteSpace: 'pre-wrap', overflowWrap: 'break-word', background: 'rgba(255,255,255,.92)' });
   el.appendChild(ta);
   const fit = () => {
+    if (a.wrap) { const n = wrapLines({ ...a, text: ta.value }).length; ta.style.width = (a.wrap + a.size * 0.8) * S.zoom + 'px'; ta.style.height = Math.max(1, n) * a.size * S.zoom * lhOf(a) + a.size * S.zoom + 'px'; return; }
     const lines = ta.value.split('\n'); mctx.font = `${a.size * S.zoom}px ${fontOf(a)}`;
     let w = 0; for (const l of lines) w = Math.max(w, mctx.measureText(l).width);
-    ta.style.width = Math.max(48, w + 14) + 'px'; ta.style.height = lines.length * a.size * S.zoom * LH + 2 + 'px';
+    ta.style.width = Math.max(48, w + 14) + 'px'; ta.style.height = lines.length * a.size * S.zoom * lhOf(a) + 2 + 'px';
   };
   fit();
   ED = { pid: p.id, aid: a.id, ta, isNew, before: before || snap(), t0: performance.now(), grp: grp || null };
@@ -3135,7 +3307,7 @@ function setTool(t) {
   if (t === 'seam') { openSeam(); return; }
   if (t === 'pgno') { openPgno(); return; }
   if (t === 'wm') { openWm(); return; }
-  closeEditor();
+  closeEditor(); closeImgMenu();
   S.tool = t; S.hover = null;
   if (!['sign', 'stamp', 'image'].includes(t)) S.armed = null;
   $('#desk').dataset.tool = t;
@@ -3150,16 +3322,20 @@ function setTool(t) {
 /* ----- 属性栏 ----- */
 const HINTS = {
   text: '点击页面输入文字；双击已有文字可修改',
-  edit: '点击文件里原有的文字直接修改，点空白处完成；把文字清空就是删除这段原文字', date: '点击页面插入今天的日期', check: '点击页面添加勾选',
+  edit: '点击原有的文字直接修改，点空白处完成；点图片可以换掉或删掉', date: '点击页面插入今天的日期', check: '点击页面添加勾选',
   sign: '点击页面放置签名，拖动右下角可缩放', stamp: '点击页面放置印章，拖动右下角可缩放', image: '点击页面放置图片',
   hl: '在页面上拖动，框出要高亮的位置', pen: '按住拖动，手写', rect: '拖动画出方框', white: '拖动盖住原有内容，再用「文字」写新内容',
-  redact: '拖动框住要涂黑的内容。导出时，涂黑所在的页会变成图片，下面的文字会被彻底移除'
+  redact: '拖动框住要涂黑的内容。导出时，涂黑所在的页会变成图片，下面的文字会被彻底移除',
+  field: '先选栏位种类，再在页面上拖出栏位（点一下用默认大小）。保存后别人可以用任何 PDF 软件填写',
+  note: '点击页面贴一张便签，在左边「批注」写内容和回复'
 };
 function selAnnObj() { return S.selAnn ? findAnn(S.selAnn) : null; }
 function refreshProps() {
   const a = selAnnObj(), tool = S.tool;
-  const kind = a ? (a.t === 'rect' && a.f ? 'white' : a.t) : ({ text: 'text', date: 'text', check: 'check', pen: 'ink', rect: 'rect', hl: 'hl' })[tool] || '';
+  const kind = a ? (a.t === 'rect' && a.f ? 'white' : a.t) : ({ text: 'text', date: 'text', check: 'check', pen: 'ink', rect: 'rect', hl: 'hl', field: 'fld' })[tool] || '';
   const show = (id, on) => { $(id).hidden = !on; };
+  show('#gFld', kind === 'fld'); if (kind === 'fld') fldProps(a && a.t === 'fld' ? a : null);
+  show('#gEd', !a && tool === 'edit'); $$('#gEd button').forEach(b => b.classList.toggle('on', (b.dataset.v === 'para') === (S.opts.edPara !== false)));
   const colorOn = ['text', 'check', 'ink', 'rect', 'hl'].includes(kind);
   show('#gColor', colorOn);
   show('#gSize', kind === 'text' || kind === 'check');
@@ -3169,7 +3345,7 @@ function refreshProps() {
   show('#gAct', !!a);
   const hint = a ? '' : T(HINTS[tool] || '');
   $('#hint').textContent = hint;
-  const any = colorOn || kind === 'img' || !!a || !!hint;
+  const any = colorOn || kind === 'img' || kind === 'fld' || !!a || !!hint;
   $('#props').hidden = !any;
   if (colorOn) {
     const pal = kind === 'hl' ? HLC : INK, cur = a ? a.c : (kind === 'hl' ? S.opts.hl : S.opts.color);
@@ -3227,7 +3403,7 @@ function delSel() {
 }
 
 /* ----- 键盘 ----- */
-const KEYS = { v: 'select', e: 'edit', t: 'text', d: 'date', c: 'check', s: 'sign', m: 'stamp', i: 'image', h: 'hl', p: 'pen', r: 'rect', w: 'white', x: 'redact' };
+const KEYS = { v: 'select', e: 'edit', t: 'text', d: 'date', c: 'check', s: 'sign', m: 'stamp', i: 'image', h: 'hl', p: 'pen', r: 'rect', w: 'white', x: 'redact', f: 'field', n: 'note' };
 function setupKeys() {
   document.addEventListener('keydown', e => {
     const tg = e.target && e.target.tagName;
@@ -3765,7 +3941,7 @@ function gotoHit(i) {
 function overlayPng(p, sc) {
   return new Promise((res, rej) => {
     const c = document.createElement('canvas'); c.width = Math.round(p.W * sc); c.height = Math.round(p.H * sc);
-    const ctx = c.getContext('2d'); ctx.setTransform(sc, 0, 0, sc, 0, 0); drawAnns(ctx, p.ann);
+    const ctx = c.getContext('2d'); ctx.setTransform(sc, 0, 0, sc, 0, 0); drawAnns(ctx, inkAnns(p.ann));
     c.toBlob(async b => { if (!b) rej(new Error(T('无法生成图层'))); else res(new Uint8Array(await b.arrayBuffer())); }, 'image/png');
   });
 }
@@ -3777,7 +3953,7 @@ async function flattenPage(p, maxSc, type) {
     const pg = await S.docs[p.doc].pdf.getPage(p.idx + 1);
     await pg.render({ canvasContext: ctx, viewport: pg.getViewport({ scale: sc, rotation: totalRot(p) }) }).promise;
   }
-  ctx.setTransform(sc, 0, 0, sc, 0, 0); drawAnns(ctx, p.ann);
+  ctx.setTransform(sc, 0, 0, sc, 0, 0); drawAnns(ctx, inkAnns(p.ann));
   return new Promise((res, rej) => c.toBlob(async b => { if (!b) rej(new Error(T('无法生成页面图片'))); else res(new Uint8Array(await b.arrayBuffer())); }, type || 'image/jpeg', 0.92));
 }
 /* 拆分 / 提取时只带上这一页真正用到的字体和图片。
@@ -3850,18 +4026,20 @@ async function buildPdf(pages, onProg) {
     const cps = await out.copyPages(src, idxs);
     js.forEach((j, k) => { copies[j] = cps[k]; });
   }
-  let n = 0;
+  let n = 0, hasForm = false;
   for (let j = 0; j < pages.length; j++) {
     const p = pages[j];
     if (flat(p)) {
-      const jpg = await out.embedJpg(await flattenPage(p));
-      out.addPage([p.W, p.H]).drawImage(jpg, { x: 0, y: 0, width: p.W, height: p.H });
+      const jpg = await out.embedJpg(await flattenPage(p)), fp = out.addPage([p.W, p.H]);
+      fp.drawImage(jpg, { x: 0, y: 0, width: p.W, height: p.H });
+      if (p.ann.some(liveAnn) && await addLive(out, fp, p, true)) hasForm = true;
       if (onProg) onProg(++n, pages.length);
       continue;
     }
     const page = p.blank ? out.addPage([p.vb[2] - p.vb[0], p.vb[3] - p.vb[1]]) : out.addPage(copies[j]);
     const r = totalRot(p); page.setRotation(degrees(r));
-    if (p.ann.length) {
+    if (p.ann.some(liveAnn) && await addLive(out, page, p, false)) hasForm = true;
+    if (inkAnns(p.ann).length) {
       const sc = Math.min(3, Math.sqrt(2.2e7 / (p.W * p.H)));
       const img = await out.embedPng(await overlayPng(p, sc));
       const w = p.vb[2] - p.vb[0], h = p.vb[3] - p.vb[1], X = p.vb[0], Y = p.vb[1];
@@ -3873,6 +4051,11 @@ async function buildPdf(pages, onProg) {
       page.drawImage(img, o);
     }
     if (onProg) onProg(++n, pages.length);
+  }
+  if (hasForm) {
+    // 中文选项用不了内建字体：让看的软件自己画栏位
+    out.getForm().acroForm.dict.set(PDFLib.PDFName.of('NeedAppearances'), PDFLib.PDFBool.True);
+    return await out.save({ updateFieldAppearances: false });
   }
   return await out.save();
 }
@@ -4673,17 +4856,23 @@ const DASH_TOOLS = [
     ['receipt', '分收据', '一页几张收据分开', 'pink', () => dashNeedDoc(openRcpt)],
     ['cmp', '对比', '两份合同差在哪里', 'teal', () => dashNeedDoc(openCmp)]
   ] },
-  { g: '转换和压缩', c: 'orange', items: [
-    ['word', '转 Word', '保留版面和表格', 'blue', () => dashNeedDoc(() => openConvAs('docx'))],
-    ['image', '转图片', 'JPG 或 PNG', 'teal', () => dashNeedDoc(() => openConvAs('img'))],
-    ['fromimg', '图片转 PDF', '照片合成一个 PDF', 'green', () => openConvAs('fromimg')],
-    ['zip', '压缩', '把文件变小', 'orange', () => dashNeedDoc(() => openConvAs('zip'))]
+  { g: '表格和批注', c: 'blue', items: [
+    ['form', '表格栏位', '做别人能填写的表格', 'blue', () => dashNeedDoc(() => setTool('field'))],
+    ['note', '批注', '便签、回复、列表', 'amber', () => dashNeedDoc(() => { setTool('note'); sideTab('cmts'); })],
+    ['image', '换图片', '换掉或删掉 PDF 里的图', 'teal', () => dashNeedDoc(() => setTool('edit'))],
+    ['hl', '高亮', '标出重点', 'orange', () => dashNeedDoc(() => setTool('hl'))]
   ] },
-  { g: '扫描、识别和保护', c: 'green', items: [
+  { g: '转换', c: 'orange', items: [
+    ['word', '转 Word', '保留版面和表格', 'blue', () => dashNeedDoc(() => openConvAs('docx'))],
+    ['xls', '转 Excel', '表格变成试算表', 'green', () => dashNeedDoc(() => openConvAs('xlsx'))],
+    ['image', '转图片', 'JPG 或 PNG', 'teal', () => dashNeedDoc(() => openConvAs('img'))],
+    ['fromimg', '图片转 PDF', '照片合成一个 PDF', 'purple', () => openConvAs('fromimg')]
+  ] },
+  { g: '识别、加密和压缩', c: 'green', items: [
     ['ocr', '文字识别', '扫描件变成可搜索', 'green', () => dashNeedDoc(() => openConvAs('ocr'))],
     ['lock', '加密码', '打开密码、禁止打印', 'indigo', () => dashNeedDoc(() => openConvAs('lock'))],
-    ['scan', '扫描', '扫描仪直接变 PDF', 'teal', () => openScan(), true],
-    ['batch', '批量处理', '很多文件一次做', 'purple', () => openBatch()]
+    ['zip', '压缩', '把文件变小', 'orange', () => dashNeedDoc(() => openConvAs('zip'))],
+    ['scan', '扫描', '扫描仪直接变 PDF', 'teal', () => openScan(), true]
   ] }
 ];
 function fileTag(name) {
@@ -4758,7 +4947,7 @@ function setUi() {
   const mark = (id, v) => $$('#' + id + ' button').forEach(b => b.classList.toggle('on', b.dataset.v === v));
   mark('setLang', LANG); mark('setTheme', LS.get('pdfed.theme') || 'auto'); mark('setFit', LS.get('pdfed.fit') || 'width'); mark('setOcr', LS.get('pdfed.ocrLang') === 'eng' ? 'eng' : 'chi');
   $('#setRecRow').hidden = !DESK.on; $('#setRecClr').disabled = !recentList().length;
-  $('#setVer').textContent = 'v' + VERSION;
+  $('#setVer').textContent = 'v' + VERSION; $('#setAuthor').value = LS.get('pdfed.author') || '';
 }
 function openSet() { setUi(); openModal('mSet'); }
 function wireSet() {
@@ -4768,6 +4957,7 @@ function wireSet() {
   $$('#setTheme button').forEach(b => b.onclick = () => { LS.set('pdfed.theme', b.dataset.v); applyTheme(); setUi(); });
   $$('#setFit button').forEach(b => b.onclick = () => { LS.set('pdfed.fit', b.dataset.v); setUi(); });
   $$('#setOcr button').forEach(b => b.onclick = () => { LS.set('pdfed.ocrLang', b.dataset.v); setUi(); });
+  $('#setAuthor').onchange = e => { LS.set('pdfed.author', e.target.value.trim()); };
   $('#ocrGo').onclick = () => ocrAll(); $('#ocrX').onclick = () => { $('#ocrNote').hidden = true; };
   $('#lkPw').oninput = $('#lkPw2').oninput = lockUi;
   $('#setRecClr').onclick = () => { LS.set('pdfed.recent', '[]'); renderRecent(); setUi(); toast(T('已清除最近打开的文件')); };
@@ -4862,6 +5052,411 @@ function wireUpd() {
   $('#setUpd').onclick = () => updCheck(true);
   $('#setUpdRow').hidden = !DESK.on;
   if (DESK.on) setTimeout(() => updCheck(false), 4000);
+}
+
+/* ===== v3.1：表格栏位、批注、整段改字、换图片、转 Excel ===== */
+
+/* ----- 坐标：画面 → PDF 原本的坐标 ----- */
+function dispToNative(p, x, y) {
+  const [a, b, c, d, e, f] = p.vt, det = a * d - b * c || 1, X = x - e, Y = y - f;
+  return [(d * X - c * Y) / det, (-b * X + a * Y) / det];
+}
+// flat：这页保存时会变成图片（新页面就是画面方向）
+function nativeBox(p, b, flat) {
+  if (flat) return { x: b.x, y: p.H - b.y - b.h, w: b.w, h: b.h };
+  const A = dispToNative(p, b.x, b.y), B = dispToNative(p, b.x + b.w, b.y + b.h);
+  return { x: Math.min(A[0], B[0]), y: Math.min(A[1], B[1]), w: Math.abs(A[0] - B[0]), h: Math.abs(A[1] - B[1]) };
+}
+const liveAnn = a => a.t === 'fld' || a.t === 'note';     // 保存时变成真的 PDF 栏位 / 批注，不画进图层
+const inkAnns = list => list.filter(a => !liveAnn(a));
+
+/* ----- 文字自动换行（整段改字用） ----- */
+const WRAP_RE = /[⺀-鿿豈-﫿＀-￯][，。、；：！？）》」』”’,.;:!?)\]]*|[^\s⺀-鿿豈-﫿＀-￯]+\s*|\s+/g;
+function wrapLines(a) {
+  const hard = String(a.text).split('\n');
+  if (!a.wrap) return hard;
+  mctx.font = `${a.size}px ${fontOf(a)}`;
+  const out = [];
+  for (const l of hard) {
+    if (!l) { out.push(''); continue; }
+    let cur = '';
+    for (const t of l.match(WRAP_RE) || []) {
+      if (cur && mctx.measureText(cur + t.replace(/\s+$/, '')).width > a.wrap) { out.push(cur.replace(/\s+$/, '')); cur = t.replace(/^\s+/, ''); }
+      else cur += t;
+    }
+    out.push(cur.replace(/\s+$/, ''));
+  }
+  return out;
+}
+const lhOf = a => a.lh || LH;
+
+/* ----- 整段：找出点到的那一段（几行字号一样、左边对齐、行距一样） ----- */
+const segCache = new WeakMap();
+function lineSegs(p, items) {
+  const c = segCache.get(items);
+  if (c && c.vt === p.vt) return c.segs;
+  const rs = runsOf(p, items).sort((a, b) => a.base - b.base || a.x0 - b.x0), segs = [];
+  for (const r of rs) {
+    const s = segs.find(q => Math.abs(q.base - r.base) < q.fh * 0.25 && Math.abs(q.fh - r.fh) < q.fh * 0.2 && r.x0 - q.x1 < q.fh * 0.8 && r.x0 >= q.x0 - 1);
+    if (s) { s.runs.push(r); s.x1 = Math.max(s.x1, r.x1); } else segs.push({ base: r.base, fh: r.fh, x0: r.x0, x1: r.x1, runs: [r] });
+  }
+  for (const s of segs) {
+    let t = '';
+    s.runs.forEach((r, k) => {
+      if (k) { const gap = r.x0 - s.runs[k - 1].x1, a = t.slice(-1), b = r.it.str[0]; if (gap > s.fh * 0.15 && a !== ' ' && b !== ' ' && !(isCJK(a) && isCJK(b))) t += ' '; }
+      t += r.it.str;
+    });
+    s.text = t.replace(/\s+/g, ' ').trim();
+  }
+  segCache.set(items, { vt: p.vt, segs });
+  return segs;
+}
+function paraAt(p, items, pt) {
+  const segs = lineSegs(p, items);
+  const h = segs.find(s => pt.x >= s.x0 - 1 && pt.x <= s.x1 + 1 && pt.y >= s.base - s.fh * 0.95 && pt.y <= s.base + s.fh * 0.25);
+  if (!h) return null;
+  const same = s => Math.abs(s.fh - h.fh) < h.fh * 0.15;
+  const ov = (s, r) => Math.min(s.x1, r.x1) - Math.max(s.x0, r.x0) > Math.min(s.x1 - s.x0, r.x1 - r.x0) * 0.3;
+  const para = [h];
+  let gap = null;
+  const right = () => Math.max(...para.map(s => s.x1)), left = () => Math.min(...para.map(s => s.x0));
+  // 往下
+  for (let cur = h; ;) {
+    const nx = segs.filter(s => !para.includes(s) && same(s) && s.base > cur.base + cur.fh * 0.8 && s.base < cur.base + cur.fh * 2.4 && ov(s, cur) && Math.abs(s.x0 - left()) < cur.fh * 2.5).sort((a, b) => a.base - b.base)[0];
+    if (!nx) break;
+    const g = nx.base - cur.base;
+    if (gap && Math.abs(g - gap) > gap * 0.2) break;
+    if (cur.x1 < Math.max(right(), nx.x1) - cur.fh * 3) break;   // 上一行比较短：段落已经结束
+    gap = gap || g; para.push(nx); cur = nx;
+  }
+  // 往上
+  for (let cur = h; ;) {
+    const pv = segs.filter(s => !para.includes(s) && same(s) && s.base < cur.base - cur.fh * 0.8 && s.base > cur.base - cur.fh * 2.4 && ov(s, cur) && Math.abs(s.x0 - left()) < cur.fh * 2.5).sort((a, b) => b.base - a.base)[0];
+    if (!pv) break;
+    const g = cur.base - pv.base;
+    if (gap && Math.abs(g - gap) > gap * 0.2) break;
+    if (pv.x1 < right() - cur.fh * 3) break;
+    gap = gap || g; para.unshift(pv); cur = pv;
+  }
+  if (para.length < 2) return null;
+  let text = '';
+  para.forEach((s, k) => {
+    if (k) { const a = text.slice(-1), b = s.text[0]; if (a === '-' && /[a-z]/i.test(text.slice(-2, -1)) && /[a-z]/.test(b)) text = text.slice(0, -1); else if (!(isCJK(a) && isCJK(b))) text += ' '; }
+    text += s.text;
+  });
+  const x0 = left(), x1 = right(), f = para[0], l = para[para.length - 1];
+  return { text, x0, x1, base: f.base, fh: h.fh, ff: f.runs[0].it.ff, lh: clamp(gap / h.fh, 1, 2.6), box: { x: x0 - 1.5, y: f.base - f.fh, w: x1 - x0 + 3, h: l.base - f.base + f.fh * 1.32 } };
+}
+async function editPara(el, p, r) {
+  const col = sampleColors(el, r.box), size = Math.round(r.fh * 10) / 10, g = uid(), before = snap(), lh = r.lh;
+  const cover = { id: uid(), t: 'rect', x: r.box.x, y: r.box.y, w: r.box.w, h: r.box.h, c: null, sw: 0, f: col.bg, eg: g };
+  const a = { id: uid(), t: 'text', x: r.x0, y: r.base - ascentRatio() * size - size * (lh - 1) / 2, text: r.text, size, c: col.fg, eg: g, wrap: Math.round((r.x1 - r.x0 + size * 0.5) * 10) / 10, lh, ff: r.ff };
+  p.ann.push(cover, a); S.selAnn = { pid: p.id, aid: a.id }; S.hover = null;
+  openEditor(el, p, a, false, before, { orig: r.text, cover: cover.id });
+}
+
+/* ----- PDF 里的图片：找位置，点了可以换或删 ----- */
+const imgBoxCache = new Map();
+async function imgBoxes(p) {
+  if (p.blank) return [];
+  const key = p.doc + ':' + p.idx;
+  if (imgBoxCache.has(key)) return imgBoxCache.get(key);
+  const out = []; imgBoxCache.set(key, out);
+  try {
+    const pg = await S.docs[p.doc].pdf.getPage(p.idx + 1), ol = await pg.getOperatorList(), O = pdfjsLib.OPS;
+    const paint = new Set([O.paintImageXObject, O.paintInlineImageXObject, O.paintImageMaskXObject, O.paintJpegXObject].filter(v => v != null));
+    let ctm = [1, 0, 0, 1, 0, 0]; const st = [];
+    for (let i = 0; i < ol.fnArray.length; i++) {
+      const fn = ol.fnArray[i], a = ol.argsArray[i];
+      if (fn === O.save) st.push(ctm);
+      else if (fn === O.restore) ctm = st.pop() || ctm;
+      else if (fn === O.transform) ctm = mmul(ctm, a);
+      else if (fn === O.paintFormXObjectBegin) { st.push(ctm); if (a && Array.isArray(a[0]) && a[0].length === 6) ctm = mmul(ctm, a[0]); }
+      else if (fn === O.paintFormXObjectEnd) ctm = st.pop() || ctm;
+      else if (paint.has(fn)) out.push([[0, 0], [1, 0], [0, 1], [1, 1]].map(([x, y]) => [ctm[0] * x + ctm[2] * y + ctm[4], ctm[1] * x + ctm[3] * y + ctm[5]]));
+    }
+  } catch (e) { console.warn('img boxes', e); }
+  return out;
+}
+function imgBoxAt(p, pt) {
+  const raw = imgBoxCache.get(p.doc + ':' + p.idx);
+  if (!raw) { imgBoxes(p); return null; }
+  const t = p.vt;
+  let best = null;
+  for (const q of raw) {
+    const d = q.map(([x, y]) => [t[0] * x + t[2] * y + t[4], t[1] * x + t[3] * y + t[5]]);
+    const xs = d.map(v => v[0]), ys = d.map(v => v[1]), b = { x: Math.min(...xs), y: Math.min(...ys) };
+    b.w = Math.max(...xs) - b.x; b.h = Math.max(...ys) - b.y;
+    if (b.w < 8 || b.h < 8 || (b.w > p.W * 0.9 && b.h > p.H * 0.9)) continue;   // 太小，或是整页的扫描图
+    if (pt.x >= b.x && pt.x <= b.x + b.w && pt.y >= b.y && pt.y <= b.y + b.h && (!best || b.w * b.h < best.w * best.h)) best = b;
+  }
+  return best;
+}
+const IMGR = { el: null, p: null, box: null };
+function imgMenu(el, p, box) {
+  closeImgMenu();
+  IMGR.el = el; IMGR.p = p; IMGR.box = box;
+  const m = document.createElement('div'); m.className = 'imgMenu';
+  m.style.left = box.x * S.zoom + 'px'; m.style.top = (box.y + box.h) * S.zoom + 6 + 'px';
+  m.innerHTML = `<button type="button" class="btn sm primary" data-a="rep">${escHtml(T('换一张图片'))}</button><button type="button" class="btn sm" data-a="del">${escHtml(T('删掉这张图片'))}</button>`;
+  m.querySelector('[data-a=rep]').onclick = () => $('#fImgRep').click();
+  m.querySelector('[data-a=del]').onclick = () => imgCover(null);
+  m.addEventListener('pointerdown', e => e.stopPropagation());
+  el.appendChild(m);
+}
+function closeImgMenu() { $$('.imgMenu').forEach(m => m.remove()); }
+async function imgCover(file) {
+  const { el, p, box } = IMGR; closeImgMenu(); S.hover = null;
+  if (!p || !box) return;
+  const before = snap(), bg = sampleColors(el, { x: box.x - 3, y: box.y - 3, w: box.w + 6, h: box.h + 6 }).bg;
+  const cover = { id: uid(), t: 'rect', x: box.x, y: box.y, w: box.w, h: box.h, c: null, sw: 0, f: bg };
+  p.ann.push(cover);
+  if (file) {
+    try {
+      const c = toCanvas(await loadImageFile(file), 2000), url = c.toDataURL(/png|gif|webp/i.test(file.type) ? 'image/png' : 'image/jpeg', 0.92), k = await addImage(url), im = imgs.get(k);
+      const s = Math.min(box.w / im.w, box.h / im.h), w = im.w * s, h = im.h * s;
+      const a = { id: uid(), t: 'img', k, x: box.x + (box.w - w) / 2, y: box.y + (box.h - h) / 2, w, h, op: 1 };
+      p.ann.push(a); S.selAnn = { pid: p.id, aid: a.id };
+    } catch (e) { p.ann.pop(); toast(e.message || String(e)); return; }
+  }
+  commit(before); redrawById(p.id); refreshProps();
+  toast(file ? T('已换图片。可以拖动或缩放新图片') : T('已删掉这张图片'));
+}
+
+/* ----- 表格栏位：在 PDF 上做可以填写的栏位 ----- */
+const FLD_DEF = { text: [160, 22], multi: [220, 64], check: [14, 14], drop: [140, 22] };
+const FLD_LBL = { text: '文字栏', multi: '多行文字栏', check: '勾选框', drop: '下拉选单' };
+function fldName() {
+  const used = new Set(S.pages.flatMap(p => p.ann.filter(a => a.t === 'fld').map(a => a.name)));
+  for (let i = 1; ; i++) { const n = T('栏位') + i; if (!used.has(n)) return n; }
+}
+function drawFld(ctx, a) {
+  ctx.save();
+  ctx.fillStyle = 'rgba(36,110,255,.10)'; ctx.strokeStyle = 'rgba(36,90,200,.85)'; ctx.lineWidth = 1;
+  ctx.fillRect(a.x, a.y, a.w, a.h); ctx.strokeRect(a.x, a.y, a.w, a.h);
+  if (a.k === 'check') { ctx.restore(); return; }
+  if (a.k === 'drop') { const s = Math.min(a.h * 0.35, 6), cx = a.x + a.w - s * 1.8, cy = a.y + a.h / 2; ctx.fillStyle = 'rgba(36,90,200,.85)'; ctx.beginPath(); ctx.moveTo(cx - s, cy - s / 2); ctx.lineTo(cx + s, cy - s / 2); ctx.lineTo(cx, cy + s / 2); ctx.fill(); }
+  const fs = clamp(a.h * 0.42, 6, 10);
+  ctx.fillStyle = 'rgba(36,90,200,.9)'; ctx.font = `${fs}px ${FONT}`; ctx.textBaseline = 'middle';
+  ctx.beginPath(); ctx.rect(a.x, a.y, a.w - (a.k === 'drop' ? fs * 2 : 0), a.h); ctx.clip();
+  ctx.fillText(a.name || '', a.x + 3, a.k === 'multi' ? a.y + fs * 0.9 : a.y + a.h / 2);
+  ctx.restore();
+}
+function drawNote(ctx, a) {
+  const s = 18;
+  ctx.save();
+  ctx.fillStyle = '#ffd43b'; ctx.strokeStyle = '#a07800'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(a.x + 3, a.y); ctx.lineTo(a.x + s - 3, a.y); ctx.quadraticCurveTo(a.x + s, a.y, a.x + s, a.y + 3); ctx.lineTo(a.x + s, a.y + s * 0.7);
+  ctx.quadraticCurveTo(a.x + s, a.y + s * 0.7 + 3, a.x + s - 3, a.y + s * 0.7 + 3); ctx.lineTo(a.x + 8, a.y + s * 0.7 + 3); ctx.lineTo(a.x + 4, a.y + s); ctx.lineTo(a.x + 5, a.y + s * 0.7 + 3);
+  ctx.lineTo(a.x + 3, a.y + s * 0.7 + 3); ctx.quadraticCurveTo(a.x, a.y + s * 0.7 + 3, a.x, a.y + s * 0.7); ctx.lineTo(a.x, a.y + 3); ctx.quadraticCurveTo(a.x, a.y, a.x + 3, a.y); ctx.fill(); ctx.stroke();
+  ctx.strokeStyle = '#7a5b00'; ctx.beginPath(); for (const k of [0.25, 0.42]) { ctx.moveTo(a.x + 4, a.y + s * k); ctx.lineTo(a.x + s - 4, a.y + s * k); } ctx.stroke();
+  ctx.restore();
+}
+function fldProps(a) {
+  $('#fdKind').value = a ? a.k : (S.opts.fk || 'text');
+  $('#fdName').value = a ? a.name || '' : '';
+  $('#fdNameW').hidden = !a;
+  const drop = (a ? a.k : S.opts.fk) === 'drop';
+  $('#fdOptW').hidden = !a || !drop;
+  if (a && drop) $('#fdOpt').value = (a.opts || []).join(', ');
+}
+function wireFld() {
+  $('#fdKind').onchange = e => { const v = e.target.value; S.opts.fk = v; const a = selAnnObj(); if (a && a.t === 'fld') modSel(x => { x.k = v; if (v === 'check') { x.w = x.h = Math.min(x.w, x.h, 18); } else if (x.h < 14) { x.w = FLD_DEF[v][0]; x.h = FLD_DEF[v][1]; } if (v === 'drop' && !x.opts) x.opts = []; }); refreshProps(); };
+  $('#fdName').onchange = e => { const v = e.target.value.trim(); if (!v) { refreshProps(); return; } if (S.pages.some(p => p.ann.some(a => a.t === 'fld' && a.name === v && a.id !== (S.selAnn || {}).aid))) { toast(T('已经有同名的栏位')); refreshProps(); return; } modSel(x => { x.name = v; }); };
+  $('#fdOpt').onchange = e => modSel(x => { x.opts = e.target.value.split(/[,，\n]/).map(s => s.trim()).filter(Boolean); });
+}
+// 保存：把栏位和批注变成真的 PDF 栏位 / 批注
+async function addLive(out, page, p, flat) {
+  const { PDFName, PDFString, PDFHexString, PDFNumber, degrees, rgb } = PDFLib;
+  const r = flat ? 0 : totalRot(p), ctx = out.context;
+  let form = null;
+  for (const a of p.ann) {
+    if (a.t === 'fld') {
+      form = form || out.getForm();
+      const b = nativeBox(p, a, flat), o = { x: b.x, y: b.y, width: b.w, height: b.h, borderWidth: 0.8, borderColor: rgb(0.55, 0.62, 0.78), backgroundColor: rgb(0.94, 0.96, 1), rotate: degrees(r) };
+      let name = a.name || fldName(), n = 2;
+      while (form.getFieldMaybe(name)) name = (a.name || 'Field') + '_' + n++;
+      try {
+        if (a.k === 'check') form.createCheckBox(name).addToPage(page, o);
+        else if (a.k === 'drop') {
+          const f = form.createDropdown(name), opts = (a.opts || []).filter(Boolean);
+          if (opts.length) f.setOptions(opts);
+          f.addToPage(page, o);
+        } else {
+          const f = form.createTextField(name);
+          if (a.k === 'multi') f.enableMultiline();
+          f.addToPage(page, o);
+        }
+      } catch (e) { console.warn('field', e); }
+    } else if (a.t === 'note') {
+      const au = a.au || noteAuthor(), b = nativeBox(p, { x: a.x, y: a.y, w: 18, h: 18 }, flat);
+      const mk = (text, who, when, irt) => {
+        const d = ctx.obj({ Type: 'Annot', Subtype: 'Text', Rect: [b.x, b.y, b.x + b.w, b.y + b.h], Name: 'Comment', F: 28, C: [1, 0.83, 0.23], Open: false });
+        d.set(PDFName.of('Contents'), PDFHexString.fromText(text || ''));
+        d.set(PDFName.of('T'), PDFHexString.fromText(who || ''));
+        d.set(PDFName.of('M'), PDFString.fromDate(new Date(when || Date.now())));
+        if (irt) { d.set(PDFName.of('IRT'), irt); d.set(PDFName.of('RT'), PDFName.of('R')); }
+        const ref = ctx.register(d); page.node.addAnnot(ref); return ref;
+      };
+      const ref = mk(a.text, au, a.d);
+      for (const rp of a.rep || []) mk(rp.text, rp.au, rp.d, ref);
+      void PDFNumber;
+    }
+  }
+  return !!form;
+}
+
+/* ----- 批注列表（左边「批注」） ----- */
+const ANN_LBL = { text: '文字', check: '勾选', img: '图片', hl: '高亮', ink: '画笔', rect: '方框', fld: '表格栏位', note: '便签', wm: '水印' };
+const ANN_IC = { text: 'text', check: 'check', img: 'image', hl: 'hl', ink: 'pen', rect: 'rect', fld: 'form', note: 'note', wm: 'wm' };
+function noteAuthor() { return LS.get('pdfed.author') || T('我'); }
+const CMT = { orig: new Map(), t: null };
+function annLabel(a) {
+  if (a.t === 'rect') return a.rd ? '涂黑' : a.f ? '遮盖' : '方框';
+  if (a.t === 'img') return a.ik === 'stamp' ? '印章' : a.ik === 'sign' ? '签名' : '图片';
+  return ANN_LBL[a.t] || a.t;
+}
+async function loadOrigCmts(p) {
+  const key = p.doc + ':' + p.idx;
+  if (p.blank || CMT.orig.has(key)) return;
+  CMT.orig.set(key, []);
+  try {
+    const pg = await S.docs[p.doc].pdf.getPage(p.idx + 1), an = await pg.getAnnotations({ intent: 'display' });
+    const list = an.filter(a => ['Text', 'FreeText', 'Highlight', 'Underline', 'StrikeOut', 'Squiggly', 'Square', 'Circle', 'Ink', 'Stamp', 'Polygon', 'Line'].includes(a.subtype) && !a.inReplyTo)
+      .map(a => ({ id: a.id, sub: a.subtype, text: (a.contentsObj && a.contentsObj.str) || a.contents || '', au: (a.titleObj && a.titleObj.str) || a.title || '', r: a.rect, reps: an.filter(x => x.inReplyTo === a.id).map(x => ({ text: (x.contentsObj && x.contentsObj.str) || '', au: (x.titleObj && x.titleObj.str) || '' })) }))
+      .filter(a => a.text || a.sub !== 'Text');
+    CMT.orig.set(key, list);
+  } catch (e) { console.warn(e); }
+}
+function cmtSoon() { clearTimeout(CMT.t); CMT.t = setTimeout(() => { if (!$('#cmts').hidden) renderCmts(); }, 120); }
+async function renderCmts() {
+  const host = $('#cmtList'); if (!host) return;
+  await Promise.all(S.pages.map(loadOrigCmts));
+  const focus = document.activeElement && host.contains(document.activeElement) ? document.activeElement.dataset.key : null;
+  host.textContent = '';
+  let n = 0;
+  S.pages.forEach((p, pi) => {
+    const mine = p.ann.filter(a => a.t !== 'wm' && !a.eg), orig = CMT.orig.get(p.doc + ':' + p.idx) || [];
+    if (!mine.length && !orig.length) return;
+    const h = document.createElement('div'); h.className = 'cmH'; h.textContent = T('第 {n} 页', { n: pi + 1 }); host.appendChild(h);
+    for (const a of mine) {
+      n++;
+      const row = document.createElement('div'); row.className = 'cm' + (S.selAnn && S.selAnn.aid === a.id ? ' on' : '');
+      const snip = a.t === 'text' ? a.text : a.t === 'fld' ? (a.name || '') + ' · ' + T(FLD_LBL[a.k] || '') : '';
+      row.innerHTML = `<div class="cmTop"><span class="cmIc">${icon(ANN_IC[a.t] || 'rect')}</span><b></b><span class="cmS"></span><button type="button" class="cmX" title="${escHtml(T('删除'))}" aria-label="${escHtml(T('删除'))}">×</button></div>`;
+      row.querySelector('b').textContent = T(annLabel(a)); row.querySelector('.cmS').textContent = snip.replace(/\s+/g, ' ').slice(0, 60);
+      row.querySelector('.cmTop').onclick = e => { if (e.target.closest('.cmX')) return; setTool('select'); goAnn(p, a); };
+      row.querySelector('.cmX').onclick = () => { const b = snap(); p.ann = p.ann.filter(x => x !== a && !(a.eg && x.eg === a.eg)); if (S.selAnn && S.selAnn.aid === a.id) S.selAnn = null; commit(b); redrawById(p.id); refreshProps(); renderCmts(); };
+      if (a.t === 'note') {
+        const meta = document.createElement('div'); meta.className = 'cmM'; meta.textContent = (a.au || noteAuthor()) + ' · ' + fmtWhen(a.d); row.appendChild(meta);
+        const ta = document.createElement('textarea'); ta.className = 'cmT'; ta.rows = 2; ta.value = a.text || ''; ta.placeholder = T('写下批注…'); ta.dataset.key = a.id;
+        ta.onchange = () => { const b = snap(); a.text = ta.value; commit(b); };
+        row.appendChild(ta);
+        for (const [ri, rp] of (a.rep || []).entries()) {
+          const r = document.createElement('div'); r.className = 'cmR';
+          r.innerHTML = '<b></b><span></span><button type="button" class="cmX" aria-label="×">×</button>';
+          r.querySelector('b').textContent = (rp.au || '') + '：'; r.querySelector('span').textContent = rp.text;
+          r.querySelector('.cmX').onclick = () => { const b = snap(); a.rep.splice(ri, 1); commit(b); renderCmts(); };
+          row.appendChild(r);
+        }
+        const rr = document.createElement('div'); rr.className = 'cmRe';
+        rr.innerHTML = `<input type="text" data-key="${a.id}r"><button type="button" class="btn sm"></button>`;
+        const inp = rr.querySelector('input'); inp.placeholder = T('回复…'); rr.querySelector('button').textContent = T('回复');
+        const send = () => { const v = inp.value.trim(); if (!v) return; const b = snap(); (a.rep = a.rep || []).push({ au: noteAuthor(), d: Date.now(), text: v }); commit(b); renderCmts(); };
+        rr.querySelector('button').onclick = send; inp.onkeydown = e => { e.stopPropagation(); if (e.key === 'Enter') send(); };
+        row.appendChild(rr);
+      }
+      host.appendChild(row);
+    }
+    for (const o of orig) {
+      n++;
+      const row = document.createElement('div'); row.className = 'cm orig';
+      row.innerHTML = `<div class="cmTop"><span class="cmIc">${icon('note')}</span><b></b><span class="cmS"></span></div><div class="cmM"></div>`;
+      row.querySelector('b').textContent = T('原文件批注'); row.querySelector('.cmS').textContent = o.text.replace(/\s+/g, ' ').slice(0, 80) || o.sub;
+      row.querySelector('.cmM').textContent = o.au + (o.reps.length ? ' · ' + T('{n} 条回复', { n: o.reps.length }) : '');
+      if (o.reps.length) for (const rp of o.reps) { const r = document.createElement('div'); r.className = 'cmR'; r.innerHTML = '<b></b><span></span>'; r.querySelector('b').textContent = rp.au + '：'; r.querySelector('span').textContent = rp.text; row.appendChild(r); }
+      row.querySelector('.cmTop').onclick = () => { const t = p.vt, y = Math.min(t[1] * o.r[0] + t[3] * o.r[1] + t[5], t[1] * o.r[2] + t[3] * o.r[3] + t[5]); goPage(pi, y); };
+      host.appendChild(row);
+    }
+  });
+  $('#cmtEmpty').hidden = n > 0;
+  $('#cmtCnt').textContent = n ? T('共 {n} 项', { n }) : '';
+  if (focus) { const el = host.querySelector(`[data-key="${focus}"]`); if (el) el.focus(); }
+}
+function fmtWhen(t) { const d = new Date(t || Date.now()), z = v => String(v).padStart(2, '0'); return `${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())} ${z(d.getHours())}:${z(d.getMinutes())}`; }
+function goAnn(p, a) {
+  const pi = S.pages.indexOf(p); if (pi < 0) return;
+  goPage(pi, Math.max(0, bbox(a).y - 40));
+  setTimeout(() => select(p.id, a.id), 60);
+}
+function focusNote(a) {
+  sideTab('cmts'); $('#app').classList.add('side-open');
+  setTimeout(() => { const t = $(`#cmtList textarea[data-key="${a.id}"]`); if (t) { t.focus(); t.scrollIntoView({ block: 'nearest' }); } }, 200);
+}
+
+/* ----- PDF 转 Excel ----- */
+// 把一页的文字排成表格：同一行分开的几段是不同的格子；整页按位置对齐成几栏
+function pageGrid(lines) {
+  if (!lines.length) return [];
+  const size = lines.map(l => l.size).sort((a, b) => a - b)[Math.floor(lines.length / 2)] || 10;
+  const spans = [];
+  for (const l of lines) if (l.cells.length >= 2) for (const c of l.cells) spans.push([c.x0, c.x1]);
+  spans.sort((a, b) => a[0] - b[0]);
+  const cols = [];
+  for (const [a, b] of spans) { const c = cols[cols.length - 1]; if (c && a <= c[1] + size * 0.3) c[1] = Math.max(c[1], b); else cols.push([a, b]); }
+  const colOf = c => {
+    if (!cols.length) return 0;
+    let best = 0, bo = -Infinity;
+    cols.forEach((s, k) => { const o = Math.min(s[1], c.x1) - Math.max(s[0], c.x0); const d = o > 0 ? o : -Math.min(Math.abs(c.x0 - s[1]), Math.abs(s[0] - c.x1)); if (d > bo) { bo = d; best = k; } });
+    return best;
+  };
+  const rows = [];
+  let prevY = null;
+  for (const l of lines) {
+    if (prevY != null && l.y - prevY > l.size * 2.6) rows.push([]);   // 隔得远：空一行
+    const r = [];
+    for (const c of l.cells.length ? l.cells : [{ text: l.text, x0: l.x0, x1: l.x1 }]) { const k = l.cells.length >= 2 ? colOf(c) : 0; r[k] = r[k] ? r[k] + ' ' + c.text : c.text; }
+    rows.push(r); prevY = l.y;
+  }
+  return rows;
+}
+const NUM_RE = /^\(?-?(?:RM|USD|\$|€|£|¥|S\$)?\s?-?\d{1,3}(?:,\d{3})*(?:\.\d+)?\)?%?$|^\(?-?\d+(?:\.\d+)?\)?%?$/i;
+function cellVal(s) {
+  const t = String(s || '').trim();
+  if (!NUM_RE.test(t) || /^0\d/.test(t.replace(/^\(?-?/, ''))) return null;   // 0123 这种是编号，不当数字
+  let v = parseFloat(t.replace(/[^\d.\-]/g, ''));
+  if (isNaN(v)) return null;
+  if (/^\(.*\)$/.test(t)) v = -Math.abs(v);
+  if (/%$/.test(t)) v /= 100;
+  return { v, pct: /%$/.test(t), money: /,\d{3}|\.\d\d$/.test(t) };
+}
+async function makeXlsx(sheets) {
+  const colL = i => { let s = ''; i++; while (i) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
+  const zip = new JSZip(), names = [];
+  sheets.forEach((sh, si) => {
+    const widths = [], multi = !sh.rows.some(r => r.filter(v => v != null && v !== '').length >= 2);
+    const rowsX = sh.rows.map((r, ri) => {
+      const cells = [];
+      for (let k = 0; k < r.length; k++) {
+        const s = r[k]; if (s == null || s === '') continue;
+        const ref = colL(k) + (ri + 1), n = cellVal(s);
+        if (multi || r.filter(v => v != null && v !== '').length >= 2) widths[k] = Math.max(widths[k] || 6, Math.min(60, Array.from(String(s)).reduce((a, ch) => a + (isCJK(ch) ? 2 : 1), 0) + 2));
+        if (n) cells.push(`<c r="${ref}" s="${n.pct ? 3 : n.money ? 2 : 0}"><v>${n.v}</v></c>`);
+        else cells.push(`<c r="${ref}" t="inlineStr"><is><t xml:space="preserve">${xmlEsc(String(s))}</t></is></c>`);
+      }
+      return `<row r="${ri + 1}">${cells.join('')}</row>`;
+    });
+    const cols = widths.length ? '<cols>' + Array.from(widths, (w, k) => `<col min="${k + 1}" max="${k + 1}" width="${w || 8}" customWidth="1"/>`).join('') + '</cols>' : '';
+    zip.file(`xl/worksheets/sheet${si + 1}.xml`, `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">${cols}<sheetData>${rowsX.join('')}</sheetData></worksheet>`);
+    names.push(sh.name.replace(/[\\/?*[\]:]/g, ' ').slice(0, 31) || 'Sheet' + (si + 1));
+  });
+  const sheetsX = names.map((n, i) => `<sheet name="${xmlEsc(n)}" sheetId="${i + 1}" r:id="rId${i + 1}"/>`).join('');
+  zip.file('[Content_Types].xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>' + names.map((_, i) => `<Override PartName="/xl/worksheets/sheet${i + 1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('') + '</Types>');
+  zip.file('_rels/.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>');
+  zip.file('xl/workbook.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>${sheetsX}</sheets></workbook>`);
+  zip.file('xl/_rels/workbook.xml.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' + names.map((_, i) => `<Relationship Id="rId${i + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i + 1}.xml"/>`).join('') + `<Relationship Id="rId${names.length + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`);
+  zip.file('xl/styles.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0.00"/></numFmts><fonts count="1"><font><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="4"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/><xf numFmtId="10" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/></cellXfs></styleSheet>');
+  return zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 }
 
 /* ===== 文字识别：扫描件变成可搜索、可复制的 PDF（v3.0）=====
@@ -5451,6 +6046,11 @@ function wire() {
       await armImage('image', url, clamp(c.width * 0.5, 60, 300));
     } catch (err) { toast(err.message); }
   };
+  wireFld();
+  $('#cmtAdd').onclick = () => { if (!S.pages.length) return; setTool('note'); toast(T('点击页面，贴上便签')); };
+  $('#fImgRep').onchange = e => { const f = e.target.files[0]; e.target.value = ''; if (f) imgCover(f); };
+  $$('#gEd button').forEach(b => { b.onclick = () => { S.opts.edPara = b.dataset.v === 'para'; LS.set('pdfed.edPara', S.opts.edPara ? '1' : '0'); S.hover = null; refreshProps(); redrawAll(); }; });
+  if (LS.get('pdfed.edPara') === '0') S.opts.edPara = false;
   $('#btnUndo').onclick = undo; $('#btnRedo').onclick = redo; $('#btnPrint').onclick = printAll;
   $('#zPage').onclick = fitPage;
   $$('#stabs button').forEach(b => { b.onclick = () => sideTab(b.dataset.st); });
