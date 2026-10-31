@@ -20,8 +20,8 @@ VIAddVersionKey /LANG=0 "ProductName" "smartPDF"
 VIAddVersionKey /LANG=0 "FileDescription" "smartPDF Setup"
 VIAddVersionKey /LANG=0 "FileVersion" "${VER}"
 VIAddVersionKey /LANG=0 "ProductVersion" "${VER}"
-VIAddVersionKey /LANG=0 "CompanyName" "nick"
-VIAddVersionKey /LANG=0 "LegalCopyright" "nick"
+VIAddVersionKey /LANG=0 "CompanyName" "PLANET COMPUTER TECHNOLOGY CENTRE"
+VIAddVersionKey /LANG=0 "LegalCopyright" "© 2026 PLANET COMPUTER TECHNOLOGY CENTRE"
 
 !define MUI_ICON "icon.ico"
 !define MUI_UNICON "icon.ico"
@@ -56,7 +56,7 @@ Section "smartPDF"
   ClearErrors
   Delete "$INSTDIR\${EXE}"
   ${If} ${Errors}
-    MessageBox MB_ICONEXCLAMATION|MB_OK "$(Running)"
+    MessageBox MB_ICONEXCLAMATION|MB_OK "$(Running)" /SD IDOK
     Abort
   ${EndIf}
   File "${EXE}"
@@ -81,7 +81,7 @@ Section "smartPDF"
 
   WriteRegStr HKCU "${UNKEY}" "DisplayName" "smartPDF"
   WriteRegStr HKCU "${UNKEY}" "DisplayVersion" "${VER}"
-  WriteRegStr HKCU "${UNKEY}" "Publisher" "nick"
+  WriteRegStr HKCU "${UNKEY}" "Publisher" "PLANET COMPUTER TECHNOLOGY CENTRE"
   WriteRegStr HKCU "${UNKEY}" "DisplayIcon" "$INSTDIR\icon.ico"
   WriteRegStr HKCU "${UNKEY}" "InstallLocation" "$INSTDIR"
   WriteRegStr HKCU "${UNKEY}" "UninstallString" '"$INSTDIR\uninstall.exe"'
@@ -95,10 +95,17 @@ Section "smartPDF"
   ${AndIfNot} ${FileExists} "$LOCALAPPDATA\Google\Chrome\Application\chrome.exe"
   ${AndIfNot} ${FileExists} "$PROGRAMFILES64\Google\Chrome\Application\chrome.exe"
   ${AndIfNot} ${FileExists} "$PROGRAMFILES32\Google\Chrome\Application\chrome.exe"
-    MessageBox MB_ICONINFORMATION|MB_OKCANCEL "$(NeedEdge)" IDCANCEL +2
+    MessageBox MB_ICONINFORMATION|MB_OKCANCEL "$(NeedEdge)" /SD IDCANCEL IDCANCEL +2
     ExecShell "open" "https://www.microsoft.com/edge/download"
   ${EndIf}
 SectionEnd
+
+; 软件里按「现在更新」时会用 /S 安静安装，装好后自动重新打开 smartPDF
+Function .onInstSuccess
+  ${If} ${Silent}
+    Exec '"$INSTDIR\${EXE}"'
+  ${EndIf}
+FunctionEnd
 
 Section "Uninstall"
   Delete "$SMPROGRAMS\smartPDF.lnk"

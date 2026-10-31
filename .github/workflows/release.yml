@@ -17,6 +17,8 @@ jobs:
       - run: desktop/build.sh
       - id: ver
         run: echo "v=$(node -p "require('./desktop/neutralino.config.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Release notes from the app's changelog
+        run: node desktop/notes.mjs > notes.md
       - uses: actions/upload-artifact@v4
         with:
           name: smartPDF-Setup
@@ -26,4 +28,5 @@ jobs:
           tag_name: v${{ steps.ver.outputs.v }}
           name: smartPDF ${{ steps.ver.outputs.v }}
           target_commitish: ${{ github.sha }}
+          body_path: notes.md
           files: desktop/out/smartPDF-Setup-*.exe
