@@ -424,9 +424,11 @@ body{background:var(--dbg)}
 .opt input{margin:0}
 html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
 @media (min-width:821px){.tools{flex-wrap:wrap;row-gap:2px}}
-@media (min-width:821px) and (max-width:1640px){#btnHome .t,#btnScan .t,#btnMerge .t,#btnSplit .t,#btnBatch .t,#btnCmp .t,#btnPrint .t,#btnSaveAs .t{display:none}#btnHome,#btnScan,#btnMerge,#btnSplit,#btnBatch,#btnCmp,#btnPrint,#btnSaveAs{padding:0 9px}}
-@media (min-width:821px) and (max-width:1820px){html[lang=en] :is(#btnHome,#btnScan,#btnMerge,#btnSplit,#btnBatch,#btnCmp,#btnPrint,#btnSaveAs) .t{display:none}html[lang=en] :is(#btnHome,#btnScan,#btnMerge,#btnSplit,#btnBatch,#btnCmp,#btnPrint,#btnSaveAs){padding:0 9px}}
-@media (min-width:821px) and (max-width:1220px){.acts .btn:not(#btnSave) .t{display:none}.acts .btn:not(#btnSave){padding:0 9px}.search input{width:130px}.brand b{display:none}}
+@media (min-width:821px) and (max-width:1640px){#btnHome .t,#btnMerge .t,#btnSplit .t,#btnBatch .t,#btnCmp .t,#btnPrint .t,#btnSaveAs .t{display:none}#btnHome,#btnMerge,#btnSplit,#btnBatch,#btnCmp,#btnPrint,#btnSaveAs{padding:0 9px}}
+@media (min-width:821px) and (max-width:1820px){html[lang=en] :is(#btnHome,#btnMerge,#btnSplit,#btnBatch,#btnCmp,#btnPrint,#btnSaveAs) .t{display:none}html[lang=en] :is(#btnHome,#btnMerge,#btnSplit,#btnBatch,#btnCmp,#btnPrint,#btnSaveAs){padding:0 9px}}
+@media (min-width:821px) and (max-width:1440px){.search input{width:130px}.fname{display:none}}
+@media (min-width:821px) and (max-width:1060px){#btnScan .t{display:none}#btnScan{padding:0 9px}}
+@media (min-width:821px) and (max-width:1220px){.acts .btn:not(#btnSave):not(#btnScan) .t{display:none}.acts .btn:not(#btnSave):not(#btnScan){padding:0 9px}.search input{width:130px}.brand b{display:none}}
 @media (min-width:821px) and (max-width:960px){.fname,#btnCmp{display:none}.search input{width:110px}}
 @media (max-width:820px){
   .only-m{display:inline-flex}
@@ -453,7 +455,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <div class="brand">
       <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTQwLDE0IEgxMjAgTDE2Miw1NiBWMTg2IEg0MCBaIiBmaWxsPSIjRkNFQkVCIiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTEyMCwxNCBWNTYgSDE2MiBaIiBmaWxsPSIjRjdDOEM4IiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjQsNjguMzcpIHNjYWxlKDAuNTU0NCkiPjxwYXRoIGQ9Ik0xNCAxMTUuNTlINDIuODZRNDMuNDkgMTIxLjc4IDQ3LjE0IDEyNS4wM1E1MC43OCAxMjguMjggNTYuNjUgMTI4LjI4UTYyLjY4IDEyOC4yOCA2Ni4xNiAxMjUuNVE2OS42NSAxMjIuNzMgNjkuNjUgMTE3LjgxUTY5LjY1IDExMy42OSA2Ni44OCAxMTFRNjQuMSAxMDguMyA2MC4wNiAxMDYuNTZRNTYuMDIgMTA0LjgxIDQ4LjU2IDEwMi41OVEzNy43OCA5OS4yNiAzMC45NyA5NS45M1EyNC4xNSA5Mi42IDE5LjIzIDg2LjFRMTQuMzIgNzkuNiAxNC4zMiA2OS4xNFExNC4zMiA1My42IDI1LjU3IDQ0LjhRMzYuODMgMzYgNTQuOTEgMzZRNzMuMyAzNiA4NC41NiA0NC44UTk1LjgxIDUzLjYgOTYuNjEgNjkuM0g2Ny4yN1E2Ni45NiA2My45MSA2My4zMSA2MC44MVE1OS42NiA1Ny43MiA1My45NiA1Ny43MlE0OS4wNCA1Ny43MiA0Ni4wMyA2MC4zNFE0My4wMiA2Mi45NSA0My4wMiA2Ny44N1E0My4wMiA3My4yNiA0OC4wOSA3Ni4yN1E1My4xNiA3OS4yOSA2My45NCA4Mi43N1E3NC43MyA4Ni40MiA4MS40NiA4OS43NVE4OC4yIDkzLjA4IDkzLjEyIDk5LjQyUTk4LjAzIDEwNS43NiA5OC4wMyAxMTUuNzVROTguMDMgMTE1LjgzIDk4LjAzIDExNS45MUw3NC41IDE0MS4xM1E3MS41NCAxNDQuMyA3MS4wOCAxNDguMzlRNjQuODQgMTUwIDU3LjQ0IDE1MFE0NS4yNCAxNTAgMzUuNTYgMTQ2LjA0UTI1Ljg5IDE0Mi4wNyAyMC4xIDEzNC4zUTE0LjMyIDEyNi41MyAxNCAxMTUuNTlaIiBmaWxsPSIjMTIzMDdBIi8+PHBhdGggZD0iTTc4LjUyIDE0NC44OCAxMDYuNTIgMTE0Ljg4UTEwOC41OCAxMTIuNjcgMTExLjYgMTEyLjUxUTExNC42MyAxMTIuMzUgMTE2LjkxIDExNC4zM0wxMjUuODEgMTIyLjA0TDE1NC40OSA4My41M0wxNDAuNDYgNzMuMDdRMTM5LjQ1IDcyLjMzIDEzOS4zMyA3MS40NVExMzkuMiA3MC41OCAxMzkuOTQgNjkuNThRMTQwLjM0IDY5LjA1IDE0MC45NCA2OC43OEwxODcuMjcgNDguNDJRMTg5LjU2IDQ3LjQyIDE5MC41NyA0OS43UTE5MC44NSA1MC4zMyAxOTAuNzYgNTEuMDJMMTg0LjUzIDEwMS4yNFExODQuMzggMTAyLjQ4IDE4My42OCAxMDMuMDJRMTgyLjk4IDEwMy41NyAxODEuNzQgMTAzLjQxUTE4MS4wOSAxMDMuMzMgMTgwLjU2IDEwMi45NEwxNjYuNTIgOTIuNDhMMTMzLjAyIDEzNy40OFExMzIuODUgMTM3LjcgMTMyLjY3IDEzNy45MVExMzAuNjMgMTQwLjI2IDEyNy41MyAxNDAuNDhRMTI0LjQ0IDE0MC43IDEyMi4wOSAxMzguNjdMMTEyLjU1IDEzMC40TDg5LjQ4IDE1NS4xMlE4Ny4zNiAxNTcuMzkgODQuMjYgMTU3LjVRODEuMTUgMTU3LjYgNzguODggMTU1LjQ4UTc2LjYxIDE1My4zNiA3Ni41IDE1MC4yNlE3Ni40IDE0Ny4xNSA3OC41MiAxNDQuODhaIiBmaWxsPSIjRTIzQjNCIi8+PC9nPjwvc3ZnPg==" alt="">
       <span class="wordmark"><span class="w1">smart</span><span class="w2">PDF</span></span>
-      <button class="ver" id="btnAbout" title="版本记录">v3.0</button>
+      <button class="ver" id="btnAbout" title="版本记录">v3.0.1</button>
       <button class="ver" id="btnLang" title="Switch to English">EN</button>
     </div>
     <div class="fname" id="fname"></div>
@@ -468,7 +470,6 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
       <span class="vsep"></span>
       <button class="btn only-m" id="btnPages" aria-label="页面列表"><span data-ic="pages"></span></button>
       <button class="btn" id="btnOpen" title="打开 PDF (Ctrl+O)"><span data-ic="open"></span><span class="t">打开</span></button>
-      <button class="btn" id="btnScan" title="用扫描仪扫纸本，变成 PDF" hidden><span data-ic="scan"></span><span class="t">扫描</span></button>
       <button class="btn" id="btnConv" title="PDF 转图片、Word、文字，或图片转 PDF"><span data-ic="conv"></span><span class="t">转换</span></button>
       <button class="btn" id="btnMerge" title="把其他 PDF 接在最后"><span data-ic="merge"></span><span class="t">合并</span></button>
       <button class="btn" id="btnSplit" title="把 PDF 拆成几个文件"><span data-ic="split"></span><span class="t">拆分</span></button>
@@ -478,6 +479,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
       <button class="btn ghost" id="btnUndo" title="撤销 (Ctrl+Z)" aria-label="撤销"><span data-ic="undo"></span></button>
       <button class="btn ghost" id="btnRedo" title="重做 (Ctrl+Shift+Z)" aria-label="重做"><span data-ic="redo"></span></button>
       <span class="vsep"></span>
+      <button class="btn" id="btnScan" title="用扫描仪扫纸本，变成 PDF" hidden><span data-ic="scan"></span><span class="t">扫描</span></button>
       <button class="btn" id="btnPrint" title="打印 (Ctrl+P)"><span data-ic="print"></span><span class="t">打印</span></button>
       <button class="btn" id="btnSaveAs" title="另存为 (Ctrl+Shift+S)"><span data-ic="saveas"></span><span class="t">另存为</span></button>
       <button class="btn primary" id="btnSave" title="保存 (Ctrl+S)"><span data-ic="save"></span><span class="t">保存</span></button>
@@ -1005,8 +1007,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '3.0';
+const VERSION = '3.0.1';
 const CHANGELOG = [
+  { v: '3.0.1', d: '2026-10-31', items: [
+    "顶栏的「扫描」按钮现在有字，图标换成扫描仪的样子，放在「打印」旁边"
+  ] },
   { v: '3.0', d: '2026-10-31', items: [
     "扫描件可以「识别文字」：认出中文和英文，之后能搜索、复制，保存的 PDF 用别的软件打开也有文字；打开扫描件时上方会提示",
     "扫描时自动拉正、去灰底，扫完自动识别文字；横放的纸会自动转正。图片转 PDF 也可以拉正、去灰底",
@@ -1162,6 +1167,7 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  "顶栏的「扫描」按钮现在有字，图标换成扫描仪的样子，放在「打印」旁边": "The Scan button in the top bar now has a label and a scanner icon, and sits next to Print",
   "保留版面和表格": "Keeps layout and tables",
   "扫描件可以「识别文字」：认出中文和英文，之后能搜索、复制，保存的 PDF 用别的软件打开也有文字；打开扫描件时上方会提示": "Scanned files can now be \"recognised\": Chinese and English text becomes searchable and copyable, also in other apps after saving; a hint appears when you open a scan",
   "扫描时自动拉正、去灰底，扫完自动识别文字；横放的纸会自动转正。图片转 PDF 也可以拉正、去灰底": "Scanning now straightens pages and cleans up grey backgrounds, then recognises the text; sideways pages are turned upright. Images to PDF can straighten and clean up too",
@@ -1665,7 +1671,7 @@ const IC = {
   redact: '<rect x="3" y="7" width="14" height="6" rx="1" fill="currentColor"/>',
   pgno: '<rect x="4.5" y="3" width="11" height="14" rx="1.5"/><path d="M8 13.5h4"/>',
   wm: '<path d="M5 15l5-10 5 10M7 11.5h6"/>',
-  scan: '<path d="M3 11h14M5 8V4.5A1.5 1.5 0 0 1 6.5 3h7A1.5 1.5 0 0 1 15 4.5V8M4.5 11v4.5A1.5 1.5 0 0 0 6 17h8a1.5 1.5 0 0 0 1.5-1.5V11"/>',
+  scan: '<rect x="2.5" y="10" width="15" height="6.5" rx="1.6"/><path d="M3.5 10L15.5 4"/><path d="M5.5 13.2h6"/><circle cx="14.5" cy="13.2" r=".9" fill="currentColor" stroke="none"/>',
   help: '<circle cx="10" cy="10" r="7.5"/><path d="M7.8 7.8a2.3 2.3 0 1 1 3.2 2.1c-.6.3-1 .8-1 1.5v.4M10 14.2v.3"/>',
   info: '<circle cx="10" cy="10" r="7.5"/><path d="M10 9v5M10 6.2v.3"/>',
   gear: '<circle cx="10" cy="10" r="2.6"/><path d="M10 2.5v2M10 15.5v2M2.5 10h2M15.5 10h2M4.7 4.7l1.4 1.4M13.9 13.9l1.4 1.4M4.7 15.3l1.4-1.4M13.9 6.1l1.4-1.4"/><circle cx="10" cy="10" r="5.2"/>',
