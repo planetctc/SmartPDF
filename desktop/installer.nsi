@@ -77,6 +77,11 @@ Section "smartPDF"
   WriteRegStr HKCU "Software\Classes\Applications\${EXE}" "FriendlyAppName" "smartPDF"
   WriteRegStr HKCU "Software\Classes\Applications\${EXE}\SupportedTypes" ".pdf" ""
   WriteRegStr HKCU "Software\Classes\Applications\${EXE}\shell\open\command" "" '"$INSTDIR\${EXE}" "%1"'
+  ; 默认软件设定里能找到 smartPDF / Shows up in Windows Default apps
+  WriteRegStr HKCU "Software\smartPDF\Capabilities" "ApplicationName" "smartPDF"
+  WriteRegStr HKCU "Software\smartPDF\Capabilities" "ApplicationDescription" "smartPDF - PDF viewer and editor"
+  WriteRegStr HKCU "Software\smartPDF\Capabilities\FileAssociations" ".pdf" "smartPDF.Document"
+  WriteRegStr HKCU "Software\RegisteredApplications" "smartPDF" "Software\smartPDF\Capabilities"
   System::Call 'shell32::SHChangeNotify(i 0x08000000, i 0, p 0, p 0)'
 
   WriteRegStr HKCU "${UNKEY}" "DisplayName" "smartPDF"
@@ -112,6 +117,8 @@ Section "Uninstall"
   Delete "$DESKTOP\smartPDF.lnk"
   DeleteRegKey HKCU "Software\Classes\smartPDF.Document"
   DeleteRegValue HKCU "Software\Classes\.pdf\OpenWithProgids" "smartPDF.Document"
+  DeleteRegValue HKCU "Software\RegisteredApplications" "smartPDF"
+  DeleteRegKey HKCU "Software\smartPDF\Capabilities"
   DeleteRegKey HKCU "Software\Classes\Applications\${EXE}"
   DeleteRegKey HKCU "${UNKEY}"
   DeleteRegKey HKCU "Software\smartPDF"

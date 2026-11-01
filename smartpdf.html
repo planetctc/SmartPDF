@@ -140,6 +140,24 @@ textarea.ed{position:absolute;margin:0;padding:0;border:1px dashed var(--accent)
 .modal[hidden]{display:none}
 .card{background:var(--panel);color:var(--ink);width:min(560px,100%);max-height:100%;overflow:auto;border-radius:14px;padding:18px;box-shadow:var(--shadow);border:1px solid var(--line)}
 .card.wide{width:min(900px,100%)}
+.df.go{cursor:pointer}.df.go:hover{filter:brightness(.96)}
+.cvCard{width:min(1500px,100%);height:100%;display:flex;flex-direction:column;gap:8px}
+.cvHead{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.cvHead h2{margin:0}.cvHead .sp{flex:1}
+.cvWhat{font-size:12.5px;color:var(--mute)}
+.cvLeg{display:flex;align-items:center;gap:6px;font-size:12px;flex-wrap:wrap}.cvLeg .muted{margin-left:10px}
+.cvL{display:inline-block;width:14px;height:10px;border-radius:2px;margin-left:8px}.cvL.del{background:rgba(220,38,38,.35)}.cvL.add{background:rgba(22,163,74,.35)}
+.cvCols{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:10px;min-height:0}
+.cvCol{display:flex;flex-direction:column;min-height:0;min-width:0}
+.cvT{font-size:12.5px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cvScroll{position:relative;flex:1;overflow:auto;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px}
+.cvPg{position:relative;margin:0 auto 12px;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.18)}
+.cvPg canvas{position:absolute;inset:0;width:100%;height:100%}
+.cvN{position:absolute;right:6px;top:3px;z-index:1;font-size:10.5px;color:#8a93a3}
+.cvBox{position:absolute;border-radius:2px;cursor:pointer}
+.cvBox.del{background:rgba(220,38,38,.24);box-shadow:inset 0 0 0 1px rgba(220,38,38,.65)}
+.cvBox.add{background:rgba(22,163,74,.24);box-shadow:inset 0 0 0 1px rgba(22,163,74,.65)}
+.cvBox.on{box-shadow:0 0 0 2px #f59e0b,0 0 0 5px rgba(245,158,11,.3)}
+@media (max-width:820px){.cvCols{grid-template-columns:1fr;grid-template-rows:1fr 1fr}}
 .cmpOut{border:1px solid var(--line);border-radius:8px;max-height:52vh;overflow:auto;background:var(--panel2);margin-top:10px;font-size:12.5px}
 .cmpOut:empty{display:none}
 .df{display:grid;grid-template-columns:22px minmax(0,1fr) 64px;gap:6px;padding:3px 8px;border-bottom:1px solid var(--line);align-items:start}
@@ -202,6 +220,16 @@ textarea.ed{position:absolute;margin:0;padding:0;border:1px dashed var(--accent)
 .rcNav{display:flex;align-items:center;gap:6px}.rcNav .mono{min-width:64px;text-align:center;font-size:12.5px}
 .rcGap{display:flex;align-items:center;gap:6px;flex:1 1 220px}.rcGap input{flex:1;min-width:80px}.rcGap .mono{font-size:12px;min-width:42px}
 .rcWrap{margin-top:10px;display:flex;justify-content:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px;overflow:auto}
+.crWrap{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.crStage{position:relative;touch-action:none;cursor:crosshair;box-shadow:0 1px 4px rgba(0,0,0,.25);line-height:0;background:#fff;flex:none}
+.crStage canvas{display:block}
+.crBox{position:absolute;box-shadow:0 0 0 9999px rgba(15,23,42,.45);outline:2px dashed #f59e0b;pointer-events:none}
+.crStage.dim .crBox{outline-color:transparent;box-shadow:none}
+.crStage{overflow:hidden}
+.crSide{flex:1 1 200px;min-width:200px}
+.crGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px}.crGrid input{width:100%}
+.hfGrid{display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:6px 8px;align-items:center}.hfGrid input,#crR{width:100%;min-width:0;height:32px;border:1px solid var(--line);border-radius:7px;background:var(--panel2);color:var(--ink);padding:0 9px}
+.hfTok{display:flex;gap:6px;align-items:center;margin-top:8px;flex-wrap:wrap}
 .rcStage{position:relative;touch-action:none;cursor:crosshair;box-shadow:0 1px 4px rgba(0,0,0,.25);line-height:0}
 .rcStage canvas{display:block}
 .rcBox{position:absolute;border:2px solid var(--c-purple);background:color-mix(in srgb,var(--c-purple) 10%,transparent);cursor:move;box-sizing:border-box}
@@ -504,7 +532,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <div class="brand">
       <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTQwLDE0IEgxMjAgTDE2Miw1NiBWMTg2IEg0MCBaIiBmaWxsPSIjRkNFQkVCIiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTEyMCwxNCBWNTYgSDE2MiBaIiBmaWxsPSIjRjdDOEM4IiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjQsNjguMzcpIHNjYWxlKDAuNTU0NCkiPjxwYXRoIGQ9Ik0xNCAxMTUuNTlINDIuODZRNDMuNDkgMTIxLjc4IDQ3LjE0IDEyNS4wM1E1MC43OCAxMjguMjggNTYuNjUgMTI4LjI4UTYyLjY4IDEyOC4yOCA2Ni4xNiAxMjUuNVE2OS42NSAxMjIuNzMgNjkuNjUgMTE3LjgxUTY5LjY1IDExMy42OSA2Ni44OCAxMTFRNjQuMSAxMDguMyA2MC4wNiAxMDYuNTZRNTYuMDIgMTA0LjgxIDQ4LjU2IDEwMi41OVEzNy43OCA5OS4yNiAzMC45NyA5NS45M1EyNC4xNSA5Mi42IDE5LjIzIDg2LjFRMTQuMzIgNzkuNiAxNC4zMiA2OS4xNFExNC4zMiA1My42IDI1LjU3IDQ0LjhRMzYuODMgMzYgNTQuOTEgMzZRNzMuMyAzNiA4NC41NiA0NC44UTk1LjgxIDUzLjYgOTYuNjEgNjkuM0g2Ny4yN1E2Ni45NiA2My45MSA2My4zMSA2MC44MVE1OS42NiA1Ny43MiA1My45NiA1Ny43MlE0OS4wNCA1Ny43MiA0Ni4wMyA2MC4zNFE0My4wMiA2Mi45NSA0My4wMiA2Ny44N1E0My4wMiA3My4yNiA0OC4wOSA3Ni4yN1E1My4xNiA3OS4yOSA2My45NCA4Mi43N1E3NC43MyA4Ni40MiA4MS40NiA4OS43NVE4OC4yIDkzLjA4IDkzLjEyIDk5LjQyUTk4LjAzIDEwNS43NiA5OC4wMyAxMTUuNzVROTguMDMgMTE1LjgzIDk4LjAzIDExNS45MUw3NC41IDE0MS4xM1E3MS41NCAxNDQuMyA3MS4wOCAxNDguMzlRNjQuODQgMTUwIDU3LjQ0IDE1MFE0NS4yNCAxNTAgMzUuNTYgMTQ2LjA0UTI1Ljg5IDE0Mi4wNyAyMC4xIDEzNC4zUTE0LjMyIDEyNi41MyAxNCAxMTUuNTlaIiBmaWxsPSIjMTIzMDdBIi8+PHBhdGggZD0iTTc4LjUyIDE0NC44OCAxMDYuNTIgMTE0Ljg4UTEwOC41OCAxMTIuNjcgMTExLjYgMTEyLjUxUTExNC42MyAxMTIuMzUgMTE2LjkxIDExNC4zM0wxMjUuODEgMTIyLjA0TDE1NC40OSA4My41M0wxNDAuNDYgNzMuMDdRMTM5LjQ1IDcyLjMzIDEzOS4zMyA3MS40NVExMzkuMiA3MC41OCAxMzkuOTQgNjkuNThRMTQwLjM0IDY5LjA1IDE0MC45NCA2OC43OEwxODcuMjcgNDguNDJRMTg5LjU2IDQ3LjQyIDE5MC41NyA0OS43UTE5MC44NSA1MC4zMyAxOTAuNzYgNTEuMDJMMTg0LjUzIDEwMS4yNFExODQuMzggMTAyLjQ4IDE4My42OCAxMDMuMDJRMTgyLjk4IDEwMy41NyAxODEuNzQgMTAzLjQxUTE4MS4wOSAxMDMuMzMgMTgwLjU2IDEwMi45NEwxNjYuNTIgOTIuNDhMMTMzLjAyIDEzNy40OFExMzIuODUgMTM3LjcgMTMyLjY3IDEzNy45MVExMzAuNjMgMTQwLjI2IDEyNy41MyAxNDAuNDhRMTI0LjQ0IDE0MC43IDEyMi4wOSAxMzguNjdMMTEyLjU1IDEzMC40TDg5LjQ4IDE1NS4xMlE4Ny4zNiAxNTcuMzkgODQuMjYgMTU3LjVRODEuMTUgMTU3LjYgNzguODggMTU1LjQ4UTc2LjYxIDE1My4zNiA3Ni41IDE1MC4yNlE3Ni40IDE0Ny4xNSA3OC41MiAxNDQuODhaIiBmaWxsPSIjRTIzQjNCIi8+PC9nPjwvc3ZnPg==" alt="">
       <span class="wordmark"><span class="w1">smart</span><span class="w2">PDF</span></span>
-      <button class="ver" id="btnAbout" title="版本记录">v3.3.3</button>
+      <button class="ver" id="btnAbout" title="版本记录">v3.4</button>
       <button class="ver" id="btnLang" title="Switch to English">EN</button>
     </div>
     <div class="fname" id="fname"></div>
@@ -592,6 +620,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
         <button class="btn sm" data-op="extract" title="把选中的页面另存成一个 PDF">提取</button>
         <button class="btn sm" data-op="split" title="把 PDF 拆成几个文件">拆分</button>
         <button class="btn sm" data-op="rcpt" title="一页上扫了好几张收据，把它们分开">分收据</button>
+        <button class="btn sm" data-op="crop" title="裁掉页面四周的白边或不要的部分">裁剪</button>
         <button class="btn sm danger" data-op="del" title="删除页面">删除</button>
       </div>
       <div class="thumbs" id="thumbs"></div>
@@ -748,6 +777,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
       <div class="field"><label class="lbl" for="ctPlace">地点（可不填）</label><input type="text" id="ctPlace" maxlength="80"></div>
       <div class="field" style="grid-column:1/-1"><label class="lbl" for="ctPw">证书密码</label><input type="password" id="ctPw" autocomplete="off"></div>
     </div>
+    <label class="row" style="gap:6px;margin-top:8px"><input type="checkbox" id="ctTs"> 加上时间戳（由时间戳机构证明签名的时间，需要上网）</label>
     <p class="muted" style="font-size:12px;margin:8px 0 0" id="ctPos"></p>
     <p class="ctMsg" id="ctMsg"></p>
   </div>
@@ -792,10 +822,20 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
 <div class="modal" id="mCmp" hidden><div class="card wide" role="dialog" aria-labelledby="mCmpT">
   <h2 id="mCmpT">对比两份合同</h2>
   <p class="muted" style="margin:0 0 10px">当前打开的「<span id="cmpOld"></span>」作为旧版，再选一份 PDF 作为新版。只比较文件里原有的文字，不含你在这里新加的内容。</p>
-  <div class="row"><input type="file" id="cmpFile" accept="application/pdf,.pdf" aria-label="选择新版 PDF"><span class="sp"></span><button class="btn primary" id="cmpGo" disabled>开始对比</button></div>
+  <div class="row"><input type="file" id="cmpFile" accept="application/pdf,.pdf" aria-label="选择新版 PDF"><span class="sp"></span><button class="btn" id="cmpViewBtn" hidden>并排查看</button><button class="btn primary" id="cmpGo" disabled>开始对比</button></div>
   <p class="muted" style="margin:10px 0 0" id="cmpSum"></p>
   <div class="cmpOut" id="cmpOut"></div>
   <div class="row end"><button class="btn" data-close>关闭</button></div>
+</div></div>
+
+<div class="modal" id="mCmpV" hidden><div class="card cvCard" role="dialog" aria-labelledby="cvVT">
+  <div class="cvHead"><h2 id="cvVT">并排比较</h2><span class="muted" id="cvVSum"></span><span class="sp"></span>
+    <span class="cvWhat" id="cvWhat"></span><button class="btn" id="cvPrev">上一处</button><span class="mono" id="cvPos"></span><button class="btn" id="cvNext">下一处</button><button class="btn" id="cvBack">返回列表</button><button class="btn primary" data-close>关闭</button></div>
+  <div class="cvLeg"><span class="cvL del"></span>旧版删掉或改掉的<span class="cvL add"></span>新版新增或改成的<span class="muted">点框框或按 ↑ ↓ 换一处</span></div>
+  <div class="cvCols">
+    <div class="cvCol"><div class="cvT">旧版　<b id="cvNA"></b></div><div class="cvScroll" id="cvA"></div></div>
+    <div class="cvCol"><div class="cvT">新版　<b id="cvNB"></b></div><div class="cvScroll" id="cvB"></div></div>
+  </div>
 </div></div>
 
 <div class="modal" id="mPgno" hidden><div class="card" role="dialog" aria-labelledby="mPnT">
@@ -808,7 +848,50 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
   </div>
   <div class="field" style="margin-top:10px"><label class="lbl" for="pnR">加在哪些页</label><input type="text" id="pnR" value="全部" placeholder="全部，或 2-8"></div>
   <p class="muted" style="margin:10px 0 0" id="pnInfo"></p>
-  <div class="row end"><button class="btn danger" id="pnDel">移除全部页码</button><span class="sp"></span><button class="btn" data-close>取消</button><button class="btn primary" id="pnGo">加上页码</button></div>
+  <div class="row end"><button class="btn danger" id="pnDel">移除全部页码</button><button class="btn" id="pnHf" title="页面上下加公司名、日期、页码等">页眉页脚…</button><span class="sp"></span><button class="btn" data-close>取消</button><button class="btn primary" id="pnGo">加上页码</button></div>
+</div></div>
+
+<div class="modal" id="mCrop" hidden><div class="card" role="dialog" aria-labelledby="crTT" style="width:min(860px,100%)">
+  <h2 id="crTT">裁剪页面</h2>
+  <p class="muted" style="margin:0 0 10px">在页面上拖拉，框出要留下的部分（拉框的边可以调大小），框外的会裁掉。文字和图片画质不变。</p>
+  <div class="crWrap">
+    <div class="crStage" id="crStage"><canvas id="crCv"></canvas><div class="crBox" id="crBox"></div></div>
+    <div class="crSide">
+      <div class="lbl">四边要裁掉多少（毫米）</div>
+      <div class="crGrid">
+        <div class="field"><label class="lbl" for="crT">上</label><input type="number" id="crT" min="0" step="1"></div>
+        <div class="field"><label class="lbl" for="crB">下</label><input type="number" id="crB" min="0" step="1"></div>
+        <div class="field"><label class="lbl" for="crL">左</label><input type="number" id="crL" min="0" step="1"></div>
+        <div class="field"><label class="lbl" for="crRt">右</label><input type="number" id="crRt" min="0" step="1"></div>
+      </div>
+      <div class="row" style="gap:8px;margin-top:10px"><button class="btn" id="crAuto">自动去白边</button><button class="btn" id="crReset">不裁</button></div>
+      <div class="field" style="margin-top:14px"><label class="lbl" for="crScope">裁哪些页</label><select id="crScope"><option value="cur">这一页</option><option value="sel">选中的页</option><option value="all">全部页面</option><option value="range">指定页码</option></select></div>
+      <input type="text" id="crR" placeholder="例如 1-3,5" hidden style="margin-top:6px">
+      <label class="row" style="margin-top:10px;gap:6px"><input type="checkbox" id="crEach"> 每页各自自动去白边</label>
+      <p class="muted" id="crInfo" style="margin:10px 0 0;font-size:12px"></p>
+    </div>
+  </div>
+  <div class="row end"><button class="btn" data-close>取消</button><button class="btn primary" id="crGo">裁剪</button></div>
+</div></div>
+
+<div class="modal" id="mHf" hidden><div class="card" role="dialog" aria-labelledby="hfTT" style="width:min(660px,100%)">
+  <h2 id="hfTT">页眉页脚</h2>
+  <p class="muted" style="margin:0 0 10px">在每页的上方和下方加文字，例如公司名、文件编号、日期和页码。不用的格子留空。</p>
+  <div class="hfGrid">
+    <span></span><span class="lbl">左边</span><span class="lbl">中间</span><span class="lbl">右边</span>
+    <b>页眉</b><input type="text" id="hf_tl" aria-label="页眉左边"><input type="text" id="hf_tc" aria-label="页眉中间"><input type="text" id="hf_tr" aria-label="页眉右边">
+    <b>页脚</b><input type="text" id="hf_bl" aria-label="页脚左边"><input type="text" id="hf_bc" aria-label="页脚中间"><input type="text" id="hf_br" aria-label="页脚右边">
+  </div>
+  <div class="hfTok" id="hfTok"><span class="lbl">插入</span><button type="button" class="btn sm">页码</button><button type="button" class="btn sm">总页数</button><button type="button" class="btn sm">日期</button><button type="button" class="btn sm">文件名</button></div>
+  <div class="row" style="margin-top:10px;gap:10px;flex-wrap:wrap;align-items:flex-end">
+    <div class="field"><label class="lbl" for="hfSize">字号</label><input type="number" id="hfSize" value="9" min="5" max="36" style="width:70px"></div>
+    <div class="field"><label class="lbl" for="hfCol">颜色</label><select id="hfCol"><option value="#14181f">黑色</option><option value="#555b66">深灰</option><option value="#1e3a8a">蓝色</option><option value="#b91c1c">红色</option></select></div>
+    <div class="field"><label class="lbl" for="hfMg">离页边（毫米）</label><input type="number" id="hfMg" value="10" min="2" max="60" style="width:80px"></div>
+    <div class="field"><label class="lbl" for="hfStart">起始页码</label><input type="number" id="hfStart" value="1" style="width:76px"></div>
+    <div class="field" style="flex:1"><label class="lbl" for="hfR">加在哪些页</label><input type="text" id="hfR" value="全部" placeholder="全部，或 2-8"></div>
+  </div>
+  <p class="muted" style="margin:10px 0 0" id="hfInfo"></p>
+  <div class="row end"><button class="btn danger" id="hfDel">移除页眉页脚</button><span class="sp"></span><button class="btn" data-close>取消</button><button class="btn primary" id="hfGo">加上</button></div>
 </div></div>
 
 <div class="modal" id="mWm" hidden><div class="card" role="dialog" aria-labelledby="mWmT">
@@ -977,12 +1060,27 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
   <div class="row end"><button type="button" class="linkbtn" id="updPage">查看下载页</button><span class="sp"></span><button type="button" class="btn" id="updLater">稍后</button><button type="button" class="btn primary" id="updGo">现在更新</button></div>
 </div>
 
+<div class="modal" id="mDef" hidden><div class="card" role="dialog" aria-labelledby="dfT" style="width:min(480px,100%)">
+  <h2 id="dfT">设成默认的 PDF 软件</h2>
+  <div id="dfAsk">
+    <p style="margin:0 0 6px">要把 smartPDF 设成这台电脑默认的 PDF 软件吗？</p>
+    <p class="muted" style="margin:0">设好后，在电脑里双击任何 PDF 文件，都会直接用 smartPDF 打开。随时可以在「设定」里改回来。</p>
+    <div class="row end" style="margin-top:16px"><button class="btn" id="dfNever">不再提醒</button><span class="sp"></span><button class="btn" id="dfLater">以后再说</button><button class="btn primary" id="dfYes">设成默认</button></div>
+  </div>
+  <div id="dfHow" hidden>
+    <p style="margin:0" id="dfHowTxt"></p>
+    <p class="muted" style="margin:10px 0 0" id="dfMsg"></p>
+    <div class="row end" style="margin-top:16px"><button class="btn" data-close>关闭</button><span class="sp"></span><button class="btn" id="dfAgain">再打开一次</button><button class="btn primary" id="dfDone">我设好了</button></div>
+  </div>
+</div></div>
+
 <div class="modal" id="mSet" hidden><div class="card" role="dialog" aria-labelledby="setT" style="width:min(520px,100%)">
   <h2 id="setT">设定</h2>
   <div class="setRow"><b>语言 · Language</b><div class="seg" id="setLang"><button type="button" data-v="zh">中文</button><button type="button" data-v="en">English</button></div></div>
   <div class="setRow"><b>外观</b><div class="seg" id="setTheme"><button type="button" data-v="auto">跟随电脑</button><button type="button" data-v="light">浅色</button><button type="button" data-v="dark">深色</button></div></div>
   <div class="setRow"><b>打开文件时显示</b><div class="seg" id="setFit"><button type="button" data-v="width">适合宽度</button><button type="button" data-v="page">整页</button></div></div>
   <div class="setRow"><b>文字识别语言</b><div class="seg" id="setOcr"><button type="button" data-v="chi">中文＋英文</button><button type="button" data-v="eng">只有英文</button></div></div>
+  <div class="setRow" id="setDefRow" hidden><b>默认 PDF 软件</b><span class="setUpdR"><span class="muted" id="setDefMsg"></span><button type="button" class="btn" id="setDef">设成默认</button></span></div>
   <div class="setRow" id="setUpdRow"><b>软件更新</b><span class="setUpdR"><span class="muted" id="setUpdMsg"></span><button type="button" class="btn" id="setUpd">检查更新</button></span></div>
   <div class="setRow"><b>批注署名</b><input type="text" id="setAuthor" placeholder="我" maxlength="40" style="height:30px;width:180px;border:1px solid var(--line);border-radius:7px;background:var(--panel2);padding:0 9px"></div>
   <div class="setRow" id="setRecRow"><b>最近打开的文件</b><button type="button" class="btn" id="setRecClr">清除记录</button></div>
@@ -1046,6 +1144,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <label class="opt"><input type="radio" name="cv" value="ocr"><b>识别文字（扫描件）</b><span>认出扫描件上的中文和英文，之后可以搜索、复制，保存的 PDF 也带文字</span></label>
     <label class="opt"><input type="radio" name="cv" value="zip"><b>压缩 PDF</b><span>把 PDF 里的图片压小，文件变小，适合电邮或上传</span></label>
     <label class="opt"><input type="radio" name="cv" value="lock"><b>加密码保护</b><span>设打开密码，或禁止打印、复制、修改</span></label>
+    <label class="opt"><input type="radio" name="cv" value="pdfa"><b>存成 PDF/A（存档）</b><span>长期保存或交给政府、法院、银行用：字体和颜色都放进文件，几十年后打开还一样</span></label>
   </div>
   <div class="row" id="cvOpts" style="margin-top:12px;align-items:flex-end">
     <div class="field" id="cvFmtF"><label class="lbl" for="cvFmt">格式</label><select id="cvFmt"><option value="jpg">JPG</option><option value="png">PNG</option></select></div>
@@ -1153,8 +1252,16 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '3.3.3';
+const VERSION = '3.4.0';
 const CHANGELOG = [
+  { v: '3.4', d: '2026-11-01', items: [
+    "对比两份文件可以「并排查看」：旧版、新版的页面放在左右两边，删掉或改掉的字标红、新增的标绿，按「下一处」一处一处跳",
+    "裁剪页面：拖拉框出要留下的部分，或按「自动去白边」；可以只裁一页、选中的页或全部页面，画质不变",
+    "页眉页脚：每页上方、下方的左中右都可以放文字，例如公司名、日期、文件名和「第 1 页，共 5 页」",
+    "存成 PDF/A 存档格式：长期保存或交给政府、法院、银行用（在「转换」里）",
+    "证书签名可以加上时间戳：由 DigiCert 等时间戳机构证明签名的时间，证书以后过期，签名照样有效",
+    "可以把 smartPDF 设成 Windows 默认的 PDF 软件：第一次打开时会问，也可以在「设定」里设"
+  ] },
   { v: '3.3.3', d: '2026-11-01', items: [
     "修好 Word／Excel 转 PDF（之前出现「命令列太长」）"
   ] },
@@ -1344,6 +1451,128 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  "存成 PDF/A": "Save as PDF/A",
+  "点一下在页面上看": "Click to see it on the page",
+  "第 {k} 处改动": "Change {k}",
+  "共 {n} 处改动": "{n} changes",
+  "正在准备页面…": "Preparing pages…",
+  "新版多了内容": "Added in the new version",
+  "新版删掉了内容": "Removed in the new version",
+  "内容有修改": "Changed",
+  "这一页是空白页，不用裁剪": "This page is blank; nothing to crop",
+  "每一页会各自找出内容的范围，去掉四周的空白": "Each page is trimmed to its own content, removing the white margins",
+  "裁剪后大小：{w} × {h} 毫米": "Size after cropping: {w} × {h} mm",
+  "这一页没有找到内容": "No content found on this page",
+  "没有可以裁剪的页面": "There are no pages to crop",
+  "请先框出要留下的部分": "Drag a box around the part to keep first",
+  "正在裁剪…": "Cropping…",
+  "页面已经没有白边可以裁了": "There are no margins left to crop",
+  "已裁剪 {n} 页，可以用「撤销」还原": "Cropped {n} pages. Use Undo to restore them",
+  "裁剪失败：{e}": "Cropping failed: {e}",
+  "六个格子都是空的": "All six boxes are empty",
+  "第一页会显示：": "The first page will show: ",
+  "上方「{t}」": "top \"{t}\"",
+  "下方「{t}」": "bottom \"{t}\"",
+  "请至少在一个格子里写字": "Type something in at least one box",
+  "已给 {n} 页加上页眉页脚": "Added headers and footers to {n} pages",
+  "没有可移除的页眉页脚": "No headers or footers to remove",
+  "已移除 {n} 页的页眉页脚": "Removed headers and footers from {n} pages",
+  "正在转成 PDF/A…": "Converting to PDF/A…",
+  "有 {n} 页用了没有放进文件里的字体（例如电脑自带的 Arial、宋体）。PDF/A 要求字体全部在文件里，不然以后换了电脑可能显示不对。要把这几页转成图片吗？（转成图片后文字不能再选取）": "{n} pages use fonts that are not stored in the file (such as Arial from the computer). PDF/A needs every font inside the file, or the pages may look different on another computer later. Turn these pages into images? (Their text can no longer be selected.)",
+  "转成图片": "Turn into images",
+  "照样保存": "Save anyway",
+  "已存成 PDF/A。有些字体没有放进文件，严格的检查可能不通过": "Saved as PDF/A. Some fonts are not stored in the file, so a strict check may fail",
+  "已存成 PDF/A（存档格式）": "Saved as PDF/A (archive format)",
+  "打不开 Windows 设定：{e}": "Could not open Windows Settings: {e}",
+  "Windows 设定已经打开：在 smartPDF 的页面按最上面的「设为默认值」；如果没有这个按钮，就在 .pdf 旁边点一下，选 smartPDF。": "Windows Settings is open. On the smartPDF page, click \"Set default\" at the top. If there is no such button, click the box next to .pdf and choose smartPDF.",
+  "请在弹出的窗口里选 smartPDF，勾选「始终使用此应用打开 .pdf 文件」，再按「确定」。": "In the window that opened, choose smartPDF, tick \"Always use this app to open .pdf files\", then click OK.",
+  "好了！以后双击 PDF 就会用 smartPDF 打开": "Done! Double-clicking a PDF now opens it in smartPDF",
+  "还没设好，Windows 现在的默认是「{p}」。可以再试一次，或者按「关闭」以后再设。": "Not set yet. The Windows default is still \"{p}\". Try again, or click Close and do it later.",
+  "已经是默认": "Already the default",
+  "还不是默认": "Not the default yet",
+  "不会再提醒。以后可以在「设定」里设成默认": "You will not be asked again. You can set it as the default in Settings any time",
+  "连不上时间戳服务，请检查网络": "Could not reach the timestamp service. Check the internet connection",
+  "网页版连不上时间戳服务，请用 Windows 版 smartPDF": "The web version cannot reach the timestamp service. Use smartPDF for Windows",
+  "时间戳服务回传的资料看不懂": "The timestamp service sent an unreadable reply",
+  "时间戳服务拒绝了请求（代码 {c}）": "The timestamp service refused the request (code {c})",
+  "正在签名并取得时间戳…": "Signing and getting a timestamp…",
+  "时间戳加不上：{e}。要不加时间戳，直接签名吗？": "Could not add a timestamp: {e}. Sign without a timestamp?",
+  "直接签名": "Sign without it",
+  "已加上证书签名和时间戳。签好的文件不要再修改，不然签名会失效": "Certificate signature and timestamp added. Do not change the signed file, or the signature becomes invalid",
+  "裁剪": "Crop",
+  "加上时间戳（由时间戳机构证明签名的时间，需要上网）": "Add a timestamp (a timestamp authority confirms when you signed; needs internet)",
+  "并排查看": "Side by side",
+  "并排比较": "Side-by-side comparison",
+  "上一处": "Previous",
+  "下一处": "Next",
+  "返回列表": "Back to list",
+  "旧版删掉或改掉的": "Removed or changed in the old version",
+  "新版新增或改成的": "Added or changed in the new version",
+  "点框框或按 ↑ ↓ 换一处": "Click a box or press ↑ ↓ to move between changes",
+  "旧版": "Old",
+  "新版": "New",
+  "页眉页脚…": "Header & footer…",
+  "裁剪页面": "Crop pages",
+  "在页面上拖拉，框出要留下的部分（拉框的边可以调大小），框外的会裁掉。文字和图片画质不变。": "Drag on the page to box the part to keep (drag the edges to resize). Everything outside is cropped. Text and image quality stay the same.",
+  "四边要裁掉多少（毫米）": "Crop from each side (mm)",
+  "上": "Top",
+  "下": "Bottom",
+  "左": "Left",
+  "右": "Right",
+  "自动去白边": "Trim white margins",
+  "不裁": "Reset",
+  "裁哪些页": "Pages to crop",
+  "这一页": "This page",
+  "选中的页": "Selected pages",
+  "全部页面": "All pages",
+  "指定页码": "Page range",
+  "每页各自自动去白边": "Trim each page's own white margins",
+  "页眉页脚": "Header & footer",
+  "在每页的上方和下方加文字，例如公司名、文件编号、日期和页码。不用的格子留空。": "Add text at the top and bottom of every page, such as the company name, document number, date and page number. Leave unused boxes empty.",
+  "左边": "Left",
+  "中间": "Center",
+  "右边": "Right",
+  "页眉": "Header",
+  "页脚": "Footer",
+  "插入": "Insert",
+  "总页数": "Total pages",
+  "文件名": "File name",
+  "黑色": "Black",
+  "深灰": "Dark gray",
+  "离页边（毫米）": "From edge (mm)",
+  "起始页码": "First page number",
+  "移除页眉页脚": "Remove headers & footers",
+  "加上": "Add",
+  "设成默认的 PDF 软件": "Make smartPDF the default PDF app",
+  "要把 smartPDF 设成这台电脑默认的 PDF 软件吗？": "Make smartPDF the default PDF app on this computer?",
+  "设好后，在电脑里双击任何 PDF 文件，都会直接用 smartPDF 打开。随时可以在「设定」里改回来。": "Then double-clicking any PDF opens it in smartPDF. You can change this back in Settings any time.",
+  "不再提醒": "Don't ask again",
+  "以后再说": "Later",
+  "设成默认": "Make default",
+  "再打开一次": "Open again",
+  "我设好了": "I've done it",
+  "默认 PDF 软件": "Default PDF app",
+  "存成 PDF/A（存档）": "Save as PDF/A (archive)",
+  "长期保存或交给政府、法院、银行用：字体和颜色都放进文件，几十年后打开还一样": "For long-term storage or for government, courts and banks: fonts and colors are stored in the file, so it looks the same decades later",
+  "裁掉页面四周的白边或不要的部分": "Crop white margins or unwanted parts of the page",
+  "页面上下加公司名、日期、页码等": "Add the company name, date, page number and more at the top or bottom",
+  "页眉左边": "Header left",
+  "页眉中间": "Header center",
+  "页眉右边": "Header right",
+  "页脚左边": "Footer left",
+  "页脚中间": "Footer center",
+  "页脚右边": "Footer right",
+  "两份文件差在哪里": "What changed between two files",
+  "去白边、只留要的部分": "Trim margins, keep what you need",
+  "公司名、日期、页码": "Company name, date, page no.",
+  "PDF/A 存档": "PDF/A archive",
+  "长期保存、交给政府": "Long-term storage, government filing",
+  "对比两份文件可以「并排查看」：旧版、新版的页面放在左右两边，删掉或改掉的字标红、新增的标绿，按「下一处」一处一处跳": "Compare now has Side by side: old and new pages next to each other, removed or changed words in red and new words in green, with Next to jump between changes",
+  "裁剪页面：拖拉框出要留下的部分，或按「自动去白边」；可以只裁一页、选中的页或全部页面，画质不变": "Crop pages: drag a box around what to keep, or click Trim white margins; crop one page, selected pages or all pages without losing quality",
+  "页眉页脚：每页上方、下方的左中右都可以放文字，例如公司名、日期、文件名和「第 1 页，共 5 页」": "Header & footer: put text at the left, center or right of the top and bottom of every page, such as the company name, date, file name and \"Page 1 of 5\"",
+  "存成 PDF/A 存档格式：长期保存或交给政府、法院、银行用（在「转换」里）": "Save as PDF/A archive format for long-term storage or for government, courts and banks (in Convert)",
+  "证书签名可以加上时间戳：由 DigiCert 等时间戳机构证明签名的时间，证书以后过期，签名照样有效": "Certificate signatures can include a timestamp: a timestamp authority such as DigiCert confirms when you signed, so the signature stays valid after the certificate expires",
+  "可以把 smartPDF 设成 Windows 默认的 PDF 软件：第一次打开时会问，也可以在「设定」里设": "Make smartPDF the default PDF app in Windows: it asks the first time you open it, or use Settings",
   "修好 Word／Excel 转 PDF（之前出现「命令列太长」）": "Fixed Word/Excel to PDF (it failed with “command line is too long”)",
   "Word／Excel 转 PDF 失败时会显示具体原因，方便找出问题": "When Word/Excel to PDF fails, the reason is now shown",
   "Office 转不了这个文件：{e}": "Office could not convert this file: {e}",
@@ -1984,7 +2213,7 @@ function T(zh, v) {
 const I18N = { texts: [], attrs: [] };
 function collectI18n() {
   const cjk = /[㐀-鿿]/;
-  const skip = el => !el || el.closest('#pages,#thumbs,#outline,#cmpOut,#recent,#dTools,#dRecent,#dNoRecent,#dHello,#chlog,#limits,script,style,textarea,#toast,#fname,#hint,#cfMsg,#signSaved,#stampSaved,#seamSaved,#seamInfo,#spInfo,#spList,#scInfo,#scThumbs,#scGo,#scDone,#scDev,#rcInfo,#rcPg,#rcStage,#rcGapV,#ixTbl,#ixInfo,#rkInfo,#rkWords,#btList,#btCnt,#btInfo,#cmpSum,#pnInfo,#qCnt,#stMsg,#pwName,#cmpOld,#gnPv,#swatches,#padInk');
+  const skip = el => !el || el.closest('#pages,#thumbs,#outline,#cmpOut,#recent,#dTools,#dRecent,#dNoRecent,#dHello,#chlog,#limits,script,style,textarea,#toast,#fname,#hint,#cfMsg,#signSaved,#stampSaved,#seamSaved,#seamInfo,#spInfo,#spList,#scInfo,#scThumbs,#scGo,#scDone,#scDev,#rcInfo,#rcPg,#rcStage,#rcGapV,#ixTbl,#ixInfo,#rkInfo,#rkWords,#btList,#btCnt,#btInfo,#cmpSum,#pnInfo,#cvA,#cvB,#cvNA,#cvNB,#cvPos,#cvWhat,#cvVSum,#crInfo,#crStage,#hfInfo,#dfHowTxt,#dfMsg,#setDefMsg,#qCnt,#stMsg,#pwName,#cmpOld,#gnPv,#swatches,#padInk');
   const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   let n;
   while ((n = w.nextNode())) {
@@ -2017,6 +2246,9 @@ function setLang(l) {
 const IC = {
   office: '<path d="M5 2.8h6.5L15 6.3V17.2H5z"/><path d="M11.5 2.8v3.5H15"/><path d="M7.5 9.5l1 4 1.5-3 1.5 3 1-4"/>',
   invx: '<path d="M5 2.8h10v14.4l-2-1.2-2 1.2-2-1.2-2 1.2-2-1.2z"/><path d="M7.5 6.5h5M7.5 9.3h5M7.5 12.1h3"/>',
+  crop: '<path d="M5.5 2.5v11.5a.5.5 0 0 0 .5.5h11.5"/><path d="M2.5 5.5h11.5a.5.5 0 0 1 .5.5v11.5"/>',
+  hf: '<rect x="3.5" y="2.5" width="13" height="15" rx="1.5"/><path d="M6 5.5h8M6 14.5h8"/><path d="M7 9h6M7 11h4" opacity=".5"/>',
+  pdfa: '<rect x="3" y="3.5" width="14" height="4" rx="1"/><path d="M4.5 7.5v8a1 1 0 0 0 1 1h9a1 1 0 0 0 1-1v-8M8 11h4"/>',
   rdk: '<circle cx="8.5" cy="8.5" r="4.5"/><path d="M12 12l4.5 4.5"/><rect x="6" y="7.2" width="5" height="2.6" rx=".4" fill="currentColor"/>',
   cert: '<path d="M10 2.5l6 2.3v4.6c0 3.9-2.6 6.8-6 8.1-3.4-1.3-6-4.2-6-8.1V4.8z"/><path d="M7.2 10l2 2 3.8-4"/>',
   form: '<rect x="3" y="4" width="14" height="12" rx="1.6"/><path d="M6 8h3M6 12h3"/><rect x="11" y="7" width="3.5" height="2.2" rx=".5"/><rect x="11" y="11" width="3.5" height="2.2" rx=".5"/>',
@@ -3033,7 +3265,7 @@ function convOpts() {
   $('#cvRF').hidden = v === 'zip' || v === 'fromimg' || v === 'office'; $('#cvLvlF').hidden = v !== 'zip';
   $('#cvLock').hidden = v !== 'lock'; $('#cvCleanF').hidden = v !== 'fromimg'; $('#cvOneF').hidden = v !== 'xlsx';
   $('#cvClean').checked = LS.get('pdfed.imgClean') === '1';
-  $('#cvGo').textContent = v === 'office' ? T('选择文件') : v === 'fromimg' ? T('选择图片') : v === 'ocr' ? T('开始识别') : v === 'lock' ? T('加密并保存') : T('开始转换');
+  $('#cvGo').textContent = v === 'office' ? T('选择文件') : v === 'fromimg' ? T('选择图片') : v === 'ocr' ? T('开始识别') : v === 'lock' ? T('加密并保存') : v === 'pdfa' ? T('存成 PDF/A') : T('开始转换');
   if (v === 'lock') { lockUi(); setTimeout(() => $('#lkPw').focus(), 30); }
 }
 async function pageLines(p) {
@@ -3181,6 +3413,7 @@ async function convGo() {
   const idx = parseRange($('#cvR').value, S.pages.length);
   if (!idx || !idx.length) { toast(T('页码范围不正确')); return; }
   if (kind === 'lock') { await lockGo(idx); return; }
+  if (kind === 'pdfa') { await pdfaGo(idx); return; }
   closeModals(); closeEditor();
   if (kind === 'ocr') { await ocrAll(idx); return; }
   try {
@@ -3991,6 +4224,8 @@ function pageOp(name) {
     openSplit();
   } else if (name === 'rcpt') {
     openRcpt();
+  } else if (name === 'crop') {
+    openCrop();
   }
 }
 
@@ -4081,22 +4316,30 @@ function buildRows(A, B, ops) {
   const rows = [];
   let k = 0;
   while (k < ops.length) {
-    if (ops[k].t === '=') { rows.push({ kind: 'eq', line: A[ops[k].i] }); k++; continue; }
+    if (ops[k].t === '=') { rows.push({ kind: 'eq', line: A[ops[k].i], lineB: B[ops[k].j] }); k++; continue; }
     const dels = [], adds = [];
     while (k < ops.length && ops[k].t !== '=') { if (ops[k].t === '-') dels.push(A[ops[k].i]); else adds.push(B[ops[k].j]); k++; }
-    const pairs = Math.min(dels.length, adds.length);
-    const dm = [], am = [];
-    for (let q = 0; q < pairs; q++) {
-      const ta = tokenize(dels[q].text), tb = tokenize(adds[q].text), wd = diffSeq(ta, tb, (x, y) => x === y);
-      let da = null, db = null;
-      if (wd) {
-        const same = wd.filter(o => o.t === '=').length;
-        if (same / Math.max(ta.length, tb.length, 1) >= 0.3) {
-          da = new Set(wd.filter(o => o.t === '-').map(o => o.i)); db = new Set(wd.filter(o => o.t === '+').map(o => o.j));
-        }
-      }
-      dm.push({ toks: ta, mark: da }); am.push({ toks: tb, mark: db });
-    }
+    // 每一行删除配上最像的那一行新增（不一定是同一个位置），再做词级对比
+    const dm = [], am = [], used = new Set();
+    const grams = t => { const g = new Set(); for (let i = 0; i < t.length - 1; i++) g.add(t.slice(i, i + 2)); return g; };
+    const ga = adds.map(l => grams(l.key));
+    dels.forEach((dl, q) => {
+      const g = grams(dl.key); let best = -1, bs = 0.25;
+      ga.forEach((h, j) => {
+        if (used.has(j)) return;
+        let c = 0; for (const x of g) if (h.has(x)) c++;
+        const sim = c / Math.max(g.size, h.size, 1);
+        if (sim > bs) { bs = sim; best = j; }
+      });
+      if (best < 0) return;
+      used.add(best);
+      const ta = tokenize(dl.text), tb = tokenize(adds[best].text), wd = diffSeq(ta, tb, (x, y) => x === y);
+      if (!wd) return;
+      const same = wd.filter(o => o.t === '=').length;
+      if (same / Math.max(ta.length, tb.length, 1) < 0.3) return;
+      dm[q] = { toks: ta, mark: new Set(wd.filter(o => o.t === '-').map(o => o.i)) };
+      am[best] = { toks: tb, mark: new Set(wd.filter(o => o.t === '+').map(o => o.j)) };
+    });
     dels.forEach((l, q) => rows.push({ kind: 'del', line: l, diff: dm[q] || null }));
     adds.forEach((l, q) => rows.push({ kind: 'add', line: l, diff: am[q] || null }));
   }
@@ -4112,13 +4355,24 @@ async function pdfLines(items) {
       const y = t.transform[5], tol = Math.max(2, (t.height || 8) * 0.4);
       let r = rows.find(q => Math.abs(q.y - y) < tol);
       if (!r) { r = { y, parts: [] }; rows.push(r); }
-      r.parts.push({ x: t.transform[4], s: t.str });
+      r.parts.push({ x: t.transform[4], y, s: t.str, w: t.width || 0, h: t.height || Math.hypot(t.transform[2], t.transform[3]) || 8 });
     }
     rows.sort((p, q) => q.y - p.y);
     for (const r of rows) {
       r.parts.sort((p, q) => p.x - q.x);
-      const text = normLine(r.parts.map(q => q.s).join(' '));
-      if (text) out.push({ text, key: cmpKey(text), pg: it.label });
+      // 跟 normLine 一样合并空白，同时记下每个字来自哪一段、第几个字（之后用来在页面上标出位置）
+      const ch = [], own = [];
+      r.parts.forEach((q, pi) => {
+        if (ch.length && ch[ch.length - 1] !== ' ') { ch.push(' '); own.push(null); }
+        for (let k = 0; k < q.s.length; k++) {
+          const c = /\s/.test(q.s[k]) ? ' ' : q.s[k];
+          if (c === ' ' && (!ch.length || ch[ch.length - 1] === ' ')) continue;
+          ch.push(c); own.push([pi, k]);
+        }
+      });
+      while (ch.length && ch[ch.length - 1] === ' ') { ch.pop(); own.pop(); }
+      const text = ch.join('');
+      if (text) out.push({ text, key: cmpKey(text), pg: it.label, it, parts: r.parts, own });
     }
   }
   return out;
@@ -4130,6 +4384,7 @@ function renderCmp(rows, nA, nB) {
   $('#cmpSum').textContent = !dels && !adds
     ? T('文字内容完全一致。版式、图片、签名和印章不在比较范围内。')
     : T('旧版 {a} 行，新版 {b} 行。删除 {d} 行，新增 {n} 行（修改的内容会显示为一行删除加一行新增）。', { a: nA, b: nB, d: dels, n: adds });
+  $('#cmpViewBtn').hidden = !CV.gs.length;
   if (!dels && !adds) return;
   const show = rows.map((r, i) => r.kind !== 'eq' || (rows[i - 1] && rows[i - 1].kind !== 'eq') || (rows[i + 1] && rows[i + 1].kind !== 'eq'));
   const mk = (cls, sign, line, diff, tag) => {
@@ -4142,6 +4397,7 @@ function renderCmp(rows, nA, nB) {
     const pr = document.createElement('span'); pr.className = 'pr'; pr.textContent = T('{tag}·{pg}页', { tag, pg: line.pg });
     d.append(sg, tx, pr); return d;
   };
+  const mk2 = r => { const d = mk(r.kind, r.kind === 'del' ? '−' : r.kind === 'add' ? '+' : '', r.line, r.diff, r.kind === 'add' ? T('新') : T('旧')); if (r.g >= 0) { d.classList.add('go'); d.title = T('点一下在页面上看'); d.onclick = () => openCmpView(r.g); } return d; };
   let i = 0;
   while (i < rows.length) {
     if (!show[i]) {
@@ -4149,7 +4405,7 @@ function renderCmp(rows, nA, nB) {
       const g = document.createElement('div'); g.className = 'df gap'; g.textContent = T('… {n} 行相同内容 …', { n: j - i }); host.appendChild(g); i = j; continue;
     }
     const r = rows[i];
-    host.appendChild(mk(r.kind, r.kind === 'del' ? '−' : r.kind === 'add' ? '+' : '', r.line, r.diff, r.kind === 'add' ? T('新') : T('旧')));
+    host.appendChild(mk2(r));
     i++;
   }
 }
@@ -4158,6 +4414,7 @@ async function runCompare() {
   const f = $('#cmpFile').files[0];
   if (!f || !S.pages.length) return;
   busy(true, T('正在对比…'));
+  cvReset();
   let pdfB = null;
   try {
     pdfB = await pdfjsLib.getDocument({ data: new Uint8Array(await f.arrayBuffer()), isEvalSupported: false }).promise;
@@ -4167,14 +4424,141 @@ async function runCompare() {
     if (!A.length && !B.length) { $('#cmpOut').textContent = ''; $('#cmpSum').textContent = T('两份文件都读不到文字，可能是扫描件，暂时无法对比。'); return; }
     const ops = diffSeq(A, B, (x, y) => x.key === y.key);
     if (!ops) { $('#cmpOut').textContent = ''; $('#cmpSum').textContent = T('文件太长，暂时无法对比。可以先用「提取」分段后再对比。'); return; }
-    renderCmp(buildRows(A, B, ops), A.length, B.length);
+    const rows = buildRows(A, B, ops);
+    Object.assign(CV, { pdfB, itemsA, itemsB, nameA: S.fileName, nameB: f.name, gs: cmpGroups(rows) }); pdfB = null;
+    renderCmp(rows, A.length, B.length);
   } catch (e) {
     console.error(e);
     $('#cmpOut').textContent = ''; $('#cmpSum').textContent = /password/i.test(String(e && e.name + e.message)) ? T('新版文件有打开密码，暂时不支持。') : T('无法读取新版文件：{e}', { e: e.message || e });
   } finally { busy(false); if (pdfB) pdfB.destroy(); }
 }
+/* ----- 并排比较（v3.4）：两边页面并排，删掉的标红、新增的标绿，可以一处一处跳 ----- */
+const CV = { gs: [], k: -1, pdfB: null, itemsA: null, itemsB: null, obs: null, els: [] };
+function cvReset() {
+  if (CV.obs) CV.obs.disconnect();
+  if (CV.pdfB) CV.pdfB.destroy();
+  Object.assign(CV, { gs: [], k: -1, pdfB: null, itemsA: null, itemsB: null, obs: null, els: [], mapA: null, mapB: null });
+  ['#cvA', '#cvB'].forEach(q => { const h = $(q); if (h) h.textContent = ''; });
+}
+// 一行里第 a 到 b 个字在页面上的框（PDF 坐标）
+function lineRect(L, a, b) {
+  let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  for (let i = a; i < b; i++) {
+    const o = L.own[i]; if (!o) continue;
+    const q = L.parts[o[0]], it = { str: q.s };
+    x0 = Math.min(x0, q.x + q.w * strFrac(it, o[1])); x1 = Math.max(x1, q.x + q.w * strFrac(it, o[1] + 1));
+    y0 = Math.min(y0, q.y - q.h * 0.22); y1 = Math.max(y1, q.y + q.h * 0.9);
+  }
+  return x1 > x0 ? [x0, y0, x1, y1] : null;
+}
+function rowRects(r) {
+  const L = r.line, out = [];
+  if (r.diff && r.diff.mark) {
+    let off = 0, run = null;
+    r.diff.toks.forEach((tk, ti) => {
+      const st = off; off += tk.length;
+      if (!r.diff.mark.has(ti) || !tk.trim()) return;
+      if (run && !L.text.slice(run[1], st).trim()) run[1] = off;
+      else { if (run) out.push(run); run = [st, off]; }
+    });
+    if (run) out.push(run);
+  } else out.push([0, L.text.length]);
+  return out.map(([a, b]) => lineRect(L, a, b)).filter(Boolean).map(rc => ({ it: L.it, rc }));
+}
+// 连在一起的删除 / 新增算一处改动
+function cmpGroups(rows) {
+  const gs = []; let cur = null, lastEq = null;
+  for (const r of rows) {
+    if (r.kind === 'eq') { r.g = -1; if (cur) { cur.after = r; gs.push(cur); cur = null; } lastEq = r; continue; }
+    if (!cur) cur = { before: lastEq, after: null, A: [], B: [] };
+    r.g = gs.length;
+    (r.kind === 'del' ? cur.A : cur.B).push(...rowRects(r));
+  }
+  if (cur) gs.push(cur);
+  return gs;
+}
+function cvAnchor(g, side) {
+  const r = g.before || g.after; if (!r) return null;
+  const L = side === 'A' ? r.line : r.lineB; if (!L) return null;
+  const rc = lineRect(L, 0, L.text.length);
+  return rc ? { it: L.it, rc } : null;
+}
+async function cvBuild(host, items) {
+  host.textContent = '';
+  const w = Math.max(200, host.clientWidth - 24), map = new Map();
+  for (const it of items) {
+    const pg = await it.pdf.getPage(it.idx + 1), vp = pg.getViewport({ scale: 1 }), sc = w / vp.width;
+    const d = document.createElement('div'); d.className = 'cvPg';
+    d.style.width = w + 'px'; d.style.height = Math.round(vp.height * sc) + 'px';
+    const n = document.createElement('span'); n.className = 'cvN'; n.textContent = T('第 {p} 页', { p: it.label }); d.appendChild(n);
+    d._pg = pg; d._vp = vp; d._sc = sc;
+    host.appendChild(d); map.set(it, d); CV.obs.observe(d);
+  }
+  return map;
+}
+function cvRender(d) {
+  if (d._done) return; d._done = true;
+  const dpr = Math.min(2, window.devicePixelRatio || 1), vp = d._pg.getViewport({ scale: d._sc * dpr });
+  const c = document.createElement('canvas'); c.width = Math.ceil(vp.width); c.height = Math.ceil(vp.height);
+  d.insertBefore(c, d.firstChild);
+  d._pg.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise.catch(e => console.warn(e));
+}
+function cvBox(map, b, cls, g) {
+  const d = map.get(b.it); if (!d) return null;
+  const v = d._vp, q = v.convertToViewportRectangle(b.rc);
+  const x = Math.min(q[0], q[2]), y = Math.min(q[1], q[3]), w = Math.abs(q[2] - q[0]), h = Math.abs(q[3] - q[1]);
+  const e = document.createElement('div'); e.className = 'cvBox ' + cls;
+  Object.assign(e.style, { left: (x - 1.5) / v.width * 100 + '%', top: (y - 1) / v.height * 100 + '%', width: (w + 3) / v.width * 100 + '%', height: (h + 2) / v.height * 100 + '%' });
+  if (g >= 0) { e.onclick = () => cvGo(g); e.title = T('第 {k} 处改动', { k: g + 1 }); }
+  d.appendChild(e); return e;
+}
+async function openCmpView(k) {
+  if (!CV.gs.length) return;
+  openModal('mCmpV');
+  $('#cvNA').textContent = CV.nameA || ''; $('#cvNB').textContent = CV.nameB || '';
+  $('#cvVSum').textContent = T('共 {n} 处改动', { n: CV.gs.length });
+  if (!CV.mapA) {
+    busy(true, T('正在准备页面…'));
+    try {
+      CV.obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) cvRender(e.target); }), { rootMargin: '600px 0px' });
+      CV.mapA = await cvBuild($('#cvA'), CV.itemsA); CV.mapB = await cvBuild($('#cvB'), CV.itemsB);
+      CV.els = CV.gs.map((g, i) => ({ A: g.A.map(b => cvBox(CV.mapA, b, 'del', i)).filter(Boolean), B: g.B.map(b => cvBox(CV.mapB, b, 'add', i)).filter(Boolean) }));
+    } finally { busy(false); }
+  }
+  cvGo(k == null ? 0 : k);
+}
+function cvScrollTo(host, el, map, anchor) {
+  let top;
+  if (el) top = el.parentNode.offsetTop + el.offsetTop;
+  else if (anchor) { const d = map.get(anchor.it); if (!d) return; const q = d._vp.convertToViewportRectangle(anchor.rc); top = d.offsetTop + Math.min(q[1], q[3]) * d._sc; }
+  else return;
+  host.scrollTo({ top: Math.max(0, top - host.clientHeight * 0.3), behavior: 'smooth' });
+}
+function cvGo(k) {
+  if (!CV.gs.length) return;
+  k = (k + CV.gs.length) % CV.gs.length; CV.k = k;
+  $$('.cvBox.on').forEach(e => e.classList.remove('on'));
+  const e = CV.els[k] || { A: [], B: [] };
+  [...e.A, ...e.B].forEach(x => x.classList.add('on'));
+  cvScrollTo($('#cvA'), e.A[0], CV.mapA, cvAnchor(CV.gs[k], 'A'));
+  cvScrollTo($('#cvB'), e.B[0], CV.mapB, cvAnchor(CV.gs[k], 'B'));
+  const g = CV.gs[k];
+  $('#cvPos').textContent = `${k + 1} / ${CV.gs.length}`;
+  $('#cvWhat').textContent = !g.A.length ? T('新版多了内容') : !g.B.length ? T('新版删掉了内容') : T('内容有修改');
+}
+function wireCmpView() {
+  $('#cmpViewBtn').onclick = () => openCmpView(0);
+  $('#cvPrev').onclick = () => cvGo(CV.k - 1); $('#cvNext').onclick = () => cvGo(CV.k + 1);
+  $('#cvBack').onclick = () => openModal('mCmp');
+  document.addEventListener('keydown', e => {
+    if ($('#mCmpV').hidden) return;
+    if (e.key === 'ArrowDown' || e.key === 'n') { e.preventDefault(); cvGo(CV.k + 1); }
+    else if (e.key === 'ArrowUp' || e.key === 'p') { e.preventDefault(); cvGo(CV.k - 1); }
+  });
+}
 function openCmp() {
   if (!S.pages.length) return;
+  cvReset(); $('#cmpViewBtn').hidden = true;
   $('#cmpOut').textContent = ''; $('#cmpSum').textContent = ''; $('#cmpFile').value = ''; $('#cmpGo').disabled = true;
   $('#cmpOld').textContent = S.fileName;
   openModal('mCmp');
@@ -4296,10 +4680,10 @@ function slimPage(doc, idx, seen) {
     leaf.set(R, slimResources(ctx, res, names, seen));
   } catch (e) { console.warn('slimPage', e); }
 }
-async function buildPdf(pages, onProg) {
+async function buildPdf(pages, onProg, opts) {
   const { PDFDocument, degrees } = PDFLib;
-  const out = await PDFDocument.create();
-  const flat = p => p.ann.some(a => a.rd) || (!p.blank && S.docs[p.doc].enc);
+  const out = await PDFDocument.create(), force = opts && opts.flat;
+  const flat = p => (force && force.has(p.id)) || p.ann.some(a => a.rd) || (!p.blank && S.docs[p.doc].enc);
   // 同一份原文件的页面一次复制，共用的字体和图片只存一份
   const copies = new Array(pages.length), bySrc = new Map();
   pages.forEach((p, j) => { if (!p.blank && !flat(p)) { if (!bySrc.has(p.doc)) bySrc.set(p.doc, []); bySrc.get(p.doc).push(j); } });
@@ -5145,7 +5529,9 @@ const DASH_TOOLS = [
     ['merge', '合并', '几个 PDF 接成一个', 'indigo', () => { openBatch(); $$('input[name="bt"]').forEach(r => { r.checked = r.value === 'merge'; }); batchUi(); }],
     ['split', '拆分', '按页或按发票号码', 'purple', () => dashNeedDoc(openSplit)],
     ['receipt', '分收据', '一页几张收据分开', 'pink', () => dashNeedDoc(openRcpt)],
-    ['cmp', '对比', '两份合同差在哪里', 'teal', () => dashNeedDoc(openCmp)]
+    ['cmp', '对比', '两份文件差在哪里', 'teal', () => dashNeedDoc(openCmp)],
+    ['crop', '裁剪页面', '去白边、只留要的部分', 'orange', () => dashNeedDoc(openCrop)],
+    ['hf', '页眉页脚', '公司名、日期、页码', 'blue', () => dashNeedDoc(openHf)]
   ] },
   { g: '表格、批注和涂黑', c: 'blue', items: [
     ['form', '表格栏位', '做别人能填写的表格', 'blue', () => dashNeedDoc(() => setTool('field'))],
@@ -5164,7 +5550,8 @@ const DASH_TOOLS = [
     ['invx', '发票转 Excel', '号码、日期、金额做成表', 'green', () => openInvx()],
     ['ocr', '文字识别', '扫描件变成可搜索', 'teal', () => dashNeedDoc(() => openConvAs('ocr'))],
     ['lock', '加密码', '打开密码、禁止打印', 'indigo', () => dashNeedDoc(() => openConvAs('lock'))],
-    ['zip', '压缩', '把文件变小', 'orange', () => dashNeedDoc(() => openConvAs('zip'))]
+    ['zip', '压缩', '把文件变小', 'orange', () => dashNeedDoc(() => openConvAs('zip'))],
+    ['pdfa', 'PDF/A 存档', '长期保存、交给政府', 'slate', () => dashNeedDoc(() => openConvAs('pdfa'))]
   ] }
 ];
 function fileTag(name) {
@@ -5242,7 +5629,7 @@ function setUi() {
   $('#setRecRow').hidden = !DESK.on; $('#setRecClr').disabled = !recentList().length;
   $('#setVer').textContent = 'v' + VERSION; $('#setAuthor').value = LS.get('pdfed.author') || '';
 }
-function openSet() { setUi(); openModal('mSet'); }
+function openSet() { setUi(); setDefRow(); openModal('mSet'); if (DESK.on) defCheck().then(setDefRow); }
 function wireSet() {
   $('#btnSet').onclick = openSet; $('#dnSet').onclick = openSet;
   $('#btnHome').onclick = showHome; $('#dnBack').onclick = updWelcome;
@@ -6140,12 +6527,448 @@ function wireRdk() {
   $$('#mRdk input[type=checkbox]').forEach(c => { c.onchange = () => { $('#rkGo').disabled = true; }; });
 }
 
+/* ===== 裁剪页面（v3.4）：框出要留下的部分，框外裁掉。只改页面范围，文字和图片画质不变 ===== */
+const CR = { p: null, sc: 1, m: { t: 0, b: 0, l: 0, r: 0 }, drag: null };
+function crTargets() {
+  const sc = $('#crScope').value;
+  if (sc === 'all') return S.pages.filter(p => !p.blank);
+  if (sc === 'sel') return S.pages.filter(p => S.sel.has(p.id) && !p.blank);
+  if (sc === 'range') { const ix = parseRange($('#crR').value, S.pages.length); return ix ? ix.map(i => S.pages[i]).filter(p => !p.blank) : null; }
+  const p = S.pages[S.cur]; return p && !p.blank ? [p] : [];
+}
+async function openCrop() {
+  if (!S.pages.length) { toast(T('请先打开一个 PDF')); return; }
+  closeEditor();
+  const cur = S.pages[S.cur];
+  if (!cur || cur.blank) { toast(T('这一页是空白页，不用裁剪')); return; }
+  const sel = S.pages.filter(p => S.sel.has(p.id) && !p.blank);
+  $('#crScope').querySelector('[value=sel]').hidden = sel.length < 2;
+  $('#crScope').querySelector('[value=sel]').textContent = T('选中的 {n} 页', { n: sel.length });
+  $('#crScope').value = sel.length > 1 ? 'sel' : 'cur'; $('#crR').hidden = true; $('#crEach').checked = false;
+  CR.p = cur; CR.m = { t: 0, b: 0, l: 0, r: 0 };
+  openModal('mCrop');
+  const st = $('#crStage'), maxW = Math.min(520, st.parentNode.clientWidth - 230 > 200 ? st.parentNode.clientWidth - 230 : st.parentNode.clientWidth), maxH = Math.min(560, window.innerHeight * 0.6);
+  CR.sc = Math.min(maxW / cur.W, maxH / cur.H);
+  const c = await pageCanvas(cur, CR.sc * Math.min(2, window.devicePixelRatio || 1)), cv = $('#crCv');
+  cv.width = c.width; cv.height = c.height; cv.getContext('2d').drawImage(c, 0, 0);
+  cv.style.width = Math.round(cur.W * CR.sc) + 'px'; cv.style.height = Math.round(cur.H * CR.sc) + 'px';
+  st.style.width = cv.style.width; st.style.height = cv.style.height;
+  crShow();
+}
+const crMm = v => Math.round(v / MM * 10) / 10;
+function crShow(skipInputs) {
+  const p = CR.p, m = CR.m, sc = CR.sc, b = $('#crBox');
+  Object.assign(b.style, { left: m.l * sc + 'px', top: m.t * sc + 'px', width: Math.max(0, p.W - m.l - m.r) * sc + 'px', height: Math.max(0, p.H - m.t - m.b) * sc + 'px' });
+  if (!skipInputs) { $('#crT').value = crMm(m.t); $('#crB').value = crMm(m.b); $('#crL').value = crMm(m.l); $('#crRt').value = crMm(m.r); }
+  const w = p.W - m.l - m.r, h = p.H - m.t - m.b;
+  $('#crInfo').textContent = $('#crEach').checked ? T('每一页会各自找出内容的范围，去掉四周的空白') : T('裁剪后大小：{w} × {h} 毫米', { w: Math.round(w / MM), h: Math.round(h / MM) });
+}
+function crFromInputs() {
+  const p = CR.p, g = id => Math.max(0, (+$(id).value || 0) * MM);
+  const m = { t: g('#crT'), b: g('#crB'), l: g('#crL'), r: g('#crRt') };
+  if (p.W - m.l - m.r < 20 || p.H - m.t - m.b < 20) return;
+  CR.m = m; crShow(true);
+}
+// 找出页面上有内容的范围（白边以内），四周留 3 毫米
+async function crAutoBox(p) {
+  const sc = Math.min(1, 700 / Math.max(p.W, p.H)), c = await pageCanvas(p, sc), w = c.width, h = c.height, d = c.getContext('2d').getImageData(0, 0, w, h).data;
+  const rows = new Uint32Array(h), cols = new Uint32Array(w);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const i = (y * w + x) * 4;
+    if ((d[i] * 3 + d[i + 1] * 6 + d[i + 2]) / 10 < 232) { rows[y]++; cols[x]++; }
+  }
+  const lim = 1; let y0 = 0, y1 = h - 1, x0 = 0, x1 = w - 1;
+  while (y0 < h && rows[y0] <= lim) y0++;
+  while (y1 > y0 && rows[y1] <= lim) y1--;
+  while (x0 < w && cols[x0] <= lim) x0++;
+  while (x1 > x0 && cols[x1] <= lim) x1--;
+  if (y0 >= h || x0 >= w) return null;
+  const pad = 3 * MM;
+  const X0 = Math.max(0, x0 / sc - pad), Y0 = Math.max(0, y0 / sc - pad), X1 = Math.min(p.W, (x1 + 1) / sc + pad), Y1 = Math.min(p.H, (y1 + 1) / sc + pad);
+  return { t: Y0, l: X0, b: p.H - Y1, r: p.W - X1 };
+}
+async function crAuto() {
+  const m = await crAutoBox(CR.p);
+  if (!m) { toast(T('这一页没有找到内容')); return; }
+  CR.m = m; crShow();
+}
+function crDown(e) {
+  const st = $('#crStage'), r = st.getBoundingClientRect(), sc = CR.sc, p = CR.p, m = CR.m;
+  const x = (e.clientX - r.left) / sc, y = (e.clientY - r.top) / sc, tol = 8 / sc;
+  const L = m.l, R = p.W - m.r, Tp = m.t, B = p.H - m.b, inY = y > Tp - tol && y < B + tol, inX = x > L - tol && x < R + tol;
+  const ed = { l: inY && Math.abs(x - L) < tol, r: inY && Math.abs(x - R) < tol, t: inX && Math.abs(y - Tp) < tol, b: inX && Math.abs(y - B) < tol };
+  let type = ed.l || ed.r || ed.t || ed.b ? 'edge' : x > L && x < R && y > Tp && y < B ? 'move' : 'new';
+  CR.drag = { type, ed, sx: x, sy: y, o: { ...m } };
+  st.setPointerCapture(e.pointerId); e.preventDefault();
+}
+function crMoveEv(e) {
+  const st = $('#crStage'), r = st.getBoundingClientRect(), sc = CR.sc, p = CR.p;
+  const x = clamp((e.clientX - r.left) / sc, 0, p.W), y = clamp((e.clientY - r.top) / sc, 0, p.H);
+  const D = CR.drag;
+  if (!D) {
+    const m = CR.m, tol = 8 / sc, L = m.l, R = p.W - m.r, Tp = m.t, B = p.H - m.b;
+    const nl = Math.abs(x - L) < tol || Math.abs(x - R) < tol, nt = Math.abs(y - Tp) < tol || Math.abs(y - B) < tol;
+    st.style.cursor = nl && nt ? 'nwse-resize' : nl ? 'ew-resize' : nt ? 'ns-resize' : x > L && x < R && y > Tp && y < B ? 'move' : 'crosshair';
+    return;
+  }
+  const o = D.o, min = 20; let m = { ...o };
+  if (D.type === 'new') {
+    m = { l: Math.min(D.sx, x), r: p.W - Math.max(D.sx, x), t: Math.min(D.sy, y), b: p.H - Math.max(D.sy, y) };
+    if (p.W - m.l - m.r < 4 || p.H - m.t - m.b < 4) return;
+  } else if (D.type === 'move') {
+    const w = p.W - o.l - o.r, h = p.H - o.t - o.b, nl = clamp(o.l + x - D.sx, 0, p.W - w), nt = clamp(o.t + y - D.sy, 0, p.H - h);
+    m = { l: nl, r: p.W - w - nl, t: nt, b: p.H - h - nt };
+  } else {
+    if (D.ed.l) m.l = clamp(x, 0, p.W - o.r - min);
+    if (D.ed.r) m.r = clamp(p.W - x, 0, p.W - o.l - min);
+    if (D.ed.t) m.t = clamp(y, 0, p.H - o.b - min);
+    if (D.ed.b) m.b = clamp(p.H - y, 0, p.H - o.t - min);
+  }
+  CR.m = m; crShow();
+}
+function crUp() { CR.drag = null; }
+// 搬动标注：页面左上角变了，标注跟着移
+function shiftAnn(a, dx, dy, W, H) {
+  const b = { ...a, id: uid() };
+  if (a.t === 'ink') b.pts = a.pts.map(([x, y]) => [x + dx, y + dy]);
+  else if (a.t === 'wm') { b.x = W / 2; b.y = H / 2; }
+  else { b.x = a.x + dx; b.y = a.y + dy; }
+  return b;
+}
+async function crGo() {
+  const list = crTargets();
+  if (!list) { toast(T('页码范围不正确')); return; }
+  if (!list.length) { toast(T('没有可以裁剪的页面')); return; }
+  const each = $('#crEach').checked, m = CR.m;
+  if (!each && m.t + m.b + m.l + m.r < 0.5) { toast(T('请先框出要留下的部分')); return; }
+  closeModals(); busy(true, T('正在裁剪…'));
+  try {
+    const jobs = [];
+    for (const p of list) {
+      let mm = m;
+      if (each) { mm = await crAutoBox(p); if (!mm) continue; }
+      const box = { x: mm.l, y: mm.t, w: p.W - mm.l - mm.r, h: p.H - mm.t - mm.b };
+      if (box.w < 20 || box.h < 20) continue;
+      if (box.x < 0.5 && box.y < 0.5 && box.w > p.W - 1 && box.h > p.H - 1) continue;
+      jobs.push({ p, box: { x: Math.max(0, box.x), y: Math.max(0, box.y), w: Math.min(box.w, p.W), h: Math.min(box.h, p.H) } });
+    }
+    if (!jobs.length) { busy(false); toast(T('页面已经没有白边可以裁了')); return; }
+    const { PDFDocument, PDFName } = PDFLib;
+    // 先把这些页面（不含标注）做成一个 PDF，再逐页改范围
+    const doc = await PDFDocument.load(await buildPdf(jobs.map(j => ({ ...j.p, ann: [] }))));
+    jobs.forEach((j, i) => {
+      const pg = doc.getPage(i), cb = pg.getCropBox(), q = { vb: [cb.x, cb.y, cb.x + cb.width, cb.y + cb.height], intr: pg.getRotation().angle, rot: 0 };
+      computeView(q);
+      const [a, b, c, d, e, f] = q.vt, det = a * d - b * c, bx = j.box;
+      const toPdf = (vx, vy) => [(d * (vx - e) - c * (vy - f)) / det, (-b * (vx - e) + a * (vy - f)) / det];
+      const p0 = toPdf(bx.x, bx.y), p1 = toPdf(bx.x + bx.w, bx.y + bx.h);
+      const X0 = Math.min(p0[0], p1[0]), X1 = Math.max(p0[0], p1[0]), Y0 = Math.min(p0[1], p1[1]), Y1 = Math.max(p0[1], p1[1]);
+      for (const k of ['TrimBox', 'BleedBox', 'ArtBox']) pg.node.delete(PDFName.of(k));
+      pg.setMediaBox(X0, Y0, X1 - X0, Y1 - Y0); pg.setCropBox(X0, Y0, X1 - X0, Y1 - Y0);
+    });
+    const di = await loadPdfBytes(await doc.save(), S.fileName);
+    const np = await pagesFromDoc(di), repl = new Map();
+    jobs.forEach((j, i) => {
+      const n = np[i], dx = -j.box.x, dy = -j.box.y;
+      n.ann = j.p.ann.map(a => shiftAnn(a, dx, dy, n.W, n.H)).filter(a => { const bb = bbox(a); return bb.x + bb.w > 0 && bb.y + bb.h > 0 && bb.x < n.W && bb.y < n.H; });
+      repl.set(j.p.id, n);
+    });
+    busy(false);
+    structural(() => { S.pages = S.pages.map(p => repl.get(p.id) || p); S.sel.clear(); });
+    toast(T('已裁剪 {n} 页，可以用「撤销」还原', { n: jobs.length }));
+  } catch (e) { busy(false); console.error(e); toast(T('裁剪失败：{e}', { e: e.message || e })); }
+}
+function wireCrop() {
+  const st = $('#crStage');
+  st.addEventListener('pointerdown', crDown); st.addEventListener('pointermove', crMoveEv); st.addEventListener('pointerup', crUp); st.addEventListener('pointercancel', crUp);
+  ['#crT', '#crB', '#crL', '#crRt'].forEach(q => { $(q).oninput = crFromInputs; });
+  $('#crAuto').onclick = crAuto; $('#crReset').onclick = () => { CR.m = { t: 0, b: 0, l: 0, r: 0 }; crShow(); };
+  $('#crScope').onchange = () => { $('#crR').hidden = $('#crScope').value !== 'range'; if (!$('#crR').hidden) $('#crR').focus(); };
+  $('#crEach').onchange = () => { $('#crStage').classList.toggle('dim', $('#crEach').checked); crShow(); };
+  $('#crGo').onclick = crGo;
+}
+
+/* ===== 页眉页脚（v3.4）：每页上下加文字，可放页码、日期、文件名 ===== */
+const HF_SLOTS = ['tl', 'tc', 'tr', 'bl', 'bc', 'br'];
+const HF_TOK = { zh: ['{页码}', '{总页数}', '{日期}', '{文件名}'], en: ['{page}', '{pages}', '{date}', '{file}'] };
+function openHf() {
+  if (!S.pages.length) { toast(T('请先打开一个 PDF')); return; }
+  closeEditor();
+  let o = {}; try { o = JSON.parse(LS.get('pdfed.hf') || '{}'); } catch (e) { /* ignore */ }
+  HF_SLOTS.forEach(k => { $('#hf_' + k).value = o[k] != null ? o[k] : k === 'bc' ? (LANG === 'en' ? 'Page {page} of {pages}' : '第 {页码} 页，共 {总页数} 页') : ''; });
+  $('#hfSize').value = o.size || 9; $('#hfCol').value = o.c || '#555b66'; $('#hfMg').value = o.mg || 10; $('#hfStart').value = 1; $('#hfR').value = T('全部');
+  HF.last = $('#hf_bc');
+  openModal('mHf'); hfPreview();
+}
+const HF = { last: null };
+function hfText(tpl, n, tot, name) {
+  const d = new Date(), date = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  return tpl.replace(/\{(页码|page)\}/gi, n).replace(/\{(总页数|pages)\}/gi, tot).replace(/\{(日期|date)\}/gi, date).replace(/\{(文件名|file)\}/gi, name).trim();
+}
+function hfPreview() {
+  const idxs = parseRange($('#hfR').value, S.pages.length), start = Math.floor(+$('#hfStart').value || 1);
+  if (!idxs || !idxs.length) { $('#hfInfo').textContent = T('页码范围不正确'); return; }
+  const tot = start + idxs.length - 1, name = stem();
+  const t = HF_SLOTS.map(k => hfText($('#hf_' + k).value, start, tot, name));
+  const top = t.slice(0, 3).filter(Boolean).join('　|　'), bot = t.slice(3).filter(Boolean).join('　|　');
+  $('#hfInfo').textContent = !top && !bot ? T('六个格子都是空的') : T('第一页会显示：') + (top ? T('上方「{t}」', { t: top }) : '') + (top && bot ? (LANG === 'en' ? ', ' : '，') : '') + (bot ? T('下方「{t}」', { t: bot }) : '');
+}
+function applyHf() {
+  const idxs = parseRange($('#hfR').value, S.pages.length);
+  if (!idxs || !idxs.length) { toast(T('页码范围不正确')); return; }
+  const tpl = {}; HF_SLOTS.forEach(k => { tpl[k] = $('#hf_' + k).value; });
+  if (!HF_SLOTS.some(k => tpl[k].trim())) { toast(T('请至少在一个格子里写字')); return; }
+  const size = clamp(+$('#hfSize').value || 9, 5, 36), c = $('#hfCol').value, mgMm = clamp(+$('#hfMg').value || 10, 2, 60), mg = mgMm * MM, start = Math.floor(+$('#hfStart').value || 1);
+  LS.set('pdfed.hf', JSON.stringify({ ...tpl, size, c, mg: mgMm }));
+  const tot = start + idxs.length - 1, name = stem(), b = snap();
+  idxs.forEach((pi, i) => {
+    const p = S.pages[pi];
+    p.ann = p.ann.filter(a => !a.hf);
+    for (const k of HF_SLOTS) {
+      const text = hfText(tpl[k], start + i, tot, name); if (!text) continue;
+      const a = { id: uid(), t: 'text', text, size, c, hf: true, x: 0, y: 0 }, m = textBox(a);
+      a.x = k[1] === 'l' ? mg : k[1] === 'r' ? p.W - mg - m.w : (p.W - m.w) / 2;
+      a.y = k[0] === 't' ? mg : p.H - mg - m.h;
+      p.ann.push(a);
+    }
+  });
+  commit(b); redrawAll(); closeModals(); toast(T('已给 {n} 页加上页眉页脚', { n: idxs.length }));
+}
+function removeHf() {
+  const b = snap(); let n = 0;
+  S.pages.forEach(p => { const k = p.ann.length; p.ann = p.ann.filter(a => !a.hf); if (p.ann.length < k) n++; });
+  if (!n) { toast(T('没有可移除的页眉页脚')); return; }
+  S.selAnn = null; commit(b); redrawAll(); refreshProps(); closeModals(); toast(T('已移除 {n} 页的页眉页脚', { n }));
+}
+function wireHf() {
+  HF_SLOTS.forEach(k => { const el = $('#hf_' + k); el.onfocus = () => { HF.last = el; }; el.oninput = hfPreview; });
+  ['#hfR', '#hfStart'].forEach(q => { $(q).oninput = hfPreview; });
+  $$('#hfTok button').forEach((bt, i) => {
+    bt.onclick = () => {
+      const el = HF.last || $('#hf_bc'), tok = HF_TOK[LANG === 'en' ? 'en' : 'zh'][i], s0 = el.selectionStart != null ? el.selectionStart : el.value.length;
+      el.value = el.value.slice(0, s0) + tok + el.value.slice(el.selectionEnd != null ? el.selectionEnd : s0); el.focus(); el.setSelectionRange(s0 + tok.length, s0 + tok.length); hfPreview();
+    };
+  });
+  $('#hfGo').onclick = applyHf; $('#hfDel').onclick = removeHf;
+  $('#pnHf').onclick = openHf;
+}
+
+/* ===== PDF/A 存档格式（v3.4）：长期保存用。字体、颜色都放进文件里，以后在哪台电脑打开都一样 ===== */
+const SRGB_ICC = 'AAAJ0G5vbmUCEAAAbW50clJHQiBYWVogB+oAAQABAAAAAAAAYWNzcE1TRlQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPbWAAEAAAAA0y0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJZGVzYwAAAPAAAABsY3BydAAAAVwAAAAWd3RwdAAAAXQAAAAUclhZWgAAAYgAAAAUZ1hZWgAAAZwAAAAUYlhZWgAAAbAAAAAUclRSQwAAAcQAAAgMZ1RSQwAAAcQAAAgMYlRSQwAAAcQAAAgMZGVzYwAAAAAAAAASc1JHQiBJRUM2MTk2Ni0yLjEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdGV4dAAAAABQdWJsaWMgRG9tYWluAAAAWFlaIAAAAAAAAPbWAAEAAAAA0y1YWVogAAAAAAAAb6QAADj2AAADj1hZWiAAAAAAAABilgAAt4cAABjcWFlaIAAAAAAAACSiAAAPgwAAts9jdXJ2AAAAAAAABAAAAAAFAAoADwAUABkAHgAjACgALQAyADcAOwBAAEUASgBPAFQAWQBeAGMAaABtAHIAdwB8AIEAhgCLAJAAlQCaAJ8ApACpAK4AsgC3ALwAwQDGAMsA0ADVANsA4ADlAOsA8AD2APsBAQEHAQ0BEwEZAR8BJQErATIBOAE+AUUBTAFSAVkBYAFnAW4BdQF8AYMBiwGSAZoBoQGpAbEBuQHBAckB0QHZAeEB6QHyAfoCAwIMAhQCHQImAi8COAJBAksCVAJdAmcCcQJ6AoQCjgKYAqICrAK2AsECywLVAuAC6wL1AwADCwMWAyEDLQM4A0MDTwNaA2YDcgN+A4oDlgOiA64DugPHA9MD4APsA/kEBgQTBCAELQQ7BEgEVQRjBHEEfgSMBJoEqAS2BMQE0wThBPAE/gUNBRwFKwU6BUkFWAVnBXcFhgWWBaYFtQXFBdUF5QX2BgYGFgYnBjcGSAZZBmoGewaMBp0GrwbABtEG4wb1BwcHGQcrBz0HTwdhB3QHhgeZB6wHvwfSB+UH+AgLCB8IMghGCFoIbgiCCJYIqgi+CNII5wj7CRAJJQk6CU8JZAl5CY8JpAm6Cc8J5Qn7ChEKJwo9ClQKagqBCpgKrgrFCtwK8wsLCyILOQtRC2kLgAuYC7ALyAvhC/kMEgwqDEMMXAx1DI4MpwzADNkM8w0NDSYNQA1aDXQNjg2pDcMN3g34DhMOLg5JDmQOfw6bDrYO0g7uDwkPJQ9BD14Peg+WD7MPzw/sEAkQJhBDEGEQfhCbELkQ1xD1ERMRMRFPEW0RjBGqEckR6BIHEiYSRRJkEoQSoxLDEuMTAxMjE0MTYxODE6QTxRPlFAYUJxRJFGoUixStFM4U8BUSFTQVVhV4FZsVvRXgFgMWJhZJFmwWjxayFtYW+hcdF0EXZReJF64X0hf3GBsYQBhlGIoYrxjVGPoZIBlFGWsZkRm3Gd0aBBoqGlEadxqeGsUa7BsUGzsbYxuKG7Ib2hwCHCocUhx7HKMczBz1HR4dRx1wHZkdwx3sHhYeQB5qHpQevh7pHxMfPh9pH5Qfvx/qIBUgQSBsIJggxCDwIRwhSCF1IaEhziH7IiciVSKCIq8i3SMKIzgjZiOUI8Ij8CQfJE0kfCSrJNolCSU4JWgllyXHJfcmJyZXJocmtyboJxgnSSd6J6sn3CgNKD8ocSiiKNQpBik4KWspnSnQKgIqNSpoKpsqzysCKzYraSudK9EsBSw5LG4soizXLQwtQS12Last4S4WLkwugi63Lu4vJC9aL5Evxy/+MDUwbDCkMNsxEjFKMYIxujHyMioyYzKbMtQzDTNGM38zuDPxNCs0ZTSeNNg1EzVNNYc1wjX9Njc2cjauNuk3JDdgN5w31zgUOFA4jDjIOQU5Qjl/Obw5+To2OnQ6sjrvOy07azuqO+g8JzxlPKQ84z0iPWE9oT3gPiA+YD6gPuA/IT9hP6I/4kAjQGRApkDnQSlBakGsQe5CMEJyQrVC90M6Q31DwEQDREdEikTORRJFVUWaRd5GIkZnRqtG8Ec1R3tHwEgFSEtIkUjXSR1JY0mpSfBKN0p9SsRLDEtTS5pL4kwqTHJMuk0CTUpNk03cTiVObk63TwBPSU+TT91QJ1BxULtRBlFQUZtR5lIxUnxSx1MTU19TqlP2VEJUj1TbVShVdVXCVg9WXFapVvdXRFeSV+BYL1h9WMtZGllpWbhaB1pWWqZa9VtFW5Vb5Vw1XIZc1l0nXXhdyV4aXmxevV8PX2Ffs2AFYFdgqmD8YU9homH1YklinGLwY0Njl2PrZEBklGTpZT1lkmXnZj1mkmboZz1nk2fpaD9olmjsaUNpmmnxakhqn2r3a09rp2v/bFdsr20IbWBtuW4SbmtuxG8eb3hv0XArcIZw4HE6cZVx8HJLcqZzAXNdc7h0FHRwdMx1KHWFdeF2Pnabdvh3VnezeBF4bnjMeSp5iXnnekZ6pXsEe2N7wnwhfIF84X1BfaF+AX5ifsJ/I3+Ef+WAR4CogQqBa4HNgjCCkoL0g1eDuoQdhICE44VHhauGDoZyhteHO4efiASIaYjOiTOJmYn+imSKyoswi5aL/IxjjMqNMY2Yjf+OZo7OjzaPnpAGkG6Q1pE/kaiSEZJ6kuOTTZO2lCCUipT0lV+VyZY0lp+XCpd1l+CYTJi4mSSZkJn8mmia1ZtCm6+cHJyJnPedZJ3SnkCerp8dn4uf+qBpoNihR6G2oiailqMGo3aj5qRWpMelOKWpphqmi6b9p26n4KhSqMSpN6mpqhyqj6sCq3Wr6axcrNCtRK24ri2uoa8Wr4uwALB1sOqxYLHWskuywrM4s660JbSctRO1irYBtnm28Ldot+C4WbjRuUq5wro7urW7LrunvCG8m70VvY++Cr6Evv+/er/1wHDA7MFnwePCX8Lbw1jD1MRRxM7FS8XIxkbGw8dBx7/IPci8yTrJuco4yrfLNsu2zDXMtc01zbXONs62zzfPuNA50LrRPNG+0j/SwdNE08bUSdTL1U7V0dZV1tjXXNfg2GTY6Nls2fHadtr724DcBdyK3RDdlt4c3qLfKd+v4DbgveFE4cziU+Lb42Pj6+Rz5PzlhOYN5pbnH+ep6DLovOlG6dDqW+rl63Dr++yG7RHtnO4o7rTvQO/M8Fjw5fFy8f/yjPMZ86f0NPTC9VD13vZt9vv3ivgZ+Kj5OPnH+lf65/t3/Af8mP0p/br+S/7c/23//w==';
+// 一页用到的字体有没有放进文件（没放进去的，PDF/A 不合格）
+function pdfaFontsOk(doc, page) {
+  const { PDFName, PDFDict, PDFArray, PDFRef, PDFRawStream, decodePDFRawStream } = PDFLib, ctx = doc.context, seen = new Set();
+  const look = v => v instanceof PDFRef ? ctx.lookup(v) : v;
+  let bad = 0;
+  const fontOk = f => {
+    f = look(f); if (!(f instanceof PDFDict)) return true;
+    const st = String(f.get(PDFName.of('Subtype')) || '');
+    if (st === '/Type3') return true;
+    let fd;
+    if (st === '/Type0') { const ds = look(f.get(PDFName.of('DescendantFonts'))); const d0 = ds instanceof PDFArray ? look(ds.get(0)) : null; fd = d0 instanceof PDFDict ? look(d0.get(PDFName.of('FontDescriptor'))) : null; }
+    else fd = look(f.get(PDFName.of('FontDescriptor')));
+    if (!(fd instanceof PDFDict)) return false;
+    return ['FontFile', 'FontFile2', 'FontFile3'].some(k => fd.has(PDFName.of(k)));
+  };
+  // 内容里真的用到（Tf）的字体名字；读不到内容就当全部都用到
+  const used = streams => {
+    const names = new Set();
+    try {
+      for (const st of streams) {
+        const s = look(st); if (!s) continue;
+        const u = s instanceof PDFRawStream ? decodePDFRawStream(s).decode() : s.getContents ? s.getContents() : null;
+        if (!u) return null;
+        const txt = new TextDecoder('latin1').decode(u);
+        // 只算真的有显示文字（Tj / TJ / ' / "）的字体；只设了字体没写字的不算
+        let cur = null;
+        for (const m of txt.matchAll(/\/([^\s/<>\[\]()]+)\s+[-\d.]+\s+Tf\b|(?:\)|\]|>)\s*(?:Tj|TJ|'|")/g)) { if (m[1]) cur = m[1]; else if (cur) names.add(cur); }
+      }
+    } catch (e) { return null; }
+    return names;
+  };
+  const walk = (res, streams, depth) => {
+    res = look(res); if (!(res instanceof PDFDict) || depth > 6) return;
+    const u = used(streams);
+    const fs = look(res.get(PDFName.of('Font')));
+    if (fs instanceof PDFDict) for (const k of fs.keys()) {
+      if (u && !u.has(k.asString().slice(1))) continue;
+      const r = fs.get(k), key = String(r); if (seen.has(key)) continue; seen.add(key); if (!fontOk(r)) bad++;
+    }
+    const xs = look(res.get(PDFName.of('XObject')));
+    if (xs instanceof PDFDict) for (const k of xs.keys()) {
+      const r = xs.get(k), key = 'x' + String(r); if (seen.has(key)) continue; seen.add(key);
+      const x = look(r), dict = x && x.dict;
+      if (dict && String(dict.get(PDFName.of('Subtype'))) === '/Form') walk(dict.get(PDFName.of('Resources')), [x], depth + 1);
+    }
+  };
+  const c = look(page.node.get(PDFName.of('Contents')));
+  const streams = c instanceof PDFArray ? Array.from({ length: c.size() }, (_, i) => c.get(i)) : c ? [c] : [];
+  walk(page.node.Resources(), streams, 0);
+  return bad === 0;
+}
+// (xmlEsc 已在前面定义)
+// 把 PDF 整理成 PDF/A-2b：加 XMP 资料、sRGB 色彩描述、文件 ID，拿掉 JavaScript、附件和不能打印的批注
+async function pdfaFix(bytes, title) {
+  const { PDFDocument, PDFName, PDFDict, PDFArray, PDFString, PDFHexString, PDFNumber, PDFRef, PDFRawStream } = PDFLib;
+  const doc = await PDFDocument.load(bytes, { updateMetadata: false }), ctx = doc.context, cat = doc.catalog;
+  const look = v => v instanceof PDFRef ? ctx.lookup(v) : v;
+  const now = new Date(); now.setMilliseconds(0);
+  const iso = now.toISOString().replace('.000Z', 'Z');
+  title = title || 'Document';
+  doc.setTitle(title); doc.setProducer('smartPDF'); doc.setCreator('smartPDF'); doc.setCreationDate(now); doc.setModificationDate(now);
+  for (const k of ['Keywords', 'Subject', 'Author', 'Trapped']) doc.getInfoDict().delete(PDFName.of(k));
+  const xmp = '<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>\n<x:xmpmeta xmlns:x="adobe:ns:meta/"><rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">' +
+    '<rdf:Description rdf:about="" xmlns:pdfaid="http://www.aiim.org/pdfa/ns/id/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:pdf="http://ns.adobe.com/pdf/1.3/">' +
+    '<pdfaid:part>2</pdfaid:part><pdfaid:conformance>B</pdfaid:conformance><dc:format>application/pdf</dc:format>' +
+    '<dc:title><rdf:Alt><rdf:li xml:lang="x-default">' + xmlEsc(title) + '</rdf:li></rdf:Alt></dc:title>' +
+    '<xmp:CreateDate>' + iso + '</xmp:CreateDate><xmp:ModifyDate>' + iso + '</xmp:ModifyDate><xmp:MetadataDate>' + iso + '</xmp:MetadataDate><xmp:CreatorTool>smartPDF</xmp:CreatorTool>' +
+    '<pdf:Producer>smartPDF</pdf:Producer></rdf:Description></rdf:RDF></x:xmpmeta>\n' + ' '.repeat(400) + '\n<?xpacket end="w"?>';
+  const xb = new TextEncoder().encode(xmp);
+  cat.set(PDFName.of('Metadata'), ctx.register(PDFRawStream.of(ctx.obj({ Type: 'Metadata', Subtype: 'XML', Length: xb.length }), xb)));
+  const icc = binToBytes(atob(SRGB_ICC));
+  const iccRef = ctx.register(PDFRawStream.of(ctx.obj({ N: 3, Length: icc.length }), icc));
+  const oi = ctx.obj({ Type: 'OutputIntent', S: 'GTS_PDFA1', OutputConditionIdentifier: PDFString.of('sRGB IEC61966-2.1'), Info: PDFString.of('sRGB IEC61966-2.1'), RegistryName: PDFString.of('http://www.color.org'), DestOutputProfile: iccRef });
+  cat.set(PDFName.of('OutputIntents'), ctx.obj([ctx.register(oi)]));
+  // 不能有 JavaScript、自动动作、附件
+  for (const k of ['OpenAction', 'AA', 'JavaScript']) { const v = look(cat.get(PDFName.of(k))); if (k !== 'OpenAction' || (v instanceof PDFDict)) cat.delete(PDFName.of(k)); }
+  const names = look(cat.get(PDFName.of('Names')));
+  if (names instanceof PDFDict) for (const k of ['JavaScript', 'EmbeddedFiles']) names.delete(PDFName.of(k));
+  const af = look(cat.get(PDFName.of('AcroForm')));
+  if (af instanceof PDFDict) { af.delete(PDFName.of('NeedAppearances')); af.delete(PDFName.of('XFA')); }
+  // 批注：都要能打印、要有外观；连结不能是 JavaScript 或开程序
+  const okAct = a => { a = look(a); if (!(a instanceof PDFDict)) return true; const s = String(a.get(PDFName.of('S')) || ''); return !/JavaScript|Launch|Sound|Movie|ResetForm|ImportData|Hide|SetOCGState|Rendition|Trans|GoTo3DView/.test(s); };
+  for (const page of doc.getPages()) {
+    page.node.delete(PDFName.of('AA'));
+    const an = look(page.node.get(PDFName.of('Annots')));
+    if (!(an instanceof PDFArray)) continue;
+    const keep = [];
+    for (let i = 0; i < an.size(); i++) {
+      const r = an.get(i), a = look(r);
+      if (!(a instanceof PDFDict)) continue;
+      const st = String(a.get(PDFName.of('Subtype')) || '');
+      if (/FileAttachment|Sound|Movie|Screen|3D|RichMedia/.test(st)) continue;
+      if (st !== '/Popup' && st !== '/Link' && !(look(a.get(PDFName.of('AP'))) instanceof PDFDict)) {
+        const rect = look(a.get(PDFName.of('Rect')));
+        const zero = rect instanceof PDFArray && rect.size() === 4 && Math.abs(rect.get(2).asNumber() - rect.get(0).asNumber()) < 0.01 && Math.abs(rect.get(3).asNumber() - rect.get(1).asNumber()) < 0.01;
+        if (!zero) continue;
+      }
+      if (!okAct(a.get(PDFName.of('A')))) a.delete(PDFName.of('A'));
+      a.delete(PDFName.of('AA'));
+      const f = (look(a.get(PDFName.of('F'))) || { asNumber: () => 0 }).asNumber();
+      if (st !== '/Popup') a.set(PDFName.of('F'), PDFNumber.of((f | 4) & ~(1 | 2 | 32)));
+      a.delete(PDFName.of('CA'));
+      keep.push(r);
+    }
+    if (keep.length) page.node.set(PDFName.of('Annots'), ctx.obj(keep)); else page.node.delete(PDFName.of('Annots'));
+  }
+  const id = new Uint8Array(16); crypto.getRandomValues(id);
+  const hex = Array.from(id, b => b.toString(16).padStart(2, '0')).join('');
+  ctx.trailerInfo.ID = ctx.obj([PDFHexString.of(hex), PDFHexString.of(hex)]);
+  const bad = doc.getPages().map((pg, i) => pdfaFontsOk(doc, pg) ? -1 : i).filter(i => i >= 0);
+  return { bytes: await doc.save({ useObjectStreams: false, updateFieldAppearances: false }), bad };
+}
+async function pdfaGo(idx) {
+  closeModals(); closeEditor(); busy(true, T('正在转成 PDF/A…'));
+  try {
+    const pages = idx.map(i => S.pages[i]);
+    let r = await pdfaFix(await buildPdf(pages), stem());
+    if (r.bad.length) {
+      busy(false);
+      const fix = await confirmDlg(T('有 {n} 页用了没有放进文件里的字体（例如电脑自带的 Arial、宋体）。PDF/A 要求字体全部在文件里，不然以后换了电脑可能显示不对。要把这几页转成图片吗？（转成图片后文字不能再选取）', { n: r.bad.length }), T('转成图片'), T('照样保存'));
+      if (fix) {
+        busy(true, T('正在转成 PDF/A…'));
+        r = await pdfaFix(await buildPdf(pages, null, { flat: new Set(r.bad.map(i => pages[i].id)) }), stem());
+      }
+    }
+    busy(false);
+    if (await saveFile(stem() + '-PDFA.pdf', new Blob([r.bytes], { type: 'application/pdf' })))
+      toast(r.bad.length ? T('已存成 PDF/A。有些字体没有放进文件，严格的检查可能不通过') : T('已存成 PDF/A（存档格式）'));
+  } catch (e) { busy(false); console.error(e); toast(T('转换失败：{e}', { e: e.message || e })); }
+}
+
+/* ===== 设成 Windows 默认的 PDF 软件（v3.4）=====
+   Windows 10/11 不让软件自己改默认，只能帮用户打开设定或「打开方式」窗口，让用户按一下 */
+const DEF = { build: 0, pid: '', isDef: null };
+const PS_DEFCHK = `$p=''
+foreach($k in @('UserChoiceLatest\\ProgId','UserChoiceLatest','UserChoice')){ try { $v=(Get-ItemProperty -LiteralPath ('HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\FileExts\\.pdf\\'+$k) -ErrorAction Stop).ProgId; if($v){$p=$v;break} } catch {} }
+Write-Output ('PROGID ' + $p)
+Write-Output ('BUILD ' + [Environment]::OSVersion.Version.Build)`;
+async function defCheck() {
+  if (!DESK.on) return null;
+  let pid = '', build = 0;
+  try { await psRun(psCmd(PS_DEFCHK), l => { const m = /^(PROGID|BUILD) ?(.*)$/.exec(l.trim()); if (m) { if (m[1] === 'PROGID') pid = m[2].trim(); else build = +m[2] || 0; } }); }
+  catch (e) { console.warn('defCheck', e); return null; }
+  Object.assign(DEF, { pid, build, isDef: /smartpdf/i.test(pid) });
+  return DEF.isDef;
+}
+// 先把 smartPDF 登记成「可以打开 PDF 的软件」，再打开 Windows 设定（Win11）或「打开方式」窗口（Win10）
+async function defSet() {
+  if (!DESK.on) return;
+  if (!DEF.build) await defCheck();
+  const win11 = DEF.build >= 22621;
+  let pdf = S.filePath && /\.pdf$/i.test(S.filePath) ? S.filePath : '';
+  if (!win11 && !pdf) {
+    try {
+      let tmp = ''; try { tmp = await Neutralino.os.getEnv('TEMP'); } catch (e) { /* ignore */ }
+      if (!tmp) tmp = await Neutralino.os.getPath('temp');
+      const d = await PDFLib.PDFDocument.create(); d.addPage([200, 200]);
+      pdf = tmp + sepOf(tmp) + 'smartPDF.pdf'; await Neutralino.filesystem.writeBinaryFile(pdf, toAB(await d.save()));
+    } catch (e) { console.warn(e); }
+  }
+  const q = s => "'" + String(s).replace(/'/g, "''") + "'";
+  const reg = (k, n, v) => `& reg.exe add ${q(k)} /v ${q(n)} /t REG_SZ /d ${q(v)} /f | Out-Null`;
+  const ps = [
+    reg('HKCU\\Software\\smartPDF\\Capabilities', 'ApplicationName', 'smartPDF'),
+    reg('HKCU\\Software\\smartPDF\\Capabilities', 'ApplicationDescription', 'smartPDF - PDF viewer and editor'),
+    reg('HKCU\\Software\\smartPDF\\Capabilities\\FileAssociations', '.pdf', 'smartPDF.Document'),
+    reg('HKCU\\Software\\RegisteredApplications', 'smartPDF', 'Software\\smartPDF\\Capabilities'),
+    win11 || !pdf ? `Start-Process 'ms-settings:defaultapps?registeredAppUser=smartPDF'` : `Start-Process rundll32.exe -ArgumentList ('shell32.dll,OpenAs_RunDLL ' + ${q(pdf)})`
+  ].join('\n');
+  try { await psRun(psCmd(ps)); } catch (e) { console.warn(e); toast(T('打不开 Windows 设定：{e}', { e: e.message || e })); return; }
+  $('#dfAsk').hidden = true; $('#dfHow').hidden = false;
+  $('#dfHowTxt').textContent = win11 || !pdf
+    ? T('Windows 设定已经打开：在 smartPDF 的页面按最上面的「设为默认值」；如果没有这个按钮，就在 .pdf 旁边点一下，选 smartPDF。')
+    : T('请在弹出的窗口里选 smartPDF，勾选「始终使用此应用打开 .pdf 文件」，再按「确定」。');
+  $('#dfMsg').textContent = '';
+  openModal('mDef');
+}
+async function defDone() {
+  $('#dfMsg').textContent = T('正在检查…');
+  const ok = await defCheck();
+  if (ok) { closeModals(); toast(T('好了！以后双击 PDF 就会用 smartPDF 打开')); setDefRow(); }
+  else $('#dfMsg').textContent = T('还没设好，Windows 现在的默认是「{p}」。可以再试一次，或者按「关闭」以后再设。', { p: DEF.pid || '?' });
+}
+function openDef() { $('#dfAsk').hidden = false; $('#dfHow').hidden = true; $('#dfMsg').textContent = ''; openModal('mDef'); }
+// 第一次打开（以及按了「以后再说」一个星期后）问一次
+async function defPrompt() {
+  if (!DESK.on || LS.get('pdfed.defAsk') === 'never') return;
+  const later = +LS.get('pdfed.defLater') || 0;
+  if (later && Date.now() - later < 7 * 864e5) return;
+  const ok = await defCheck();
+  if (ok !== false) return;
+  if ([...$$('.modal')].some(m => !m.hidden) || !$('#busy').hidden) { LS.set('pdfed.defLater', String(Date.now() - 6 * 864e5)); return; }   // 正在做别的事，明天再问
+  openDef();
+}
+async function setDefRow() {
+  const row = $('#setDefRow'); row.hidden = !DESK.on; if (!DESK.on) return;
+  $('#setDefMsg').textContent = DEF.isDef == null ? '' : DEF.isDef ? T('已经是默认') : T('还不是默认');
+  $('#setDef').hidden = DEF.isDef === true;
+}
+function wireDef() {
+  $('#dfYes').onclick = defSet; $('#dfAgain').onclick = defSet; $('#dfDone').onclick = defDone;
+  $('#dfLater').onclick = () => { LS.set('pdfed.defLater', String(Date.now())); closeModals(); };
+  $('#dfNever').onclick = () => { LS.set('pdfed.defAsk', 'never'); closeModals(); toast(T('不会再提醒。以后可以在「设定」里设成默认')); };
+  $('#setDef').onclick = () => { closeModals(); openDef(); };
+  if (DESK.on) setTimeout(defPrompt, 6000);
+}
+
 /* ===== 证书签名（数字签名，v3.2）=====
    在 PDF 里加一个「电子封条」：带着签名人的证书，签完后文件改一个字，Adobe 等软件就会显示签名失效。
    证书可以自己生成（免费，Adobe 会显示「身份未验证」），也可以导入向认证机构买的 .pfx / .p12。
    证书用密码加密后存在这台电脑里；密钥不会离开电脑。 */
 const CERT = { busy: false };
 const SIG_BYTES = 16384;   // 预留给签名的空间（够放机构证书链）
+const SIG_BYTES_TS = 32768;   // 有时间戳时多留一些（时间戳带着机构的证书）
 function loadForge() {
   if (window.forge) return window.forge;
   const s = document.createElement('script'); s.textContent = $('#forgeSrc').textContent; document.head.appendChild(s);
@@ -6217,9 +7040,9 @@ async function signPdf(bytes, o) {
   const forge = loadForge(), { PDFDocument, PDFName, PDFString, PDFHexString, PDFNumber } = PDFLib;
   const doc = await PDFDocument.load(bytes), ctx = doc.context, pages = doc.getPages();
   const page = pages[clamp(o.page || 0, 0, pages.length - 1)];
-  const PH = 1234567890;
+  const PH = 1234567890, SB = o.ts ? SIG_BYTES_TS : SIG_BYTES;
   const sig = ctx.obj({ Type: 'Sig', Filter: 'Adobe.PPKLite', SubFilter: 'adbe.pkcs7.detached', ByteRange: [0, PH, PH, PH] });
-  sig.set(PDFName.of('Contents'), PDFHexString.of('0'.repeat(SIG_BYTES * 2)));
+  sig.set(PDFName.of('Contents'), PDFHexString.of('0'.repeat(SB * 2)));
   sig.set(PDFName.of('M'), PDFString.fromDate(new Date()));
   sig.set(PDFName.of('Name'), PDFHexString.fromText(o.name || ''));
   if (o.reason) sig.set(PDFName.of('Reason'), PDFHexString.fromText(o.reason));
@@ -6241,9 +7064,9 @@ async function signPdf(bytes, o) {
   // 找空位
   const txt = new TextDecoder('latin1').decode(out);
   const br = txt.indexOf(`/ByteRange [ 0 ${PH} ${PH} ${PH} ]`);
-  const c0 = txt.indexOf('<' + '0'.repeat(SIG_BYTES * 2) + '>');
+  const c0 = txt.indexOf('<' + '0'.repeat(SB * 2) + '>');
   if (br < 0 || c0 < 0) throw new Error('signature placeholder');
-  const c1 = c0 + SIG_BYTES * 2 + 2;
+  const c1 = c0 + SB * 2 + 2;
   const ph = `/ByteRange [ 0 ${PH} ${PH} ${PH} ]`, range = [0, c0, c1, out.length - c1];
   let real = `/ByteRange [ ${range.join(' ')} ]`;
   if (real.length > ph.length) throw new Error('byte range');
@@ -6266,11 +7089,81 @@ async function signPdf(bytes, o) {
     const sd = asn.value[1].value[0], si = sd.value[sd.value.length - 1].value[0];
     si.value[1].value[0] = forge.asn1.fromDer(forge.asn1.toDer(iss).getBytes());
   } catch (e) { console.warn(e); }
+  if (o.ts) await addTimestamp(asn);
   const der = forge.asn1.toDer(asn).getBytes();
-  if (der.length > SIG_BYTES) throw new Error(T('证书太大，放不进签名'));
+  if (der.length > SB) throw new Error(T('证书太大，放不进签名'));
   let hex = ''; for (let i = 0; i < der.length; i++) hex += der.charCodeAt(i).toString(16).padStart(2, '0');
-  out.set(enc.encode(hex.padEnd(SIG_BYTES * 2, '0')), c0 + 1);
+  out.set(enc.encode(hex.padEnd(SB * 2, '0')), c0 + 1);
   return out;
+}
+/* ----- 签名时间戳（v3.4）：向时间戳机构（DigiCert 等）取一个证明，证明文件在这个时间已经签好 ----- */
+const TSA_URLS = ['http://timestamp.digicert.com', 'http://timestamp.sectigo.com', 'http://ts.ssl.com', 'https://freetsa.org/tsr'];
+function tsaRequest(hashBin) {
+  const forge = loadForge(), A = forge.asn1, U = A.Class.UNIVERSAL, Ty = A.Type;
+  const nonce = new Uint8Array(8); crypto.getRandomValues(nonce); nonce[0] = (nonce[0] & 0x7f) | 0x01;
+  const req = A.create(U, Ty.SEQUENCE, true, [
+    A.create(U, Ty.INTEGER, false, '\x01'),
+    A.create(U, Ty.SEQUENCE, true, [
+      A.create(U, Ty.SEQUENCE, true, [A.create(U, Ty.OID, false, A.oidToDer(forge.pki.oids.sha256).getBytes()), A.create(U, Ty.NULL, false, '')]),
+      A.create(U, Ty.OCTETSTRING, false, hashBin)
+    ]),
+    A.create(U, Ty.INTEGER, false, bytesToBin(nonce)),
+    A.create(U, Ty.BOOLEAN, false, '\xff')
+  ]);
+  return binToBytes(A.toDer(req).getBytes());
+}
+// 送出请求：电脑版用 PowerShell（不受网页跨网站限制），网页版直接试
+async function tsaFetch(req) {
+  if (DESK.on) {
+    const base = (await scanTmp()).replace('smartpdf-scan-', 'smartpdf-ts-'), qf = base + '.tsq', rf = base + '.tsr';
+    await Neutralino.filesystem.writeBinaryFile(qf, toAB(req));
+    const q = s => "'" + String(s).replace(/'/g, "''") + "'";
+    const ps = `$ErrorActionPreference='Stop'
+try { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 } catch {}
+foreach ($u in @(${TSA_URLS.map(q).join(',')})) {
+  try { Invoke-WebRequest -Uri $u -Method Post -ContentType 'application/timestamp-query' -InFile ${q(qf)} -OutFile ${q(rf)} -UseBasicParsing -TimeoutSec 15 | Out-Null
+    if ((Get-Item -LiteralPath ${q(rf)}).Length -gt 100) { Write-Output ('OK ' + $u); exit 0 } } catch { Write-Output ('ERR ' + $u + ' ' + $_.Exception.Message) }
+}
+exit 1`;
+    let log = '';
+    try { await psRun(psCmd(ps), l => { log += l + '\n'; }); }
+    finally { Neutralino.filesystem.remove(qf).catch(() => {}); }
+    let buf = null;
+    try { buf = new Uint8Array(await Neutralino.filesystem.readBinaryFile(rf)); } catch (e) { /* 没有回应 */ }
+    Neutralino.filesystem.remove(rf).catch(() => {});
+    if (!buf || buf.length < 100) { console.warn('tsa', log); throw new Error(T('连不上时间戳服务，请检查网络')); }
+    return buf;
+  }
+  for (const u of TSA_URLS.filter(x => location.protocol !== 'https:' || x.startsWith('https'))) {
+    try {
+      const r = await fetch(u, { method: 'POST', headers: { 'Content-Type': 'application/timestamp-query' }, body: req });
+      if (r.ok) { const b = new Uint8Array(await r.arrayBuffer()); if (b.length > 100) return b; }
+    } catch (e) { console.warn('tsa', u, e); }
+  }
+  throw new Error(T('网页版连不上时间戳服务，请用 Windows 版 smartPDF'));
+}
+// 取得时间戳：回传 TimeStampToken（DER 二进位字串）
+async function getTimestamp(hashBin) {
+  const forge = loadForge(), resp = await tsaFetch(tsaRequest(hashBin));
+  let asn;
+  try { asn = forge.asn1.fromDer(bytesToBin(resp)); } catch (e) { throw new Error(T('时间戳服务回传的资料看不懂')); }
+  const st = asn.value[0] && asn.value[0].value[0], code = st ? st.value.charCodeAt(st.value.length - 1) : 2;
+  if (code > 1 || !asn.value[1]) throw new Error(T('时间戳服务拒绝了请求（代码 {c}）', { c: code }));
+  return forge.asn1.toDer(asn.value[1]).getBytes();
+}
+// 把时间戳放进签名资料（SignerInfo 的 unsignedAttrs）
+async function addTimestamp(asn) {
+  const forge = loadForge(), A = forge.asn1, U = A.Class.UNIVERSAL;
+  const sd = asn.value[1].value[0], si = sd.value[sd.value.length - 1].value[0];
+  const sigEl = si.value.find((v, i) => i > 2 && v.tagClass === U && v.type === A.Type.OCTETSTRING);
+  if (!sigEl) throw new Error('signature value');
+  const md = forge.md.sha256.create(); md.update(sigEl.value);
+  let tok;
+  try { tok = await getTimestamp(md.digest().getBytes()); } catch (e) { e.tsa = true; throw e; }
+  si.value = si.value.filter(v => !(v.tagClass === A.Class.CONTEXT_SPECIFIC && v.type === 1));
+  si.value.push(A.create(A.Class.CONTEXT_SPECIFIC, 1, true, [
+    A.create(U, A.Type.SEQUENCE, true, [A.create(U, A.Type.OID, false, A.oidToDer('1.2.840.113549.1.9.16.2.14').getBytes()), A.create(U, A.Type.SET, true, [A.fromDer(tok)])])
+  ]));
 }
 // 打开的文件有没有数字签名
 async function docSigs(di) {
@@ -6300,7 +7193,7 @@ function openCert() {
   closeEditor(); certUi();
   $('#ctReason').value = LS.get('pdfed.certReason') || T('我同意这份文件的内容');
   $('#ctPlace').value = LS.get('pdfed.certPlace') || '';
-  $('#ctPw').value = '';
+  $('#ctPw').value = ''; $('#ctTs').checked = LS.get('pdfed.certTs') !== '0';
   openModal('mCert');
 }
 async function certCreate() {
@@ -6335,7 +7228,7 @@ async function certSign() {
   let k;
   try { k = openP12(b64ToBin(c.p12), pw); } catch (e) { $('#ctMsg').textContent = e.message; $('#ctPw').focus(); return; }
   if (k.cert.validity.notAfter < new Date()) { $('#ctMsg').textContent = T('这张证书已经过期了'); return; }
-  LS.set('pdfed.certReason', $('#ctReason').value.trim()); LS.set('pdfed.certPlace', $('#ctPlace').value.trim());
+  LS.set('pdfed.certReason', $('#ctReason').value.trim()); LS.set('pdfed.certPlace', $('#ctPlace').value.trim()); LS.set('pdfed.certTs', $('#ctTs').checked ? '1' : '0');
   // 签名框放在第一张签名图片的位置
   let pi = S.cur, rect = null;
   for (let i = 0; i < S.pages.length && !rect; i++) {
@@ -6346,10 +7239,20 @@ async function certSign() {
   try {
     const plain = await buildPdf(S.pages);
     const info = certInfo(k.cert);
-    const out = await signPdf(plain, { key: k.key, cert: k.cert, chain: k.chain, page: pi, rect, name: info.name, reason: $('#ctReason').value.trim(), location: $('#ctPlace').value.trim(), contact: info.email });
+    const so = { key: k.key, cert: k.cert, chain: k.chain, page: pi, rect, name: info.name, reason: $('#ctReason').value.trim(), location: $('#ctPlace').value.trim(), contact: info.email, ts: $('#ctTs').checked };
+    if (so.ts) busy(true, T('正在签名并取得时间戳…'));
+    let out;
+    try { out = await signPdf(plain, so); }
+    catch (e) {
+      if (!e.tsa) throw e;
+      busy(false);
+      if (!(await confirmDlg(T('时间戳加不上：{e}。要不加时间戳，直接签名吗？', { e: e.message || e }), T('直接签名'), T('取消')))) return;
+      busy(true, T('正在签名…'));
+      so.ts = false; out = await signPdf(plain, so);
+    }
     busy(false);
     await saveFile(stem() + T('-已签名') + '.pdf', new Blob([out], { type: 'application/pdf' }));
-    toast(T('已加上证书签名。签好的文件不要再修改，不然签名会失效'));
+    toast(so.ts ? T('已加上证书签名和时间戳。签好的文件不要再修改，不然签名会失效') : T('已加上证书签名。签好的文件不要再修改，不然签名会失效'));
   } catch (e) { busy(false); console.error(e); toast(T('签名失败：{e}', { e: e.message || e })); }
   finally { CERT.busy = false; }
 }
@@ -7000,7 +7903,7 @@ function wire() {
   let spT; $('#spKey').oninput = () => { clearTimeout(spT); spT = setTimeout(splitInfo, 350); };
   $('#spSort').onchange = $('#spMiss').onchange = () => { if (INV.res) invGroup(); };
   $('#spOut').onchange = () => splitInfo(true);
-  $('#btnCmp').onclick = openCmp; $('#cmpGo').onclick = runCompare;
+  $('#btnCmp').onclick = openCmp; $('#cmpGo').onclick = runCompare; wireCmpView(); wireCrop(); wireHf(); wireDef();
   $('#cmpFile').onchange = e => { $('#cmpGo').disabled = !e.target.files.length; };
   $('#pnGo').onclick = applyPgno; $('#pnDel').onclick = removePgno; $('#wmGo').onclick = applyWm; $('#wmDel').onclick = removeWm;
   $('#nightBtn').onclick = () => setNight(!$('#app').classList.contains('night'), true);
