@@ -160,6 +160,17 @@ textarea.ed{position:absolute;margin:0;padding:0;border:1px dashed var(--accent)
 .field{display:flex;flex-direction:column;gap:4px;min-width:0}
 .field input[type=text],.field input[type=number],.field select{height:32px;border:1px solid var(--line);border-radius:7px;background:var(--panel2);padding:0 9px;min-width:0}
 .field input[type=password],.field input[type=email]{height:32px;border:1px solid var(--line);border-radius:7px;background:var(--panel2);padding:0 9px;min-width:0}
+.ixWrap{max-height:min(46vh,420px);overflow:auto;border:1px solid var(--line);border-radius:10px;margin-top:10px}
+.ixWrap[hidden]{display:none}
+#ixTbl{border-collapse:collapse;width:100%;font-size:12.5px}
+#ixTbl th{position:sticky;top:0;background:var(--panel2);text-align:left;font-weight:600;padding:7px 8px;border-bottom:1px solid var(--line);white-space:nowrap;z-index:1}
+#ixTbl td{padding:6px 8px;border-bottom:1px solid var(--line);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;outline:none}
+#ixTbl td[contenteditable]{cursor:text}
+#ixTbl td[contenteditable]:focus{background:var(--accent-soft);white-space:normal}
+#ixTbl td.num{text-align:right;font-variant-numeric:tabular-nums}
+#ixTbl td.miss{background:color-mix(in srgb,var(--c-amber) 18%,transparent)}
+.rkPre{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:10px}
+#rkWords{width:100%;min-height:76px;border:1px solid var(--line);border-radius:8px;background:var(--panel2);padding:8px 10px;font:inherit;resize:vertical;color:var(--ink)}
 .ctCard{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--panel2);display:flex;gap:12px;align-items:flex-start}
 .ctCard .ctIc{flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--c-green) 16%,var(--panel));color:var(--c-green)}
 .ctCard b{display:block;font-size:14px}
@@ -493,7 +504,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <div class="brand">
       <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTQwLDE0IEgxMjAgTDE2Miw1NiBWMTg2IEg0MCBaIiBmaWxsPSIjRkNFQkVCIiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTEyMCwxNCBWNTYgSDE2MiBaIiBmaWxsPSIjRjdDOEM4IiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjQsNjguMzcpIHNjYWxlKDAuNTU0NCkiPjxwYXRoIGQ9Ik0xNCAxMTUuNTlINDIuODZRNDMuNDkgMTIxLjc4IDQ3LjE0IDEyNS4wM1E1MC43OCAxMjguMjggNTYuNjUgMTI4LjI4UTYyLjY4IDEyOC4yOCA2Ni4xNiAxMjUuNVE2OS42NSAxMjIuNzMgNjkuNjUgMTE3LjgxUTY5LjY1IDExMy42OSA2Ni44OCAxMTFRNjQuMSAxMDguMyA2MC4wNiAxMDYuNTZRNTYuMDIgMTA0LjgxIDQ4LjU2IDEwMi41OVEzNy43OCA5OS4yNiAzMC45NyA5NS45M1EyNC4xNSA5Mi42IDE5LjIzIDg2LjFRMTQuMzIgNzkuNiAxNC4zMiA2OS4xNFExNC4zMiA1My42IDI1LjU3IDQ0LjhRMzYuODMgMzYgNTQuOTEgMzZRNzMuMyAzNiA4NC41NiA0NC44UTk1LjgxIDUzLjYgOTYuNjEgNjkuM0g2Ny4yN1E2Ni45NiA2My45MSA2My4zMSA2MC44MVE1OS42NiA1Ny43MiA1My45NiA1Ny43MlE0OS4wNCA1Ny43MiA0Ni4wMyA2MC4zNFE0My4wMiA2Mi45NSA0My4wMiA2Ny44N1E0My4wMiA3My4yNiA0OC4wOSA3Ni4yN1E1My4xNiA3OS4yOSA2My45NCA4Mi43N1E3NC43MyA4Ni40MiA4MS40NiA4OS43NVE4OC4yIDkzLjA4IDkzLjEyIDk5LjQyUTk4LjAzIDEwNS43NiA5OC4wMyAxMTUuNzVROTguMDMgMTE1LjgzIDk4LjAzIDExNS45MUw3NC41IDE0MS4xM1E3MS41NCAxNDQuMyA3MS4wOCAxNDguMzlRNjQuODQgMTUwIDU3LjQ0IDE1MFE0NS4yNCAxNTAgMzUuNTYgMTQ2LjA0UTI1Ljg5IDE0Mi4wNyAyMC4xIDEzNC4zUTE0LjMyIDEyNi41MyAxNCAxMTUuNTlaIiBmaWxsPSIjMTIzMDdBIi8+PHBhdGggZD0iTTc4LjUyIDE0NC44OCAxMDYuNTIgMTE0Ljg4UTEwOC41OCAxMTIuNjcgMTExLjYgMTEyLjUxUTExNC42MyAxMTIuMzUgMTE2LjkxIDExNC4zM0wxMjUuODEgMTIyLjA0TDE1NC40OSA4My41M0wxNDAuNDYgNzMuMDdRMTM5LjQ1IDcyLjMzIDEzOS4zMyA3MS40NVExMzkuMiA3MC41OCAxMzkuOTQgNjkuNThRMTQwLjM0IDY5LjA1IDE0MC45NCA2OC43OEwxODcuMjcgNDguNDJRMTg5LjU2IDQ3LjQyIDE5MC41NyA0OS43UTE5MC44NSA1MC4zMyAxOTAuNzYgNTEuMDJMMTg0LjUzIDEwMS4yNFExODQuMzggMTAyLjQ4IDE4My42OCAxMDMuMDJRMTgyLjk4IDEwMy41NyAxODEuNzQgMTAzLjQxUTE4MS4wOSAxMDMuMzMgMTgwLjU2IDEwMi45NEwxNjYuNTIgOTIuNDhMMTMzLjAyIDEzNy40OFExMzIuODUgMTM3LjcgMTMyLjY3IDEzNy45MVExMzAuNjMgMTQwLjI2IDEyNy41MyAxNDAuNDhRMTI0LjQ0IDE0MC43IDEyMi4wOSAxMzguNjdMMTEyLjU1IDEzMC40TDg5LjQ4IDE1NS4xMlE4Ny4zNiAxNTcuMzkgODQuMjYgMTU3LjVRODEuMTUgMTU3LjYgNzguODggMTU1LjQ4UTc2LjYxIDE1My4zNiA3Ni41IDE1MC4yNlE3Ni40IDE0Ny4xNSA3OC41MiAxNDQuODhaIiBmaWxsPSIjRTIzQjNCIi8+PC9nPjwvc3ZnPg==" alt="">
       <span class="wordmark"><span class="w1">smart</span><span class="w2">PDF</span></span>
-      <button class="ver" id="btnAbout" title="版本记录">v3.2.1</button>
+      <button class="ver" id="btnAbout" title="版本记录">v3.3</button>
       <button class="ver" id="btnLang" title="Switch to English">EN</button>
     </div>
     <div class="fname" id="fname"></div>
@@ -564,6 +575,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <div class="grp seg" id="gEd"><button type="button" data-v="para">整段改</button><button type="button" data-v="line">一行一行改</button></div>
     <div class="grp" id="gChk"><button class="btn sm" id="chkTog">切换 ✓ / ✗</button></div>
     <div class="grp" id="gAct"><button class="btn sm" id="btnDup">复制</button><button class="btn sm danger" id="btnDel">删除</button></div>
+    <div class="grp" id="gRdk" hidden><button class="btn sm" id="rkOpen">按关键词涂黑…</button></div>
     <span class="hint" id="hint"></span>
   </div>
 
@@ -671,6 +683,32 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
   </div>
   <p class="muted" style="font-size:12px;margin:12px 0 0">要别人能核实是你签的、签后不能被偷改？<button class="ctLink" id="sgCert" type="button">用证书签名</button></p>
   <div class="row end"><button class="btn" data-close>关闭</button></div>
+</div></div>
+
+<div class="modal" id="mInvx" hidden><div class="card" role="dialog" aria-labelledby="ixT" style="width:min(980px,100%)">
+  <h2 id="ixT">发票资料转 Excel</h2>
+  <p class="muted" style="margin:0 0 10px">选好发票 PDF（可以一次选很多个），smartPDF 会读出每张发票的号码、日期、卖方、客户、税和总额，做成一张 Excel 表。一个文件里有几张发票也会分开。</p>
+  <div class="row" style="flex-wrap:wrap;gap:8px"><button class="btn primary" id="ixGo">选择发票文件</button><button class="btn" id="ixUseCur">用现在打开的文件</button><label class="row" style="margin-left:6px"><input type="checkbox" id="ixOcr" checked> 扫描件先识别文字</label></div>
+  <p class="muted" id="ixInfo" style="margin:10px 0 0;min-height:1.3em"></p>
+  <div class="ixWrap" id="ixWrap" hidden><table id="ixTbl"></table></div>
+  <p class="muted" style="margin:8px 0 0;font-size:11.5px">黄色格子是没找到的资料，可以点进去直接打字补上。</p>
+  <input type="file" id="fInvx" accept="application/pdf,.pdf" multiple hidden>
+  <div class="row end"><button class="btn" data-close>关闭</button><button class="btn primary" id="ixSave" disabled>存成 Excel</button></div>
+</div></div>
+
+<div class="modal" id="mRdk" hidden><div class="card" role="dialog" aria-labelledby="rkT" style="width:min(520px,100%)">
+  <h2 id="rkT">按关键词涂黑</h2>
+  <p class="muted" style="margin:0 0 10px">整份文件里找到的地方全部涂黑，保存时下面的文字会被彻底删掉。</p>
+  <label class="lbl" for="rkWords">要涂黑的字（一行一个）</label>
+  <textarea id="rkWords" placeholder="例如：&#10;Lim Ah Kow&#10;012-345 6789"></textarea>
+  <div class="rkPre">
+    <label class="row"><input type="checkbox" id="rk_ic"> IC 号码</label>
+    <label class="row"><input type="checkbox" id="rk_phone"> 电话号码</label>
+    <label class="row"><input type="checkbox" id="rk_email"> 电邮地址</label>
+    <label class="row"><input type="checkbox" id="rk_acct"> 户口号码、卡号（10 位以上的数字）</label>
+  </div>
+  <p class="muted" id="rkInfo" style="margin:10px 0 0;min-height:1.3em"></p>
+  <div class="row end"><button class="btn" data-close>取消</button><button class="btn" id="rkFind">查找</button><button class="btn primary" id="rkGo" disabled>全部涂黑</button></div>
 </div></div>
 
 <div class="modal" id="mCert" hidden><div class="card" role="dialog" aria-labelledby="mCertT" style="width:min(560px,100%)">
@@ -1003,6 +1041,7 @@ html[lang=en] .ops{grid-template-columns:repeat(auto-fill,minmax(68px,1fr))}
     <label class="opt"><input type="radio" name="cv" value="docx"><b>PDF 转 Word</b><span>保留段落、对齐和表格；扫描件会先识别文字</span></label>
     <label class="opt"><input type="radio" name="cv" value="xlsx"><b>PDF 转 Excel</b><span>表格、报表变成试算表，数字可以直接计算；扫描件会先识别文字</span></label>
     <label class="opt"><input type="radio" name="cv" value="txt"><b>PDF 转文字</b><span>存成 .txt 纯文字</span></label>
+    <label class="opt"><input type="radio" name="cv" value="office"><b>Word／Excel／PPT 转 PDF</b><span>用电脑上的 Microsoft Office（或 LibreOffice）转，版面跟原来一样（Windows 版）</span></label>
     <label class="opt"><input type="radio" name="cv" value="fromimg"><b>图片转 PDF</b><span>选几张图片，合成一个新 PDF</span></label>
     <label class="opt"><input type="radio" name="cv" value="ocr"><b>识别文字（扫描件）</b><span>认出扫描件上的中文和英文，之后可以搜索、复制，保存的 PDF 也带文字</span></label>
     <label class="opt"><input type="radio" name="cv" value="zip"><b>压缩 PDF</b><span>把 PDF 里的图片压小，文件变小，适合电邮或上传</span></label>
@@ -1114,8 +1153,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '3.2.1';
+const VERSION = '3.3';
 const CHANGELOG = [
+  { v: '3.3', d: '2026-11-01', items: [
+    "Word／Excel／PowerPoint 转 PDF：用电脑上的 Office 转，版面跟原来一样；也可以直接用「打开」选 Word、Excel 文件，或拖进来，转好就能签名、盖章、合并",
+    "发票资料转 Excel：一次选很多张发票 PDF，自动读出发票号码、日期、卖方、客户、税和总额，做成一张 Excel 表（最后一行有合计）。一个文件里有几张发票会分开，扫描件会先识别文字，读不到的可以在表里直接补",
+    "按关键词涂黑：输入名字或勾选 IC 号码、电话、电邮、户口号码，整份文件找到的地方一次全部涂黑",
+    "搜索高亮和涂黑的位置更准，不会漏掉第一个字"
+  ] },
   { v: '3.2.1', d: '2026-11-01', items: [
     "更新完成后，旧版本的窗口会自动关掉，不会留着两个 smartPDF"
   ] },
@@ -1290,6 +1335,76 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  "Word／Excel／PowerPoint 转 PDF：用电脑上的 Office 转，版面跟原来一样；也可以直接用「打开」选 Word、Excel 文件，或拖进来，转好就能签名、盖章、合并": "Word / Excel / PowerPoint to PDF: uses Office on your computer so the layout stays the same. You can also pick Word or Excel files in Open, or drag them in, then sign, stamp or merge",
+  "发票资料转 Excel：一次选很多张发票 PDF，自动读出发票号码、日期、卖方、客户、税和总额，做成一张 Excel 表（最后一行有合计）。一个文件里有几张发票会分开，扫描件会先识别文字，读不到的可以在表里直接补": "Invoice data to Excel: pick many invoice PDFs at once; smartPDF reads the invoice number, date, seller, customer, tax and total into one Excel sheet with a total row. Several invoices in one file are separated, scans are recognised first, and missing data can be typed in",
+  "按关键词涂黑：输入名字或勾选 IC 号码、电话、电邮、户口号码，整份文件找到的地方一次全部涂黑": "Redact by keyword: type names or tick IC numbers, phones, emails or account numbers, and every match in the file is blacked out at once",
+  "搜索高亮和涂黑的位置更准，不会漏掉第一个字": "Search highlights and redaction boxes are placed more precisely",
+  "扫描件的文字识别不成功（第一次要连网下载识别组件）。": "Text recognition failed for scans (the first time needs internet to download it).",
+  "Word／Excel 转 PDF 要用 Windows 版 smartPDF（会用到电脑上的 Office）": "Word/Excel to PDF needs the Windows version of smartPDF (it uses Office on your computer)",
+  "PDF 和 Office 文件": "PDF and Office files",
+  "选择文件": "Choose files",
+  "正在用 Office 转成 PDF…": "Converting to PDF with Office…",
+  "正在用 Office 转成 PDF… {i}/{n}": "Converting to PDF with Office… {i}/{n}",
+  "Office 和 LibreOffice 都转不了这个文件": "Neither Office nor LibreOffice could convert this file",
+  "这台电脑没有安装 Microsoft Office 或 LibreOffice，转不了。可以先在 Word / Excel 里「另存为 PDF」": "Microsoft Office or LibreOffice is not installed on this computer. You can use “Save as PDF” in Word / Excel instead",
+  "有 {n} 个文件转不了：{f}": "{n} file(s) could not be converted: {f}",
+  "选择 Word、Excel 或 PowerPoint 文件": "Choose Word, Excel or PowerPoint files",
+  "要把转好的 PDF 接在现在这个文件后面吗？选「另外打开」就换成新文件。": "Add the converted PDF to the end of the current file? Choose “Open separately” to open it as a new file.",
+  "接在后面": "Add to end",
+  "另外打开": "Open separately",
+  "正在识别扫描的发票… {f}": "Reading scanned invoice… {f}",
+  "选择发票 PDF，可以一次选很多个。": "Choose invoice PDFs. You can pick many at once.",
+  "选择发票 PDF": "Choose invoice PDFs",
+  "正在读取… {i}/{n}": "Reading… {i}/{n}",
+  "打不开这个文件": "Can't open this file",
+  "读出 {n} 张发票。": "Read {n} invoice(s). ",
+  "有 {m} 张没找到号码或总额，请在表里直接补上。": "{m} are missing a number or total; fill them in directly in the table.",
+  "可以在表里直接修改，再存成 Excel。": "You can edit the table directly, then save as Excel.",
+  "读取失败：{e}": "Reading failed: {e}",
+  "合计": "Total",
+  "发票资料": "Invoice data",
+  "文件": "File",
+  "页": "Pages",
+  "发票号码": "Invoice no.",
+  "卖方": "Seller",
+  "客户": "Customer",
+  "币种": "Currency",
+  "税": "Tax",
+  "总额": "Total amount",
+  "请写要涂黑的字，或勾选上面的种类": "Type the words to black out, or tick a type above",
+  "正在查找…": "Searching…",
+  "找到 {n} 处，在 {p} 页。": "Found {n} match(es) on {p} page(s).",
+  "没有找到。": "Nothing found.",
+  "有 {n} 页是扫描件，要先用「识别文字」才找得到。": "{n} page(s) are scans; run “Recognise text” first to search them.",
+  "已涂黑 {n} 处。保存时这些地方下面的文字会被彻底删掉": "Blacked out {n} place(s). The text underneath is removed for good when you save",
+  "按关键词涂黑…": "Redact by keyword…",
+  "按关键词涂黑": "Redact by keyword",
+  "发票资料转 Excel": "Invoice data to Excel",
+  "选好发票 PDF（可以一次选很多个），smartPDF 会读出每张发票的号码、日期、卖方、客户、税和总额，做成一张 Excel 表。一个文件里有几张发票也会分开。": "Pick invoice PDFs (many at once). smartPDF reads each invoice's number, date, seller, customer, tax and total into one Excel sheet. Several invoices in one file are separated.",
+  "选择发票文件": "Choose invoice files",
+  "用现在打开的文件": "Use the open file",
+  "扫描件先识别文字": "Recognise text in scans first",
+  "黄色格子是没找到的资料，可以点进去直接打字补上。": "Yellow cells were not found; click and type to fill them in.",
+  "存成 Excel": "Save as Excel",
+  "整份文件里找到的地方全部涂黑，保存时下面的文字会被彻底删掉。": "Every match in the whole file is blacked out, and the text underneath is removed for good when you save.",
+  "要涂黑的字（一行一个）": "Words to black out (one per line)",
+  "IC 号码": "IC numbers",
+  "电话号码": "Phone numbers",
+  "电邮地址": "Email addresses",
+  "户口号码、卡号（10 位以上的数字）": "Account and card numbers (10+ digits)",
+  "查找": "Find",
+  "全部涂黑": "Black out all",
+  "Word／Excel／PPT 转 PDF": "Word / Excel / PPT to PDF",
+  "用电脑上的 Microsoft Office（或 LibreOffice）转，版面跟原来一样（Windows 版）": "Uses Microsoft Office (or LibreOffice) on your computer, so the layout stays the same (Windows version)",
+  "例如：\nLim Ah Kow\n012-345 6789": "For example:\nLim Ah Kow\n012-345 6789",
+  "例如：&#10;Lim Ah Kow&#10;012-345 6789": "For example:&#10;Lim Ah Kow&#10;012-345 6789",
+  "表格、批注和涂黑": "Forms, comments and redaction",
+  "IC、电话一次全部涂黑": "IC numbers, phones, all at once",
+  "Word／Excel 转 PDF": "Word / Excel to PDF",
+  "用电脑上的 Office 转": "Uses Office on your PC",
+  "发票、识别和加密": "Invoices, OCR and security",
+  "发票转 Excel": "Invoices to Excel",
+  "号码、日期、金额做成表": "Number, date, amount in a table",
   "更新完成后，旧版本的窗口会自动关掉，不会留着两个 smartPDF": "After an update, the old smartPDF window now closes by itself instead of staying open",
   "这个文件有 {n} 个数字签名。修改后再保存，原来的签名会失效": "This file has {n} digital signature(s). If you change and save it, those signatures will no longer be valid",
   "密码不对": "Wrong password",
@@ -1855,7 +1970,7 @@ function T(zh, v) {
 const I18N = { texts: [], attrs: [] };
 function collectI18n() {
   const cjk = /[㐀-鿿]/;
-  const skip = el => !el || el.closest('#pages,#thumbs,#outline,#cmpOut,#recent,#dTools,#dRecent,#dNoRecent,#dHello,#chlog,#limits,script,style,textarea,#toast,#fname,#hint,#cfMsg,#signSaved,#stampSaved,#seamSaved,#seamInfo,#spInfo,#spList,#scInfo,#scThumbs,#scGo,#scDone,#scDev,#rcInfo,#rcPg,#rcStage,#rcGapV,#btList,#btCnt,#btInfo,#cmpSum,#pnInfo,#qCnt,#stMsg,#pwName,#cmpOld,#gnPv,#swatches,#padInk');
+  const skip = el => !el || el.closest('#pages,#thumbs,#outline,#cmpOut,#recent,#dTools,#dRecent,#dNoRecent,#dHello,#chlog,#limits,script,style,textarea,#toast,#fname,#hint,#cfMsg,#signSaved,#stampSaved,#seamSaved,#seamInfo,#spInfo,#spList,#scInfo,#scThumbs,#scGo,#scDone,#scDev,#rcInfo,#rcPg,#rcStage,#rcGapV,#ixTbl,#ixInfo,#rkInfo,#rkWords,#btList,#btCnt,#btInfo,#cmpSum,#pnInfo,#qCnt,#stMsg,#pwName,#cmpOld,#gnPv,#swatches,#padInk');
   const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   let n;
   while ((n = w.nextNode())) {
@@ -1886,6 +2001,9 @@ function setLang(l) {
 }
 /* ----- 图标 ----- */
 const IC = {
+  office: '<path d="M5 2.8h6.5L15 6.3V17.2H5z"/><path d="M11.5 2.8v3.5H15"/><path d="M7.5 9.5l1 4 1.5-3 1.5 3 1-4"/>',
+  invx: '<path d="M5 2.8h10v14.4l-2-1.2-2 1.2-2-1.2-2 1.2-2-1.2z"/><path d="M7.5 6.5h5M7.5 9.3h5M7.5 12.1h3"/>',
+  rdk: '<circle cx="8.5" cy="8.5" r="4.5"/><path d="M12 12l4.5 4.5"/><rect x="6" y="7.2" width="5" height="2.6" rx=".4" fill="currentColor"/>',
   cert: '<path d="M10 2.5l6 2.3v4.6c0 3.9-2.6 6.8-6 8.1-3.4-1.3-6-4.2-6-8.1V4.8z"/><path d="M7.2 10l2 2 3.8-4"/>',
   form: '<rect x="3" y="4" width="14" height="12" rx="1.6"/><path d="M6 8h3M6 12h3"/><rect x="11" y="7" width="3.5" height="2.2" rx=".5"/><rect x="11" y="11" width="3.5" height="2.2" rx=".5"/>',
   note: '<path d="M4 4.5A1.5 1.5 0 0 1 5.5 3h9A1.5 1.5 0 0 1 16 4.5v7a1.5 1.5 0 0 1-1.5 1.5H9l-3.5 3.5V13h0A1.5 1.5 0 0 1 4 11.5z"/><path d="M7 7h6M7 9.8h4"/>',
@@ -2077,13 +2195,22 @@ function drawAnn(ctx, a) {
 }
 function drawAnns(ctx, list) { for (const a of list) drawAnn(ctx, a); }
 
+// 一段字里第 n 个字从多宽的地方开始（用字体实际宽度量，比按字数平分准，涂黑才不会漏字）
+let _mctx = null;
+function strFrac(it, n) {
+  if (n <= 0) return 0; if (n >= it.str.length) return 1;
+  if (!_mctx) _mctx = document.createElement('canvas').getContext('2d');
+  _mctx.font = '100px ' + (it.ff === 'serif' ? '"Times New Roman",Times,serif' : it.ff === 'mono' ? '"Courier New",monospace' : 'Helvetica,Arial,sans-serif');
+  const all = _mctx.measureText(it.str).width;
+  return all > 0 ? _mctx.measureText(it.str.slice(0, n)).width / all : n / it.str.length;
+}
 function hitPoly(p, h) {
   const items = textCache.get(p.doc + ':' + p.idx);
   const it = items && items[h.ii];
   if (!it || !it.str.length) return null;
   const m = mmul(p.vt, it.tr);
   const dl = Math.hypot(m[0], m[1]) || 1, dx = m[0] / dl, dy = m[1] / dl;
-  const f0 = h.k / it.str.length, f1 = (h.k + h.len) / it.str.length, w = it.w;
+  const f0 = strFrac(it, h.k), f1 = strFrac(it, h.k + h.len), w = it.w;
   const ux = m[2], uy = m[3], bx = m[4] - ux * 0.18, by = m[5] - uy * 0.18;
   const P = f => [bx + dx * w * f, by + dy * w * f];
   const a = P(f0), b = P(f1);
@@ -2290,16 +2417,31 @@ async function openFiles(files, mode, meta) {
     toast(e.message || T('打开失败'));
   } finally { busy(false); }
 }
-async function confirmDlg(msg, yes) {
+async function confirmDlg(msg, yes, no) {
   return new Promise(res => {
-    $('#cfMsg').textContent = msg; $('#cfYes').textContent = yes || T('继续');
+    $('#cfMsg').textContent = msg; $('#cfYes').textContent = yes || T('继续'); $('#cfNo').textContent = no || T('取消');
     openModal('mConfirm');
     const done = v => { $('#cfYes').onclick = $('#cfNo').onclick = null; closeModals(); res(v); };
     $('#cfYes').onclick = () => done(true); $('#cfNo').onclick = () => done(false);
   });
 }
 async function requestOpen(files, mode, meta) {
+  files = Array.from(files || []);
+  // 拖进来的 Word / Excel：电脑版先存到暂存文件夹，再叫 Office 转成 PDF
+  const off = files.filter(f => OFFICE_RE.test(f.name));
+  if (off.length && !DESK.on) { toast(T('Word／Excel 转 PDF 要用 Windows 版 smartPDF（会用到电脑上的 Office）')); files = files.filter(f => !off.includes(f)); if (!files.length) return; }
   if (mode === 'replace' && S.dirty && !(await confirmDlg(T('当前文件有还没保存的修改，打开新文件会丢掉它们。'), T('放弃并打开')))) return;
+  if (off.length && DESK.on) {
+    const base = (await scanTmp()).replace('smartpdf-scan-', 'smartpdf-in-'), tmp = [];
+    try {
+      for (let i = 0; i < off.length; i++) { const p = base + '-' + i + '-' + off[i].name.replace(/[\\/:*?"<>|]/g, '_'); await Neutralino.filesystem.writeBinaryFile(p, await off[i].arrayBuffer()); tmp.push(p); }
+      const conv = await officeToPdf(tmp);
+      files = files.filter(f => !off.includes(f)).concat(conv.map((f, i) => new File([f], f.name.replace(/^smartpdf-in-\d+-\d+-/, ''), { type: 'application/pdf' })));
+      meta = Object.assign({}, meta, { dirty: true, path: null });
+    } catch (e) { console.error(e); toast(T('转换失败：{e}', { e: e.message || e })); files = files.filter(f => !off.includes(f)); }
+    finally { tmp.forEach(p => Neutralino.filesystem.remove(p).catch(() => {})); }
+    if (!files.length) return;
+  }
   return openFiles(files, mode, meta);
 }
 const baseName = p => String(p).split(/[\\/]/).pop();
@@ -2402,7 +2544,7 @@ async function deskFolderDlg(title, o) {
 async function pickOpen(mode) {
   if (DESK.on) {
     let paths;
-    try { paths = await deskOpenDlg(T('打开 PDF'), { filters: [{ name: 'PDF', extensions: ['pdf', 'PDF'] }], multiSelections: mode === 'append' }); } catch (e) { console.warn(e); return; }
+    try { paths = await deskOpenDlg(T('打开 PDF'), { filters: [{ name: T('PDF 和 Office 文件'), extensions: ['pdf', ...OFFICE_EXT] }, { name: 'PDF', extensions: ['pdf'] }, { name: 'Word / Excel / PowerPoint', extensions: OFFICE_EXT }], multiSelections: mode === 'append' }); } catch (e) { console.warn(e); return; }
     if (paths && paths.length) openPaths(paths, mode);
     return;
   }
@@ -2416,12 +2558,14 @@ async function pickOpen(mode) {
   $(mode === 'replace' ? '#fOpen' : '#fMerge').click();
 }
 async function openPaths(paths, mode) {
-  const files = [];
-  for (const p of paths) {
+  if (paths.length && paths.every(p => OFFICE_RE.test(p))) return openOfficePaths(paths, mode);
+  const files = [], off = paths.filter(p => OFFICE_RE.test(p));
+  for (const p of paths.filter(p => !OFFICE_RE.test(p))) {
     try { files.push(new File([await Neutralino.filesystem.readBinaryFile(p)], baseName(p), { type: 'application/pdf' })); }
     catch (e) { console.warn(e); toast(T('打不开这个文件：{name}', { name: baseName(p) })); removeRecent(p); return; }
   }
-  return requestOpen(files, mode, paths.length === 1 ? { path: paths[0] } : {});
+  if (off.length) { try { files.push(...await officeToPdf(off)); } catch (e) { toast(T('转换失败：{e}', { e: e.message || e })); } }
+  return requestOpen(files, mode, paths.length === 1 ? { path: paths[0] } : off.length ? { dirty: true } : {});
 }
 function recentList() { try { const a = JSON.parse(LS.get('pdfed.recent') || '[]'); return Array.isArray(a) ? a.filter(x => typeof x === 'string') : []; } catch (e) { return []; } }
 function addRecent(p) { LS.set('pdfed.recent', JSON.stringify([p, ...recentList().filter(x => x !== p)].slice(0, 6))); renderRecent(); }
@@ -2872,10 +3016,10 @@ function convOpts() {
   const v = ($('input[name="cv"]:checked') || {}).value;
   $('#cvOpts').hidden = false;
   $('#cvFmtF').hidden = $('#cvDpiF').hidden = v !== 'img';
-  $('#cvRF').hidden = v === 'zip' || v === 'fromimg'; $('#cvLvlF').hidden = v !== 'zip';
+  $('#cvRF').hidden = v === 'zip' || v === 'fromimg' || v === 'office'; $('#cvLvlF').hidden = v !== 'zip';
   $('#cvLock').hidden = v !== 'lock'; $('#cvCleanF').hidden = v !== 'fromimg'; $('#cvOneF').hidden = v !== 'xlsx';
   $('#cvClean').checked = LS.get('pdfed.imgClean') === '1';
-  $('#cvGo').textContent = v === 'fromimg' ? T('选择图片') : v === 'ocr' ? T('开始识别') : v === 'lock' ? T('加密并保存') : T('开始转换');
+  $('#cvGo').textContent = v === 'office' ? T('选择文件') : v === 'fromimg' ? T('选择图片') : v === 'ocr' ? T('开始识别') : v === 'lock' ? T('加密并保存') : T('开始转换');
   if (v === 'lock') { lockUi(); setTimeout(() => $('#lkPw').focus(), 30); }
 }
 async function pageLines(p) {
@@ -3016,6 +3160,7 @@ async function makeDocx(pages) {
 }
 async function convGo() {
   const kind = ($('input[name="cv"]:checked') || {}).value;
+  if (kind === 'office') { closeModals(); pickOffice(); return; }
   if (kind === 'fromimg') { LS.set('pdfed.imgClean', $('#cvClean').checked ? '1' : '0'); closeModals(); $('#fImgs').click(); return; }
   if (!S.pages.length) { toast(T('请先打开一个 PDF')); return; }
   if (kind === 'zip') { closeModals(); closeEditor(); return compressCurrent(); }
@@ -3468,7 +3613,7 @@ function refreshProps() {
   show('#gChk', !!a && a.t === 'check');
   show('#gAct', !!a);
   const hint = a ? '' : T(HINTS[tool] || '');
-  $('#hint').textContent = hint;
+  $('#hint').textContent = hint; $('#gRdk').hidden = tool !== 'redact' || !!a;
   const any = colorOn || kind === 'img' || kind === 'fld' || !!a || !!hint;
   $('#props').hidden = !any;
   if (colorOn) {
@@ -4257,7 +4402,7 @@ function linesFromItems(list) {
     const y = it.tr[5], h = Math.hypot(it.tr[2], it.tr[3]) || 10;
     let r = rows.find(r => Math.abs(r.y - y) < h * 0.5);
     if (!r) rows.push(r = { y, items: [] });
-    r.items.push({ x: it.tr[4], s: it.str });
+    r.items.push({ x: it.tr[4], x1: it.tr[4] + (it.w || 0), s: it.str });
   }
   rows.sort((a, b) => b.y - a.y);
   return rows.map(r => { r.items.sort((a, b) => a.x - b.x); return { items: r.items, text: r.items.map(i => i.s).join(' ').replace(/\s+/g, ' ').trim() }; });
@@ -4980,23 +5125,24 @@ const DASH_TOOLS = [
     ['receipt', '分收据', '一页几张收据分开', 'pink', () => dashNeedDoc(openRcpt)],
     ['cmp', '对比', '两份合同差在哪里', 'teal', () => dashNeedDoc(openCmp)]
   ] },
-  { g: '表格和批注', c: 'blue', items: [
+  { g: '表格、批注和涂黑', c: 'blue', items: [
     ['form', '表格栏位', '做别人能填写的表格', 'blue', () => dashNeedDoc(() => setTool('field'))],
     ['note', '批注', '便签、回复、列表', 'amber', () => dashNeedDoc(() => { setTool('note'); sideTab('cmts'); })],
     ['redact', '涂黑', '永久删掉敏感内容', 'red', () => dashNeedDoc(() => setTool('redact'))],
-    ['hl', '高亮', '标出重点', 'orange', () => dashNeedDoc(() => setTool('hl'))]
+    ['rdk', '按关键词涂黑', 'IC、电话一次全部涂黑', 'amber', () => dashNeedDoc(openRdk)]
   ] },
   { g: '转换', c: 'orange', items: [
     ['word', '转 Word', '保留版面和表格', 'blue', () => dashNeedDoc(() => openConvAs('docx'))],
     ['xls', '转 Excel', '表格变成试算表', 'green', () => dashNeedDoc(() => openConvAs('xlsx'))],
-    ['image', '转图片', 'JPG 或 PNG', 'teal', () => dashNeedDoc(() => openConvAs('img'))],
+    ['office', 'Word／Excel 转 PDF', '用电脑上的 Office 转', 'indigo', () => pickOffice(), true],
+    ['image', '转图片', 'JPG 或 PNG', 'teal', () => dashNeedDoc(() => openConvAs('img')), 'web'],
     ['fromimg', '图片转 PDF', '照片合成一个 PDF', 'purple', () => openConvAs('fromimg')]
   ] },
-  { g: '识别、加密和压缩', c: 'green', items: [
-    ['ocr', '文字识别', '扫描件变成可搜索', 'green', () => dashNeedDoc(() => openConvAs('ocr'))],
+  { g: '发票、识别和加密', c: 'green', items: [
+    ['invx', '发票转 Excel', '号码、日期、金额做成表', 'green', () => openInvx()],
+    ['ocr', '文字识别', '扫描件变成可搜索', 'teal', () => dashNeedDoc(() => openConvAs('ocr'))],
     ['lock', '加密码', '打开密码、禁止打印', 'indigo', () => dashNeedDoc(() => openConvAs('lock'))],
-    ['zip', '压缩', '把文件变小', 'orange', () => dashNeedDoc(() => openConvAs('zip'))],
-    ['scan', '扫描', '扫描仪直接变 PDF', 'teal', () => openScan(), true]
+    ['zip', '压缩', '把文件变小', 'orange', () => dashNeedDoc(() => openConvAs('zip'))]
   ] }
 ];
 function fileTag(name) {
@@ -5016,7 +5162,8 @@ function renderDash() {
     const hd = document.createElement('h3'); hd.innerHTML = `<span class="dDot" style="--c:var(--c-${grp.c})"></span>`; hd.append(T(grp.g));
     const grid = document.createElement('div'); grid.className = 'dGrid';
     for (const [ic, label, sub, c, fn, desk] of grp.items) {
-      if (desk && !DESK.on) continue;
+      if (desk === true && !DESK.on) continue;
+      if (desk === 'web' && DESK.on) continue;
       const b = document.createElement('button'); b.type = 'button'; b.className = 'dTool'; b.style.setProperty('--c', `var(--c-${c})`);
       b.dataset.q = (label + ' ' + sub + ' ' + T(label) + ' ' + T(sub)).toLowerCase();
       b.innerHTML = `<span class="dChip">${icon(ic)}</span><b></b><span class="dSub"></span>`;
@@ -5566,8 +5713,9 @@ async function makeXlsx(sheets) {
     const rowsX = sh.rows.map((r, ri) => {
       const cells = [];
       for (let k = 0; k < r.length; k++) {
-        const s = r[k]; if (s == null || s === '') continue;
-        const ref = colL(k) + (ri + 1), n = cellVal(s);
+        let s = r[k]; if (s == null || s === '') continue;
+        const txt = typeof s === 'object'; if (txt) { s = s.s; if (s == null || s === '') continue; }   // { s } = 一定当文字（例如发票号码）
+        const ref = colL(k) + (ri + 1), n = txt ? null : cellVal(s);
         if (multi || r.filter(v => v != null && v !== '').length >= 2) widths[k] = Math.max(widths[k] || 6, Math.min(60, Array.from(String(s)).reduce((a, ch) => a + (isCJK(ch) ? 2 : 1), 0) + 2));
         if (n) cells.push(`<c r="${ref}" s="${n.pct ? 3 : n.money ? 2 : 0}"><v>${n.v}</v></c>`);
         else cells.push(`<c r="${ref}" t="inlineStr"><is><t xml:space="preserve">${xmlEsc(String(s))}</t></is></c>`);
@@ -5585,6 +5733,382 @@ async function makeXlsx(sheets) {
   zip.file('xl/_rels/workbook.xml.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' + names.map((_, i) => `<Relationship Id="rId${i + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i + 1}.xml"/>`).join('') + `<Relationship Id="rId${names.length + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`);
   zip.file('xl/styles.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><numFmts count="1"><numFmt numFmtId="164" formatCode="#,##0.00"/></numFmts><fonts count="1"><font><sz val="11"/><name val="Calibri"/></font></fonts><fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="4"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/><xf numFmtId="10" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/></cellXfs></styleSheet>');
   return zip.generateAsync({ type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+}
+
+/* ===== Word／Excel／PowerPoint 转 PDF（v3.3）=====
+   电脑版：叫电脑上装好的 Microsoft Office 把文件存成 PDF（版面最准），没有 Office 就用 LibreOffice。
+   转好的 PDF 直接在 smartPDF 打开，可以接着签名、盖章、合并。 */
+const OFFICE_EXT = ['doc', 'docx', 'rtf', 'odt', 'xls', 'xlsx', 'xlsm', 'csv', 'ods', 'ppt', 'pptx', 'odp'];
+const OFFICE_RE = new RegExp('\\.(' + OFFICE_EXT.join('|') + ')$', 'i');
+const PS_OFFICE = (files, outs, res) => PS_HEAD + `$res=@{ok=$true;done=@();fail=@();via=''}
+$files=@(${files.map(psq).join(',')}); $outs=@(${outs.map(psq).join(',')})
+$word=$null; $excel=$null; $ppt=$null; $so=$null
+foreach($c in @("$env:ProgramFiles\\LibreOffice\\program\\soffice.exe","\${env:ProgramFiles(x86)}\\LibreOffice\\program\\soffice.exe")){ if(-not $so -and (Test-Path $c)){ $so=$c } }
+try{
+  for($i=0; $i -lt $files.Count; $i++){
+    $f=$files[$i]; $o=$outs[$i]; $ext=[IO.Path]::GetExtension($f).ToLower(); $ok=$false
+    [Console]::Out.WriteLine('FILE '+($i+1)); [Console]::Out.Flush()
+    try{
+      if($ext -match '^\\.(docx?|rtf|odt)$'){
+        if(-not $word){ $word=New-Object -ComObject Word.Application; $word.Visible=$false; $word.DisplayAlerts=0 }
+        $m=[Type]::Missing; $d=$word.Documents.Open($f,$false,$true,$false,'smartpdf-no-password'); $d.ExportAsFixedFormat($o,17); $d.Close($false); $ok=$true
+      } elseif($ext -match '^\\.(xlsx?|xlsm|csv|ods)$'){
+        if(-not $excel){ $excel=New-Object -ComObject Excel.Application; $excel.Visible=$false; $excel.DisplayAlerts=$false }
+        $m=[Type]::Missing; $b=$excel.Workbooks.Open($f,0,$true,$m,'smartpdf-no-password'); $b.ExportAsFixedFormat(0,$o); $b.Close($false); $ok=$true
+      } else {
+        if(-not $ppt){ $ppt=New-Object -ComObject PowerPoint.Application }
+        $p=$ppt.Presentations.Open($f,-1,0,0); $p.SaveAs($o,32); $p.Close(); $ok=$true
+      }
+      if($ok){ $res.via='office' }
+    }catch{ $ok=$false }
+    if(-not $ok -and $so){
+      try{
+        $tmp=Join-Path ([IO.Path]::GetTempPath()) ('smartpdf-lo-'+[Guid]::NewGuid().ToString('N')); New-Item -ItemType Directory -Path $tmp | Out-Null
+        $pr=Start-Process -FilePath $so -ArgumentList @('--headless','--norestore','--convert-to','pdf','--outdir',('"'+$tmp+'"'),('"'+$f+'"')) -WindowStyle Hidden -Wait -PassThru
+        $g=Get-ChildItem $tmp -Filter *.pdf | Select-Object -First 1
+        if($g){ Move-Item $g.FullName $o -Force; $ok=$true; $res.via='libreoffice' }
+        Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
+      }catch{}
+    }
+    if($ok -and (Test-Path $o)){ $res.done+=$i } else { $res.fail+=$i }
+  }
+}catch{ $res=Err $_ }
+finally{
+  foreach($a in @($word,$excel,$ppt)){ if($a){ try{ $a.Quit() }catch{}; try{ [void][Runtime.InteropServices.Marshal]::ReleaseComObject($a) }catch{} } }
+}
+$res.office=[bool]$res.via; $res.lo=[bool]$so
+Done $res ${psq(res)}`;
+async function officeToPdf(paths) {
+  const base = (await scanTmp()).replace('smartpdf-scan-', 'smartpdf-office-');
+  const outs = paths.map((p, i) => base + '-' + i + '.pdf'), res = base + '.json';
+  busy(true, T('正在用 Office 转成 PDF…'));
+  try {
+    await psRun(psCmd(PS_OFFICE(paths, outs, res)), l => { const m = /^FILE (\d+)/.exec(l.trim()); if (m && paths.length > 1) busy(true, T('正在用 Office 转成 PDF… {i}/{n}', { i: m[1], n: paths.length })); });
+  } finally { busy(false); }
+  const r = await readRes(res);
+  if (!r || !r.ok) throw new Error((r && (r.msg || r.code)) || T('没有回应'));
+  const done = arr(r.done).map(Number), fail = arr(r.fail).map(Number);
+  const files = [];
+  for (const i of done) {
+    try { files.push(new File([await Neutralino.filesystem.readBinaryFile(outs[i])], baseName(paths[i]).replace(OFFICE_RE, '') + '.pdf', { type: 'application/pdf' })); } catch (e) { console.warn(e); fail.push(i); }
+    Neutralino.filesystem.remove(outs[i]).catch(() => {});
+  }
+  if (fail.length && !files.length) throw new Error(r.lo ? T('Office 和 LibreOffice 都转不了这个文件') : T('这台电脑没有安装 Microsoft Office 或 LibreOffice，转不了。可以先在 Word / Excel 里「另存为 PDF」'));
+  if (fail.length) toast(T('有 {n} 个文件转不了：{f}', { n: fail.length, f: fail.map(i => baseName(paths[i])).join('、') }));
+  return files;
+}
+async function pickOffice() {
+  if (!DESK.on) { toast(T('Word／Excel 转 PDF 要用 Windows 版 smartPDF（会用到电脑上的 Office）')); return; }
+  let paths;
+  try { paths = await deskOpenDlg(T('选择 Word、Excel 或 PowerPoint 文件'), { filters: [{ name: 'Word / Excel / PowerPoint', extensions: OFFICE_EXT }], multiSelections: true }); } catch (e) { console.warn(e); return; }
+  if (paths && paths.length) openOfficePaths(paths, S.pages.length && !DASH.home ? 'ask' : 'replace');
+}
+async function openOfficePaths(paths, mode) {
+  if (mode === 'replace' && S.dirty && !(await confirmDlg(T('当前文件有还没保存的修改，打开新文件会丢掉它们。'), T('放弃并打开')))) return;
+  let files;
+  try { files = await officeToPdf(paths); } catch (e) { console.error(e); toast(T('转换失败：{e}', { e: e.message || e })); return; }
+  if (!files.length) return;
+  if (mode === 'ask') {
+    mode = (await confirmDlg(T('要把转好的 PDF 接在现在这个文件后面吗？选「另外打开」就换成新文件。'), T('接在后面'), T('另外打开'))) ? 'append' : 'replace';
+    if (mode === 'replace' && S.dirty && !(await confirmDlg(T('当前文件有还没保存的修改，打开新文件会丢掉它们。'), T('放弃并打开')))) return;
+  }
+  await openFiles(files, mode, { dirty: true });
+}
+
+/* ===== 发票资料提取到 Excel（v3.3）=====
+   一次选很多张发票 PDF，读出发票号码、日期、卖方、客户、税、总额，做成一张试算表。扫描件先识别文字。
+   一个 PDF 里有几张发票（发票号码不同）会分成几行。 */
+const IX = { rows: [], run: 0 };
+const IX_COLS = [['file', '文件'], ['pages', '页'], ['inv', '发票号码'], ['date', '日期'], ['seller', '卖方'], ['buyer', '客户'], ['cur', '币种'], ['tax', '税'], ['total', '总额']];
+const MONTHS = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, sept: 9, oct: 10, nov: 11, dec: 12, januari: 1, februari: 2, mac: 3, april: 4, mei: 5, julai: 7, ogos: 8, okt: 10, disember: 12 };
+const pad2 = n => String(n).padStart(2, '0');
+function ixDateIn(s) {
+  let m;
+  if ((m = s.match(/(20\d\d)\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日?/))) return `${m[1]}-${pad2(m[2])}-${pad2(m[3])}`;
+  if ((m = s.match(/\b(20\d\d)[-/.](\d{1,2})[-/.](\d{1,2})\b/))) return `${m[1]}-${pad2(m[2])}-${pad2(m[3])}`;
+  if ((m = s.match(/\b(\d{1,2})[-/.](\d{1,2})[-/.]((?:20)?\d\d)\b/))) {
+    let d = +m[1], mo = +m[2], y = +m[3]; if (y < 100) y += 2000;
+    if (mo > 12 && d <= 12) [d, mo] = [mo, d];
+    if (mo >= 1 && mo <= 12 && d >= 1 && d <= 31) return `${y}-${pad2(mo)}-${pad2(d)}`;
+  }
+  if ((m = s.match(/\b(\d{1,2})(?:st|nd|rd|th)?[\s\-.]+([A-Za-z]{3,9})\.?[\s\-.,]+((?:20)?\d\d)\b/))) {
+    const mo = MONTHS[m[2].toLowerCase()] || MONTHS[m[2].toLowerCase().slice(0, 3)]; let y = +m[3]; if (y < 100) y += 2000;
+    if (mo) return `${y}-${pad2(mo)}-${pad2(m[1])}`;
+  }
+  if ((m = s.match(/\b([A-Za-z]{3,9})\.?\s+(\d{1,2})(?:st|nd|rd|th)?,?\s+(20\d\d)\b/))) {
+    const mo = MONTHS[m[1].toLowerCase()] || MONTHS[m[1].toLowerCase().slice(0, 3)];
+    if (mo) return `${m[3]}-${pad2(mo)}-${pad2(m[2])}`;
+  }
+  return '';
+}
+function ixDate(lines) {
+  const lab = /(invoice\s*date|inv\.?\s*date|bill\s*date|tarikh(\s*invois)?|开票日期|发票日期|日期|\bdate\b)/i, bad = /(due|expiry|delivery|order|tempoh|到期)/i;
+  for (let k = 0; k < lines.length; k++) {
+    const t = lines[k].text, m = t.match(lab);
+    if (!m || bad.test(t.slice(Math.max(0, m.index - 12), m.index + m[0].length + 2))) continue;
+    const d = ixDateIn(t.slice(m.index)) || (lines[k + 1] && ixDateIn(lines[k + 1].text));
+    if (d) return d;
+  }
+  for (const l of lines) { if (bad.test(l.text)) continue; const d = ixDateIn(l.text); if (d) return d; }
+  return '';
+}
+const MONEY_RE = /\(?-?(?:RM|MYR|USD|SGD|US\$|S\$|\$|¥|￥)?\s?\d{1,3}(?:,\d{3})+(?:\.\d{1,2})?\)?|\(?-?(?:RM|MYR|USD|SGD|US\$|S\$|\$|¥|￥)?\s?\d+\.\d{2}\)?/g;
+const moneyVal = s => { const v = parseFloat(s.replace(/[^\d.\-]/g, '')); return isNaN(v) ? null : /^\(.*\)$/.test(s.trim()) ? -Math.abs(v) : v; };
+function lineMoney(t) { return (t.match(MONEY_RE) || []).map(moneyVal).filter(v => v != null); }
+const TOTAL_LABELS = [
+  /grand\s*total|total\s*amount\s*(?:payable|due)|amount\s*(?:due|payable)|total\s*(?:payable|due)|jumlah\s*(?:besar|perlu\s*dibayar|bayaran)|价税合计|应付金额|应付总额|总计|合计金额/i,
+  /net\s*total|total\s*(?:incl|inclusive|including|\(?rm|\(?myr|amount)|total\s*\(/i,
+  /\btotal\b|\bjumlah\b|合计|总额|小计/i
+];
+const NOT_TOTAL = /sub\s*-?\s*total|subtotal|total\s*(?:qty|quantity|tax|sst|gst|discount|excl|exclusive|before|weight|items?|pcs|units)|jumlah\s*kecil|小计/i;
+function ixTotal(lines) {
+  for (const re of TOTAL_LABELS) {
+    const c = [];
+    lines.forEach((l, k) => {
+      if (!re.test(l.text) || NOT_TOTAL.test(l.text) && re === TOTAL_LABELS[2]) return;
+      if (re !== TOTAL_LABELS[0] && NOT_TOTAL.test(l.text)) return;
+      let v = lineMoney(l.text.slice(l.text.search(re)));
+      if (!v.length && lines[k + 1]) v = lineMoney(lines[k + 1].text);
+      if (v.length) c.push(v[v.length - 1]);
+    });
+    if (c.length) return Math.max(...c);
+  }
+  return null;
+}
+function ixTax(lines, total) {
+  const re = /\b(?:sst|gst|service\s*tax|sales\s*tax|tax\s*amount|total\s*tax|tax|cukai(?:\s*perkhidmatan|\s*jualan)?)\b|税额|税金/i;
+  const bad = /tax\s*invoice|tax\s*(?:id|no|reg|number|identification)|before\s*tax|excl(?:uding)?\.?\s*tax|incl(?:uding)?\.?\s*tax|tin\b|sst\s*(?:no|reg|id)|invois\s*cukai/i;
+  for (let k = lines.length - 1; k >= 0; k--) {
+    const t = lines[k].text; if (!re.test(t) || bad.test(t)) continue;
+    const v = lineMoney(t.slice(t.search(re)));
+    const x = v.length ? v[v.length - 1] : null;
+    if (x != null && (total == null || Math.abs(x) < Math.abs(total))) return x;
+  }
+  return null;
+}
+const CO_RE = /\b(?:sdn\.?\s*bhd|bhd|berhad|enterprise|trading|ltd|limited|llp|plt|inc|corp(?:oration)?|co\.|company|holdings|resources|services|industries|marketing|solutions?|technology|engineering|construction|supplies|hardware|motor|pharmacy|restaurant|store)\b|有限公司|公司|商行|企业|集团/i;
+const TITLE_RE = /invoice|invois|发票|收据|receipt|quotation|statement|\bbill\b|\btel\b|\bfax\b|phone|\bsst\b|\bgst\b/i;
+const BUYER_LAB = /\b(?:bill(?:ed)?\s*to|sold\s*to|ship\s*to|deliver(?:y)?\s*to|customer|client|kepada|attn|to\s*:)|客户|购买方|买方|收货/i;
+// 同一行里靠得很近的字合成一段（扫描识别出来是一个一个字词）
+function ixPhrases(line) {
+  const out = [];
+  for (const it of [...line.items].sort((p, q) => p.x - q.x)) {
+    const last = out[out.length - 1];
+    if (last && last.x1 != null && it.x - last.x1 < 9) { last.s += (/[\u4e00-\u9fff]$/.test(last.s) && /^[\u4e00-\u9fff]/.test(it.s) ? '' : ' ') + it.s; last.x1 = it.x1; }
+    else out.push({ x: it.x, x1: it.x1, s: it.s });
+  }
+  return out;
+}
+function ixParties(lines) {
+  let seller = '', buyer = '';
+  const clean = s => s.replace(/\s{2,}/g, ' ').replace(/^[\s:：\-]+|[\s:：\-]+$/g, '').slice(0, 80);
+  let after = -1;
+  for (let k = 0; k < Math.min(lines.length, 40); k++) {
+    const t = lines[k].text;
+    if (BUYER_LAB.test(t)) {
+      after = k;
+      if (!buyer) {
+        const rest = clean(t.replace(BUYER_LAB, ''));
+        const cand = [rest, ...(lines.slice(k + 1, k + 4).map(l => clean(l.text)))].filter(Boolean);
+        buyer = cand.find(c => CO_RE.test(c)) || cand.find(c => /[A-Za-z一-鿿]{3}/.test(c) && !/\d{5,}/.test(c)) || '';
+        // 标签单独一格（表头）：客户名字在下面一两行、差不多同一列
+        const it = ixPhrases(lines[k]), li = it.find(i => BUYER_LAB.test(i.s));
+        if (li && !clean(li.s.replace(BUYER_LAB, ''))) {
+          for (const nx of lines.slice(k + 1, k + 3)) {
+            const c = ixPhrases(nx).filter(i => /[A-Za-z\u4e00-\u9fff]{2}/.test(i.s)).sort((x, y) => Math.abs(x.x - li.x) - Math.abs(y.x - li.x))[0];
+            if (c && Math.abs(c.x - li.x) < 60) { buyer = clean(c.s); break; }
+          }
+        }
+      }
+      continue;
+    }
+    if (!seller && (after < 0 || k > after + 4)) {
+      const c = ixPhrases(lines[k]).find(i => CO_RE.test(i.s) && !TITLE_RE.test(i.s.replace(CO_RE, '')));
+      if (c) seller = clean(c.s);
+    }
+  }
+  if (!seller) { for (const l of lines.slice(0, 8)) { const c = ixPhrases(l).find(i => /[A-Za-z\u4e00-\u9fff]{3}/.test(i.s) && !TITLE_RE.test(i.s)); if (c) { seller = clean(c.s); break; } } }
+  if (buyer === seller) buyer = '';
+  return { seller, buyer };
+}
+function ixCur(text) {
+  if (/\b(?:RM|MYR)\b|RM\s?\d/.test(text)) return 'MYR';
+  if (/\bSGD\b|S\$/.test(text)) return 'SGD';
+  if (/\bUSD\b|US\$/.test(text)) return 'USD';
+  if (/\b(?:RMB|CNY)\b|[¥￥]|元/.test(text)) return 'CNY';
+  if (/\bEUR\b|€/.test(text)) return 'EUR';
+  return '';
+}
+function ixFields(lines) {
+  const total = ixTotal(lines);
+  return { inv: findInv(lines) || '', date: ixDate(lines), ...ixParties(lines), cur: ixCur(lines.map(l => l.text).join('\n')), tax: ixTax(lines, total), total };
+}
+// 一个 PDF：每页读一次，发票号码变了就当新的一张
+async function ixDoc(pdf, name, ocr, run) {
+  const out = [];
+  let cur = null;
+  for (let i = 0; i < pdf.numPages; i++) {
+    if (run !== IX.run) return out;
+    const pg = await pdf.getPage(i + 1), tc = await pg.getTextContent();
+    let lines = linesFromItems(tc.items.filter(t => t.str).map(t => ({ str: t.str, tr: t.transform, w: t.width })));
+    if (!lines.length && ocr) {
+      $('#ixInfo').textContent = OCR.p ? T('正在识别扫描的发票… {f}', { f: name }) : T('正在下载文字识别组件…');
+      try { lines = await ocrImage(await renderPdfjsPng(pg, OCR_SC), OCR_SC); } catch (e) { console.warn(e); IX.ocrErr = true; }
+    }
+    const inv = findInv(lines);
+    if (!cur || (inv && cur.inv && inv !== cur.inv)) { cur = { file: name, p0: i + 1, p1: i + 1, inv: inv || '', lines: [] }; out.push(cur); }
+    cur.p1 = i + 1; if (!cur.inv && inv) cur.inv = inv;
+    cur.lines.push(...lines);
+  }
+  return out.map(c => ({ file: c.file, pages: c.p0 === c.p1 ? String(c.p0) : c.p0 + '-' + c.p1, ...ixFields(c.lines), inv: c.inv || findInv(c.lines) || '', empty: !c.lines.length }));
+}
+function openInvx() {
+  IX.rows = []; IX.run++;
+  $('#ixInfo').textContent = T('选择发票 PDF，可以一次选很多个。');
+  $('#ixUseCur').hidden = !S.pages.length;
+  ixRender(); openModal('mInvx');
+}
+async function ixPick() {
+  if (DESK.on) {
+    let paths;
+    try { paths = await deskOpenDlg(T('选择发票 PDF'), { filters: [{ name: 'PDF', extensions: ['pdf'] }], multiSelections: true }); } catch (e) { console.warn(e); return; }
+    if (!paths || !paths.length) return;
+    const files = [];
+    for (const p of paths) { try { files.push(new File([await Neutralino.filesystem.readBinaryFile(p)], baseName(p), { type: 'application/pdf' })); } catch (e) { console.warn(e); } }
+    return ixRun(files);
+  }
+  $('#fInvx').click();
+}
+async function ixRun(files, useCur) {
+  const run = ++IX.run, ocr = $('#ixOcr').checked; IX.rows = []; IX.ocrErr = false; ixRender();
+  $('#ixGo').disabled = $('#ixUseCur').disabled = true;
+  try {
+    if (useCur) {
+      const bytes = await buildPdf(S.pages);
+      files = [new File([bytes], S.fileName || 'document.pdf', { type: 'application/pdf' })];
+    }
+    for (let k = 0; k < files.length; k++) {
+      if (run !== IX.run) return;
+      $('#ixInfo').textContent = T('正在读取… {i}/{n}', { i: k + 1, n: files.length });
+      try {
+        const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await files[k].arrayBuffer()) }).promise;
+        IX.rows.push(...await ixDoc(pdf, files[k].name.replace(/\.pdf$/i, ''), ocr, run));
+        pdf.destroy();
+      } catch (e) { console.warn(e); IX.rows.push({ file: files[k].name, pages: '', inv: '', date: '', seller: T('打不开这个文件'), buyer: '', cur: '', tax: null, total: null, bad: true }); }
+      ixRender();
+    }
+    const miss = IX.rows.filter(r => r.total == null || !r.inv).length;
+    $('#ixInfo').textContent = T('读出 {n} 张发票。', { n: IX.rows.length }) + (miss ? T('有 {m} 张没找到号码或总额，请在表里直接补上。', { m: miss }) : T('可以在表里直接修改，再存成 Excel。')) + (IX.ocrErr ? ' ' + T('扫描件的文字识别不成功（第一次要连网下载识别组件）。') : '');
+  } catch (e) { console.error(e); $('#ixInfo').textContent = T('读取失败：{e}', { e: e.message || e }); }
+  finally { if (run === IX.run) { $('#ixGo').disabled = $('#ixUseCur').disabled = false; ixRender(); } }
+}
+const ixFmt = v => (v == null || v === '' ? '' : typeof v === 'number' ? v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : String(v));
+function ixRender() {
+  const t = $('#ixTbl'); t.textContent = '';
+  $('#ixSave').disabled = !IX.rows.length; $('#ixWrap').hidden = !IX.rows.length;
+  if (!IX.rows.length) return;
+  const hr = document.createElement('tr');
+  for (const [, lb] of IX_COLS) { const th = document.createElement('th'); th.textContent = T(lb); hr.appendChild(th); }
+  t.appendChild(hr);
+  IX.rows.forEach(r => {
+    const tr = document.createElement('tr');
+    for (const [k] of IX_COLS) {
+      const td = document.createElement('td'); td.textContent = ixFmt(r[k]);
+      if (k === 'tax' || k === 'total') td.className = 'num';
+      if ((k === 'inv' || k === 'total') && (r[k] == null || r[k] === '')) td.classList.add('miss');
+      if (k !== 'file' && k !== 'pages') {
+        td.contentEditable = 'plaintext-only';
+        td.onkeydown = e => { e.stopPropagation(); if (e.key === 'Enter') { e.preventDefault(); td.blur(); } };
+        td.onblur = () => { const v = td.textContent.trim(); r[k] = k === 'tax' || k === 'total' ? (v === '' ? null : moneyVal(v)) : v; td.classList.toggle('miss', (k === 'inv' || k === 'total') && (r[k] == null || r[k] === '')); };
+      }
+      tr.appendChild(td);
+    }
+    t.appendChild(tr);
+  });
+}
+async function ixSave() {
+  if (!IX.rows.length) return;
+  const head = IX_COLS.map(([, lb]) => T(lb));
+  const rows = [head, ...IX.rows.map(r => IX_COLS.map(([k]) => (k === 'tax' || k === 'total') ? (r[k] == null ? '' : r[k].toFixed(2)) : k === 'inv' || k === 'file' ? { s: r[k] || '' } : r[k] || ''))];
+  const sum = IX.rows.reduce((a, r) => a + (r.total || 0), 0), tsum = IX.rows.reduce((a, r) => a + (r.tax || 0), 0);
+  rows.push([], [T('合计'), '', '', '', '', '', '', tsum.toFixed(2), sum.toFixed(2)]);
+  const blob = await makeXlsx([{ name: T('发票'), rows }]);
+  await saveFile(T('发票资料') + '-' + new Date().toISOString().slice(0, 10) + '.xlsx', blob);
+}
+function wireInvx() {
+  $('#ixGo').onclick = ixPick;
+  $('#ixUseCur').onclick = () => ixRun(null, true);
+  $('#ixSave').onclick = ixSave;
+  $('#fInvx').onchange = e => { const f = Array.from(e.target.files || []); e.target.value = ''; if (f.length) ixRun(f); };
+}
+
+/* ===== 按关键词一次涂黑（v3.3）=====
+   找出整份文件里的关键词或 IC 号码、电话、电邮、长数字，全部加上涂黑框。保存时下面的文字会被彻底删掉。 */
+const RDK_PRESETS = {
+  ic: /\b\d{6}-\d{2}-\d{4}\b|\b\d{12}\b/g,
+  phone: /(?:\+?6?0)1\d[\s-]?\d{3,4}[\s-]?\d{4}\b|\b0[3-9]\d?[\s-]?\d{3,4}[\s-]?\d{4}\b/g,
+  email: /[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}/g,
+  acct: /\b\d(?:[\s-]?\d){9,18}\b/g
+};
+const RDK = { hits: [] };
+function openRdk() {
+  if (!S.pages.length) { toast(T('请先打开一个 PDF')); return; }
+  closeEditor(); RDK.hits = [];
+  $('#rkWords').value = LS.get('pdfed.rdkWords') || '';
+  for (const k of Object.keys(RDK_PRESETS)) $('#rk_' + k).checked = (LS.get('pdfed.rdk_' + k) || (k === 'ic' ? '1' : '0')) === '1';
+  $('#rkInfo').textContent = ''; $('#rkGo').disabled = true;
+  openModal('mRdk'); setTimeout(() => $('#rkWords').focus(), 30);
+}
+function rdkRes() {
+  const res = [];
+  for (const w of $('#rkWords').value.split(/\n|,|，/).map(s => s.trim()).filter(Boolean)) res.push(new RegExp(reEsc(w).replace(/\s+/g, '\\s*'), 'gi'));
+  for (const k of Object.keys(RDK_PRESETS)) if ($('#rk_' + k).checked) res.push(new RegExp(RDK_PRESETS[k].source, 'g'));
+  return res;
+}
+async function rdkFind() {
+  const res = rdkRes();
+  if (!res.length) { $('#rkInfo').textContent = T('请写要涂黑的字，或勾选上面的种类'); return; }
+  LS.set('pdfed.rdkWords', $('#rkWords').value);
+  for (const k of Object.keys(RDK_PRESETS)) LS.set('pdfed.rdk_' + k, $('#rk_' + k).checked ? '1' : '0');
+  $('#rkInfo').textContent = T('正在查找…'); $('#rkGo').disabled = true;
+  const hits = []; let noText = 0;
+  for (const p of S.pages) {
+    if (p.blank) continue;
+    const items = await getItems(p);
+    if (!items.some(i => i.str.trim())) { noText++; continue; }
+    items.forEach((it, ii) => {
+      for (const re of res) { re.lastIndex = 0; let m; while ((m = re.exec(it.str))) { if (!m[0].length) { re.lastIndex++; continue; } hits.push({ pid: p.id, ii, k: m.index, len: m[0].length, s: m[0] }); } }
+    });
+  }
+  // 同一个地方被几个条件找到，只算一次
+  hits.sort((x, y) => (x.pid + ':' + x.ii).localeCompare(y.pid + ':' + y.ii) || x.k - y.k || y.len - x.len);
+  RDK.hits = [];
+  for (const h of hits) { const l = RDK.hits[RDK.hits.length - 1]; if (l && l.pid === h.pid && l.ii === h.ii && h.k < l.k + l.len) { const e = Math.max(l.k + l.len, h.k + h.len); l.len = e - l.k; continue; } RDK.hits.push({ ...h }); }
+  const pg = new Set(RDK.hits.map(h => h.pid)).size;
+  $('#rkInfo').textContent = (RDK.hits.length ? T('找到 {n} 处，在 {p} 页。', { n: RDK.hits.length, p: pg }) + ' ' + [...new Set(RDK.hits.map(h => h.s))].slice(0, 6).join('、') + (RDK.hits.length > 6 ? '…' : '') : T('没有找到。')) +
+    (noText ? ' ' + T('有 {n} 页是扫描件，要先用「识别文字」才找得到。', { n: noText }) : '');
+  $('#rkGo').disabled = !RDK.hits.length;
+}
+function rdkApply() {
+  if (!RDK.hits.length) return;
+  const before = snap(); let n = 0;
+  for (const h of RDK.hits) {
+    const p = pageById(h.pid); if (!p) continue;
+    const poly = hitPoly(p, h); if (!poly) continue;
+    const xs = poly.map(q => q[0]), ys = poly.map(q => q[1]);
+    const pd = Math.max(1, (Math.max(...ys) - Math.min(...ys)) * 0.12);
+    const x = Math.min(...xs) - pd, y = Math.min(...ys) - pd * 0.5, w = Math.max(...xs) - x + pd, hh = Math.max(...ys) - y + pd * 0.5;
+    p.ann.push({ id: uid(), t: 'rect', x, y, w, h: hh, c: null, sw: 0, f: '#000000', rd: true }); n++;
+  }
+  closeModals(); commit(before); redrawAll(); RDK.hits = [];
+  toast(T('已涂黑 {n} 处。保存时这些地方下面的文字会被彻底删掉', { n }));
+}
+function wireRdk() {
+  $('#rkFind').onclick = rdkFind;
+  $('#rkGo').onclick = rdkApply;
+  $('#rkWords').onkeydown = e => e.stopPropagation();
+  $('#rkWords').oninput = () => { $('#rkGo').disabled = true; };
+  $$('#mRdk input[type=checkbox]').forEach(c => { c.onchange = () => { $('#rkGo').disabled = true; }; });
 }
 
 /* ===== 证书签名（数字签名，v3.2）=====
@@ -6172,7 +6696,7 @@ function getOcr() {
 }
 async function ocrImage(blob, sc) {
   const w = await getOcr(), { data } = await w.recognize(blob);
-  return (data.lines || []).map(l => ({ items: l.words.map(wd => ({ x: wd.bbox.x0 / sc, s: wd.text })), text: l.text.replace(/\s+/g, ' ').trim() })).filter(l => l.text);
+  return (data.lines || []).map(l => ({ items: l.words.map(wd => ({ x: wd.bbox.x0 / sc, x1: wd.bbox.x1 / sc, s: wd.text })), text: l.text.replace(/\s+/g, ' ').trim() })).filter(l => l.text);
 }
 const OCR_SC = 2.8;
 async function ocrPage(p) {
@@ -6398,7 +6922,8 @@ function wire() {
       await armImage('image', url, clamp(c.width * 0.5, 60, 300));
     } catch (err) { toast(err.message); }
   };
-  wireFld(); wireCert();
+  wireFld(); wireCert(); wireInvx(); wireRdk();
+  $('#rkOpen').onclick = openRdk;
   $('#sgCert').onclick = () => { closeModals(); openCert(); };
   $('#cmtAdd').onclick = () => { if (!S.pages.length) return; setTool('note'); toast(T('点击页面，贴上便签')); };
   $('#fImgRep').onchange = e => { const f = e.target.files[0]; e.target.value = ''; if (f) imgCover(f); };
