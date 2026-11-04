@@ -489,6 +489,13 @@ body{background:var(--dbg)}
 .ctxm .cxI i{font-style:normal;width:18px;text-align:center;font-weight:700}
 .ctxm .cxI.danger{color:#c62828}
 .ctxm hr{border:0;border-top:1px solid var(--line);margin:4px 2px}
+.selBar{position:fixed;z-index:59;display:flex;align-items:center;gap:4px;padding:5px 6px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:10px;box-shadow:0 8px 24px rgba(10,20,40,.2)}
+.selBar .sbD{width:20px;height:20px;border-radius:50%;border:2px solid var(--panel);box-shadow:0 0 0 1px var(--line);padding:0;cursor:pointer}
+.selBar .sbD:hover,.selBar .sbD:focus-visible{box-shadow:0 0 0 2px var(--accent);outline:0}
+.selBar .sbD.on{box-shadow:0 0 0 2px var(--ink)}
+.selBar .sbB{height:26px;min-width:26px;padding:0 6px;border:0;border-radius:6px;background:transparent;color:inherit;cursor:pointer;font:600 13px/1 var(--font,inherit)}
+.selBar .sbB:hover,.selBar .sbB:focus-visible{background:var(--accent-soft);outline:0}
+.selBar .sbS{width:1px;height:18px;background:var(--line);margin:0 2px}
 .imgMenu{position:absolute;z-index:6;display:flex;gap:6px;padding:6px;background:var(--panel);border:1px solid var(--line);border-radius:9px;box-shadow:var(--shadow)}
 .imgMenu.choice{flex-direction:column;gap:0;padding:4px;max-height:240px;overflow:auto}
 .imgMenu.choice button{border:0;background:transparent;text-align:left;padding:6px 10px;border-radius:6px;font-size:13px;color:var(--ink)}
@@ -555,12 +562,13 @@ body{background:var(--dbg)}
 </style>
 </head><body>
 <div class="ctxm" id="ctxm" role="menu" hidden></div>
+<div class="selBar" id="selBar" role="toolbar" aria-label="选中的文字" hidden></div>
 <div class="app" id="app">
   <header class="bar top">
     <div class="brand">
       <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTQwLDE0IEgxMjAgTDE2Miw1NiBWMTg2IEg0MCBaIiBmaWxsPSIjRkNFQkVCIiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTEyMCwxNCBWNTYgSDE2MiBaIiBmaWxsPSIjRjdDOEM4IiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjQsNjguMzcpIHNjYWxlKDAuNTU0NCkiPjxwYXRoIGQ9Ik0xNCAxMTUuNTlINDIuODZRNDMuNDkgMTIxLjc4IDQ3LjE0IDEyNS4wM1E1MC43OCAxMjguMjggNTYuNjUgMTI4LjI4UTYyLjY4IDEyOC4yOCA2Ni4xNiAxMjUuNVE2OS42NSAxMjIuNzMgNjkuNjUgMTE3LjgxUTY5LjY1IDExMy42OSA2Ni44OCAxMTFRNjQuMSAxMDguMyA2MC4wNiAxMDYuNTZRNTYuMDIgMTA0LjgxIDQ4LjU2IDEwMi41OVEzNy43OCA5OS4yNiAzMC45NyA5NS45M1EyNC4xNSA5Mi42IDE5LjIzIDg2LjFRMTQuMzIgNzkuNiAxNC4zMiA2OS4xNFExNC4zMiA1My42IDI1LjU3IDQ0LjhRMzYuODMgMzYgNTQuOTEgMzZRNzMuMyAzNiA4NC41NiA0NC44UTk1LjgxIDUzLjYgOTYuNjEgNjkuM0g2Ny4yN1E2Ni45NiA2My45MSA2My4zMSA2MC44MVE1OS42NiA1Ny43MiA1My45NiA1Ny43MlE0OS4wNCA1Ny43MiA0Ni4wMyA2MC4zNFE0My4wMiA2Mi45NSA0My4wMiA2Ny44N1E0My4wMiA3My4yNiA0OC4wOSA3Ni4yN1E1My4xNiA3OS4yOSA2My45NCA4Mi43N1E3NC43MyA4Ni40MiA4MS40NiA4OS43NVE4OC4yIDkzLjA4IDkzLjEyIDk5LjQyUTk4LjAzIDEwNS43NiA5OC4wMyAxMTUuNzVROTguMDMgMTE1LjgzIDk4LjAzIDExNS45MUw3NC41IDE0MS4xM1E3MS41NCAxNDQuMyA3MS4wOCAxNDguMzlRNjQuODQgMTUwIDU3LjQ0IDE1MFE0NS4yNCAxNTAgMzUuNTYgMTQ2LjA0UTI1Ljg5IDE0Mi4wNyAyMC4xIDEzNC4zUTE0LjMyIDEyNi41MyAxNCAxMTUuNTlaIiBmaWxsPSIjMTIzMDdBIi8+PHBhdGggZD0iTTc4LjUyIDE0NC44OCAxMDYuNTIgMTE0Ljg4UTEwOC41OCAxMTIuNjcgMTExLjYgMTEyLjUxUTExNC42MyAxMTIuMzUgMTE2LjkxIDExNC4zM0wxMjUuODEgMTIyLjA0TDE1NC40OSA4My41M0wxNDAuNDYgNzMuMDdRMTM5LjQ1IDcyLjMzIDEzOS4zMyA3MS40NVExMzkuMiA3MC41OCAxMzkuOTQgNjkuNThRMTQwLjM0IDY5LjA1IDE0MC45NCA2OC43OEwxODcuMjcgNDguNDJRMTg5LjU2IDQ3LjQyIDE5MC41NyA0OS43UTE5MC44NSA1MC4zMyAxOTAuNzYgNTEuMDJMMTg0LjUzIDEwMS4yNFExODQuMzggMTAyLjQ4IDE4My42OCAxMDMuMDJRMTgyLjk4IDEwMy41NyAxODEuNzQgMTAzLjQxUTE4MS4wOSAxMDMuMzMgMTgwLjU2IDEwMi45NEwxNjYuNTIgOTIuNDhMMTMzLjAyIDEzNy40OFExMzIuODUgMTM3LjcgMTMyLjY3IDEzNy45MVExMzAuNjMgMTQwLjI2IDEyNy41MyAxNDAuNDhRMTI0LjQ0IDE0MC43IDEyMi4wOSAxMzguNjdMMTEyLjU1IDEzMC40TDg5LjQ4IDE1NS4xMlE4Ny4zNiAxNTcuMzkgODQuMjYgMTU3LjVRODEuMTUgMTU3LjYgNzguODggMTU1LjQ4UTc2LjYxIDE1My4zNiA3Ni41IDE1MC4yNlE3Ni40IDE0Ny4xNSA3OC41MiAxNDQuODhaIiBmaWxsPSIjRTIzQjNCIi8+PC9nPjwvc3ZnPg==" alt="">
       <span class="wordmark"><span class="w1">smart</span><span class="w2">PDF</span></span>
-      <button class="ver" id="btnAbout" title="版本记录">v3.5.2</button>
+      <button class="ver" id="btnAbout" title="版本记录">v3.6</button>
       <button class="ver" id="btnLang" title="Switch to English">EN</button>
     </div>
     <div class="fname" id="fname"></div>
@@ -1281,8 +1289,12 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '3.5.2';
+const VERSION = '3.6.0';
 const CHANGELOG = [
+  { v: '3.6', d: '2026-11-04', items: [
+    "选完字会自动出现小工具条：点颜色就高亮，还有下划线、删除线、复制，按「▾」看全部颜色；不用再按右键（右键照样可以）",
+    "高亮、下划线、删除线保存成真正的 PDF 批注，跟 Adobe 一样：别人用 Adobe、Edge 打开也看得到，能在批注列表里看、改颜色或删除",
+  ] },
   { v: '3.5.2', d: '2026-11-04', items: [
     "修正：高亮过的字不能再选来加下划线或删除线，现在可以在同一段字上又高亮又加线",
   ] },
@@ -1505,7 +1517,7 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
-  '其他颜色': 'More colours', '下划线': 'Underline', '删除线': 'Strikethrough', '复制文字': 'Copy text', '已复制': 'Copied', '换颜色': 'Change colour', '高亮颜色': 'Highlight colour',
+  '其他颜色': 'More colours', '更多颜色': 'More colours', '选中的文字': 'Selected text', '下划线': 'Underline', '删除线': 'Strikethrough', '复制文字': 'Copy text', '已复制': 'Copied', '换颜色': 'Change colour', '高亮颜色': 'Highlight colour',
   '收起页面栏': 'Hide page panel', '显示页面栏': 'Show page panel',  '页面操作': 'Page tools',
   "存成 PDF/A": "Save as PDF/A",
   "点一下在页面上看": "Click to see it on the page",
@@ -1623,7 +1635,9 @@ const EN = {
   "公司名、日期、页码": "Company name, date, page no.",
   "PDF/A 存档": "PDF/A archive",
   "长期保存、交给政府": "Long-term storage, government filing",
-"修正：高亮过的字不能再选来加下划线或删除线，现在可以在同一段字上又高亮又加线": "Fix: text that was already highlighted could not be selected again to underline or strike it; now the same text can be highlighted and underlined",
+"选完字会自动出现小工具条：点颜色就高亮，还有下划线、删除线、复制，按「▾」看全部颜色；不用再按右键（右键照样可以）": "Selecting text now pops up a small toolbar: click a colour to highlight, or underline, strike through or copy; ▾ shows every colour. No right-click needed (right-click still works)",
+  "高亮、下划线、删除线保存成真正的 PDF 批注，跟 Adobe 一样：别人用 Adobe、Edge 打开也看得到，能在批注列表里看、改颜色或删除": "Highlights, underlines and strikethroughs are saved as real PDF annotations, like Adobe: people opening the file in Adobe or Edge see them in the comments list and can recolour or delete them",
+  "修正：高亮过的字不能再选来加下划线或删除线，现在可以在同一段字上又高亮又加线": "Fix: text that was already highlighted could not be selected again to underline or strike it; now the same text can be highlighted and underlined",
   "右键高亮多了颜色：黄、橙、红、粉、紫、蓝、青、绿八种，还可以按彩虹圆点自己挑任何颜色；下划线和删除线也可以选黑、红、蓝、绿、橙、紫或其他颜色。贴着文字的高亮不会再被不小心拖走": "More right-click highlight colours: yellow, orange, red, pink, purple, blue, teal and green, plus the rainbow dot to pick any colour; underline and strikethrough can be black, red, blue, green, orange, purple or any other colour. Highlights that follow the text can no longer be dragged away by accident",
   "选中文件里的字后按右键，可以直接高亮（黄、绿、粉、蓝、橙五种颜色）、加下划线、加删除线或复制文字；在已有的高亮上按右键可以换颜色或删除": "Select text in the document and right-click to highlight it (yellow, green, pink, blue or orange), underline it, strike it through or copy it; right-click an existing highlight to change its colour or delete it",
   "顶部的按钮全部都有字了（合并、拆分、批量、对比、撤销、重做、打印、帮助、设定等），一看就知道是什么；放得下就像中文版一样字在图标旁边排一行，屏幕窄放不下时字才放到图标下面": "Every button in the top bar now has a label (Merge, Split, Batch, Compare, Undo, Redo, Print, Help, Settings…); labels sit beside the icons in one row when there is room, and move under the icons only on narrow screens",
@@ -3761,20 +3775,52 @@ function ctxOpen(e, items) {
   m.style.top = Math.max(6, Math.min(e.clientY, innerHeight - r.height - 6)) + 'px';
   const f = m.querySelector('button'); if (f) f.focus({ preventScroll: true });
 }
+function selMenuItems(s) {
+  return [
+    { label: '高亮', sw: HLC, cur: S.opts.hl, fn: c => markSel('', c) },
+    { label: '下划线', sw: ULC, cur: S.opts.ul, fn: c => { S.opts.ul = c; markSel('u', c); } },
+    { label: '删除线', sw: ULC, cur: S.opts.st, fn: c => { S.opts.st = c; markSel('s', c); } },
+    '-',
+    { label: '复制文字', ic: '⧉', fn: () => copyText(s.text) },
+  ];
+}
+function copyText(t) { (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast(T('已复制'))).catch(() => { document.execCommand('copy'); toast(T('已复制')); }); }
+// 选完字自动出现的小工具条：常用高亮颜色、下划线、删除线、复制；「▾」打开全部颜色
+function selBarHide() { const b = $('#selBar'); if (b && !b.hidden) { b.hidden = true; b.textContent = ''; } }
+function selBarShow() {
+  const s = selRects(), bar = $('#selBar'); if (!s) { selBarHide(); return; }
+  bar.textContent = '';
+  const add = (el, fn) => { el.addEventListener('pointerdown', e => e.preventDefault()); el.onclick = () => { selBarHide(); fn(); }; bar.appendChild(el); return el; };
+  for (const c of HLC.slice(0, 5)) {
+    const d = document.createElement('button'); d.type = 'button'; d.className = 'sbD' + (c === S.opts.hl ? ' on' : ''); d.style.background = c; d.title = T('高亮'); d.setAttribute('aria-label', T('高亮') + ' ' + c);
+    add(d, () => markSel('', c));
+  }
+  const btn = (txt, title, fn) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'sbB'; b.innerHTML = txt; b.title = T(title); b.setAttribute('aria-label', T(title)); return add(b, fn); };
+  btn('▾', '更多颜色', () => { const r = bar.dataset; ctxOpen({ clientX: +r.x, clientY: +r.y }, selMenuItems(s)); });
+  const sep = () => { const x = document.createElement('span'); x.className = 'sbS'; bar.appendChild(x); };
+  sep();
+  btn('<u style="text-decoration-color:' + S.opts.ul + '">U</u>', '下划线', () => markSel('u', S.opts.ul));
+  btn('<s style="text-decoration-color:' + S.opts.st + '">S</s>', '删除线', () => markSel('s', S.opts.st));
+  sep();
+  btn('⧉', '复制文字', () => copyText(s.text));
+  const rg = getSelection().getRangeAt(0), rs = rg.getClientRects(), last = rs[rs.length - 1] || rg.getBoundingClientRect();
+  bar.hidden = false;
+  const w = bar.offsetWidth, h = bar.offsetHeight;
+  let x = Math.max(6, Math.min(last.right - w / 2, innerWidth - w - 6)), y = last.bottom + 8;
+  if (y + h > innerHeight - 6) y = Math.max(6, rg.getBoundingClientRect().top - h - 8);
+  bar.style.left = x + 'px'; bar.style.top = y + 'px'; bar.dataset.x = x; bar.dataset.y = y + h;
+}
 function initCtxMenu() {
   const desk = $('#desk');
+  desk.addEventListener('pointerup', e => { if (S.tool === 'select' && e.button === 0) setTimeout(selBarShow, 0); });
+  document.addEventListener('selectionchange', () => { const sel = getSelection(); if (!sel || sel.isCollapsed) selBarHide(); });
+  desk.addEventListener('scroll', selBarHide, { passive: true }); addEventListener('resize', selBarHide);
   desk.addEventListener('contextmenu', e => {
     if (S.tool !== 'select' || !S.pages.length) return;
     const s = selRects();
     if (s) {
       e.preventDefault();
-      ctxOpen(e, [
-        { label: '高亮', sw: HLC, cur: S.opts.hl, fn: c => markSel('', c) },
-        { label: '下划线', sw: ULC, cur: S.opts.ul, fn: c => { S.opts.ul = c; markSel('u', c); } },
-        { label: '删除线', sw: ULC, cur: S.opts.st, fn: c => { S.opts.st = c; markSel('s', c); } },
-        '-',
-        { label: '复制文字', ic: '⧉', fn: () => { const t = s.text; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast(T('已复制'))).catch(() => { document.execCommand('copy'); toast(T('已复制')); }); } },
-      ]);
+      selBarHide(); ctxOpen(e, selMenuItems(s));
       return;
     }
     const el = e.target.closest('.pg'); if (!el) return;
@@ -4827,7 +4873,7 @@ function gotoHit(i) {
 function overlayPng(p, sc) {
   return new Promise((res, rej) => {
     const c = document.createElement('canvas'); c.width = Math.round(p.W * sc); c.height = Math.round(p.H * sc);
-    const ctx = c.getContext('2d'); ctx.setTransform(sc, 0, 0, sc, 0, 0); drawAnns(ctx, inkAnns(p.ann));
+    const ctx = c.getContext('2d'); ctx.setTransform(sc, 0, 0, sc, 0, 0); drawAnns(ctx, inkAnns(p.ann).filter(a => !fixedHl(a)));
     c.toBlob(async b => { if (!b) rej(new Error(T('无法生成图层'))); else res(new Uint8Array(await b.arrayBuffer())); }, 'image/png');
   });
 }
@@ -4924,8 +4970,8 @@ async function buildPdf(pages, onProg, opts) {
     }
     const page = p.blank ? out.addPage([p.vb[2] - p.vb[0], p.vb[3] - p.vb[1]]) : out.addPage(copies[j]);
     const r = totalRot(p); page.setRotation(degrees(r));
-    if (p.ann.some(liveAnn) && await addLive(out, page, p, false)) hasForm = true;
-    if (inkAnns(p.ann).length) {
+    if (p.ann.some(a => liveAnn(a) || fixedHl(a)) && await addLive(out, page, p, false)) hasForm = true;
+    if (inkAnns(p.ann).some(a => !fixedHl(a))) {
       const sc = Math.min(3, Math.sqrt(2.2e7 / (p.W * p.H)));
       const img = await out.embedPng(await overlayPng(p, sc));
       const w = p.vb[2] - p.vb[0], h = p.vb[3] - p.vb[1], X = p.vb[0], Y = p.vb[1];
@@ -6205,6 +6251,26 @@ async function addLive(out, page, p, flat) {
       const ref = mk(a.text, au, a.d);
       for (const rp of a.rep || []) mk(rp.text, rp.au, rp.d, ref);
       void PDFNumber;
+    } else if (fixedHl(a) && !flat) {
+      // 选字高亮／下划线／删除线 → 真正的 PDF 批注（Adobe、Edge 里也能看到、改颜色、删除），带外观流，哪里打开都一样
+      const sx = a.w / a.rw, sy = a.h / a.rh;
+      const lines = a.r.map(([x, y, w, h]) => ({ x: a.x + x * sx, y: a.y + y * sy, w: w * sx, h: h * sy }));
+      const shape = l => { if (!a.k) return l; const th = Math.max(0.8, l.h * 0.08); return { x: l.x, y: a.k === 'u' ? l.y + l.h - th : l.y + l.h * 0.55 - th / 2, w: l.w, h: th }; };
+      const nb = lines.map(l => nativeBox(p, l, false)), sb = lines.map(l => nativeBox(p, shape(l), false));
+      const all = nb.concat(sb), x0 = Math.min(...all.map(b => b.x)), y0 = Math.min(...all.map(b => b.y));
+      const x1 = Math.max(...all.map(b => b.x + b.w)), y1 = Math.max(...all.map(b => b.y + b.h));
+      const qp = []; for (const b of nb) qp.push(b.x, b.y + b.h, b.x + b.w, b.y + b.h, b.x, b.y, b.x + b.w, b.y);
+      const m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(a.c || '#ffe14d') || [0, 'ff', 'e1', '4d'];
+      const C = [1, 2, 3].map(i => +(parseInt(m[i], 16) / 255).toFixed(3)), op = a.k ? 1 : 0.4, f = v => +v.toFixed(2);
+      const body = (a.k ? '' : '/G0 gs ') + C.join(' ') + ' rg ' + sb.map(b => `${f(b.x)} ${f(b.y)} ${f(b.w)} ${f(b.h)} re`).join(' ') + ' f';
+      const res = a.k ? {} : { ExtGState: { G0: { Type: 'ExtGState', CA: op, ca: op, BM: 'Multiply' } } };
+      const ap = ctx.register(ctx.stream(body, { Type: 'XObject', Subtype: 'Form', BBox: [x0, y0, x1, y1], Resources: res }));
+      const d = ctx.obj({ Type: 'Annot', Subtype: a.k === 'u' ? 'Underline' : a.k === 's' ? 'StrikeOut' : 'Highlight', Rect: [x0, y0, x1, y1], QuadPoints: qp, C, CA: op, F: 4 });
+      d.set(PDFName.of('AP'), ctx.obj({ N: ap }));
+      if (a.txt) d.set(PDFName.of('Contents'), PDFHexString.fromText(a.txt));
+      d.set(PDFName.of('T'), PDFHexString.fromText(noteAuthor()));
+      d.set(PDFName.of('M'), PDFString.fromDate(new Date()));
+      page.node.addAnnot(ctx.register(d));
     }
   }
   return !!form;
