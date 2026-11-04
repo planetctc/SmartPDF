@@ -475,6 +475,17 @@ body{background:var(--dbg)}
 .conv{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .optWide{grid-column:1/-1}
 @media (max-width:620px){.conv{grid-template-columns:1fr}}
+.ctxm{position:fixed;z-index:60;min-width:184px;padding:6px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(10,20,40,.22);font-size:13px}
+.ctxm .cxL{font-size:11px;color:var(--mute);padding:4px 8px 2px}
+.ctxm .cxS{display:flex;gap:6px;padding:4px 8px 8px}
+.ctxm .cxS button{width:24px;height:24px;border-radius:50%;border:2px solid var(--panel);box-shadow:0 0 0 1px var(--line);padding:0;cursor:pointer}
+.ctxm .cxS button:hover,.ctxm .cxS button:focus-visible{box-shadow:0 0 0 2px var(--accent);outline:0}
+.ctxm .cxS button.on{box-shadow:0 0 0 2px var(--ink)}
+.ctxm .cxI{display:flex;align-items:center;gap:8px;width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:7px 8px;border-radius:7px;cursor:pointer;font:inherit}
+.ctxm .cxI:hover,.ctxm .cxI:focus-visible{background:var(--accent-soft);outline:0}
+.ctxm .cxI i{font-style:normal;width:18px;text-align:center;font-weight:700}
+.ctxm .cxI.danger{color:#c62828}
+.ctxm hr{border:0;border-top:1px solid var(--line);margin:4px 2px}
 .imgMenu{position:absolute;z-index:6;display:flex;gap:6px;padding:6px;background:var(--panel);border:1px solid var(--line);border-radius:9px;box-shadow:var(--shadow)}
 .imgMenu.choice{flex-direction:column;gap:0;padding:4px;max-height:240px;overflow:auto}
 .imgMenu.choice button{border:0;background:transparent;text-align:left;padding:6px 10px;border-radius:6px;font-size:13px;color:var(--ink)}
@@ -540,12 +551,13 @@ body{background:var(--dbg)}
 @media (prefers-reduced-motion:reduce){.side{transition:none}}
 </style>
 </head><body>
+<div class="ctxm" id="ctxm" role="menu" hidden></div>
 <div class="app" id="app">
   <header class="bar top">
     <div class="brand">
       <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTQwLDE0IEgxMjAgTDE2Miw1NiBWMTg2IEg0MCBaIiBmaWxsPSIjRkNFQkVCIiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTEyMCwxNCBWNTYgSDE2MiBaIiBmaWxsPSIjRjdDOEM4IiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjQsNjguMzcpIHNjYWxlKDAuNTU0NCkiPjxwYXRoIGQ9Ik0xNCAxMTUuNTlINDIuODZRNDMuNDkgMTIxLjc4IDQ3LjE0IDEyNS4wM1E1MC43OCAxMjguMjggNTYuNjUgMTI4LjI4UTYyLjY4IDEyOC4yOCA2Ni4xNiAxMjUuNVE2OS42NSAxMjIuNzMgNjkuNjUgMTE3LjgxUTY5LjY1IDExMy42OSA2Ni44OCAxMTFRNjQuMSAxMDguMyA2MC4wNiAxMDYuNTZRNTYuMDIgMTA0LjgxIDQ4LjU2IDEwMi41OVEzNy43OCA5OS4yNiAzMC45NyA5NS45M1EyNC4xNSA5Mi42IDE5LjIzIDg2LjFRMTQuMzIgNzkuNiAxNC4zMiA2OS4xNFExNC4zMiA1My42IDI1LjU3IDQ0LjhRMzYuODMgMzYgNTQuOTEgMzZRNzMuMyAzNiA4NC41NiA0NC44UTk1LjgxIDUzLjYgOTYuNjEgNjkuM0g2Ny4yN1E2Ni45NiA2My45MSA2My4zMSA2MC44MVE1OS42NiA1Ny43MiA1My45NiA1Ny43MlE0OS4wNCA1Ny43MiA0Ni4wMyA2MC4zNFE0My4wMiA2Mi45NSA0My4wMiA2Ny44N1E0My4wMiA3My4yNiA0OC4wOSA3Ni4yN1E1My4xNiA3OS4yOSA2My45NCA4Mi43N1E3NC43MyA4Ni40MiA4MS40NiA4OS43NVE4OC4yIDkzLjA4IDkzLjEyIDk5LjQyUTk4LjAzIDEwNS43NiA5OC4wMyAxMTUuNzVROTguMDMgMTE1LjgzIDk4LjAzIDExNS45MUw3NC41IDE0MS4xM1E3MS41NCAxNDQuMyA3MS4wOCAxNDguMzlRNjQuODQgMTUwIDU3LjQ0IDE1MFE0NS4yNCAxNTAgMzUuNTYgMTQ2LjA0UTI1Ljg5IDE0Mi4wNyAyMC4xIDEzNC4zUTE0LjMyIDEyNi41MyAxNCAxMTUuNTlaIiBmaWxsPSIjMTIzMDdBIi8+PHBhdGggZD0iTTc4LjUyIDE0NC44OCAxMDYuNTIgMTE0Ljg4UTEwOC41OCAxMTIuNjcgMTExLjYgMTEyLjUxUTExNC42MyAxMTIuMzUgMTE2LjkxIDExNC4zM0wxMjUuODEgMTIyLjA0TDE1NC40OSA4My41M0wxNDAuNDYgNzMuMDdRMTM5LjQ1IDcyLjMzIDEzOS4zMyA3MS40NVExMzkuMiA3MC41OCAxMzkuOTQgNjkuNThRMTQwLjM0IDY5LjA1IDE0MC45NCA2OC43OEwxODcuMjcgNDguNDJRMTg5LjU2IDQ3LjQyIDE5MC41NyA0OS43UTE5MC44NSA1MC4zMyAxOTAuNzYgNTEuMDJMMTg0LjUzIDEwMS4yNFExODQuMzggMTAyLjQ4IDE4My42OCAxMDMuMDJRMTgyLjk4IDEwMy41NyAxODEuNzQgMTAzLjQxUTE4MS4wOSAxMDMuMzMgMTgwLjU2IDEwMi45NEwxNjYuNTIgOTIuNDhMMTMzLjAyIDEzNy40OFExMzIuODUgMTM3LjcgMTMyLjY3IDEzNy45MVExMzAuNjMgMTQwLjI2IDEyNy41MyAxNDAuNDhRMTI0LjQ0IDE0MC43IDEyMi4wOSAxMzguNjdMMTEyLjU1IDEzMC40TDg5LjQ4IDE1NS4xMlE4Ny4zNiAxNTcuMzkgODQuMjYgMTU3LjVRODEuMTUgMTU3LjYgNzguODggMTU1LjQ4UTc2LjYxIDE1My4zNiA3Ni41IDE1MC4yNlE3Ni40IDE0Ny4xNSA3OC41MiAxNDQuODhaIiBmaWxsPSIjRTIzQjNCIi8+PC9nPjwvc3ZnPg==" alt="">
       <span class="wordmark"><span class="w1">smart</span><span class="w2">PDF</span></span>
-      <button class="ver" id="btnAbout" title="版本记录">v3.4.4</button>
+      <button class="ver" id="btnAbout" title="版本记录">v3.5</button>
       <button class="ver" id="btnLang" title="Switch to English">EN</button>
     </div>
     <div class="fname" id="fname"></div>
@@ -1266,8 +1278,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '3.4.4';
+const VERSION = '3.5.0';
 const CHANGELOG = [
+  { v: '3.5', d: '2026-11-04', items: [
+    "选中文件里的字后按右键，可以直接高亮（黄、绿、粉、蓝、橙五种颜色）、加下划线、加删除线或复制文字；在已有的高亮上按右键可以换颜色或删除",
+  ] },
   { v: '3.4.4', d: '2026-11-04', items: [
     "顶部的按钮全部都有字了（合并、拆分、批量、对比、撤销、重做、打印、帮助、设定等），一看就知道是什么；放得下就像中文版一样字在图标旁边排一行，屏幕窄放不下时字才放到图标下面",
   ] },
@@ -1443,7 +1458,7 @@ const SANS = 'Arial,"Helvetica Neue",Helvetica,"Noto Sans SC","Microsoft YaHei",
 const fontOf = a => a.ff === 'serif' ? SERIF : a.ff === 'mono' ? MONO : a.ff === 'sans' ? SANS : FONT;
 const LH = 1.25;
 const INK = ['#14181f', '#1d4ed8', '#c62828'];
-const HLC = ['#ffe14d', '#7ee08a', '#ff9ec4', '#7cc4ff'];
+const HLC = ['#ffe14d', '#7ee08a', '#ff9ec4', '#7cc4ff', '#ffb347'];
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
@@ -1477,6 +1492,7 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  '下划线': 'Underline', '删除线': 'Strikethrough', '复制文字': 'Copy text', '已复制': 'Copied', '换颜色': 'Change colour', '高亮颜色': 'Highlight colour',
   '收起页面栏': 'Hide page panel', '显示页面栏': 'Show page panel',  '页面操作': 'Page tools',
   "存成 PDF/A": "Save as PDF/A",
   "点一下在页面上看": "Click to see it on the page",
@@ -1594,7 +1610,8 @@ const EN = {
   "公司名、日期、页码": "Company name, date, page no.",
   "PDF/A 存档": "PDF/A archive",
   "长期保存、交给政府": "Long-term storage, government filing",
-"顶部的按钮全部都有字了（合并、拆分、批量、对比、撤销、重做、打印、帮助、设定等），一看就知道是什么；放得下就像中文版一样字在图标旁边排一行，屏幕窄放不下时字才放到图标下面": "Every button in the top bar now has a label (Merge, Split, Batch, Compare, Undo, Redo, Print, Help, Settings…); labels sit beside the icons in one row when there is room, and move under the icons only on narrow screens",
+"选中文件里的字后按右键，可以直接高亮（黄、绿、粉、蓝、橙五种颜色）、加下划线、加删除线或复制文字；在已有的高亮上按右键可以换颜色或删除": "Select text in the document and right-click to highlight it (yellow, green, pink, blue or orange), underline it, strike it through or copy it; right-click an existing highlight to change its colour or delete it",
+  "顶部的按钮全部都有字了（合并、拆分、批量、对比、撤销、重做、打印、帮助、设定等），一看就知道是什么；放得下就像中文版一样字在图标旁边排一行，屏幕窄放不下时字才放到图标下面": "Every button in the top bar now has a label (Merge, Split, Batch, Compare, Undo, Redo, Print, Help, Settings…); labels sit beside the icons in one row when there is room, and move under the icons only on narrow screens",
 "任务栏和窗口标题会显示打开的文件名，例如「合同.pdf - smartPDF」；开了好几个窗口也分得清。有未保存的修改时，名字前面会有一个点": "The taskbar and window title now show the open file name, e.g. \"contract.pdf - smartPDF\", so several windows are easy to tell apart; a dot in front means there are unsaved changes",
 "收起和展开页面栏改成页面栏右边中间的小三角按钮：按「◀」收起，收起后按「▶」展开": "Hide or show the page panel with the small triangle in the middle of its right edge: ◀ hides it, ▶ brings it back",
   "页面按钮（左转、右转、上移、复制、拆分、删除等）移到文件上方排成一行，左边页面栏不再被挤满；页面栏可以收起，收起后文件看得更大": "Page buttons (rotate, move, duplicate, split, delete…) now sit in one row above the document, so the page panel is no longer crowded; the page panel can be hidden to give the document more room",
@@ -2449,7 +2466,16 @@ function drawAnn(ctx, a) {
       ctx.fillText(a.text, 0, 0);
       break;
     }
-    case 'hl': ctx.globalAlpha = 0.4; ctx.fillStyle = a.c; ctx.fillRect(a.x, a.y, a.w, a.h); break;
+    case 'hl': {
+      // a.r：选字高亮的每一行（相对 a.x/a.y，按 a.rw/a.rh 缩放）；a.k：'u' 下划线、's' 删除线
+      const sx = a.r ? a.w / a.rw : 1, sy = a.r ? a.h / a.rh : 1;
+      const rs = a.r ? a.r.map(([x, y, w, h]) => [a.x + x * sx, a.y + y * sy, w * sx, h * sy]) : [[a.x, a.y, a.w, a.h]];
+      ctx.fillStyle = a.c;
+      if (a.k === 'u' || a.k === 's') {
+        for (const [x, y, w, h] of rs) { const th = Math.max(0.8, h * 0.08); ctx.fillRect(x, a.k === 'u' ? y + h - th : y + h * 0.55 - th / 2, w, th); }
+      } else { ctx.globalAlpha = 0.4; for (const [x, y, w, h] of rs) ctx.fillRect(x, y, w, h); }
+      break;
+    }
     case 'rect': {
       if (a.f) { ctx.fillStyle = a.f; ctx.fillRect(a.x, a.y, a.w, a.h); }
       if (a.sw > 0 && a.c) { ctx.strokeStyle = a.c; ctx.lineWidth = a.sw; ctx.lineJoin = 'miter'; ctx.strokeRect(a.x, a.y, a.w, a.h); }
@@ -3630,6 +3656,119 @@ function onHoverEdit(e, el) {
 let D = null;   // 当前拖动
 let ED = null;  // 当前文字编辑
 
+/* ----- 右键菜单：选中文字后右键可以高亮（选颜色）、下划线、删除线、复制；在高亮上右键可以换颜色或删除 ----- */
+function selRects() {
+  const sel = getSelection(); if (!sel || sel.isCollapsed || !sel.rangeCount) return null;
+  const rg = sel.getRangeAt(0), root = rg.commonAncestorContainer;
+  const rootEl = root.nodeType === 1 ? root : root.parentElement;
+  if (!rootEl || !rootEl.closest('#pages')) return null;
+  const nodes = [];
+  if (root.nodeType === 3) nodes.push(root);
+  else { const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) if (rg.intersectsNode(n)) nodes.push(n); }
+  const by = new Map(), pgs = $$('#pages .pg');
+  for (const n of nodes) {
+    if (!n.parentElement || !n.parentElement.closest('.tl') || !n.nodeValue.trim()) continue;
+    const sub = document.createRange(); sub.selectNodeContents(n);
+    if (n === rg.startContainer) sub.setStart(n, rg.startOffset);
+    if (n === rg.endContainer) sub.setEnd(n, rg.endOffset);
+    for (const cr of sub.getClientRects()) {
+      if (cr.width < 1 || cr.height < 1) continue;
+      const cx = cr.left + cr.width / 2, cy = cr.top + cr.height / 2;
+      const el = pgs.find(e => { const r = e.getBoundingClientRect(); return cx >= r.left && cx <= r.right && cy >= r.top && cy <= r.bottom; });
+      if (!el) continue;
+      const r = el.getBoundingClientRect();
+      if (!by.has(el)) by.set(el, []);
+      by.get(el).push([(cr.left - r.left) / S.zoom, (cr.top - r.top) / S.zoom, cr.width / S.zoom, cr.height / S.zoom]);
+    }
+  }
+  for (const [el, list] of by) {   // 同一行相邻的块合成一条
+    list.sort((a, b) => a[1] - b[1] || a[0] - b[0]);
+    const out = [];
+    for (const b of list) {
+      const l = out.find(o => Math.abs((o[1] + o[3] / 2) - (b[1] + b[3] / 2)) < Math.min(o[3], b[3]) * 0.5 && b[0] <= o[0] + o[2] + Math.max(o[3], b[3]) && b[0] + b[2] >= o[0] - Math.max(o[3], b[3]));
+      if (l) { const x0 = Math.min(l[0], b[0]), y0 = Math.min(l[1], b[1]), x1 = Math.max(l[0] + l[2], b[0] + b[2]), y1 = Math.max(l[1] + l[3], b[1] + b[3]); l.splice(0, 4, x0, y0, x1 - x0, y1 - y0); }
+      else out.push(b.slice());
+    }
+    by.set(el, out);
+  }
+  return by.size ? { by, text: sel.toString() } : null;
+}
+function markSel(k, c) {
+  const s = selRects(); if (!s) return;
+  const before = snap(); let last = null;
+  for (const [el, rs] of s.by) {
+    const p = pageById(el.dataset.id); if (!p || !rs.length) continue;
+    const x0 = Math.min(...rs.map(r => r[0])), y0 = Math.min(...rs.map(r => r[1]));
+    const x1 = Math.max(...rs.map(r => r[0] + r[2])), y1 = Math.max(...rs.map(r => r[1] + r[3]));
+    const a = { id: uid(), t: 'hl', x: x0, y: y0, w: x1 - x0, h: y1 - y0, rw: x1 - x0, rh: y1 - y0, r: rs.map(r => [r[0] - x0, r[1] - y0, r[2], r[3]]), c, txt: s.text.replace(/\s+/g, ' ').trim().slice(0, 200) };
+    if (k) a.k = k;
+    p.ann.push(a); last = { pid: p.id, aid: a.id }; redrawPage(el);
+  }
+  if (!k) S.opts.hl = c;
+  getSelection().removeAllRanges();
+  commit(before); if (last) S.selAnn = last; refreshProps();
+}
+function ctxClose() { const m = $('#ctxm'); if (m && !m.hidden) { m.hidden = true; m.textContent = ''; } }
+function ctxOpen(e, items) {
+  const m = $('#ctxm'); m.textContent = '';
+  for (const it of items) {
+    if (it === '-') { m.appendChild(document.createElement('hr')); continue; }
+    if (it.sw) {
+      const l = document.createElement('div'); l.className = 'cxL'; l.textContent = T(it.label); m.appendChild(l);
+      const row = document.createElement('div'); row.className = 'cxS';
+      for (const c of it.sw) {
+        const b = document.createElement('button'); b.type = 'button'; b.style.background = c; b.setAttribute('role', 'menuitem');
+        b.setAttribute('aria-label', T(it.label) + ' ' + c); b.title = T(it.label);
+        if (it.cur && it.cur.toLowerCase() === c.toLowerCase()) b.classList.add('on');
+        b.onclick = () => { ctxClose(); it.fn(c); };
+        row.appendChild(b);
+      }
+      m.appendChild(row); continue;
+    }
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'cxI' + (it.danger ? ' danger' : ''); b.setAttribute('role', 'menuitem');
+    const i = document.createElement('i'); i.innerHTML = it.ic; b.appendChild(i);
+    b.appendChild(document.createTextNode(T(it.label)));
+    b.onclick = () => { ctxClose(); it.fn(); };
+    m.appendChild(b);
+  }
+  m.hidden = false;
+  const r = m.getBoundingClientRect();
+  m.style.left = Math.max(6, Math.min(e.clientX, innerWidth - r.width - 6)) + 'px';
+  m.style.top = Math.max(6, Math.min(e.clientY, innerHeight - r.height - 6)) + 'px';
+  const f = m.querySelector('button'); if (f) f.focus({ preventScroll: true });
+}
+function initCtxMenu() {
+  const desk = $('#desk');
+  desk.addEventListener('contextmenu', e => {
+    if (S.tool !== 'select' || !S.pages.length) return;
+    const s = selRects();
+    if (s) {
+      e.preventDefault();
+      ctxOpen(e, [
+        { label: '高亮', sw: HLC, cur: S.opts.hl, fn: c => markSel('', c) },
+        { label: '下划线', ic: '<u>U</u>', fn: () => markSel('u', INK[1]) },
+        { label: '删除线', ic: '<s>S</s>', fn: () => markSel('s', INK[2]) },
+        '-',
+        { label: '复制文字', ic: '⧉', fn: () => { const t = s.text; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast(T('已复制'))).catch(() => { document.execCommand('copy'); toast(T('已复制')); }); } },
+      ]);
+      return;
+    }
+    const el = e.target.closest('.pg'); if (!el) return;
+    const p = pageById(el.dataset.id), pt = ptOf(e, el), a = p && hitAnn(p, pt);
+    if (!a || a.t !== 'hl') return;
+    e.preventDefault(); select(p.id, a.id); redrawPage(el);
+    const recolor = c => { const b = snap(); a.c = c; if (!a.k) S.opts.hl = c; commit(b); redrawPage(el); refreshProps(); };
+    ctxOpen(e, [
+      { label: a.k ? '换颜色' : '高亮颜色', sw: a.k ? INK : HLC, cur: a.c, fn: recolor },
+      '-',
+      { label: '删除', ic: '×', danger: true, fn: () => { const b = snap(); p.ann = p.ann.filter(x => x !== a); S.selAnn = null; commit(b); redrawPage(el); refreshProps(); } },
+    ]);
+  });
+  document.addEventListener('pointerdown', e => { if (!e.target.closest('#ctxm')) ctxClose(); }, true);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') ctxClose(); });
+  desk.addEventListener('scroll', ctxClose, { passive: true });
+  addEventListener('resize', ctxClose); addEventListener('blur', ctxClose);
+}
 function ptOf(e, el) { const r = el.getBoundingClientRect(); return { x: (e.clientX - r.left) / S.zoom, y: (e.clientY - r.top) / S.zoom }; }
 function todayStr() { const d = new Date(), z = n => String(n).padStart(2, '0'); return `${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())}`; }
 
@@ -3919,12 +4058,12 @@ function refreshProps() {
   const any = colorOn || kind === 'img' || kind === 'fld' || !!a || !!hint;
   $('#props').hidden = !any;
   if (colorOn) {
-    const pal = kind === 'hl' ? HLC : INK, cur = a ? a.c : (kind === 'hl' ? S.opts.hl : S.opts.color);
+    const hlPal = kind === 'hl' && !(a && a.k), pal = hlPal ? HLC : INK, cur = a ? a.c : (kind === 'hl' ? S.opts.hl : S.opts.color);
     const sw = $('#swatches'); sw.textContent = '';
     pal.forEach(c => {
       const b = document.createElement('button');
       b.className = 'swatch' + (c.toLowerCase() === String(cur).toLowerCase() ? ' on' : ''); b.style.background = c; b.setAttribute('aria-label', T('颜色 {c}', { c }));
-      b.onclick = () => { if (kind === 'hl') S.opts.hl = c; else S.opts.color = c; modSel(x => { x.c = c; }); refreshProps(); };
+      b.onclick = () => { if (hlPal) S.opts.hl = c; else S.opts.color = c; modSel(x => { x.c = c; }); refreshProps(); };
       sw.appendChild(b);
     });
   }
@@ -6052,6 +6191,7 @@ const ANN_IC = { text: 'text', check: 'check', img: 'image', hl: 'hl', ink: 'pen
 function noteAuthor() { return LS.get('pdfed.author') || T('我'); }
 const CMT = { orig: new Map(), t: null };
 function annLabel(a) {
+  if (a.t === 'hl' && a.k) return a.k === 'u' ? '下划线' : '删除线';
   if (a.t === 'rect') return a.rd ? '涂黑' : a.f ? '遮盖' : '方框';
   if (a.t === 'img') return a.ik === 'stamp' ? '印章' : a.ik === 'sign' ? '签名' : '图片';
   return ANN_LBL[a.t] || a.t;
@@ -6082,7 +6222,7 @@ async function renderCmts() {
     for (const a of mine) {
       n++;
       const row = document.createElement('div'); row.className = 'cm' + (S.selAnn && S.selAnn.aid === a.id ? ' on' : '');
-      const snip = a.t === 'text' ? a.text : a.t === 'fld' ? (a.name || '') + ' · ' + T(FLD_LBL[a.k] || '') : '';
+      const snip = a.t === 'text' ? a.text : a.t === 'hl' ? (a.txt || '') : a.t === 'fld' ? (a.name || '') + ' · ' + T(FLD_LBL[a.k] || '') : '';
       row.innerHTML = `<div class="cmTop"><span class="cmIc">${icon(ANN_IC[a.t] || 'rect')}</span><b></b><span class="cmS"></span><button type="button" class="cmX" title="${escHtml(T('删除'))}" aria-label="${escHtml(T('删除'))}">×</button></div>`;
       row.querySelector('b').textContent = T(annLabel(a)); row.querySelector('.cmS').textContent = snip.replace(/\s+/g, ' ').slice(0, 60);
       row.querySelector('.cmTop').onclick = e => { if (e.target.closest('.cmX')) return; setTool('select'); goAnn(p, a); };
@@ -7976,7 +8116,7 @@ async function init() {
   readLang();
   fillIcons(); collectI18n(); applyLang(); fillAbout(); loadLib(); wire(); setupProps(); setupKeys();
   $('#btnLang').onclick = () => setLang(LANG === 'en' ? 'zh' : 'en');
-  initSizer();
+  initSizer(); initCtxMenu();
   refreshProps(); updUndo(); updSearchUi(); updStatus(); updWelcome(); renderRecent();
   const arg = DESK.on && Array.isArray(window.NL_ARGS) ? NL_ARGS.slice(1).find(a => /\.pdf$/i.test(a)) : null;
   if (arg) await openPaths([arg], 'replace');
