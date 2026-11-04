@@ -475,12 +475,15 @@ body{background:var(--dbg)}
 .conv{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .optWide{grid-column:1/-1}
 @media (max-width:620px){.conv{grid-template-columns:1fr}}
-.ctxm{position:fixed;z-index:60;min-width:184px;padding:6px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(10,20,40,.22);font-size:13px}
+.ctxm{position:fixed;z-index:60;min-width:184px;max-width:calc(100vw - 12px);padding:6px;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(10,20,40,.22);font-size:13px}
 .ctxm .cxL{font-size:11px;color:var(--mute);padding:4px 8px 2px}
-.ctxm .cxS{display:flex;gap:6px;padding:4px 8px 8px}
+.ctxm .cxS{display:flex;flex-wrap:wrap;gap:6px;padding:4px 8px 8px}
 .ctxm .cxS button{width:24px;height:24px;border-radius:50%;border:2px solid var(--panel);box-shadow:0 0 0 1px var(--line);padding:0;cursor:pointer}
 .ctxm .cxS button:hover,.ctxm .cxS button:focus-visible{box-shadow:0 0 0 2px var(--accent);outline:0}
 .ctxm .cxS button.on{box-shadow:0 0 0 2px var(--ink)}
+.ctxm .cxMore{position:relative;width:24px;height:24px;border-radius:50%;border:2px solid var(--panel);box-shadow:0 0 0 1px var(--line);background:conic-gradient(#ff5252,#ffd740,#69f0ae,#40c4ff,#7c4dff,#ff4081,#ff5252);cursor:pointer;overflow:hidden}
+.ctxm .cxMore:hover{box-shadow:0 0 0 2px var(--accent)}
+.ctxm .cxMore input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;border:0;padding:0}
 .ctxm .cxI{display:flex;align-items:center;gap:8px;width:100%;border:0;background:transparent;color:inherit;text-align:left;padding:7px 8px;border-radius:7px;cursor:pointer;font:inherit}
 .ctxm .cxI:hover,.ctxm .cxI:focus-visible{background:var(--accent-soft);outline:0}
 .ctxm .cxI i{font-style:normal;width:18px;text-align:center;font-weight:700}
@@ -557,7 +560,7 @@ body{background:var(--dbg)}
     <div class="brand">
       <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTQwLDE0IEgxMjAgTDE2Miw1NiBWMTg2IEg0MCBaIiBmaWxsPSIjRkNFQkVCIiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTEyMCwxNCBWNTYgSDE2MiBaIiBmaWxsPSIjRjdDOEM4IiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjQsNjguMzcpIHNjYWxlKDAuNTU0NCkiPjxwYXRoIGQ9Ik0xNCAxMTUuNTlINDIuODZRNDMuNDkgMTIxLjc4IDQ3LjE0IDEyNS4wM1E1MC43OCAxMjguMjggNTYuNjUgMTI4LjI4UTYyLjY4IDEyOC4yOCA2Ni4xNiAxMjUuNVE2OS42NSAxMjIuNzMgNjkuNjUgMTE3LjgxUTY5LjY1IDExMy42OSA2Ni44OCAxMTFRNjQuMSAxMDguMyA2MC4wNiAxMDYuNTZRNTYuMDIgMTA0LjgxIDQ4LjU2IDEwMi41OVEzNy43OCA5OS4yNiAzMC45NyA5NS45M1EyNC4xNSA5Mi42IDE5LjIzIDg2LjFRMTQuMzIgNzkuNiAxNC4zMiA2OS4xNFExNC4zMiA1My42IDI1LjU3IDQ0LjhRMzYuODMgMzYgNTQuOTEgMzZRNzMuMyAzNiA4NC41NiA0NC44UTk1LjgxIDUzLjYgOTYuNjEgNjkuM0g2Ny4yN1E2Ni45NiA2My45MSA2My4zMSA2MC44MVE1OS42NiA1Ny43MiA1My45NiA1Ny43MlE0OS4wNCA1Ny43MiA0Ni4wMyA2MC4zNFE0My4wMiA2Mi45NSA0My4wMiA2Ny44N1E0My4wMiA3My4yNiA0OC4wOSA3Ni4yN1E1My4xNiA3OS4yOSA2My45NCA4Mi43N1E3NC43MyA4Ni40MiA4MS40NiA4OS43NVE4OC4yIDkzLjA4IDkzLjEyIDk5LjQyUTk4LjAzIDEwNS43NiA5OC4wMyAxMTUuNzVROTguMDMgMTE1LjgzIDk4LjAzIDExNS45MUw3NC41IDE0MS4xM1E3MS41NCAxNDQuMyA3MS4wOCAxNDguMzlRNjQuODQgMTUwIDU3LjQ0IDE1MFE0NS4yNCAxNTAgMzUuNTYgMTQ2LjA0UTI1Ljg5IDE0Mi4wNyAyMC4xIDEzNC4zUTE0LjMyIDEyNi41MyAxNCAxMTUuNTlaIiBmaWxsPSIjMTIzMDdBIi8+PHBhdGggZD0iTTc4LjUyIDE0NC44OCAxMDYuNTIgMTE0Ljg4UTEwOC41OCAxMTIuNjcgMTExLjYgMTEyLjUxUTExNC42MyAxMTIuMzUgMTE2LjkxIDExNC4zM0wxMjUuODEgMTIyLjA0TDE1NC40OSA4My41M0wxNDAuNDYgNzMuMDdRMTM5LjQ1IDcyLjMzIDEzOS4zMyA3MS40NVExMzkuMiA3MC41OCAxMzkuOTQgNjkuNThRMTQwLjM0IDY5LjA1IDE0MC45NCA2OC43OEwxODcuMjcgNDguNDJRMTg5LjU2IDQ3LjQyIDE5MC41NyA0OS43UTE5MC44NSA1MC4zMyAxOTAuNzYgNTEuMDJMMTg0LjUzIDEwMS4yNFExODQuMzggMTAyLjQ4IDE4My42OCAxMDMuMDJRMTgyLjk4IDEwMy41NyAxODEuNzQgMTAzLjQxUTE4MS4wOSAxMDMuMzMgMTgwLjU2IDEwMi45NEwxNjYuNTIgOTIuNDhMMTMzLjAyIDEzNy40OFExMzIuODUgMTM3LjcgMTMyLjY3IDEzNy45MVExMzAuNjMgMTQwLjI2IDEyNy41MyAxNDAuNDhRMTI0LjQ0IDE0MC43IDEyMi4wOSAxMzguNjdMMTEyLjU1IDEzMC40TDg5LjQ4IDE1NS4xMlE4Ny4zNiAxNTcuMzkgODQuMjYgMTU3LjVRODEuMTUgMTU3LjYgNzguODggMTU1LjQ4UTc2LjYxIDE1My4zNiA3Ni41IDE1MC4yNlE3Ni40IDE0Ny4xNSA3OC41MiAxNDQuODhaIiBmaWxsPSIjRTIzQjNCIi8+PC9nPjwvc3ZnPg==" alt="">
       <span class="wordmark"><span class="w1">smart</span><span class="w2">PDF</span></span>
-      <button class="ver" id="btnAbout" title="版本记录">v3.5</button>
+      <button class="ver" id="btnAbout" title="版本记录">v3.5.1</button>
       <button class="ver" id="btnLang" title="Switch to English">EN</button>
     </div>
     <div class="fname" id="fname"></div>
@@ -1278,8 +1281,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '3.5.0';
+const VERSION = '3.5.1';
 const CHANGELOG = [
+  { v: '3.5.1', d: '2026-11-04', items: [
+    "右键高亮多了颜色：黄、橙、红、粉、紫、蓝、青、绿八种，还可以按彩虹圆点自己挑任何颜色；下划线和删除线也可以选黑、红、蓝、绿、橙、紫或其他颜色。贴着文字的高亮不会再被不小心拖走",
+  ] },
   { v: '3.5', d: '2026-11-04', items: [
     "选中文件里的字后按右键，可以直接高亮（黄、绿、粉、蓝、橙五种颜色）、加下划线、加删除线或复制文字；在已有的高亮上按右键可以换颜色或删除",
   ] },
@@ -1458,7 +1464,11 @@ const SANS = 'Arial,"Helvetica Neue",Helvetica,"Noto Sans SC","Microsoft YaHei",
 const fontOf = a => a.ff === 'serif' ? SERIF : a.ff === 'mono' ? MONO : a.ff === 'sans' ? SANS : FONT;
 const LH = 1.25;
 const INK = ['#14181f', '#1d4ed8', '#c62828'];
-const HLC = ['#ffe14d', '#7ee08a', '#ff9ec4', '#7cc4ff', '#ffb347'];
+const HLC = ['#ffe14d', '#ffb347', '#ff6b6b', '#ff9ec4', '#c39bff', '#7cc4ff', '#5ee0d6', '#7ee08a'];
+// 下划线、删除线的颜色：黑、红、蓝、绿、橙、紫
+const ULC = ['#14181f', '#d32f2f', '#1d4ed8', '#2e7d32', '#ef6c00', '#7b1fa2'];
+// 贴着文字的高亮（有 a.r）不能拖动或拉大，免得移开了原来的字
+const fixedHl = a => !!(a && a.t === 'hl' && a.r);
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
@@ -1469,7 +1479,7 @@ const uid = () => 'a' + (_uid++).toString(36) + Math.random().toString(36).slice
 const S = {
   docs: [], pages: [], zoom: 1, tool: 'select', cur: 0,
   sel: new Set(), selAnn: null, editing: null, draft: null, armed: null,
-  opts: { color: INK[0], hl: HLC[0], size: 12, sw: 2 },
+  opts: { color: INK[0], hl: HLC[0], ul: '#d32f2f', st: '#d32f2f', size: 12, sw: 2 },
   undo: [], redo: [], dirty: false, sample: false,
   search: { q: '', hits: [], i: -1 }, fileName: 'document.pdf'
 };
@@ -1492,7 +1502,7 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
-  '下划线': 'Underline', '删除线': 'Strikethrough', '复制文字': 'Copy text', '已复制': 'Copied', '换颜色': 'Change colour', '高亮颜色': 'Highlight colour',
+  '其他颜色': 'More colours', '下划线': 'Underline', '删除线': 'Strikethrough', '复制文字': 'Copy text', '已复制': 'Copied', '换颜色': 'Change colour', '高亮颜色': 'Highlight colour',
   '收起页面栏': 'Hide page panel', '显示页面栏': 'Show page panel',  '页面操作': 'Page tools',
   "存成 PDF/A": "Save as PDF/A",
   "点一下在页面上看": "Click to see it on the page",
@@ -1610,7 +1620,8 @@ const EN = {
   "公司名、日期、页码": "Company name, date, page no.",
   "PDF/A 存档": "PDF/A archive",
   "长期保存、交给政府": "Long-term storage, government filing",
-"选中文件里的字后按右键，可以直接高亮（黄、绿、粉、蓝、橙五种颜色）、加下划线、加删除线或复制文字；在已有的高亮上按右键可以换颜色或删除": "Select text in the document and right-click to highlight it (yellow, green, pink, blue or orange), underline it, strike it through or copy it; right-click an existing highlight to change its colour or delete it",
+"右键高亮多了颜色：黄、橙、红、粉、紫、蓝、青、绿八种，还可以按彩虹圆点自己挑任何颜色；下划线和删除线也可以选黑、红、蓝、绿、橙、紫或其他颜色。贴着文字的高亮不会再被不小心拖走": "More right-click highlight colours: yellow, orange, red, pink, purple, blue, teal and green, plus the rainbow dot to pick any colour; underline and strikethrough can be black, red, blue, green, orange, purple or any other colour. Highlights that follow the text can no longer be dragged away by accident",
+  "选中文件里的字后按右键，可以直接高亮（黄、绿、粉、蓝、橙五种颜色）、加下划线、加删除线或复制文字；在已有的高亮上按右键可以换颜色或删除": "Select text in the document and right-click to highlight it (yellow, green, pink, blue or orange), underline it, strike it through or copy it; right-click an existing highlight to change its colour or delete it",
   "顶部的按钮全部都有字了（合并、拆分、批量、对比、撤销、重做、打印、帮助、设定等），一看就知道是什么；放得下就像中文版一样字在图标旁边排一行，屏幕窄放不下时字才放到图标下面": "Every button in the top bar now has a label (Merge, Split, Batch, Compare, Undo, Redo, Print, Help, Settings…); labels sit beside the icons in one row when there is room, and move under the icons only on narrow screens",
 "任务栏和窗口标题会显示打开的文件名，例如「合同.pdf - smartPDF」；开了好几个窗口也分得清。有未保存的修改时，名字前面会有一个点": "The taskbar and window title now show the open file name, e.g. \"contract.pdf - smartPDF\", so several windows are easy to tell apart; a dot in front means there are unsaved changes",
 "收起和展开页面栏改成页面栏右边中间的小三角按钮：按「◀」收起，收起后按「▶」展开": "Hide or show the page panel with the small triangle in the middle of its right edge: ◀ hides it, ▶ brings it back",
@@ -2595,7 +2606,7 @@ function drawOverlay(p, ctx, s) {
       ctx.save();
       ctx.strokeStyle = st; ctx.lineWidth = 1.5 * u; ctx.setLineDash([5 * u, 3 * u]);
       ctx.strokeRect(b.x - 2 * u, b.y - 2 * u, b.w + 4 * u, b.h + 4 * u);
-      if (a.t !== 'ink') { ctx.setLineDash([]); ctx.fillStyle = '#fff'; ctx.lineWidth = 1.5 * u; ctx.beginPath(); ctx.rect(b.x + b.w - 4 * u, b.y + b.h - 4 * u, 9 * u, 9 * u); ctx.fill(); ctx.stroke(); }
+      if (a.t !== 'ink' && !fixedHl(a)) { ctx.setLineDash([]); ctx.fillStyle = '#fff'; ctx.lineWidth = 1.5 * u; ctx.beginPath(); ctx.rect(b.x + b.w - 4 * u, b.y + b.h - 4 * u, 9 * u, 9 * u); ctx.fill(); ctx.stroke(); }
       ctx.restore();
     }
   }
@@ -3723,6 +3734,12 @@ function ctxOpen(e, items) {
         b.onclick = () => { ctxClose(); it.fn(c); };
         row.appendChild(b);
       }
+      // 「其他颜色」：彩虹圆点，打开电脑的调色盘随便选
+      const lb = document.createElement('label'); lb.className = 'cxMore'; lb.title = T('其他颜色');
+      const ci = document.createElement('input'); ci.type = 'color'; ci.value = it.cur && /^#[0-9a-f]{6}$/i.test(it.cur) ? it.cur : it.sw[0];
+      ci.setAttribute('aria-label', T(it.label) + ' · ' + T('其他颜色'));
+      ci.onchange = () => { ctxClose(); it.fn(ci.value); };
+      lb.appendChild(ci); row.appendChild(lb);
       m.appendChild(row); continue;
     }
     const b = document.createElement('button'); b.type = 'button'; b.className = 'cxI' + (it.danger ? ' danger' : ''); b.setAttribute('role', 'menuitem');
@@ -3746,8 +3763,8 @@ function initCtxMenu() {
       e.preventDefault();
       ctxOpen(e, [
         { label: '高亮', sw: HLC, cur: S.opts.hl, fn: c => markSel('', c) },
-        { label: '下划线', ic: '<u>U</u>', fn: () => markSel('u', INK[1]) },
-        { label: '删除线', ic: '<s>S</s>', fn: () => markSel('s', INK[2]) },
+        { label: '下划线', sw: ULC, cur: S.opts.ul, fn: c => { S.opts.ul = c; markSel('u', c); } },
+        { label: '删除线', sw: ULC, cur: S.opts.st, fn: c => { S.opts.st = c; markSel('s', c); } },
         '-',
         { label: '复制文字', ic: '⧉', fn: () => { const t = s.text; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast(T('已复制'))).catch(() => { document.execCommand('copy'); toast(T('已复制')); }); } },
       ]);
@@ -3759,7 +3776,7 @@ function initCtxMenu() {
     e.preventDefault(); select(p.id, a.id); redrawPage(el);
     const recolor = c => { const b = snap(); a.c = c; if (!a.k) S.opts.hl = c; commit(b); redrawPage(el); refreshProps(); };
     ctxOpen(e, [
-      { label: a.k ? '换颜色' : '高亮颜色', sw: a.k ? INK : HLC, cur: a.c, fn: recolor },
+      { label: a.k ? '换颜色' : '高亮颜色', sw: a.k ? ULC : HLC, cur: a.c, fn: recolor },
       '-',
       { label: '删除', ic: '×', danger: true, fn: () => { const b = snap(); p.ann = p.ann.filter(x => x !== a); S.selAnn = null; commit(b); redrawPage(el); refreshProps(); } },
     ]);
@@ -3815,8 +3832,9 @@ function onDown(e, el) {
   closeEditor(); closeImgMenu();
   if (tool === 'select') {
     const sa = S.selAnn && S.selAnn.pid === p.id ? p.ann.find(a => a.id === S.selAnn.aid) : null;
-    if (sa && onHandle(sa, pt)) { startDrag('resize', el, p, sa, pt, e); return; }
+    if (sa && !fixedHl(sa) && onHandle(sa, pt)) { startDrag('resize', el, p, sa, pt, e); return; }
     const a = hitAnn(p, pt);
+    if (a && fixedHl(a)) { select(p.id, a.id); redrawPage(el); refreshProps(); return; }
     if (a) { select(p.id, a.id); startDrag('move', el, p, a, pt, e); if (a.t === 'note') focusNote(a); }
     else {
       const f = fieldAt(p, pt);
@@ -4058,7 +4076,7 @@ function refreshProps() {
   const any = colorOn || kind === 'img' || kind === 'fld' || !!a || !!hint;
   $('#props').hidden = !any;
   if (colorOn) {
-    const hlPal = kind === 'hl' && !(a && a.k), pal = hlPal ? HLC : INK, cur = a ? a.c : (kind === 'hl' ? S.opts.hl : S.opts.color);
+    const hlPal = kind === 'hl' && !(a && a.k), pal = hlPal ? HLC : a && a.t === 'hl' && a.k ? ULC : INK, cur = a ? a.c : (kind === 'hl' ? S.opts.hl : S.opts.color);
     const sw = $('#swatches'); sw.textContent = '';
     pal.forEach(c => {
       const b = document.createElement('button');
