@@ -113,6 +113,7 @@ button{cursor:pointer}
 #pages{position:relative}
 .pg{position:relative;background:#fff;margin:0 auto 14px;box-shadow:var(--shadow);flex-shrink:0}
 .pg canvas{position:absolute;left:0;top:0;width:100%;height:100%}
+.pg .hlc{mix-blend-mode:multiply;pointer-events:none}
 .pgno{position:absolute;right:-2px;top:0;transform:translateX(100%);padding:2px 6px;font:11px var(--mono);color:var(--mute);pointer-events:none}
 .ov{cursor:default;touch-action:pan-x pan-y pinch-zoom}
 .desk[data-tool="text"] .ov{cursor:text}
@@ -568,7 +569,7 @@ body{background:var(--dbg)}
     <div class="brand">
       <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTQwLDE0IEgxMjAgTDE2Miw1NiBWMTg2IEg0MCBaIiBmaWxsPSIjRkNFQkVCIiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTEyMCwxNCBWNTYgSDE2MiBaIiBmaWxsPSIjRjdDOEM4IiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjQsNjguMzcpIHNjYWxlKDAuNTU0NCkiPjxwYXRoIGQ9Ik0xNCAxMTUuNTlINDIuODZRNDMuNDkgMTIxLjc4IDQ3LjE0IDEyNS4wM1E1MC43OCAxMjguMjggNTYuNjUgMTI4LjI4UTYyLjY4IDEyOC4yOCA2Ni4xNiAxMjUuNVE2OS42NSAxMjIuNzMgNjkuNjUgMTE3LjgxUTY5LjY1IDExMy42OSA2Ni44OCAxMTFRNjQuMSAxMDguMyA2MC4wNiAxMDYuNTZRNTYuMDIgMTA0LjgxIDQ4LjU2IDEwMi41OVEzNy43OCA5OS4yNiAzMC45NyA5NS45M1EyNC4xNSA5Mi42IDE5LjIzIDg2LjFRMTQuMzIgNzkuNiAxNC4zMiA2OS4xNFExNC4zMiA1My42IDI1LjU3IDQ0LjhRMzYuODMgMzYgNTQuOTEgMzZRNzMuMyAzNiA4NC41NiA0NC44UTk1LjgxIDUzLjYgOTYuNjEgNjkuM0g2Ny4yN1E2Ni45NiA2My45MSA2My4zMSA2MC44MVE1OS42NiA1Ny43MiA1My45NiA1Ny43MlE0OS4wNCA1Ny43MiA0Ni4wMyA2MC4zNFE0My4wMiA2Mi45NSA0My4wMiA2Ny44N1E0My4wMiA3My4yNiA0OC4wOSA3Ni4yN1E1My4xNiA3OS4yOSA2My45NCA4Mi43N1E3NC43MyA4Ni40MiA4MS40NiA4OS43NVE4OC4yIDkzLjA4IDkzLjEyIDk5LjQyUTk4LjAzIDEwNS43NiA5OC4wMyAxMTUuNzVROTguMDMgMTE1LjgzIDk4LjAzIDExNS45MUw3NC41IDE0MS4xM1E3MS41NCAxNDQuMyA3MS4wOCAxNDguMzlRNjQuODQgMTUwIDU3LjQ0IDE1MFE0NS4yNCAxNTAgMzUuNTYgMTQ2LjA0UTI1Ljg5IDE0Mi4wNyAyMC4xIDEzNC4zUTE0LjMyIDEyNi41MyAxNCAxMTUuNTlaIiBmaWxsPSIjMTIzMDdBIi8+PHBhdGggZD0iTTc4LjUyIDE0NC44OCAxMDYuNTIgMTE0Ljg4UTEwOC41OCAxMTIuNjcgMTExLjYgMTEyLjUxUTExNC42MyAxMTIuMzUgMTE2LjkxIDExNC4zM0wxMjUuODEgMTIyLjA0TDE1NC40OSA4My41M0wxNDAuNDYgNzMuMDdRMTM5LjQ1IDcyLjMzIDEzOS4zMyA3MS40NVExMzkuMiA3MC41OCAxMzkuOTQgNjkuNThRMTQwLjM0IDY5LjA1IDE0MC45NCA2OC43OEwxODcuMjcgNDguNDJRMTg5LjU2IDQ3LjQyIDE5MC41NyA0OS43UTE5MC44NSA1MC4zMyAxOTAuNzYgNTEuMDJMMTg0LjUzIDEwMS4yNFExODQuMzggMTAyLjQ4IDE4My42OCAxMDMuMDJRMTgyLjk4IDEwMy41NyAxODEuNzQgMTAzLjQxUTE4MS4wOSAxMDMuMzMgMTgwLjU2IDEwMi45NEwxNjYuNTIgOTIuNDhMMTMzLjAyIDEzNy40OFExMzIuODUgMTM3LjcgMTMyLjY3IDEzNy45MVExMzAuNjMgMTQwLjI2IDEyNy41MyAxNDAuNDhRMTI0LjQ0IDE0MC43IDEyMi4wOSAxMzguNjdMMTEyLjU1IDEzMC40TDg5LjQ4IDE1NS4xMlE4Ny4zNiAxNTcuMzkgODQuMjYgMTU3LjVRODEuMTUgMTU3LjYgNzguODggMTU1LjQ4UTc2LjYxIDE1My4zNiA3Ni41IDE1MC4yNlE3Ni40IDE0Ny4xNSA3OC41MiAxNDQuODhaIiBmaWxsPSIjRTIzQjNCIi8+PC9nPjwvc3ZnPg==" alt="">
       <span class="wordmark"><span class="w1">smart</span><span class="w2">PDF</span></span>
-      <button class="ver" id="btnAbout" title="版本记录">v3.6</button>
+      <button class="ver" id="btnAbout" title="版本记录">v3.6.1</button>
       <button class="ver" id="btnLang" title="Switch to English">EN</button>
     </div>
     <div class="fname" id="fname"></div>
@@ -1289,8 +1290,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '3.6.0';
+const VERSION = '3.6.1';
 const CHANGELOG = [
+  { v: '3.6.1', d: '2026-11-04', items: [
+    "高亮颜色改成鲜艳的亮黄、亮绿、亮蓝、亮橙（另有粉、红、紫、青），用「正片叠底」方式涂上去，颜色饱满、黑字照样清楚；保存后在 Adobe 里也一样",
+  ] },
   { v: '3.6', d: '2026-11-04', items: [
     "选完字会自动出现小工具条：点颜色就高亮，还有下划线、删除线、复制，按「▾」看全部颜色；不用再按右键（右键照样可以）",
     "高亮、下划线、删除线保存成真正的 PDF 批注，跟 Adobe 一样：别人用 Adobe、Edge 打开也看得到，能在批注列表里看、改颜色或删除",
@@ -1479,7 +1483,10 @@ const SANS = 'Arial,"Helvetica Neue",Helvetica,"Noto Sans SC","Microsoft YaHei",
 const fontOf = a => a.ff === 'serif' ? SERIF : a.ff === 'mono' ? MONO : a.ff === 'sans' ? SANS : FONT;
 const LH = 1.25;
 const INK = ['#14181f', '#1d4ed8', '#c62828'];
-const HLC = ['#ffe14d', '#ffb347', '#ff6b6b', '#ff9ec4', '#c39bff', '#7cc4ff', '#5ee0d6', '#7ee08a'];
+// 高亮颜色：前四个是 nick 常用的亮黄、亮绿、亮蓝、亮橙（用「正片叠底」画，颜色鲜艳、字照样看得清）
+const HLC = ['#fff500', '#7af255', '#22a3ff', '#ffaa00', '#ff8ac8', '#ff6b6b', '#c39bff', '#5ee0d6'];
+// 涂色高亮（不是线）：在单独一层用正片叠底画；保存时变成真正的 PDF 高亮批注
+const mulHl = a => !!(a && a.t === 'hl' && !a.k);
 // 下划线、删除线的颜色：黑、红、蓝、绿、橙、紫
 const ULC = ['#14181f', '#d32f2f', '#1d4ed8', '#2e7d32', '#ef6c00', '#7b1fa2'];
 // 贴着文字的高亮（有 a.r）不能拖动或拉大，免得移开了原来的字
@@ -1635,7 +1642,8 @@ const EN = {
   "公司名、日期、页码": "Company name, date, page no.",
   "PDF/A 存档": "PDF/A archive",
   "长期保存、交给政府": "Long-term storage, government filing",
-"选完字会自动出现小工具条：点颜色就高亮，还有下划线、删除线、复制，按「▾」看全部颜色；不用再按右键（右键照样可以）": "Selecting text now pops up a small toolbar: click a colour to highlight, or underline, strike through or copy; ▾ shows every colour. No right-click needed (right-click still works)",
+"高亮颜色改成鲜艳的亮黄、亮绿、亮蓝、亮橙（另有粉、红、紫、青），用「正片叠底」方式涂上去，颜色饱满、黑字照样清楚；保存后在 Adobe 里也一样": "Highlight colours are now bright yellow, green, blue and orange (plus pink, red, purple, teal), painted in multiply mode so colours are strong and black text stays clear; they look the same in Adobe after saving",
+  "选完字会自动出现小工具条：点颜色就高亮，还有下划线、删除线、复制，按「▾」看全部颜色；不用再按右键（右键照样可以）": "Selecting text now pops up a small toolbar: click a colour to highlight, or underline, strike through or copy; ▾ shows every colour. No right-click needed (right-click still works)",
   "高亮、下划线、删除线保存成真正的 PDF 批注，跟 Adobe 一样：别人用 Adobe、Edge 打开也看得到，能在批注列表里看、改颜色或删除": "Highlights, underlines and strikethroughs are saved as real PDF annotations, like Adobe: people opening the file in Adobe or Edge see them in the comments list and can recolour or delete them",
   "修正：高亮过的字不能再选来加下划线或删除线，现在可以在同一段字上又高亮又加线": "Fix: text that was already highlighted could not be selected again to underline or strike it; now the same text can be highlighted and underlined",
   "右键高亮多了颜色：黄、橙、红、粉、紫、蓝、青、绿八种，还可以按彩虹圆点自己挑任何颜色；下划线和删除线也可以选黑、红、蓝、绿、橙、紫或其他颜色。贴着文字的高亮不会再被不小心拖走": "More right-click highlight colours: yellow, orange, red, pink, purple, blue, teal and green, plus the rainbow dot to pick any colour; underline and strikethrough can be black, red, blue, green, orange, purple or any other colour. Highlights that follow the text can no longer be dragged away by accident",
@@ -2502,7 +2510,7 @@ function drawAnn(ctx, a) {
       ctx.fillStyle = a.c;
       if (a.k === 'u' || a.k === 's') {
         for (const [x, y, w, h] of rs) { const th = Math.max(0.8, h * 0.08); ctx.fillRect(x, a.k === 'u' ? y + h - th : y + h * 0.55 - th / 2, w, th); }
-      } else { ctx.globalAlpha = 0.4; for (const [x, y, w, h] of rs) ctx.fillRect(x, y, w, h); }
+      } else { ctx.globalCompositeOperation = 'multiply'; for (const [x, y, w, h] of rs) ctx.fillRect(x, y, w, h); }
       break;
     }
     case 'rect': {
@@ -2609,9 +2617,10 @@ function drawOverlay(p, ctx, s) {
   drawFields(p, ctx);
   for (const a of p.ann) {
     if (S.editing && S.editing.aid === a.id) continue;
+    if (mulHl(a)) continue;   // 涂色高亮画在下面的 .hlc 层
     drawAnn(ctx, a);
   }
-  if (S.draft && S.draft.pid === p.id) drawAnn(ctx, S.draft.a);
+  if (S.draft && S.draft.pid === p.id && !mulHl(S.draft.a)) drawAnn(ctx, S.draft.a);
   if (S.hover && S.hover.pid === p.id && S.tool === 'edit' && !S.editing) {
     const b = S.hover.box, u = 1 / S.zoom;
     ctx.save(); ctx.fillStyle = 'rgba(36,70,168,.08)'; ctx.strokeStyle = 'rgba(36,70,168,.7)'; ctx.lineWidth = u; ctx.setLineDash([4 * u, 3 * u]);
@@ -3044,7 +3053,7 @@ function buildPages() {
   S.pages.forEach((p, i) => {
     const el = document.createElement('div');
     el.className = 'pg'; el.dataset.id = p.id;
-    el.innerHTML = '<canvas class="base"></canvas><canvas class="ov"></canvas><div class="tl"></div><div class="pgno"></div>';
+    el.innerHTML = '<canvas class="base"></canvas><canvas class="hlc"></canvas><canvas class="ov"></canvas><div class="tl"></div><div class="pgno"></div>';
     el.querySelector('.pgno').textContent = i + 1;
     host.appendChild(el); bindOverlay(el); bindTL(el);
   });
@@ -3094,6 +3103,12 @@ function redrawPage(el) {
   const p = pageById(el.dataset.id), o = el.querySelector('.ov');
   if (!p || !o || !o.width) return;
   drawOverlay(p, o.getContext('2d'), el._s);
+  const hc = el.querySelector('.hlc');
+  if (hc && hc.width) {
+    const c = hc.getContext('2d'); c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, hc.width, hc.height); c.setTransform(el._s, 0, 0, el._s, 0, 0);
+    for (const a of p.ann) if (mulHl(a)) drawAnn(c, a);
+    if (S.draft && S.draft.pid === p.id && mulHl(S.draft.a)) drawAnn(c, S.draft.a);
+  }
 }
 function redrawAll() { $$('.pg').forEach(el => { if (el._on) redrawPage(el); }); }
 function redrawById(id) { const el = pageEl(id); if (el && el._on) redrawPage(el); }
@@ -4873,7 +4888,7 @@ function gotoHit(i) {
 function overlayPng(p, sc) {
   return new Promise((res, rej) => {
     const c = document.createElement('canvas'); c.width = Math.round(p.W * sc); c.height = Math.round(p.H * sc);
-    const ctx = c.getContext('2d'); ctx.setTransform(sc, 0, 0, sc, 0, 0); drawAnns(ctx, inkAnns(p.ann).filter(a => !fixedHl(a)));
+    const ctx = c.getContext('2d'); ctx.setTransform(sc, 0, 0, sc, 0, 0); drawAnns(ctx, inkAnns(p.ann).filter(a => !fixedHl(a) && !mulHl(a)));
     c.toBlob(async b => { if (!b) rej(new Error(T('无法生成图层'))); else res(new Uint8Array(await b.arrayBuffer())); }, 'image/png');
   });
 }
@@ -4970,8 +4985,8 @@ async function buildPdf(pages, onProg, opts) {
     }
     const page = p.blank ? out.addPage([p.vb[2] - p.vb[0], p.vb[3] - p.vb[1]]) : out.addPage(copies[j]);
     const r = totalRot(p); page.setRotation(degrees(r));
-    if (p.ann.some(a => liveAnn(a) || fixedHl(a)) && await addLive(out, page, p, false)) hasForm = true;
-    if (inkAnns(p.ann).some(a => !fixedHl(a))) {
+    if (p.ann.some(a => liveAnn(a) || fixedHl(a) || mulHl(a)) && await addLive(out, page, p, false)) hasForm = true;
+    if (inkAnns(p.ann).some(a => !fixedHl(a) && !mulHl(a))) {
       const sc = Math.min(3, Math.sqrt(2.2e7 / (p.W * p.H)));
       const img = await out.embedPng(await overlayPng(p, sc));
       const w = p.vb[2] - p.vb[0], h = p.vb[3] - p.vb[1], X = p.vb[0], Y = p.vb[1];
@@ -6251,17 +6266,17 @@ async function addLive(out, page, p, flat) {
       const ref = mk(a.text, au, a.d);
       for (const rp of a.rep || []) mk(rp.text, rp.au, rp.d, ref);
       void PDFNumber;
-    } else if (fixedHl(a) && !flat) {
+    } else if ((fixedHl(a) || mulHl(a)) && !flat && a.w > 0 && a.h > 0) {
       // 选字高亮／下划线／删除线 → 真正的 PDF 批注（Adobe、Edge 里也能看到、改颜色、删除），带外观流，哪里打开都一样
-      const sx = a.w / a.rw, sy = a.h / a.rh;
-      const lines = a.r.map(([x, y, w, h]) => ({ x: a.x + x * sx, y: a.y + y * sy, w: w * sx, h: h * sy }));
+      const sx = a.r ? a.w / a.rw : 1, sy = a.r ? a.h / a.rh : 1;
+      const lines = (a.r || [[0, 0, a.w, a.h]]).map(([x, y, w, h]) => ({ x: a.x + x * sx, y: a.y + y * sy, w: w * sx, h: h * sy }));
       const shape = l => { if (!a.k) return l; const th = Math.max(0.8, l.h * 0.08); return { x: l.x, y: a.k === 'u' ? l.y + l.h - th : l.y + l.h * 0.55 - th / 2, w: l.w, h: th }; };
       const nb = lines.map(l => nativeBox(p, l, false)), sb = lines.map(l => nativeBox(p, shape(l), false));
       const all = nb.concat(sb), x0 = Math.min(...all.map(b => b.x)), y0 = Math.min(...all.map(b => b.y));
       const x1 = Math.max(...all.map(b => b.x + b.w)), y1 = Math.max(...all.map(b => b.y + b.h));
       const qp = []; for (const b of nb) qp.push(b.x, b.y + b.h, b.x + b.w, b.y + b.h, b.x, b.y, b.x + b.w, b.y);
       const m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(a.c || '#ffe14d') || [0, 'ff', 'e1', '4d'];
-      const C = [1, 2, 3].map(i => +(parseInt(m[i], 16) / 255).toFixed(3)), op = a.k ? 1 : 0.4, f = v => +v.toFixed(2);
+      const C = [1, 2, 3].map(i => +(parseInt(m[i], 16) / 255).toFixed(3)), op = 1, f = v => +v.toFixed(2);
       const body = (a.k ? '' : '/G0 gs ') + C.join(' ') + ' rg ' + sb.map(b => `${f(b.x)} ${f(b.y)} ${f(b.w)} ${f(b.h)} re`).join(' ') + ' f';
       const res = a.k ? {} : { ExtGState: { G0: { Type: 'ExtGState', CA: op, ca: op, BM: 'Multiply' } } };
       const ap = ctx.register(ctx.stream(body, { Type: 'XObject', Subtype: 'Form', BBox: [x0, y0, x1, y1], Resources: res }));
