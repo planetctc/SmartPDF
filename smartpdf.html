@@ -513,8 +513,9 @@ body{background:var(--dbg)}
 .opt input{margin:0}
 
 @media (min-width:821px){.tools{flex-wrap:wrap;row-gap:2px}}
-/* 屏幕不够宽时：顶部按钮改成「图标在上、字在下」，每个按钮都有字 */
-@media (min-width:821px) and (max-width:1919px){.top .acts .btn{flex-direction:column;justify-content:center;height:46px;padding:4px 7px 3px!important;gap:2px;min-width:44px}.top .acts .btn .t{display:block!important;font-size:11px;line-height:1.1;white-space:nowrap}.top .acts{gap:3px}.top .acts .vsep{height:30px}}
+@media (min-width:821px){.top.slim .acts .btn.ghost .t{display:none}}
+/* 顶部按钮排一行放不下时（fitTop 加 .stack）：改成「图标在上、字在下」，每个按钮都有字 */
+@media (min-width:821px){.top.stack .acts .btn{flex-direction:column;justify-content:center;height:46px;padding:4px 7px 3px!important;gap:2px;min-width:44px}.top.stack .acts .btn .t{display:block!important;font-size:11px;line-height:1.1;white-space:nowrap}.top.stack .acts{gap:3px}.top.stack .acts .vsep{height:30px}}
 .top .acts .btn.ghost .t{opacity:.9}
 @media (min-width:821px) and (max-width:1440px){.search input{width:130px}.fname{display:none}}
 @media (min-width:821px) and (max-width:1220px){.search input{width:110px}.brand b{display:none}.top .wordmark{display:none}}
@@ -1268,7 +1269,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 const VERSION = '3.4.4';
 const CHANGELOG = [
   { v: '3.4.4', d: '2026-11-04', items: [
-    "顶部的按钮全部都有字了（合并、拆分、批量、对比、撤销、重做、打印、帮助、设定等），一看就知道是什么；屏幕窄的时候字放在图标下面",
+    "顶部的按钮全部都有字了（合并、拆分、批量、对比、撤销、重做、打印、帮助、设定等），一看就知道是什么；放得下就像中文版一样字在图标旁边排一行，屏幕窄放不下时字才放到图标下面",
   ] },
   { v: '3.4.3', d: '2026-11-04', items: [
     "任务栏和窗口标题会显示打开的文件名，例如「合同.pdf - smartPDF」；开了好几个窗口也分得清。有未保存的修改时，名字前面会有一个点",
@@ -1593,7 +1594,7 @@ const EN = {
   "公司名、日期、页码": "Company name, date, page no.",
   "PDF/A 存档": "PDF/A archive",
   "长期保存、交给政府": "Long-term storage, government filing",
-"顶部的按钮全部都有字了（合并、拆分、批量、对比、撤销、重做、打印、帮助、设定等），一看就知道是什么；屏幕窄的时候字放在图标下面": "Every button in the top bar now has a label (Merge, Split, Batch, Compare, Undo, Redo, Print, Help, Settings…); on narrower screens the label sits under the icon",
+"顶部的按钮全部都有字了（合并、拆分、批量、对比、撤销、重做、打印、帮助、设定等），一看就知道是什么；放得下就像中文版一样字在图标旁边排一行，屏幕窄放不下时字才放到图标下面": "Every button in the top bar now has a label (Merge, Split, Batch, Compare, Undo, Redo, Print, Help, Settings…); labels sit beside the icons in one row when there is room, and move under the icons only on narrow screens",
 "任务栏和窗口标题会显示打开的文件名，例如「合同.pdf - smartPDF」；开了好几个窗口也分得清。有未保存的修改时，名字前面会有一个点": "The taskbar and window title now show the open file name, e.g. \"contract.pdf - smartPDF\", so several windows are easy to tell apart; a dot in front means there are unsaved changes",
 "收起和展开页面栏改成页面栏右边中间的小三角按钮：按「◀」收起，收起后按「▶」展开": "Hide or show the page panel with the small triangle in the middle of its right edge: ◀ hides it, ▶ brings it back",
   "页面按钮（左转、右转、上移、复制、拆分、删除等）移到文件上方排成一行，左边页面栏不再被挤满；页面栏可以收起，收起后文件看得更大": "Page buttons (rotate, move, duplicate, split, delete…) now sit in one row above the document, so the page panel is no longer crowded; the page panel can be hidden to give the document more room",
@@ -2258,7 +2259,7 @@ function collectI18n() {
 function applyLang() {
   const en = LANG === 'en';
   document.documentElement.lang = en ? 'en' : 'zh-CN';
-  winTitle = ''; updTitle();
+  winTitle = ''; updTitle(); requestAnimationFrame(fitTop);
   for (const it of I18N.texts) it.n.nodeValue = en ? it.zh.replace(it.key, EN[it.key]) : it.zh;
   for (const it of I18N.attrs) it.el.setAttribute(it.a, en ? EN[it.zh] : it.zh);
   for (const [id, zh] of Object.entries(ZH_DEFAULTS)) { const el = $(id); if (el && (el.value === zh || el.value === EN[zh])) el.value = T(zh); }
@@ -3143,6 +3144,15 @@ function updStatus() {
   updTitle();
 }
 /* 窗口标题（任务栏上看到的名字）显示文件名，有未保存的修改时前面加 • */
+function fitTop() {
+  const t = $('.top'); if (!t) return;
+  const over = () => t.scrollWidth > t.clientWidth + 1;
+  // 先试一行全部带字；放不下就先拿掉撤销、重做、帮助、设定的字；还放不下才改成字在图标下面
+  t.classList.remove('stack', 'slim');
+  if (over()) t.classList.add('slim');
+  if (over()) { t.classList.remove('slim'); t.classList.add('stack'); }
+}
+addEventListener('resize', () => { cancelAnimationFrame(fitTop.raf); fitTop.raf = requestAnimationFrame(fitTop); });
 let winTitle = '';
 function updTitle() {
   const t = S.pages.length && S.fileName ? (S.dirty ? '• ' : '') + S.fileName + ' - smartPDF' : 'smartPDF';
@@ -3150,7 +3160,7 @@ function updTitle() {
   winTitle = t; document.title = t;
   if (DESK.on && window.Neutralino && Neutralino.window) Neutralino.window.setTitle(t).catch(() => {});
 }
-setInterval(updTitle, 800);
+setInterval(() => { updTitle(); fitTop(); }, 1000);
 let scrollRaf = 0;
 function onScroll() {
   if (scrollRaf) return;
