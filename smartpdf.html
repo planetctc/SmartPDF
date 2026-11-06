@@ -97,6 +97,8 @@ button{cursor:pointer}
 .tab .tbD{width:7px;height:7px;border-radius:50%;background:#e8590c;flex-shrink:0}
 .tab .tbX{width:20px;height:20px;border:0;border-radius:5px;background:none;color:var(--mute);font-size:15px;line-height:1;cursor:pointer;flex-shrink:0;display:grid;place-items:center}
 .tab .tbX:hover{background:var(--line);color:var(--ink)}
+.tab.drag{opacity:.45}
+.tab.over{box-shadow:inset 3px 0 0 var(--accent)}
 .tabAdd{width:30px;height:28px;border:0;border-radius:7px;background:none;color:var(--mute);font-size:19px;line-height:1;cursor:pointer;flex-shrink:0;margin-bottom:2px}
 .tabAdd:hover{background:var(--panel);color:var(--accent)}
 .stabs button{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-left:3px!important;padding-right:3px!important}
@@ -1307,8 +1309,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '3.7.0';
+const VERSION = '3.7.1';
 const CHANGELOG = [
+  { v: '3.7.1', d: '2026-11-06', items: [
+    "文件标签可以拖出窗口，变成自己一个窗口（也可以右键点标签选「移到新窗口」）；标签可以拖来拖去换位置，右键还有「关闭其他文件」",
+  ] },
   { v: '3.7.0', d: '2026-11-06', items: [
     "分页标签：一个窗口可以开好几个文件，文件上方一排标签，点一下就切换；按「+」再开一个，按「×」关掉（没保存会先问）。Ctrl+Tab 换下一个",
     "smartPDF 已经开着时，在电脑里双击别的 PDF，会开进同一个窗口的新标签，不会再多开一个窗口",
@@ -1547,6 +1552,11 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  "文件标签可以拖出窗口，变成自己一个窗口（也可以右键点标签选「移到新窗口」）；标签可以拖来拖去换位置，右键还有「关闭其他文件」": "Drag a file tab out of the window to give it its own window (or right-click the tab → Move to new window); drag tabs to reorder them; right-click also has Close other files",
+  '移到新窗口': 'Move to new window', '关闭': 'Close', '关闭其他文件': 'Close other files',
+  '移到新窗口要用 Windows 版 smartPDF': 'Moving to a new window needs the Windows version of smartPDF',
+  '要先保存这个文件，才能移到新窗口。': 'Save this file first so it can move to a new window.', '保存并移过去': 'Save and move',
+  '开不了新窗口：{e}': 'Could not open a new window: {e}', '已在新窗口打开 {name}': 'Opened {name} in a new window',
   "分页标签：一个窗口可以开好几个文件，文件上方一排标签，点一下就切换；按「+」再开一个，按「×」关掉（没保存会先问）。Ctrl+Tab 换下一个": "Tabs: open several files in one window and click a tab above the document to switch; “+” opens another, “×” closes one (asks first if unsaved). Ctrl+Tab goes to the next",
   "smartPDF 已经开着时，在电脑里双击别的 PDF，会开进同一个窗口的新标签，不会再多开一个窗口": "When smartPDF is already open, double-clicking another PDF on your computer opens it in a new tab of the same window instead of another window",
   "新工具：箭头、直线、圆圈。按住 Shift 可以画正圆、水平或 45° 的线；颜色、粗细可以改，拖动可以移动，拖端点可以改方向": "New tools: arrow, line and circle. Hold Shift for a perfect circle or a straight / 45° line; change colour and thickness, drag to move, drag the end to re-aim",
@@ -3243,6 +3253,42 @@ async function closeTab(i) {
   TABS.cur = Math.min(i, TABS.list.length - 1);
   tabPut(TABS.list[TABS.cur].st); tabAfter();
 }
+// 拖标签换位置
+function tabMove(from, to) {
+  if (from === to || from == null) return;
+  const cur = TABS.list[TABS.cur], [t] = TABS.list.splice(from, 1);
+  TABS.list.splice(to, 0, t); TABS.cur = TABS.list.indexOf(cur); renderTabs(true);
+}
+function tabMenu(e, i) {
+  const items = [];
+  if (DESK.on && TABS.list.length > 1) items.push({ label: '移到新窗口', ic: '⧉', fn: () => tabToWindow(i) });
+  items.push({ label: '关闭', ic: '×', fn: () => closeTab(i) });
+  if (TABS.list.length > 1) items.push({ label: '关闭其他文件', ic: '⊗', fn: () => closeOthers(i) });
+  ctxOpen(e, items);
+}
+async function closeOthers(i) {
+  const keep = TABS.list[i];
+  for (let k = TABS.list.length - 1; k >= 0; k--) if (TABS.list[k] !== keep && TABS.list.includes(TABS.list[k])) { await closeTab(k); }
+  const at = TABS.list.indexOf(keep); if (at >= 0) switchTab(at);
+}
+/* 把一个标签拉出去，变成自己一个窗口（v3.7.1）：
+   再开一个 smartPDF 打开这个文件（加 --own-window，不会又被收回来这个窗口），然后关掉这里的标签。
+   还没保存的文件要先保存，新窗口才拿得到最新的内容。 */
+async function tabToWindow(i) {
+  if (!DESK.on) { toast(T('移到新窗口要用 Windows 版 smartPDF')); return; }
+  if (TABS.list.length < 2) return;
+  if (i !== TABS.cur) switchTab(i);
+  if (S.dirty || !S.filePath) {
+    if (!(await confirmDlg(T('要先保存这个文件，才能移到新窗口。'), T('保存并移过去')))) return;
+    if (!(await saveDoc()) || !S.filePath) return;
+  }
+  const path = S.filePath, pid = Number(window.NL_PID) || 0;
+  const exe = pid ? `(Get-Process -Id ${pid}).Path` : psq(String(window.NL_PATH || '').replace(/[\\/]$/, '') + '\\smartPDF.exe');
+  try { await psRun(psCmd(`Start-Process -FilePath ${exe} -ArgumentList @(${psq('"' + path + '"')}, '--own-window')`)); }
+  catch (e) { console.warn(e); toast(T('开不了新窗口：{e}', { e: e.message || e })); return; }
+  S.dirty = false; closeTab(TABS.cur);
+  toast(T('已在新窗口打开 {name}', { name: baseName(path) }));
+}
 const tabDirtyAny = () => S.dirty || TABS.list.some((t, i) => i !== TABS.cur && t.st && t.st.dirty);
 function renderTabs(force) {
   tabEnsure();
@@ -3264,6 +3310,18 @@ function renderTabs(force) {
     b.onclick = () => switchTab(i);
     b.onauxclick = e => { if (e.button === 1) { e.preventDefault(); closeTab(i); } };
     b.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); switchTab(i); } };
+    b.oncontextmenu = e => { e.preventDefault(); tabMenu(e, i); };
+    b.draggable = true;
+    b.ondragstart = e => { TABS.drag = i; e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('application/x-smartpdf-tab', String(i)); b.classList.add('drag'); };
+    b.ondragend = e => { b.classList.remove('drag'); const from = TABS.drag; TABS.drag = null; $$('#tabs .tab').forEach(t => t.classList.remove('over'));
+      if (from == null || e.dataTransfer.dropEffect !== 'none') return;
+      // 放在窗口外面：移到新窗口
+      const out = e.clientX < 0 || e.clientY < 0 || e.clientX > innerWidth || e.clientY > innerHeight
+        || (e.screenX || e.screenY) && (e.screenX < screenX || e.screenY < screenY || e.screenX > screenX + outerWidth || e.screenY > screenY + outerHeight);
+      if (out) tabToWindow(from); };
+    b.ondragover = e => { if (TABS.drag == null) return; e.preventDefault(); e.dataTransfer.dropEffect = 'move'; b.classList.add('over'); };
+    b.ondragleave = () => b.classList.remove('over');
+    b.ondrop = e => { if (TABS.drag == null) return; e.preventDefault(); e.stopPropagation(); tabMove(TABS.drag, i); };
     host.appendChild(b);
   });
   const add = document.createElement('button'); add.type = 'button'; add.className = 'tabAdd'; add.textContent = '+';
@@ -8498,7 +8556,8 @@ async function init() {
   refreshProps(); updUndo(); updSearchUi(); updStatus(); updWelcome(); renderRecent();
   const arg = DESK.on && Array.isArray(window.NL_ARGS) ? NL_ARGS.slice(1).find(a => /\.pdf$/i.test(a)) : null;
   const one = await oneInit().catch(() => false);
-  if (arg && one && await oneHandOff(arg).catch(() => false)) { oneQuit(); return; }
+  const own = Array.isArray(window.NL_ARGS) && NL_ARGS.includes('--own-window');
+  if (arg && one && !own && await oneHandOff(arg).catch(() => false)) { oneQuit(); return; }
   if (one) oneServe();
   if (arg) await openPaths([arg], 'replace');
   if (DESK.on) setTimeout(closeOldAfterUpdate, 1500);
