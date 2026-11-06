@@ -88,6 +88,17 @@ button{cursor:pointer}
 .ops .btn{padding:0 11px;justify-content:center;height:28px;font-size:12px;white-space:nowrap;flex-shrink:0}
 .opsL{font-size:12px;color:var(--mute);margin-right:2px;white-space:nowrap}
 .app.empty .ops{display:none}
+.ftabs{display:flex;align-items:flex-end;gap:2px;padding:5px 8px 0;min-height:36px;box-sizing:border-box;background:var(--panel2);border-bottom:1px solid var(--line);flex-shrink:0;overflow-x:auto;scrollbar-width:thin}
+.app.empty .ftabs,.ftabs:empty{display:none}
+.tab{display:flex;align-items:center;gap:6px;max-width:220px;min-width:90px;height:30px;padding:0 6px 0 12px;border:1px solid transparent;border-bottom:0;border-radius:8px 8px 0 0;background:transparent;color:var(--mute);font:inherit;font-size:12.5px;cursor:pointer;flex-shrink:0;position:relative;top:1px}
+.tab:hover{background:var(--panel);color:var(--ink)}
+.tab.on{background:var(--panel);color:var(--ink);border-color:var(--line);font-weight:600;box-shadow:inset 0 2px 0 var(--accent)}
+.tab .tbN{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
+.tab .tbD{width:7px;height:7px;border-radius:50%;background:#e8590c;flex-shrink:0}
+.tab .tbX{width:20px;height:20px;border:0;border-radius:5px;background:none;color:var(--mute);font-size:15px;line-height:1;cursor:pointer;flex-shrink:0;display:grid;place-items:center}
+.tab .tbX:hover{background:var(--line);color:var(--ink)}
+.tabAdd{width:30px;height:28px;border:0;border-radius:7px;background:none;color:var(--mute);font-size:19px;line-height:1;cursor:pointer;flex-shrink:0;margin-bottom:2px}
+.tabAdd:hover{background:var(--panel);color:var(--accent)}
 .stabs button{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-left:3px!important;padding-right:3px!important}
 .sideTg{position:absolute;left:-3px;top:50%;width:16px;height:52px;margin-top:-26px;padding:0;border:1px solid var(--line);border-radius:8px;background:var(--panel);box-shadow:var(--soft);cursor:pointer;z-index:6;display:grid;place-items:center}
 .sideTg::before{content:"";border-style:solid;border-width:6px 7px 6px 0;border-color:transparent var(--mute) transparent transparent}
@@ -117,8 +128,9 @@ button{cursor:pointer}
 .pgno{position:absolute;right:-2px;top:0;transform:translateX(100%);padding:2px 6px;font:11px var(--mono);color:var(--mute);pointer-events:none}
 .ov{cursor:default;touch-action:pan-x pan-y pinch-zoom}
 .desk[data-tool="text"] .ov{cursor:text}
-.desk[data-tool="date"] .ov,.desk[data-tool="check"] .ov,.desk[data-tool="sign"] .ov,.desk[data-tool="stamp"] .ov,.desk[data-tool="image"] .ov,.desk[data-tool="hl"] .ov,.desk[data-tool="pen"] .ov,.desk[data-tool="rect"] .ov,.desk[data-tool="white"] .ov{cursor:crosshair}
-.desk[data-tool="hl"] .ov,.desk[data-tool="pen"] .ov,.desk[data-tool="rect"] .ov,.desk[data-tool="white"] .ov{touch-action:none}
+.desk[data-tool="date"] .ov,.desk[data-tool="check"] .ov,.desk[data-tool="sign"] .ov,.desk[data-tool="stamp"] .ov,.desk[data-tool="image"] .ov,.desk[data-tool="hl"] .ov,.desk[data-tool="pen"] .ov,.desk[data-tool="rect"] .ov,.desk[data-tool="white"] .ov,.desk[data-tool="ell"] .ov,.desk[data-tool="arrow"] .ov,.desk[data-tool="line"] .ov,.desk[data-tool="co"] .ov{cursor:crosshair}
+.desk[data-tool="hl"] .ov,.desk[data-tool="pen"] .ov,.desk[data-tool="rect"] .ov,.desk[data-tool="white"] .ov,.desk[data-tool="ell"] .ov,.desk[data-tool="arrow"] .ov,.desk[data-tool="line"] .ov,.desk[data-tool="co"] .ov{touch-action:none}
+.coEd{position:absolute;z-index:7;box-sizing:border-box;margin:0;border:1.5px solid var(--accent);border-radius:2px;background:#fff;color:#14181f;resize:none;outline:0;padding:4px 5px;overflow:hidden;line-height:1.3;font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",Arial,sans-serif}
 .desk[data-tool="redact"] .ov{cursor:crosshair;touch-action:none}
 .app.night .pg,.app.night .th canvas{filter:invert(.92) hue-rotate(180deg)}
 .btn[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
@@ -141,7 +153,7 @@ textarea.ed{position:absolute;margin:0;padding:0;border:1px dashed var(--accent)
 .tool[data-tool=select]{--ic:var(--c-slate)} .tool[data-tool=edit]{--ic:var(--c-indigo)} .tool[data-tool=text]{--ic:var(--c-blue)}
 .tool[data-tool=date]{--ic:var(--c-teal)} .tool[data-tool=check]{--ic:var(--c-green)} .tool[data-tool=sign]{--ic:var(--c-purple)} .tool[data-tool=cert]{--ic:var(--c-green)}
 .tool[data-tool=stamp],.tool[data-tool=seam]{--ic:var(--c-red)} .tool[data-tool=image]{--ic:var(--c-orange)} .tool[data-tool=hl]{--ic:var(--c-amber)}
-.tool[data-tool=pen]{--ic:var(--c-pink)} .tool[data-tool=rect]{--ic:var(--c-blue)} .tool[data-tool=white]{--ic:var(--c-slate)}
+.tool[data-tool=pen]{--ic:var(--c-pink)} .tool[data-tool=rect]{--ic:var(--c-blue)} .tool[data-tool=ell]{--ic:var(--c-blue)} .tool[data-tool=arrow],.tool[data-tool=line]{--ic:var(--c-red)} .tool[data-tool=co]{--ic:var(--c-orange,var(--c-red))} .tool[data-tool=white]{--ic:var(--c-slate)}
 .tool[data-tool=redact]{--ic:var(--ink)} .tool[data-tool=pgno]{--ic:var(--c-teal)} .tool[data-tool=wm]{--ic:var(--c-purple)}
 #btnOpen{--ic:var(--c-amber)} #btnScan{--ic:var(--c-green)} #btnConv{--ic:var(--c-teal)} #btnMerge{--ic:var(--c-blue)} #btnSplit{--ic:var(--c-purple)} #btnBatch{--ic:var(--c-orange)}
 #btnCmp{--ic:var(--c-indigo)} #btnPrint{--ic:var(--c-slate)} #btnSaveAs{--ic:var(--c-green)}
@@ -569,7 +581,7 @@ body{background:var(--dbg)}
     <div class="brand">
       <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PHBhdGggZD0iTTQwLDE0IEgxMjAgTDE2Miw1NiBWMTg2IEg0MCBaIiBmaWxsPSIjRkNFQkVCIiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PHBhdGggZD0iTTEyMCwxNCBWNTYgSDE2MiBaIiBmaWxsPSIjRjdDOEM4IiBzdHJva2U9IiNFMjNCM0IiIHN0cm9rZS13aWR0aD0iOSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDQuMjQsNjguMzcpIHNjYWxlKDAuNTU0NCkiPjxwYXRoIGQ9Ik0xNCAxMTUuNTlINDIuODZRNDMuNDkgMTIxLjc4IDQ3LjE0IDEyNS4wM1E1MC43OCAxMjguMjggNTYuNjUgMTI4LjI4UTYyLjY4IDEyOC4yOCA2Ni4xNiAxMjUuNVE2OS42NSAxMjIuNzMgNjkuNjUgMTE3LjgxUTY5LjY1IDExMy42OSA2Ni44OCAxMTFRNjQuMSAxMDguMyA2MC4wNiAxMDYuNTZRNTYuMDIgMTA0LjgxIDQ4LjU2IDEwMi41OVEzNy43OCA5OS4yNiAzMC45NyA5NS45M1EyNC4xNSA5Mi42IDE5LjIzIDg2LjFRMTQuMzIgNzkuNiAxNC4zMiA2OS4xNFExNC4zMiA1My42IDI1LjU3IDQ0LjhRMzYuODMgMzYgNTQuOTEgMzZRNzMuMyAzNiA4NC41NiA0NC44UTk1LjgxIDUzLjYgOTYuNjEgNjkuM0g2Ny4yN1E2Ni45NiA2My45MSA2My4zMSA2MC44MVE1OS42NiA1Ny43MiA1My45NiA1Ny43MlE0OS4wNCA1Ny43MiA0Ni4wMyA2MC4zNFE0My4wMiA2Mi45NSA0My4wMiA2Ny44N1E0My4wMiA3My4yNiA0OC4wOSA3Ni4yN1E1My4xNiA3OS4yOSA2My45NCA4Mi43N1E3NC43MyA4Ni40MiA4MS40NiA4OS43NVE4OC4yIDkzLjA4IDkzLjEyIDk5LjQyUTk4LjAzIDEwNS43NiA5OC4wMyAxMTUuNzVROTguMDMgMTE1LjgzIDk4LjAzIDExNS45MUw3NC41IDE0MS4xM1E3MS41NCAxNDQuMyA3MS4wOCAxNDguMzlRNjQuODQgMTUwIDU3LjQ0IDE1MFE0NS4yNCAxNTAgMzUuNTYgMTQ2LjA0UTI1Ljg5IDE0Mi4wNyAyMC4xIDEzNC4zUTE0LjMyIDEyNi41MyAxNCAxMTUuNTlaIiBmaWxsPSIjMTIzMDdBIi8+PHBhdGggZD0iTTc4LjUyIDE0NC44OCAxMDYuNTIgMTE0Ljg4UTEwOC41OCAxMTIuNjcgMTExLjYgMTEyLjUxUTExNC42MyAxMTIuMzUgMTE2LjkxIDExNC4zM0wxMjUuODEgMTIyLjA0TDE1NC40OSA4My41M0wxNDAuNDYgNzMuMDdRMTM5LjQ1IDcyLjMzIDEzOS4zMyA3MS40NVExMzkuMiA3MC41OCAxMzkuOTQgNjkuNThRMTQwLjM0IDY5LjA1IDE0MC45NCA2OC43OEwxODcuMjcgNDguNDJRMTg5LjU2IDQ3LjQyIDE5MC41NyA0OS43UTE5MC44NSA1MC4zMyAxOTAuNzYgNTEuMDJMMTg0LjUzIDEwMS4yNFExODQuMzggMTAyLjQ4IDE4My42OCAxMDMuMDJRMTgyLjk4IDEwMy41NyAxODEuNzQgMTAzLjQxUTE4MS4wOSAxMDMuMzMgMTgwLjU2IDEwMi45NEwxNjYuNTIgOTIuNDhMMTMzLjAyIDEzNy40OFExMzIuODUgMTM3LjcgMTMyLjY3IDEzNy45MVExMzAuNjMgMTQwLjI2IDEyNy41MyAxNDAuNDhRMTI0LjQ0IDE0MC43IDEyMi4wOSAxMzguNjdMMTEyLjU1IDEzMC40TDg5LjQ4IDE1NS4xMlE4Ny4zNiAxNTcuMzkgODQuMjYgMTU3LjVRODEuMTUgMTU3LjYgNzguODggMTU1LjQ4UTc2LjYxIDE1My4zNiA3Ni41IDE1MC4yNlE3Ni40IDE0Ny4xNSA3OC41MiAxNDQuODhaIiBmaWxsPSIjRTIzQjNCIi8+PC9nPjwvc3ZnPg==" alt="">
       <span class="wordmark"><span class="w1">smart</span><span class="w2">PDF</span></span>
-      <button class="ver" id="btnAbout" title="版本记录">v3.6.1</button>
+      <button class="ver" id="btnAbout" title="版本记录">v3.7</button>
       <button class="ver" id="btnLang" title="Switch to English">EN</button>
     </div>
     <div class="fname" id="fname"></div>
@@ -618,6 +630,10 @@ body{background:var(--dbg)}
     <button class="tool" data-tool="hl" title="高亮 (H)"><span data-ic="hl"></span>高亮</button>
     <button class="tool" data-tool="pen" title="画笔 (P)"><span data-ic="pen"></span>画笔</button>
     <button class="tool" data-tool="rect" title="方框 (R)"><span data-ic="rect"></span>方框</button>
+    <button class="tool" data-tool="ell" title="圆圈 (O)"><span data-ic="ell"></span>圆圈</button>
+    <button class="tool" data-tool="arrow" title="箭头 (A)"><span data-ic="arrow"></span>箭头</button>
+    <button class="tool" data-tool="line" title="直线 (L)"><span data-ic="line"></span>直线</button>
+    <button class="tool" data-tool="co" title="批注框：拉一条线指着要说明的地方，再写字 (K)"><span data-ic="co"></span>批注框</button>
     <button class="tool" data-tool="white" title="用白色盖住原有内容 (W)"><span data-ic="white"></span>遮盖</button>
     <button class="tool" data-tool="redact" title="永久涂黑，导出时彻底移除下面的文字 (X)"><span data-ic="redact"></span>涂黑</button>
     <span class="sep"></span>
@@ -658,6 +674,7 @@ body{background:var(--dbg)}
     <div class="sizer" id="sizer" role="separator" aria-orientation="vertical" title="拖拉调整页面栏宽度，双击恢复"><button type="button" class="sideTg" id="sideTg" title="收起页面栏" aria-label="收起页面栏" aria-expanded="true"></button></div>
     <div class="scrim" id="scrim"></div>
     <section class="deskwrap">
+      <div class="ftabs" id="tabs" role="tablist" aria-label="打开的文件"></div>
       <div class="note" id="note" hidden><span><b>示例合同</b> 可以直接试：选「签名」「印章」「文字」，点页面放置；第 2 页签名处的淡蓝色框是可填写栏位，点一下就能填。点右上角「打开」换成你自己的 PDF。</span><button id="noteX" aria-label="关闭提示">×</button></div>
       <div class="note" id="ocrNote" hidden><span><b>扫描件</b> 这个文件的字是图片，不能搜索或复制。</span><button type="button" class="btn sm primary" id="ocrGo">识别文字</button><button id="ocrX" aria-label="关闭提示" style="margin-left:0">×</button></div>
       <div class="welcome" id="welcome" hidden><div class="dash">
@@ -1290,8 +1307,14 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '3.6.1';
+const VERSION = '3.7.0';
 const CHANGELOG = [
+  { v: '3.7.0', d: '2026-11-06', items: [
+    "分页标签：一个窗口可以开好几个文件，文件上方一排标签，点一下就切换；按「+」再开一个，按「×」关掉（没保存会先问）。Ctrl+Tab 换下一个",
+    "smartPDF 已经开着时，在电脑里双击别的 PDF，会开进同一个窗口的新标签，不会再多开一个窗口",
+    "新工具：箭头、直线、圆圈。按住 Shift 可以画正圆、水平或 45° 的线；颜色、粗细可以改，拖动可以移动，拖端点可以改方向",
+    "新工具「批注框」：按住要说明的地方拖出去，放开后打字，就有一个文字框加一条线指着那一行；双击可以再改，字太多框会自动变高",
+  ] },
   { v: '3.6.1', d: '2026-11-04', items: [
     "高亮颜色改成鲜艳的亮黄、亮绿、亮蓝、亮橙（另有粉、红、紫、青），用「正片叠底」方式涂上去，颜色饱满、黑字照样清楚；保存后在 Adobe 里也一样",
   ] },
@@ -1524,6 +1547,19 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  "分页标签：一个窗口可以开好几个文件，文件上方一排标签，点一下就切换；按「+」再开一个，按「×」关掉（没保存会先问）。Ctrl+Tab 换下一个": "Tabs: open several files in one window and click a tab above the document to switch; “+” opens another, “×” closes one (asks first if unsaved). Ctrl+Tab goes to the next",
+  "smartPDF 已经开着时，在电脑里双击别的 PDF，会开进同一个窗口的新标签，不会再多开一个窗口": "When smartPDF is already open, double-clicking another PDF on your computer opens it in a new tab of the same window instead of another window",
+  "新工具：箭头、直线、圆圈。按住 Shift 可以画正圆、水平或 45° 的线；颜色、粗细可以改，拖动可以移动，拖端点可以改方向": "New tools: arrow, line and circle. Hold Shift for a perfect circle or a straight / 45° line; change colour and thickness, drag to move, drag the end to re-aim",
+  "新工具「批注框」：按住要说明的地方拖出去，放开后打字，就有一个文字框加一条线指着那一行；双击可以再改，字太多框会自动变高": "New “Callout” tool: press on the spot to explain, drag out, release and type; you get a text box with a line pointing at that row. Double-click to edit; the box grows with the text",
+  '打开的文件': 'Open files', '关闭这个文件': 'Close this file', '在新标签打开 PDF (Ctrl+O)': 'Open a PDF in a new tab (Ctrl+O)',
+  '「{name}」有还没保存的修改，关掉会丢掉它们。': '“{name}” has unsaved changes. Closing it will lose them.', '不保存，关掉': 'Close without saving', '「{name}」有还没保存的修改，要先保存吗？': '“{name}” has unsaved changes. Save first?',
+  '圆圈': 'Circle', '箭头': 'Arrow', '直线': 'Line', '批注框': 'Callout', '输入说明…': 'Type a note…',
+  '圆圈 (O)': 'Circle (O)', '箭头 (A)': 'Arrow (A)', '直线 (L)': 'Line (L)',
+  '批注框：拉一条线指着要说明的地方，再写字 (K)': 'Callout: a box with a line pointing at the spot you are explaining (K)',
+  '拖动画圆圈或椭圆（按住 Shift 画正圆）': 'Drag to draw a circle or oval (hold Shift for a perfect circle)',
+  '从起点拖到要指的地方，画箭头（按住 Shift 画直的）': 'Drag from the start to the spot to point at (hold Shift to keep it straight)',
+  '按住拖动画直线（按住 Shift 画水平、垂直或斜 45°）': 'Drag to draw a line (hold Shift for horizontal, vertical or 45°)',
+  '先按住要指的地方，拖到要放说明的位置再放开，然后打字；双击可以再改': 'Press on the spot to point at, drag to where the note should go, release and type; double-click to edit again',
   '其他颜色': 'More colours', '更多颜色': 'More colours', '选中的文字': 'Selected text', '下划线': 'Underline', '删除线': 'Strikethrough', '复制文字': 'Copy text', '已复制': 'Copied', '换颜色': 'Change colour', '高亮颜色': 'Highlight colour',
   '收起页面栏': 'Hide page panel', '显示页面栏': 'Show page panel',  '页面操作': 'Page tools',
   "存成 PDF/A": "Save as PDF/A",
@@ -1677,7 +1713,7 @@ const EN = {
   "这台电脑没有安装 Microsoft Office 或 LibreOffice，转不了。可以先在 Word / Excel 里「另存为 PDF」": "Microsoft Office or LibreOffice is not installed on this computer. You can use “Save as PDF” in Word / Excel instead",
   "有 {n} 个文件转不了：{f}": "{n} file(s) could not be converted: {f}",
   "选择 Word、Excel 或 PowerPoint 文件": "Choose Word, Excel or PowerPoint files",
-  "要把转好的 PDF 接在现在这个文件后面吗？选「另外打开」就换成新文件。": "Add the converted PDF to the end of the current file? Choose “Open separately” to open it as a new file.",
+  "要把转好的 PDF 接在现在这个文件后面吗？选「另外打开」会开在新的标签。": "Add the converted PDF to the end of the current file? Choose “Open separately” to open it in a new tab.",
   "接在后面": "Add to end",
   "另外打开": "Open separately",
   "正在识别扫描的发票… {f}": "Reading scanned invoice… {f}",
@@ -2358,6 +2394,10 @@ const IC = {
   hl: '<path d="M4 15l7-7 3 3-7 7H4z"/><path d="M11 8l2-2 3 3-2 2"/>',
   pen: '<path d="M4 16l1-4 8.5-8.5 3 3L8 15z"/><path d="M12 5l3 3"/>',
   rect: '<rect x="4" y="5" width="12" height="10" rx="1"/>',
+  ell: '<ellipse cx="10" cy="10" rx="6.5" ry="5.2"/>',
+  arrow: '<path d="M4 16L15 5"/><path d="M9 4.5h6.5V11"/>',
+  line: '<path d="M4 16L16 4"/>',
+  co: '<rect x="8.5" y="3" width="8.5" height="7" rx="1"/><path d="M8.5 9L3.5 16.5"/><path d="M10.8 5.6h4M10.8 7.6h2.6"/>',
   white: '<rect x="4" y="5" width="12" height="10" rx="1" fill="currentColor" fill-opacity=".22"/>',
   redact: '<rect x="3" y="7" width="14" height="6" rx="1" fill="currentColor"/>',
   pgno: '<rect x="4.5" y="3" width="11" height="14" rx="1.5"/><path d="M8 13.5h4"/>',
@@ -2429,7 +2469,7 @@ function bbox(a) {
     case 'check': return { x: a.x, y: a.y, w: a.s, h: a.s };
     case 'note': return { x: a.x, y: a.y, w: 18, h: 18 };
     case 'wm': { const m = textBox({ text: a.text, size: a.size }); return { x: a.x - m.w / 2, y: a.y - m.h / 2, w: m.w, h: m.h }; }
-    case 'ink': {
+    case 'ink': case 'line': {
       let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
       for (const [x, y] of a.pts) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }
       return { x: x0 - a.sw / 2, y: y0 - a.sw / 2, w: x1 - x0 + a.sw, h: y1 - y0 + a.sw };
@@ -2446,7 +2486,17 @@ function segDist(p, a, b) {
 }
 function hit(a, pt, tol) {
   if (a.t === 'wm') return false;
-  if (a.t === 'ink') {
+  if (a.t === 'co') {
+    if (pt.x >= a.x - tol && pt.x <= a.x + a.w + tol && pt.y >= a.y - tol && pt.y <= a.y + a.h + tol) return true;
+    const t = coTail(a); return !!t && segDist(pt, [a.ax, a.ay], t) <= tol + 1.5;
+  }
+  if (a.t === 'ell') {
+    const rx = a.w / 2, ry = a.h / 2, cx = a.x + rx, cy = a.y + ry;
+    if (rx < 1 || ry < 1) return false;
+    const d = Math.hypot((pt.x - cx) / rx, (pt.y - cy) / ry), m = (tol + a.sw / 2) / Math.min(rx, ry);
+    return Math.abs(d - 1) <= Math.max(m, 0.06);
+  }
+  if (a.t === 'ink' || a.t === 'line') {
     if (a.pts.length === 1) return Math.hypot(pt.x - a.pts[0][0], pt.y - a.pts[0][1]) <= tol + a.sw;
     for (let i = 1; i < a.pts.length; i++) if (segDist(pt, a.pts[i - 1], a.pts[i]) <= tol + a.sw / 2) return true;
     return false;
@@ -2466,10 +2516,70 @@ function hitAnn(p, pt) {
 }
 function onHandle(a, pt) {
   if (a.t === 'ink') return false;
+  if (a.t === 'line') return Math.hypot(pt.x - a.pts[1][0], pt.y - a.pts[1][1]) < 11 / S.zoom;
   const b = bbox(a);
   return Math.hypot(pt.x - (b.x + b.w), pt.y - (b.y + b.h)) < 11 / S.zoom;
 }
 
+/* ----- 箭头、直线、圆圈、批注框（v3.7） ----- */
+function arrowHead(ctx, from, to, hs) {
+  const ang = Math.atan2(to[1] - from[1], to[0] - from[0]), w = 0.45;
+  ctx.beginPath(); ctx.moveTo(to[0], to[1]);
+  ctx.lineTo(to[0] - hs * Math.cos(ang - w), to[1] - hs * Math.sin(ang - w));
+  ctx.lineTo(to[0] - hs * Math.cos(ang + w), to[1] - hs * Math.sin(ang + w));
+  ctx.closePath(); ctx.fill();
+}
+// 批注框的线从框边最靠近箭头的一点拉出来；箭头点在框里面就不画线
+function coTail(a) {
+  const tx = clamp(a.ax, a.x, a.x + a.w), ty = clamp(a.ay, a.y, a.y + a.h);
+  if (tx === a.ax && ty === a.ay) return null;
+  if (tx > a.x && tx < a.x + a.w && ty > a.y && ty < a.y + a.h) return null;
+  // 从框边的中点出发比较好看
+  if (a.ax < a.x || a.ax > a.x + a.w) return [a.ax < a.x ? a.x : a.x + a.w, a.y + a.h / 2];
+  return [a.x + a.w / 2, a.ay < a.y ? a.y : a.y + a.h];
+}
+function coLines(ctx, a) {
+  ctx.font = `${a.size}px ${FONT}`;
+  const max = a.w - 12, out = [];
+  for (const para of String(a.text || '').split('\n')) {
+    let line = '';
+    for (const tok of para.match(WRAP_RE) || ['']) {
+      if (line && ctx.measureText(line + tok).width > max) { out.push(line.replace(/\s+$/, '')); line = tok.replace(/^\s+/, ''); }
+      else line += tok;
+      while (ctx.measureText(line).width > max && line.length > 1) { let k = line.length - 1; while (k > 1 && ctx.measureText(line.slice(0, k)).width > max) k--; out.push(line.slice(0, k)); line = line.slice(k); }
+    }
+    out.push(line);
+  }
+  return out;
+}
+function coFit(a) {
+  const c = document.createElement('canvas').getContext('2d'), n = Math.max(1, coLines(c, a).length);
+  a.h = Math.max(a.h0 || 30, Math.ceil(10 + n * a.size * 1.3));
+}
+function openCo(el, p, a, before) {
+  closeCo();
+  const ta = document.createElement('textarea'), z = S.zoom;
+  ta.className = 'coEd'; ta.value = a.text || ''; ta.placeholder = T('输入说明…');
+  const place = () => { ta.style.left = a.x * z + 'px'; ta.style.top = a.y * z + 'px'; ta.style.width = a.w * z + 'px'; ta.style.height = a.h * z + 'px'; ta.style.fontSize = a.size * z + 'px'; ta.style.padding = 4 * z + 'px ' + 5 * z + 'px'; };
+  place(); S.coEd = a.id; a.h0 = a.h0 || a.h;
+  el.appendChild(ta); redrawPage(el);
+  ta.addEventListener('pointerdown', e => e.stopPropagation());
+  ta.addEventListener('input', () => { a.text = ta.value; coFit(a); place(); redrawPage(el); });
+  ta.addEventListener('keydown', e => { e.stopPropagation(); if (e.key === 'Escape' || (e.key === 'Enter' && (e.ctrlKey || e.metaKey))) { e.preventDefault(); ta.blur(); } });
+  const done = () => {
+    if (CO.ta !== ta) return;
+    CO.ta = null; S.coEd = null; ta.remove();
+    a.text = ta.value.replace(/\s+$/, ''); delete a.h0;
+    if (!a.text) { p.ann = p.ann.filter(x => x !== a); if (S.selAnn && S.selAnn.aid === a.id) S.selAnn = null; }
+    else coFit(a);
+    commit(before); redrawPage(el); refreshProps(); cmtSoon();
+  };
+  ta.addEventListener('blur', done);
+  CO.ta = ta; CO.done = done;
+  setTimeout(() => ta.focus(), 0);
+}
+const CO = { ta: null, done: null };
+function closeCo() { if (CO.ta && CO.done) CO.done(); }
 function drawAnn(ctx, a) {
   ctx.save();
   switch (a.t) {
@@ -2511,6 +2621,30 @@ function drawAnn(ctx, a) {
       if (a.k === 'u' || a.k === 's') {
         for (const [x, y, w, h] of rs) { const th = Math.max(0.8, h * 0.08); ctx.fillRect(x, a.k === 'u' ? y + h - th : y + h * 0.55 - th / 2, w, th); }
       } else { ctx.globalCompositeOperation = 'multiply'; for (const [x, y, w, h] of rs) ctx.fillRect(x, y, w, h); }
+      break;
+    }
+    case 'ell': {
+      if (a.w < 1 || a.h < 1) break;
+      ctx.strokeStyle = a.c; ctx.lineWidth = a.sw; ctx.beginPath(); ctx.ellipse(a.x + a.w / 2, a.y + a.h / 2, a.w / 2, a.h / 2, 0, 0, Math.PI * 2); ctx.stroke();
+      break;
+    }
+    case 'line': {
+      const [p0, p1] = a.pts; ctx.strokeStyle = a.c; ctx.fillStyle = a.c; ctx.lineWidth = a.sw; ctx.lineCap = 'round';
+      let ex = p1[0], ey = p1[1];
+      const L = Math.hypot(p1[0] - p0[0], p1[1] - p0[1]), hs = Math.min(Math.max(7, a.sw * 4), L * 0.6);
+      if (a.ar && L > 1) { const k = (hs * 0.8) / L; ex = p1[0] - (p1[0] - p0[0]) * k; ey = p1[1] - (p1[1] - p0[1]) * k; }
+      ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(ex, ey); ctx.stroke();
+      if (a.ar && L > 1) arrowHead(ctx, p0, p1, hs);
+      break;
+    }
+    case 'co': {
+      const t = coTail(a); ctx.strokeStyle = a.c; ctx.fillStyle = a.c; ctx.lineWidth = 1.2;
+      if (t) { const L = Math.hypot(t[0] - a.ax, t[1] - a.ay), hs = Math.min(8, L * 0.5); if (L > 1) { const k = hs * 0.8 / L; ctx.beginPath(); ctx.moveTo(t[0], t[1]); ctx.lineTo(a.ax + (t[0] - a.ax) * k, a.ay + (t[1] - a.ay) * k); ctx.stroke(); arrowHead(ctx, t, [a.ax, a.ay], hs); } }
+      ctx.fillStyle = '#fff'; ctx.fillRect(a.x, a.y, a.w, a.h); ctx.lineWidth = 1.2; ctx.strokeRect(a.x, a.y, a.w, a.h);
+      if (S.coEd !== a.id && a.text) {
+        ctx.fillStyle = '#14181f'; ctx.font = `${a.size}px ${FONT}`; ctx.textBaseline = 'top';
+        const lh = a.size * 1.3; coLines(ctx, a).forEach((l, i) => { if (5 + i * lh + a.size <= a.h + 2) ctx.fillText(l, a.x + 6, a.y + 5 + i * lh); });
+      }
       break;
     }
     case 'rect': {
@@ -2633,7 +2767,8 @@ function drawOverlay(p, ctx, s) {
       ctx.save();
       ctx.strokeStyle = st; ctx.lineWidth = 1.5 * u; ctx.setLineDash([5 * u, 3 * u]);
       ctx.strokeRect(b.x - 2 * u, b.y - 2 * u, b.w + 4 * u, b.h + 4 * u);
-      if (a.t !== 'ink' && !fixedHl(a)) { ctx.setLineDash([]); ctx.fillStyle = '#fff'; ctx.lineWidth = 1.5 * u; ctx.beginPath(); ctx.rect(b.x + b.w - 4 * u, b.y + b.h - 4 * u, 9 * u, 9 * u); ctx.fill(); ctx.stroke(); }
+      if (a.t === 'line') { ctx.setLineDash([]); ctx.fillStyle = '#fff'; ctx.lineWidth = 1.5 * u; ctx.beginPath(); ctx.arc(a.pts[1][0], a.pts[1][1], 5 * u, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); }
+      else if (a.t !== 'ink' && !fixedHl(a)) { ctx.setLineDash([]); ctx.fillStyle = '#fff'; ctx.lineWidth = 1.5 * u; ctx.beginPath(); ctx.rect(b.x + b.w - 4 * u, b.y + b.h - 4 * u, 9 * u, 9 * u); ctx.fill(); ctx.stroke(); }
       ctx.restore();
     }
   }
@@ -2728,6 +2863,7 @@ async function openFiles(files, mode, meta) {
   const list = Array.from(files).filter(f => /\.pdf$/i.test(f.name) || f.type === 'application/pdf');
   if (!list.length) { toast(T('请选择 PDF 文件')); return; }
   busy(true, T('正在打开…'));
+  const nt = mode === 'replace' && tabNew();
   const old = { docs: S.docs, pages: S.pages };
   try {
     if (mode === 'replace') { S.docs = []; S.pages = []; }
@@ -2755,6 +2891,7 @@ async function openFiles(files, mode, meta) {
     toast((mode === 'replace' ? T('已打开 {name}', { name: list[0].name }) : T('已合并 {n} 页', { n: added.length })) + (enc ? T('。这个文件有加密保护，保存时页面会转为图片') : ''));
   } catch (e) {
     S.docs = old.docs; S.pages = old.pages;
+    if (nt) tabDrop();
     toast(e.message || T('打开失败'));
   } finally { busy(false); }
 }
@@ -2771,7 +2908,7 @@ async function requestOpen(files, mode, meta) {
   // 拖进来的 Word / Excel：电脑版先存到暂存文件夹，再叫 Office 转成 PDF
   const off = files.filter(f => OFFICE_RE.test(f.name));
   if (off.length && !DESK.on) { toast(T('Word／Excel 转 PDF 要用 Windows 版 smartPDF（会用到电脑上的 Office）')); files = files.filter(f => !off.includes(f)); if (!files.length) return; }
-  if (mode === 'replace' && S.dirty && !(await confirmDlg(T('当前文件有还没保存的修改，打开新文件会丢掉它们。'), T('放弃并打开')))) return;
+  if (mode === 'replace' && S.dirty && !tabWillNew() && !(await confirmDlg(T('当前文件有还没保存的修改，打开新文件会丢掉它们。'), T('放弃并打开')))) return;
   if (off.length && DESK.on) {
     const base = (await scanTmp()).replace('smartpdf-scan-', 'smartpdf-in-'), tmp = [];
     try {
@@ -3027,15 +3164,113 @@ async function makeSample() {
   return await doc.save();
 }
 async function loadSample() {
-  if (S.dirty && !(await confirmDlg(T('当前文件有还没保存的修改，打开新文件会丢掉它们。'), T('放弃并打开')))) return;
   const bytes = await makeSample();
+  tabNew();
   S.docs = [];
   const di = await loadPdfBytes(bytes, T('合同示例.pdf'));
-  S.pages = await pagesFromDoc(di);
+  S.pages = await pagesFromDoc(di); S.search = { q: '', hits: [], i: -1 }; $('#q').value = ''; updSearchUi();
   S.fileName = T('合同示例.pdf'); S.sample = true; S.dirty = false; S.filePath = null; S.fileHandle = null;
   S.undo = []; S.redo = []; S.sel.clear(); S.selAnn = null; S.cur = 0; textCache.clear(); OCR.cache.clear(); fieldCache.clear(); linkCache.clear(); imgBoxCache.clear(); CMT.orig.clear(); updUndo();
   $('#note').hidden = false;
   renderAll(); buildOutline(); fitWidth();
+}
+
+/* ----- 分页标签（v3.7）：一个窗口开好几个文件，点上面的标签切换 -----
+   每个标签存一份自己的文件资料；切换时把现在的收起来，换上另一个的 */
+const TAB_KEYS = ['docs', 'pages', 'zoom', 'cur', 'sel', 'selAnn', 'undo', 'redo', 'dirty', 'sample', 'search', 'fileName', 'filePath', 'fileHandle'];
+const tabMaps = () => [textCache, OCR.cache, fieldCache, linkCache, imgBoxCache, CMT.orig];
+const TABS = { list: [], cur: -1, sig: '' };
+let _tabN = 1;
+function tabGrab() {
+  const st = {}; TAB_KEYS.forEach(k => { st[k] = S[k]; });
+  st.maps = tabMaps().map(m => new Map(m));
+  const d = $('#desk'); st.top = d.scrollTop; st.left = d.scrollLeft;
+  st.note = $('#note').hidden; st.ocrNote = $('#ocrNote').hidden;
+  return st;
+}
+function tabPut(st) {
+  TAB_KEYS.forEach(k => { S[k] = st[k]; });
+  tabMaps().forEach((m, i) => { m.clear(); if (st.maps) st.maps[i].forEach((v, k) => m.set(k, v)); });
+  $('#note').hidden = st.note !== false; $('#ocrNote').hidden = st.ocrNote !== false;
+}
+const tabBlank = () => ({ docs: [], pages: [], zoom: S.zoom, cur: 0, sel: new Set(), selAnn: null, undo: [], redo: [], dirty: false, sample: false, search: { q: '', hits: [], i: -1 }, fileName: 'document.pdf', filePath: null, fileHandle: null, maps: null, top: 0, left: 0, note: true, ocrNote: true });
+function tabEnsure() { if (!TABS.list.length && S.pages.length) { TABS.list = [{ id: _tabN++ }]; TABS.cur = 0; } }
+// 打开新文件时要不要开新标签：现在开着一个文件（而且不是没动过的示例合同）就开新的
+const tabWillNew = () => S.pages.length > 0 && !(S.sample && !S.dirty);
+function tabNew() {
+  if (!tabWillNew()) return false;
+  closeEditor(); closeImgMenu(); tabEnsure();
+  TABS.list[TABS.cur].st = tabGrab();
+  tabPut(tabBlank());
+  TABS.list.push({ id: _tabN++ }); TABS.cur = TABS.list.length - 1;
+  $('#desk').scrollTop = 0; $('#desk').scrollLeft = 0;
+  return true;
+}
+// 新标签打开失败：拿掉它，回到原来的标签
+function tabDrop() {
+  TABS.list.splice(TABS.cur, 1);
+  TABS.cur = Math.min(TABS.cur, TABS.list.length - 1);
+  if (TABS.cur >= 0) { tabPut(TABS.list[TABS.cur].st); tabAfter(); }
+}
+function tabAfter() {
+  S.hover = null; S.editing = null; S.draft = null;
+  $('#q').value = S.search.q || '';
+  const st = TABS.list[TABS.cur] && TABS.list[TABS.cur].st;
+  updUndo(); renderAll(); buildOutline(); updSearchUi(); refreshProps(); cmtSoon();
+  if (st) requestAnimationFrame(() => { const d = $('#desk'); d.scrollTop = st.top || 0; d.scrollLeft = st.left || 0; });
+  renderTabs(true);
+}
+function switchTab(i) {
+  if (i === TABS.cur || i < 0 || i >= TABS.list.length) return;
+  closeEditor(); closeImgMenu(); if (typeof selBarHide === 'function') selBarHide();
+  TABS.list[TABS.cur].st = tabGrab();
+  TABS.cur = i; tabPut(TABS.list[i].st);
+  tabAfter();
+}
+async function closeTab(i) {
+  const t = TABS.list[i]; if (!t) return;
+  const dirty = i === TABS.cur ? S.dirty : t.st && t.st.dirty;
+  const name = i === TABS.cur ? S.fileName : t.st && t.st.fileName;
+  if (dirty) {
+    if (i !== TABS.cur) switchTab(i);
+    if (!(await confirmDlg(T('「{name}」有还没保存的修改，关掉会丢掉它们。', { name }), T('不保存，关掉')))) return;
+    i = TABS.cur;
+  }
+  if (i !== TABS.cur) { TABS.list.splice(i, 1); if (i < TABS.cur) TABS.cur--; renderTabs(true); return; }
+  closeEditor(); closeImgMenu();
+  TABS.list.splice(i, 1);
+  if (!TABS.list.length) { TABS.cur = -1; tabPut(tabBlank()); tabAfter(); return; }
+  TABS.cur = Math.min(i, TABS.list.length - 1);
+  tabPut(TABS.list[TABS.cur].st); tabAfter();
+}
+const tabDirtyAny = () => S.dirty || TABS.list.some((t, i) => i !== TABS.cur && t.st && t.st.dirty);
+function renderTabs(force) {
+  tabEnsure();
+  const host = $('#tabs'); if (!host) return;
+  const info = TABS.list.map((t, i) => i === TABS.cur ? { n: S.fileName, d: S.dirty, p: S.filePath } : { n: t.st.fileName, d: t.st.dirty, p: t.st.filePath });
+  const sig = TABS.cur + '|' + LANG + '|' + info.map(x => x.n + (x.d ? '*' : '')).join('|');
+  if (!force && sig === TABS.sig) return;
+  TABS.sig = sig; host.textContent = '';
+  if (!S.pages.length && !TABS.list.length) return;
+  info.forEach((x, i) => {
+    const b = document.createElement('div'); b.className = 'tab' + (i === TABS.cur ? ' on' : '');
+    b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', i === TABS.cur ? 'true' : 'false'); b.tabIndex = 0;
+    b.title = (x.p || x.n) + (x.d ? '\n' + T('有未保存的修改') : '');
+    const n = document.createElement('span'); n.className = 'tbN'; n.textContent = x.n; b.appendChild(n);
+    if (x.d) { const d = document.createElement('span'); d.className = 'tbD'; b.appendChild(d); }
+    const c = document.createElement('button'); c.type = 'button'; c.className = 'tbX'; c.textContent = '×'; c.title = T('关闭这个文件'); c.setAttribute('aria-label', T('关闭这个文件'));
+    c.onclick = e => { e.stopPropagation(); closeTab(i); };
+    b.appendChild(c);
+    b.onclick = () => switchTab(i);
+    b.onauxclick = e => { if (e.button === 1) { e.preventDefault(); closeTab(i); } };
+    b.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); switchTab(i); } };
+    host.appendChild(b);
+  });
+  const add = document.createElement('button'); add.type = 'button'; add.className = 'tabAdd'; add.textContent = '+';
+  add.title = T('在新标签打开 PDF (Ctrl+O)'); add.setAttribute('aria-label', T('在新标签打开 PDF (Ctrl+O)'));
+  add.onclick = () => { DASH.pending = null; pickOpen('replace'); };
+  host.appendChild(add);
+  const on = host.querySelector('.tab.on'); if (on) on.scrollIntoView({ block: 'nearest', inline: 'nearest' });
 }
 
 /* ----- 页面 DOM ----- */
@@ -3211,7 +3446,7 @@ function updStatus() {
   $('#zVal').textContent = Math.round(S.zoom * 100) + '%';
   $('#fname').textContent = !S.pages.length ? '' : S.fileName + (S.dirty ? '  ·  ' + T('有未保存的修改') : '');
   $('#stMsg').textContent = '';
-  updTitle();
+  updTitle(); renderTabs();
 }
 /* 窗口标题（任务栏上看到的名字）显示文件名，有未保存的修改时前面加 • */
 function fitTop() {
@@ -3896,8 +4131,9 @@ function addAnn(p, a, then) {
 function onDown(e, el) {
   if (e.button !== undefined && e.button !== 0) return;
   const p = pageById(el.dataset.id); if (!p) return;
-  const pt = ptOf(e, el), tool = S.tool, wasEditing = !!ED;
+  const pt = ptOf(e, el), tool = S.tool, wasEditing = !!ED, wasCo = !!CO.ta;
   closeEditor(); closeImgMenu();
+  if (tool === 'co' && wasCo) return;
   if (tool === 'select') {
     const sa = S.selAnn && S.selAnn.pid === p.id ? p.ann.find(a => a.id === S.selAnn.aid) : null;
     if (sa && !fixedHl(sa) && onHandle(sa, pt)) { startDrag('resize', el, p, sa, pt, e); return; }
@@ -3962,6 +4198,9 @@ function onDown(e, el) {
   else if (tool === 'white') a = { id: uid(), t: 'rect', x: pt.x, y: pt.y, w: 0, h: 0, c: null, sw: 0, f: '#ffffff' };
   else if (tool === 'redact') a = { id: uid(), t: 'rect', x: pt.x, y: pt.y, w: 0, h: 0, c: null, sw: 0, f: '#000000', rd: true };
   else if (tool === 'pen') a = { id: uid(), t: 'ink', pts: [[pt.x, pt.y]], c: S.opts.color, sw: S.opts.sw };
+  else if (tool === 'ell') a = { id: uid(), t: 'ell', x: pt.x, y: pt.y, w: 0, h: 0, c: S.opts.color, sw: S.opts.sw };
+  else if (tool === 'arrow' || tool === 'line') a = { id: uid(), t: 'line', pts: [[pt.x, pt.y], [pt.x, pt.y]], c: S.opts.color, sw: S.opts.sw, ar: tool === 'arrow' ? 1 : 0 };
+  else if (tool === 'co') a = { id: uid(), t: 'co', ax: pt.x, ay: pt.y, x: pt.x + 30, y: pt.y - 60, w: 180, h: 34, text: '', size: S.opts.size, c: S.opts.color };
   else if (tool === 'field') a = { id: uid(), t: 'fld', k: S.opts.fk || 'text', x: pt.x, y: pt.y, w: 0, h: 0, name: '' };
   else return;
   S.draft = { pid: p.id, a };
@@ -4009,17 +4248,28 @@ function onMove(e, el) {
     if (a.t === 'ink') {
       const l = a.pts[a.pts.length - 1];
       if (Math.hypot(pt.x - l[0], pt.y - l[1]) > 1.2) a.pts.push([pt.x, pt.y]);
-    } else { a.x = Math.min(D.sx, pt.x); a.y = Math.min(D.sy, pt.y); a.w = Math.abs(pt.x - D.sx); a.h = Math.abs(pt.y - D.sy); }
+    } else if (a.t === 'line') {
+      let x = pt.x, y = pt.y;
+      if (e.shiftKey) { const dx = x - D.sx, dy = y - D.sy, ang = Math.round(Math.atan2(dy, dx) / (Math.PI / 4)) * (Math.PI / 4), L = Math.hypot(dx, dy); x = D.sx + Math.cos(ang) * L; y = D.sy + Math.sin(ang) * L; }
+      a.pts[1] = [x, y];
+    } else if (a.t === 'co') {
+      a.x = pt.x < D.sx ? pt.x - a.w : pt.x; a.y = pt.y - a.h / 2;
+    } else {
+      a.x = Math.min(D.sx, pt.x); a.y = Math.min(D.sy, pt.y); a.w = Math.abs(pt.x - D.sx); a.h = Math.abs(pt.y - D.sy);
+      if (a.t === 'ell' && e.shiftKey) { const m = Math.max(a.w, a.h); a.w = a.h = m; if (pt.x < D.sx) a.x = D.sx - m; if (pt.y < D.sy) a.y = D.sy - m; }
+    }
     redrawPage(el); return;
   }
   const a = p.ann.find(x => x.id === D.aid); if (!a) return;
   const o = D.orig, dx = pt.x - D.sx, dy = pt.y - D.sy;
   if (D.type === 'move') {
-    if (a.t === 'ink') a.pts = o.pts.map(([x, y]) => [x + dx, y + dy]);
+    if (a.pts) a.pts = o.pts.map(([x, y]) => [x + dx, y + dy]);
     else { a.x = o.x + dx; a.y = o.y + dy; }
   } else if (D.type === 'resize') {
     if (a.t === 'img') { a.w = Math.max(12, pt.x - o.x); a.h = a.w * o.h / o.w; }
-    else if (a.t === 'rect' || a.t === 'hl' || (a.t === 'fld' && a.k !== 'check')) { a.w = Math.max(4, pt.x - o.x); a.h = Math.max(4, pt.y - o.y); }
+    else if (a.t === 'line') a.pts[1] = [pt.x, pt.y];
+    else if (a.t === 'co') { a.w = Math.max(60, pt.x - o.x); a.h = Math.max(24, pt.y - o.y); }
+    else if (a.t === 'rect' || a.t === 'hl' || a.t === 'ell' || (a.t === 'fld' && a.k !== 'check')) { a.w = Math.max(4, pt.x - o.x); a.h = Math.max(4, pt.y - o.y); }
     else if (a.t === 'fld') a.w = a.h = Math.max(8, Math.max(pt.x - o.x, pt.y - o.y));
     else if (a.t === 'text' && a.wrap) a.wrap = Math.max(a.size * 2, pt.x - o.x);
     else if (a.t === 'text') { const b0 = bbox(o); a.size = clamp(Math.round(o.size * Math.max(0.3, (pt.y - o.y) / b0.h) * 2) / 2, 4, 200); }
@@ -4039,7 +4289,13 @@ function onUp(e, el) {
       if (a.k === 'check') a.w = a.h = Math.min(Math.max(a.w, a.h), 24);
       a.name = fldName(); if (a.k === 'drop') a.opts = [];
     }
-    const ok = a.t === 'ink' || (a.w > 3 && a.h > 3);
+    if (a.t === 'co' && p) {
+      if (Math.hypot(a.x - a.ax, a.y + a.h / 2 - a.ay) < 12) { a.x = a.ax + 30; a.y = a.ay - 60; }
+      a.x = clamp(a.x, 0, Math.max(0, p.W - a.w)); a.y = clamp(a.y, 0, Math.max(0, p.H - a.h));
+      p.ann.push(a); S.selAnn = { pid: p.id, aid: a.id }; redrawPage(el); refreshProps();
+      openCo(el, p, a, d.before); return;
+    }
+    const ok = a.t === 'ink' || (a.t === 'line' ? Math.hypot(a.pts[1][0] - a.pts[0][0], a.pts[1][1] - a.pts[0][1]) > 4 : (a.w > 3 && a.h > 3));
     if (ok && p) { p.ann.push(a); S.selAnn = { pid: p.id, aid: a.id }; if (a.rd && !S.rdTold) { S.rdTold = true; toast(T('涂黑所在的页导出后会变成图片，原文字被彻底移除')); } }
   }
   if (p) commit(d.before);
@@ -4049,6 +4305,7 @@ function onDbl(e, el) {
   if (S.tool !== 'select') return;
   const p = pageById(el.dataset.id), pt = ptOf(e, el), a = p && hitAnn(p, pt);
   if (a && a.t === 'text') { select(p.id, a.id); openEditor(el, p, a, false); }
+  else if (a && a.t === 'co') { select(p.id, a.id); openCo(el, p, a, snap()); }
 }
 
 /* ----- 文字编辑 ----- */
@@ -4081,6 +4338,7 @@ function openEditor(el, p, a, isNew, before, grp) {
   setTimeout(() => { ta.focus(); if (grp) ta.setSelectionRange(ta.value.length, ta.value.length); else if (!isNew) ta.select(); }, 20);
 }
 function closeEditor() {
+  closeCo();
   if (!ED) return;
   const E = ED; ED = null; S.editing = null;
   const p = pageById(E.pid), a = p && p.ann.find(x => x.id === E.aid), val = E.ta.value;
@@ -4120,22 +4378,30 @@ const HINTS = {
   text: '点击页面输入文字；双击已有文字可修改',
   edit: '点击原有的文字直接修改，点空白处完成；点图片可以换掉或删掉', date: '点击页面插入今天的日期', check: '点击页面添加勾选',
   sign: '点击页面放置签名，拖动右下角可缩放', stamp: '点击页面放置印章，拖动右下角可缩放', image: '点击页面放置图片',
-  hl: '在页面上拖动，框出要高亮的位置', pen: '按住拖动，手写', rect: '拖动画出方框', white: '拖动盖住原有内容，再用「文字」写新内容',
+  hl: '在页面上拖动，框出要高亮的位置', pen: '按住拖动，手写', rect: '拖动画出方框',
+  ell: '拖动画圆圈或椭圆（按住 Shift 画正圆）', arrow: '从起点拖到要指的地方，画箭头（按住 Shift 画直的）', line: '按住拖动画直线（按住 Shift 画水平、垂直或斜 45°）',
+  co: '先按住要指的地方，拖到要放说明的位置再放开，然后打字；双击可以再改', white: '拖动盖住原有内容，再用「文字」写新内容',
   redact: '拖动框住要涂黑的内容。导出时，涂黑所在的页会变成图片，下面的文字会被彻底移除',
   field: '先选栏位种类，再在页面上拖出栏位（点一下用默认大小）。保存后别人可以用任何 PDF 软件填写',
   note: '点击页面贴一张便签，在左边「批注」写内容和回复'
 };
 function selAnnObj() { return S.selAnn ? findAnn(S.selAnn) : null; }
+// 属性栏出现或收起时，下面的页面会上下跳；把文件区的卷动位置补回去，页面在画面上就不会动（拖着东西时不会突然跑掉）
 function refreshProps() {
+  const d = $('#desk'), t0 = d && S.pages.length ? d.getBoundingClientRect().top : null;
+  refreshProps0();
+  if (t0 != null) { const dt = d.getBoundingClientRect().top - t0; if (dt) d.scrollTop += dt; }
+}
+function refreshProps0() {
   const a = selAnnObj(), tool = S.tool;
-  const kind = a ? (a.t === 'rect' && a.f ? 'white' : a.t) : ({ text: 'text', date: 'text', check: 'check', pen: 'ink', rect: 'rect', hl: 'hl', field: 'fld' })[tool] || '';
+  const kind = a ? (a.t === 'rect' && a.f ? 'white' : a.t) : ({ text: 'text', date: 'text', check: 'check', pen: 'ink', rect: 'rect', hl: 'hl', field: 'fld', ell: 'ell', arrow: 'line', line: 'line', co: 'co' })[tool] || '';
   const show = (id, on) => { $(id).hidden = !on; };
   show('#gFld', kind === 'fld'); if (kind === 'fld') fldProps(a && a.t === 'fld' ? a : null);
   show('#gEd', !a && tool === 'edit'); $$('#gEd button').forEach(b => b.classList.toggle('on', (b.dataset.v === 'para') === (S.opts.edPara !== false)));
-  const colorOn = ['text', 'check', 'ink', 'rect', 'hl'].includes(kind);
+  const colorOn = ['text', 'check', 'ink', 'rect', 'hl', 'ell', 'line', 'co'].includes(kind);
   show('#gColor', colorOn);
-  show('#gSize', kind === 'text' || kind === 'check');
-  show('#gSw', kind === 'ink' || kind === 'rect');
+  show('#gSize', kind === 'text' || kind === 'check' || kind === 'co');
+  show('#gSw', kind === 'ink' || kind === 'rect' || kind === 'ell' || kind === 'line');
   show('#gOp', !!a && a.t === 'img');
   show('#gChk', !!a && a.t === 'check');
   show('#gAct', !!a);
@@ -4153,11 +4419,11 @@ function refreshProps() {
       sw.appendChild(b);
     });
   }
-  if (kind === 'text' || kind === 'check') {
+  if (kind === 'text' || kind === 'check' || kind === 'co') {
     const v = a ? (a.t === 'check' ? a.s : a.size) : S.opts.size;
     $('#szVal').textContent = Math.round(v * 10) / 10; $('#szLbl').textContent = kind === 'check' ? T('大小') : T('字号');
   }
-  if (kind === 'ink' || kind === 'rect') $('#swSel').value = String(a ? a.sw : S.opts.sw);
+  if (kind === 'ink' || kind === 'rect' || kind === 'ell' || kind === 'line') $('#swSel').value = String(a ? a.sw : S.opts.sw);
   if (a && a.t === 'img') { const v = Math.round((a.op == null ? 1 : a.op) * 100); $('#opRng').value = v; $('#opVal').textContent = v + '%'; }
 }
 function modSel(fn) {
@@ -4170,6 +4436,7 @@ function setupProps() {
     const a = selAnnObj();
     if (a && a.t === 'check') modSel(x => { x.s = clamp(x.s + d * 2, 8, 120); });
     else if (a && a.t === 'text') modSel(x => { x.size = clamp(x.size + d, 4, 200); });
+    else if (a && a.t === 'co') modSel(x => { x.size = clamp(x.size + d, 6, 72); coFit(x); });
     else S.opts.size = clamp(S.opts.size + d, 6, 72);
     refreshProps();
   }
@@ -4199,7 +4466,7 @@ function delSel() {
 }
 
 /* ----- 键盘 ----- */
-const KEYS = { v: 'select', e: 'edit', t: 'text', d: 'date', c: 'check', s: 'sign', m: 'stamp', i: 'image', h: 'hl', p: 'pen', r: 'rect', w: 'white', x: 'redact', f: 'field', n: 'note' };
+const KEYS = { a: 'arrow', l: 'line', o: 'ell', k: 'co', v: 'select', e: 'edit', t: 'text', d: 'date', c: 'check', s: 'sign', m: 'stamp', i: 'image', h: 'hl', p: 'pen', r: 'rect', w: 'white', x: 'redact', f: 'field', n: 'note' };
 function setupKeys() {
   document.addEventListener('keydown', e => {
     const tg = e.target && e.target.tagName;
@@ -4213,6 +4480,10 @@ function setupKeys() {
     if (mod && k === 'y') { e.preventDefault(); redo(); return; }
     if (mod && k === 's') { e.preventDefault(); if (e.shiftKey) saveAs(); else saveDoc(); return; }
     if (mod && k === 'o') { e.preventDefault(); pickOpen('replace'); return; }
+    if (e.ctrlKey && (k === 'tab' || k === 'pagedown' || k === 'pageup') && TABS.list.length > 1) {
+      e.preventDefault(); const n = TABS.list.length, back = k === 'pageup' || (k === 'tab' && e.shiftKey);
+      switchTab((TABS.cur + (back ? n - 1 : 1)) % n); return;
+    }
     if (mod && k === 'f') { e.preventDefault(); $('#q').focus(); $('#q').select(); return; }
     if (mod && k === 'p') { e.preventDefault(); printAll(); return; }
     if (mod && (k === '=' || k === '+')) { e.preventDefault(); setZoom(S.zoom * 1.15); return; }
@@ -6292,11 +6563,12 @@ async function addLive(out, page, p, flat) {
 }
 
 /* ----- 批注列表（左边「批注」） ----- */
-const ANN_LBL = { text: '文字', check: '勾选', img: '图片', hl: '高亮', ink: '画笔', rect: '方框', fld: '表格栏位', note: '便签', wm: '水印' };
-const ANN_IC = { text: 'text', check: 'check', img: 'image', hl: 'hl', ink: 'pen', rect: 'rect', fld: 'form', note: 'note', wm: 'wm' };
+const ANN_LBL = { ell: '圆圈', line: '直线', co: '批注框', text: '文字', check: '勾选', img: '图片', hl: '高亮', ink: '画笔', rect: '方框', fld: '表格栏位', note: '便签', wm: '水印' };
+const ANN_IC = { ell: 'ell', line: 'line', co: 'co', text: 'text', check: 'check', img: 'image', hl: 'hl', ink: 'pen', rect: 'rect', fld: 'form', note: 'note', wm: 'wm' };
 function noteAuthor() { return LS.get('pdfed.author') || T('我'); }
 const CMT = { orig: new Map(), t: null };
 function annLabel(a) {
+  if (a.t === 'line' && a.ar) return '箭头';
   if (a.t === 'hl' && a.k) return a.k === 'u' ? '下划线' : '删除线';
   if (a.t === 'rect') return a.rd ? '涂黑' : a.f ? '遮盖' : '方框';
   if (a.t === 'img') return a.ik === 'stamp' ? '印章' : a.ik === 'sign' ? '签名' : '图片';
@@ -6328,7 +6600,7 @@ async function renderCmts() {
     for (const a of mine) {
       n++;
       const row = document.createElement('div'); row.className = 'cm' + (S.selAnn && S.selAnn.aid === a.id ? ' on' : '');
-      const snip = a.t === 'text' ? a.text : a.t === 'hl' ? (a.txt || '') : a.t === 'fld' ? (a.name || '') + ' · ' + T(FLD_LBL[a.k] || '') : '';
+      const snip = a.t === 'text' || a.t === 'co' ? (a.text || '') : a.t === 'hl' ? (a.txt || '') : a.t === 'fld' ? (a.name || '') + ' · ' + T(FLD_LBL[a.k] || '') : '';
       row.innerHTML = `<div class="cmTop"><span class="cmIc">${icon(ANN_IC[a.t] || 'rect')}</span><b></b><span class="cmS"></span><button type="button" class="cmX" title="${escHtml(T('删除'))}" aria-label="${escHtml(T('删除'))}">×</button></div>`;
       row.querySelector('b').textContent = T(annLabel(a)); row.querySelector('.cmS').textContent = snip.replace(/\s+/g, ' ').slice(0, 60);
       row.querySelector('.cmTop').onclick = e => { if (e.target.closest('.cmX')) return; setTool('select'); goAnn(p, a); };
@@ -6521,13 +6793,13 @@ async function pickOffice() {
   if (paths && paths.length) openOfficePaths(paths, S.pages.length && !DASH.home ? 'ask' : 'replace');
 }
 async function openOfficePaths(paths, mode) {
-  if (mode === 'replace' && S.dirty && !(await confirmDlg(T('当前文件有还没保存的修改，打开新文件会丢掉它们。'), T('放弃并打开')))) return;
+  if (mode === 'replace' && S.dirty && !tabWillNew() && !(await confirmDlg(T('当前文件有还没保存的修改，打开新文件会丢掉它们。'), T('放弃并打开')))) return;
   let files;
   try { files = await officeToPdf(paths); } catch (e) { console.error(e); toast(T('转换失败：{e}', { e: e.message || e })); return; }
   if (!files.length) return;
   if (mode === 'ask') {
-    mode = (await confirmDlg(T('要把转好的 PDF 接在现在这个文件后面吗？选「另外打开」就换成新文件。'), T('接在后面'), T('另外打开'))) ? 'append' : 'replace';
-    if (mode === 'replace' && S.dirty && !(await confirmDlg(T('当前文件有还没保存的修改，打开新文件会丢掉它们。'), T('放弃并打开')))) return;
+    mode = (await confirmDlg(T('要把转好的 PDF 接在现在这个文件后面吗？选「另外打开」会开在新的标签。'), T('接在后面'), T('另外打开'))) ? 'append' : 'replace';
+    if (mode === 'replace' && S.dirty && !tabWillNew() && !(await confirmDlg(T('当前文件有还没保存的修改，打开新文件会丢掉它们。'), T('放弃并打开')))) return;
   }
   await openFiles(files, mode, { dirty: true });
 }
@@ -8146,7 +8418,7 @@ function wire() {
   $$('input[name="cv"]').forEach(r => { r.onchange = convOpts; });
   $('#fImgs').onchange = e => { const f = Array.from(e.target.files); e.target.value = ''; if (f.length) imagesToPdf(f); };
   $('#btnSave').onclick = saveDoc; $('#btnSaveAs').onclick = saveAs;
-  window.addEventListener('beforeunload', e => { if (S.dirty && !(DESK.on && window.NL_MODE === 'window')) { e.preventDefault(); e.returnValue = ''; } });
+  window.addEventListener('beforeunload', e => { if (tabDirtyAny() && !(DESK.on && window.NL_MODE === 'window')) { e.preventDefault(); e.returnValue = ''; } });
   $('#fMerge').onchange = e => { if (e.target.files.length) openFiles(e.target.files, 'append'); e.target.value = ''; };
   $('#fImg').onchange = async e => {
     const f = e.target.files[0]; e.target.value = ''; if (!f) return;
@@ -8225,8 +8497,62 @@ async function init() {
   initSizer(); initCtxMenu();
   refreshProps(); updUndo(); updSearchUi(); updStatus(); updWelcome(); renderRecent();
   const arg = DESK.on && Array.isArray(window.NL_ARGS) ? NL_ARGS.slice(1).find(a => /\.pdf$/i.test(a)) : null;
+  const one = await oneInit().catch(() => false);
+  if (arg && one && await oneHandOff(arg).catch(() => false)) { oneQuit(); return; }
+  if (one) oneServe();
   if (arg) await openPaths([arg], 'replace');
   if (DESK.on) setTimeout(closeOldAfterUpdate, 1500);
+}
+/* ----- 只开一个 smartPDF（v3.7）-----
+   smartPDF 已经开着时，在电脑里双击别的 PDF：新开的那个把文件交给已经开着的（开在新标签），自己关掉。
+   开着的 smartPDF 每 2 秒在暂存文件夹写一次「我还在」，另外每 0.7 秒看一次收件夹。
+   交不出去（对方没回应）就照旧自己打开，不会打不开文件。 */
+const ONE = { dir: '', live: '', me: 0, busy: false };
+const nap = ms => new Promise(r => setTimeout(r, ms));
+async function oneInit() {
+  if (!DESK.on || window.NL_OS !== 'Windows') return false;
+  const tmp = (await scanTmp()).replace(/smartpdf-scan-\d+$/, '');
+  ONE.dir = tmp + 'smartpdf-inbox'; ONE.live = tmp + 'smartpdf-live.txt'; ONE.me = Number(window.NL_PID) || 0;
+  try { await Neutralino.filesystem.createDirectory(ONE.dir); } catch (e) { /* 已经有了 */ }
+  return true;
+}
+async function oneHandOff(path) {
+  let txt = ''; try { txt = await Neutralino.filesystem.readFile(ONE.live); } catch (e) { return false; }
+  const [head, title] = txt.split('\n'), [pid, ts] = head.trim().split(/\s+/).map(Number);
+  if (!ts || pid === ONE.me || Math.abs(Date.now() - ts) > 6000) return false;
+  const f = ONE.dir + sepOf(ONE.dir) + Date.now() + '-' + ONE.me + '.txt';
+  try { await Neutralino.filesystem.writeFile(f, path); } catch (e) { return false; }
+  let took = false;
+  for (let i = 0; i < 40 && !took; i++) { await nap(100); try { await Neutralino.filesystem.getStats(f); } catch (e) { took = true; } }
+  if (!took) { try { await Neutralino.filesystem.remove(f); return false; } catch (e) { took = true; } }
+  // 这个窗口是刚被打开的（在最前面），由它把开着的 smartPDF 叫到前面来
+  if (title) await Promise.race([psRun(psCmd(`$s=New-Object -ComObject WScript.Shell; [void]$s.AppActivate(${psq(title.trim())})`)).catch(() => {}), nap(2500)]);
+  return true;
+}
+function oneQuit() {
+  $('#app').style.visibility = 'hidden';
+  Neutralino.app.exit().catch(() => {});
+  setTimeout(() => { try { window.close(); } catch (e) { /* ignore */ } }, 400);
+}
+function oneServe() {
+  const beat = () => Neutralino.filesystem.writeFile(ONE.live, ONE.me + ' ' + Date.now() + '\n' + document.title).catch(() => {});
+  beat(); setInterval(beat, 2000);
+  setInterval(oneCheck, 700);
+}
+async function oneCheck() {
+  if (ONE.busy || DESK.offline) return; ONE.busy = true;
+  try {
+    let ents = []; try { ents = await Neutralino.filesystem.readDirectory(ONE.dir); } catch (e) { return; }
+    for (const en of ents) {
+      const name = en.entry || baseName(en.path || '');
+      if (!/^\d+-\d+\.txt$/.test(name)) continue;
+      const src = ONE.dir + sepOf(ONE.dir) + name, mine = src + '.' + ONE.me;
+      try { await Neutralino.filesystem.move(src, mine); } catch (e) { continue; }
+      let path = ''; try { path = (await Neutralino.filesystem.readFile(mine)).trim(); } catch (e) { /* ignore */ }
+      Neutralino.filesystem.remove(mine).catch(() => {});
+      if (path) { if (DASH.home && S.pages.length) updWelcome(); await openPaths([path], 'replace'); }
+    }
+  } finally { ONE.busy = false; }
 }
 // 刚更新完：把还开着的旧版本窗口关掉（更新前旧版本会留下一个记录文件）
 async function closeOldAfterUpdate() {
@@ -8273,11 +8599,15 @@ async function boot() {
   await init();
 }
 async function onDeskClose() {
-  if (S.dirty) {
+  // 每个有未保存修改的标签都问一次
+  for (let guard = 0; guard < 99; guard++) {
+    if (!S.dirty && tabDirtyAny()) switchTab(TABS.list.findIndex((t, i) => i !== TABS.cur && t.st && t.st.dirty));
+    if (!S.dirty) break;
     let r = 'CANCEL';
-    try { r = await Neutralino.os.showMessageBox('smartPDF', T('有还没保存的修改，要先保存吗？'), 'YES_NO_CANCEL', 'WARNING'); } catch (e) { console.warn(e); }
+    try { r = await Neutralino.os.showMessageBox('smartPDF', T('「{name}」有还没保存的修改，要先保存吗？', { name: S.fileName }), 'YES_NO_CANCEL', 'WARNING'); } catch (e) { console.warn(e); }
     if (r === 'CANCEL') return;
     if (r === 'YES' && !(await saveDoc())) return;
+    S.dirty = false;
   }
   Neutralino.app.exit();
 }
