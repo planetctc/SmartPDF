@@ -30,3 +30,6 @@ jobs:
           target_commitish: ${{ github.sha }}
           body_path: notes.md
           files: desktop/out/smartPDF-Setup-*.exe
+  android-apk:
+    needs: windows-installer
+    uses: ./.github/workflows/android.yml

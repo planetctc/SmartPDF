@@ -1,0 +1,9 @@
+{
+  "appId": "com.planetctc.smartpdf",
+  "appName": "smartPDF",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false,
+    "backgroundColor": "#12307a"
+  }
+}

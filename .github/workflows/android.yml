@@ -1,0 +1,55 @@
+name: Android APK
+# Builds the Android app (smartpdf.html wrapped with Capacitor) and attaches the APK to the release.
+on:
+  workflow_dispatch:
+  workflow_call:
+  pull_request:
+    paths: ['mobile/**', 'smartpdf.html', '.github/workflows/android.yml']
+permissions:
+  contents: write
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Install Capacitor
+        working-directory: mobile
+        run: npm install --no-audit --no-fund
+      - name: Create the Android project
+        working-directory: mobile
+        run: |
+          node prepare.mjs www
+          npx cap add android
+          node prepare.mjs android
+          npx @capacitor/assets generate --android --iconBackgroundColor '#ffffff' --splashBackgroundColor '#12307a' || echo "icon generation skipped"
+          npx cap sync android
+      - name: Build
+        working-directory: mobile/android
+        run: ./gradlew --no-daemon assembleRelease
+      - id: ver
+        run: echo "v=$(node -p "require('./desktop/neutralino.config.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Sign
+        run: |
+          BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          IN=mobile/android/app/build/outputs/apk/release/app-release-unsigned.apk
+          OUT=smartPDF-${{ steps.ver.outputs.v }}.apk
+          "$BT/zipalign" -f -p 4 "$IN" aligned.apk
+          "$BT/apksigner" sign --ks mobile/smartpdf-test.keystore --ks-key-alias smartpdf --ks-pass pass:smartpdf-test --key-pass pass:smartpdf-test --out "$OUT" aligned.apk
+          "$BT/apksigner" verify "$OUT"
+          ls -la "$OUT"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: smartPDF-android
+          path: smartPDF-*.apk
+      - if: github.event_name != 'pull_request'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.ver.outputs.v }}
+          files: smartPDF-*.apk
