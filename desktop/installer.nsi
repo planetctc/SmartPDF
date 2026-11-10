@@ -6,6 +6,8 @@ ManifestDPIAware true
 !define APP "smartPDF"
 !define VER "2.0.1"
 !define EXE "smartPDF.exe"
+; 双击 PDF 先跑这个（没有窗口）：smartPDF 已经开着就交给它，不会闪一个新窗口
+!define OPEN "smartPDF-open.exe"
 !define UNKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\smartPDF"
 
 Name "${APP}"
@@ -49,6 +51,8 @@ LangString Running ${LANG_ENGLISH} "smartPDF is running. Please close it and try
 
 Section "smartPDF"
   SetOutPath "$INSTDIR"
+  nsExec::Exec 'taskkill /F /IM ${OPEN}'
+  Pop $0
   ; 关掉旧版本（包括 v2.0 卡在任务栏的进程）
   nsExec::Exec 'taskkill /F /IM ${EXE}'
   Pop $0
@@ -60,6 +64,7 @@ Section "smartPDF"
     Abort
   ${EndIf}
   File "${EXE}"
+  File "${OPEN}"
   File "resources.neu"
   File "icon.ico"
   File "pdf-file.ico"
@@ -72,11 +77,11 @@ Section "smartPDF"
   ; 打开方式 / Open with
   WriteRegStr HKCU "Software\Classes\smartPDF.Document" "" "$(DocName)"
   WriteRegStr HKCU "Software\Classes\smartPDF.Document\DefaultIcon" "" "$INSTDIR\pdf-file.ico"
-  WriteRegStr HKCU "Software\Classes\smartPDF.Document\shell\open\command" "" '"$INSTDIR\${EXE}" "%1"'
+  WriteRegStr HKCU "Software\Classes\smartPDF.Document\shell\open\command" "" '"$INSTDIR\${OPEN}" "%1"'
   WriteRegStr HKCU "Software\Classes\.pdf\OpenWithProgids" "smartPDF.Document" ""
   WriteRegStr HKCU "Software\Classes\Applications\${EXE}" "FriendlyAppName" "smartPDF"
   WriteRegStr HKCU "Software\Classes\Applications\${EXE}\SupportedTypes" ".pdf" ""
-  WriteRegStr HKCU "Software\Classes\Applications\${EXE}\shell\open\command" "" '"$INSTDIR\${EXE}" "%1"'
+  WriteRegStr HKCU "Software\Classes\Applications\${EXE}\shell\open\command" "" '"$INSTDIR\${OPEN}" "%1"'
   ; 默认软件设定里能找到 smartPDF / Shows up in Windows Default apps
   WriteRegStr HKCU "Software\smartPDF\Capabilities" "ApplicationName" "smartPDF"
   WriteRegStr HKCU "Software\smartPDF\Capabilities" "ApplicationDescription" "smartPDF - PDF viewer and editor"

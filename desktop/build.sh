@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # 打包 Windows 安装包：desktop/build.sh
-# 需要：Node 18+、NSIS（Ubuntu: sudo apt-get install nsis）
+# 需要：Node 18+、NSIS、MinGW（Ubuntu: sudo apt-get install nsis gcc-mingw-w64-x86-64）
 # 输出：desktop/out/smartPDF-Setup-<版本>.exe
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -23,6 +23,11 @@ npx -y @neutralinojs/neu@11 build --release
 
 rm -rf out && mkdir out
 node seticon.mjs dist/smartPDF/smartPDF-win_x64.exe icon.ico out/smartPDF.exe "$VER"
+# 双击 PDF 用的小启动程序（需要：sudo apt-get install gcc-mingw-w64-x86-64）
+echo '1 ICON "icon.ico"' > out/launcher.rc
+x86_64-w64-mingw32-windres out/launcher.rc -I. -O coff -o out/launcher.res
+x86_64-w64-mingw32-gcc -O2 -s -municode -mwindows launcher.c out/launcher.res -o out/smartPDF-open.exe -lshell32
+rm out/launcher.rc out/launcher.res
 cp dist/smartPDF/resources.neu icon.ico pdf-file.ico side.bmp installer.nsi out/
 sed -i "s/^!define VER .*/!define VER \"$VER\"/; s/^VIProductVersion .*/VIProductVersion \"$VER.0\"/" out/installer.nsi
 (cd out && makensis -V2 installer.nsi)
