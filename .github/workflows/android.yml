@@ -37,12 +37,25 @@ jobs:
       - id: ver
         run: echo "v=$(node -p "require('./desktop/neutralino.config.json').version")" >> "$GITHUB_OUTPUT"
       - name: Sign
+        # Uses the private release key when the repo secrets ANDROID_KEYSTORE_B64 / ANDROID_KEY_ALIAS / ANDROID_KEY_PASS are set;
+        # until then the public test key in mobile/ (changing key = existing installs must uninstall once).
+        env:
+          KS_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+          KS_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KS_PASS: ${{ secrets.ANDROID_KEY_PASS }}
         run: |
           BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
           IN=mobile/android/app/build/outputs/apk/release/app-release-unsigned.apk
           OUT=smartPDF-${{ steps.ver.outputs.v }}.apk
           "$BT/zipalign" -f -p 4 "$IN" aligned.apk
-          "$BT/apksigner" sign --ks mobile/smartpdf-test.keystore --ks-key-alias smartpdf --ks-pass pass:smartpdf-test --key-pass pass:smartpdf-test --out "$OUT" aligned.apk
+          if [ -n "$KS_B64" ]; then
+            echo "$KS_B64" | base64 -d > "$RUNNER_TEMP/release.keystore"
+            KS="$RUNNER_TEMP/release.keystore"; ALIAS="$KS_ALIAS"; export PASS="$KS_PASS"; echo "signing with the release key"
+          else
+            KS=mobile/smartpdf-test.keystore; ALIAS=smartpdf; export PASS=smartpdf-test; echo "::warning::signing with the public TEST key"
+          fi
+          "$BT/apksigner" sign --ks "$KS" --ks-key-alias "$ALIAS" --ks-pass env:PASS --key-pass env:PASS --out "$OUT" aligned.apk
+          rm -f "$RUNNER_TEMP/release.keystore"
           "$BT/apksigner" verify "$OUT"
           ls -la "$OUT"
       - uses: actions/upload-artifact@v4

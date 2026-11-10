@@ -8,5 +8,8 @@ while ((m = re.exec(html))) {
   n++;
   try { new Function(m[2]); } catch (e) { bad++; console.error(`script #${n}: ${e.message}`); }
 }
+// 安全检查：app 里每个 pdfjsLib.getDocument 都要关掉 eval（CVE-2024-4367）
+const app = html.slice(html.lastIndexOf('<script>'));
+for (const g of app.match(/pdfjsLib\.getDocument\([^\n]*/g) || []) if (!/isEvalSupported:\s*false/.test(g)) { bad++; console.error('getDocument without isEvalSupported: false → ' + g.slice(0, 120)); }
 if (bad) process.exit(1);
 console.log(`checkjs: ${n} scripts OK`);
