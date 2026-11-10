@@ -6,6 +6,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 VER=$(node -p "require('./neutralino.config.json').version")
 
+node checkjs.mjs
 cp ../smartpdf.html resources/index.html
 
 # 文字识别组件（英文＋简体中文：扫描件变成可搜索、找发票号码），放进 resources/ocr/，只在用到时才载入
