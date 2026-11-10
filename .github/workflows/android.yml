@@ -19,6 +19,7 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+      - run: node desktop/checkjs.mjs
       - name: Install Capacitor
         working-directory: mobile
         run: npm install --no-audit --no-fund
