@@ -1,0 +1,19 @@
+{
+  "name": "smartpdf-android",
+  "private": true,
+  "description": "smartPDF Android app: the same smartpdf.html wrapped with Capacitor",
+  "scripts": {
+    "prepare-www": "node prepare.mjs"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/app": "^6.0.2",
+    "@capacitor/core": "^6.2.0",
+    "@capacitor/filesystem": "^6.0.3",
+    "@capacitor/share": "^6.0.3"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^6.2.0"
+  }
+}
