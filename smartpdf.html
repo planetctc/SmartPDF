@@ -1354,8 +1354,17 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '3.8.0';
+const VERSION = '3.8.1';
 const CHANGELOG = [
+  { v: '3.8.1', d: '2026-11-10', items: [
+    "修正：正在保存时切到别的标签（或在电脑里双击别的 PDF），文件会写进另一个标签的文件。现在处理中不能切换标签，按键不起作用，送进来的文件做完再打开",
+    "保存后原文件的表单栏位还可以填，书签（目录）和页面之间的链接也会保留",
+    "按关键词涂黑：号码在 PDF 里被拆成两段也找得到",
+    "压缩：透明的图片（logo、印章）压缩后在 Adobe 里也显示正常",
+    "拆分、导出快很多：400 页每页拆成一个文件从二十多秒变成一秒左右；文字识别、批量处理更省内存",
+    "安全：修补 pdf.js 漏洞（CVE-2024-4367）；文件名里有弯引号不会再被当成命令；Word／Excel 转 PDF 不执行文档里的宏；一键更新会核对安装包，对不上就不装",
+    "smartPDF 窗口缩小时双击 PDF，不会再开出第二个窗口",
+  ] },
   { v: '3.8.0', d: '2026-11-07', items: [
     "手机版：在手机上打开，上面只留常用按钮，其余放在「⋯」里；工具栏移到最下面，大拇指按得到；两只手指可以放大缩小；页面按钮放在左边的页面抽屉里",
     "安卓 app（测试版）：在 WhatsApp、Gmail、文件 app 点 PDF 可以选「用 smartPDF 打开」；保存的文件放在手机的 Documents/smartPDF，存好可以直接分享",
@@ -1608,6 +1617,17 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  "修正：正在保存时切到别的标签（或在电脑里双击别的 PDF），文件会写进另一个标签的文件。现在处理中不能切换标签，按键不起作用，送进来的文件做完再打开": "Fixed: switching tab while saving (or double-clicking another PDF in Explorer) could write the file into the other tab's file. While working, tabs are locked, keys do nothing, and incoming files open when the job is done",
+  "保存后原文件的表单栏位还可以填，书签（目录）和页面之间的链接也会保留": "Saving keeps the original form fields fillable, and keeps bookmarks and links between pages",
+  "按关键词涂黑：号码在 PDF 里被拆成两段也找得到": "Redact by keyword: finds numbers even when the PDF splits them into two pieces",
+  "压缩：透明的图片（logo、印章）压缩后在 Adobe 里也显示正常": "Compress: transparent images (logos, stamps) still look right in Adobe after compressing",
+  "拆分、导出快很多：400 页每页拆成一个文件从二十多秒变成一秒左右；文字识别、批量处理更省内存": "Split and export are much faster (400 pages, one file per page: from 20+ seconds to about one); OCR and batch use far less memory",
+  "安全：修补 pdf.js 漏洞（CVE-2024-4367）；文件名里有弯引号不会再被当成命令；Word／Excel 转 PDF 不执行文档里的宏；一键更新会核对安装包，对不上就不装": "Security: patched the pdf.js flaw (CVE-2024-4367); curly quotes in file names can no longer inject commands; Word/Excel to PDF never runs macros; one-click update checks the installer and refuses one that does not match",
+  "smartPDF 窗口缩小时双击 PDF，不会再开出第二个窗口": "Double-clicking a PDF while smartPDF is minimised no longer opens a second window",
+  "正在处理，请等一下再切换": "Working on it, please wait a moment before switching",
+  "正在处理，做完后会打开 {name}": "Working on it. {name} will open when done",
+  "正在处理，请等做完再关": "Working on it, please wait until it is done before closing",
+  "下载的安装包核对不上（可能被改过或没下载完整），已删除，没有安装": "The downloaded installer did not match (changed or incomplete). It was deleted and not installed",
   "smartPDF 已经开着时双击别的 PDF，不会再闪出一个新窗口：文件直接开进已经开着的窗口的新标签，那个窗口会跳到最前面（最小化了也会还原）": "Double-clicking another PDF while smartPDF is open no longer flashes a new window: the file opens straight into a new tab of the open window, which comes to the front (restored if minimised)",
   "一次选好几个 PDF 按 Enter，全部开在同一个窗口的标签里": "Select several PDFs and press Enter: they all open as tabs in one window",
   "手机版：在手机上打开，上面只留常用按钮，其余放在「⋯」里；工具栏移到最下面，大拇指按得到；两只手指可以放大缩小；页面按钮放在左边的页面抽屉里": "Phone layout: only the main buttons stay at the top, the rest are under “⋯”; the tools sit at the bottom within thumb reach; pinch with two fingers to zoom; page buttons are in the page drawer",
@@ -2507,7 +2527,26 @@ function fillIcons() { $$('[data-ic]').forEach(el => { el.innerHTML = icon(el.da
 /* ----- 提示 / 忙碌 ----- */
 let toastT;
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, 2800); }
-function busy(on, msg) { $('#busy').hidden = !on; if (msg) $('#busyMsg').textContent = msg; }
+function busy(on, msg) { $('#busy').hidden = !on; if (msg) $('#busyMsg').textContent = msg; if (!on) jobFlush(); }
+/* 正在处理（保存、识别、裁剪、签名…）时锁住（v3.8.1）：
+   以前「处理中」的遮罩只挡鼠标，按键、拖进来的文件、在电脑里双击的 PDF 还是会切换标签，结果 A 的内容写进 B 的文件。
+   现在处理中不能切换/关闭标签，按键不起作用；这时送进来的文件先排队，做完再打开。 */
+const JOB = { lock: 0, q: [], t: 0 };
+const anyModal = () => [...$$('.modal')].some(m => !m.hidden);
+const isBusy = () => !$('#busy').hidden || JOB.lock > 0;
+async function locked(fn) { JOB.lock++; try { return await fn(); } finally { JOB.lock--; jobFlush(); } }
+// 忙的时候：把要做的事排队，返回 true
+function jobDefer(fn) { if (!isBusy()) return false; JOB.q.push(fn); return true; }
+function jobFlush() {
+  clearTimeout(JOB.t);
+  JOB.t = setTimeout(() => { if (!JOB.q.length) return; if (isBusy()) { jobFlush(); return; } const f = JOB.q.shift(); Promise.resolve().then(f).catch(e => console.error(e)).finally(jobFlush); }, 60);
+}
+function jobKeyGuard(e) {
+  if (!isBusy()) return;
+  // 处理中还要回答的窗口（例如输入密码、确认）照常可以打字
+  if (!$('#busy').hidden || !(e.target && e.target.closest && e.target.closest('.modal:not([hidden])'))) { e.preventDefault(); e.stopImmediatePropagation(); }
+}
+window.addEventListener('keydown', jobKeyGuard, true);
 
 /* ----- 几何：页面视图（与 pdf.js 的 viewport 一致，scale = 1） ----- */
 function totalRot(p) { return (((p.intr || 0) + (p.rot || 0)) % 360 + 360) % 360; }
@@ -2851,6 +2890,7 @@ function drawOverlay(p, ctx, s) {
 }
 /* ===== 加载、渲染、撤销 ===== */
 pdfjsLib.GlobalWorkerOptions.workerSrc = URL.createObjectURL(new Blob([document.getElementById('pdfworker').textContent], { type: 'text/javascript' }));
+// 安全：每个 pdfjsLib.getDocument 都要带 isEvalSupported: false（CVE-2024-4367），desktop/checkjs.mjs 会检查
 
 let rq = Promise.resolve();
 const enqueue = fn => { rq = rq.then(fn).catch(e => console.warn(e)); return rq; };
@@ -2934,7 +2974,8 @@ async function pagesFromDoc(di) {
   }
   return out;
 }
-async function openFiles(files, mode, meta) {
+async function openFiles(files, mode, meta) { return locked(() => openFilesNow(files, mode, meta)); }
+async function openFilesNow(files, mode, meta) {
   meta = meta || {};
   const list = Array.from(files).filter(f => /\.pdf$/i.test(f.name) || f.type === 'application/pdf');
   if (!list.length) { toast(T('请选择 PDF 文件')); return; }
@@ -2981,6 +3022,7 @@ async function confirmDlg(msg, yes, no) {
 }
 async function requestOpen(files, mode, meta) {
   files = Array.from(files || []);
+  if (jobDefer(() => requestOpen(files, mode, meta))) { toast(T('正在处理，做完后会打开 {name}', { name: (files[0] && files[0].name) || '' })); return; }
   // 拖进来的 Word / Excel：电脑版先存到暂存文件夹，再叫 Office 转成 PDF
   const off = files.filter(f => OFFICE_RE.test(f.name));
   if (off.length && !DESK.on) { toast(T('Word／Excel 转 PDF 要用 Windows 版 smartPDF（会用到电脑上的 Office）')); files = files.filter(f => !off.includes(f)); if (!files.length) return; }
@@ -3112,6 +3154,7 @@ async function pickOpen(mode) {
   $(mode === 'replace' ? '#fOpen' : '#fMerge').click();
 }
 async function openPaths(paths, mode) {
+  if (jobDefer(() => openPaths(paths, mode))) { toast(T('正在处理，做完后会打开 {name}', { name: baseName(paths[0] || '') })); return; }
   if (paths.length && paths.every(p => OFFICE_RE.test(p))) return openOfficePaths(paths, mode);
   const files = [], off = paths.filter(p => OFFICE_RE.test(p));
   for (const p of paths.filter(p => !OFFICE_RE.test(p))) {
@@ -3141,14 +3184,22 @@ async function buildCurrent() {
   finally { busy(false); }
 }
 async function writeCurrent() {
-  try {
-    const bytes = await buildCurrent();
-    if (S.filePath) await Neutralino.filesystem.writeBinaryFile(S.filePath, toAB(bytes));
-    else { const w = await S.fileHandle.createWritable(); await w.write(bytes); await w.close(); }
-    S.dirty = false; S.sample = false; $('#note').hidden = true; updStatus();
-    toast(T('已保存 {name}', { name: S.fileName }));
-    return true;
-  } catch (e) { console.error(e); toast(T('保存失败：{e}', { e: e.message || e })); return false; }
+  // 一开始就记下是哪个标签、哪个文件；就算中途换了标签，也只写回这个文件、只把这个标签标成已保存
+  const tab = TABS.list[TABS.cur], path = S.filePath, handle = S.fileHandle, name = S.fileName, pages = S.pages, undoN = S.undo.length;
+  return locked(async () => {
+    try {
+      closeEditor(); busy(true, T('正在生成 PDF…'));
+      let bytes;
+      try { bytes = await buildPdf(pages, (i, n) => busy(true, T('正在生成 PDF… {i}/{n}', { i, n }))); } finally { busy(false); }
+      if (path) await Neutralino.filesystem.writeBinaryFile(path, toAB(bytes));
+      else { const w = await handle.createWritable(); await w.write(bytes); await w.close(); }
+      const here = !tab || TABS.list[TABS.cur] === tab, st = here ? S : tab.st;
+      if (st && st.filePath === path && st.fileHandle === handle && st.undo.length === undoN) { st.dirty = false; st.sample = false; }
+      if (here) { $('#note').hidden = true; updStatus(); } else renderTabs(true);
+      toast(T('已保存 {name}', { name }));
+      return true;
+    } catch (e) { console.error(e); toast(T('保存失败：{e}', { e: e.message || e })); return false; }
+  });
 }
 async function saveDoc() {
   if (!S.pages.length) return false;
@@ -3310,6 +3361,7 @@ function tabAfter() {
 }
 function switchTab(i) {
   if (i === TABS.cur || i < 0 || i >= TABS.list.length) return;
+  if (isBusy()) { toast(T('正在处理，请等一下再切换')); return; }
   closeEditor(); closeImgMenu(); if (typeof selBarHide === 'function') selBarHide();
   TABS.list[TABS.cur].st = tabGrab();
   TABS.cur = i; tabPut(TABS.list[i].st);
@@ -3317,6 +3369,7 @@ function switchTab(i) {
 }
 async function closeTab(i) {
   const t = TABS.list[i]; if (!t) return;
+  if (isBusy()) { toast(T('正在处理，请等一下再切换')); return; }
   const dirty = i === TABS.cur ? S.dirty : t.st && t.st.dirty;
   const name = i === TABS.cur ? S.fileName : t.st && t.st.fileName;
   if (dirty) {
@@ -3615,6 +3668,7 @@ async function mobShareCurrent() {
 // 从 WhatsApp、Gmail、文件 app 点「用 smartPDF 打开」
 async function mobOpenUri(uri) {
   if (!uri || !/^(content|file):/i.test(uri)) return;
+  if (jobDefer(() => mobOpenUri(uri))) return;
   busy(true, T('正在打开…'));
   let u8;
   try { const r = await capCall('Filesystem', 'readFile', { path: uri }); u8 = typeof r.data === 'string' ? b64u8(r.data) : new Uint8Array(await r.data.arrayBuffer()); }
@@ -3627,6 +3681,7 @@ async function mobOpenUri(uri) {
 }
 // 安卓的「返回」键：先关窗口、抽屉、选单，最后才离开
 function mobBack() {
+  if (isBusy() && !anyModal()) return;
   if (!$('#ctxm').hidden) { ctxClose(); return; }
   if ($$('.modal').some(m => !m.hidden)) { closeModals(); return; }
   if ($('#app').classList.contains('side-open')) { $('#app').classList.remove('side-open'); return; }
@@ -5527,12 +5582,16 @@ async function buildPdf(pages, onProg, opts) {
   // 同一份原文件的页面一次复制，共用的字体和图片只存一份
   const copies = new Array(pages.length), bySrc = new Map();
   pages.forEach((p, j) => { if (!p.blank && !flat(p)) { if (!bySrc.has(p.doc)) bySrc.set(p.doc, []); bySrc.get(p.doc).push(j); } });
+  const srcs = new Map();
   for (const [d, js] of bySrc) {
-    const src = await PDFDocument.load(S.docs[d].bytes), seen = new Set(), idxs = js.map(j => pages[j].idx);
+    const src = await srcDoc(S.docs[d]), seen = new Set(), idxs = js.map(j => pages[j].idx);
+    srcs.set(d, src);
     if (js.length < src.getPageCount()) for (const i of new Set(idxs)) slimPage(src, i, seen);
     const cps = await out.copyPages(src, idxs);
     js.forEach((j, k) => { copies[j] = cps[k]; });
   }
+  // 原文件的表单栏位、页面之间的链接（v3.8.1：以前保存一次栏位就不能填了）
+  const keep = keepAnnots(out, pages, copies, srcs);
   let n = 0, hasForm = false;
   for (let j = 0; j < pages.length; j++) {
     const p = pages[j];
@@ -5559,12 +5618,194 @@ async function buildPdf(pages, onProg, opts) {
     }
     if (onProg) onProg(++n, pages.length);
   }
+  keep.finish(out.getPages());
+  if (!(opts && opts.noOutline)) await copyOutline(out, pages);
   if (hasForm) {
     // 中文选项用不了内建字体：让看的软件自己画栏位
     out.getForm().acroForm.dict.set(PDFLib.PDFName.of('NeedAppearances'), PDFLib.PDFBool.True);
-    return await out.save({ updateFieldAppearances: false });
   }
-  return await out.save();
+  return await out.save(hasForm || keep.fields ? { updateFieldAppearances: false } : {});
+}
+/* 原文件解析一次就留着（v3.8.1）：以前每导出一次都把整份文件重新读一遍，「每页拆成一个文件」400 页要等二十几秒。
+   20 秒没用到就放掉，不会一直占着内存 */
+const SRC = { m: new Map(), t: 0 };
+function srcDoc(dd) {
+  let e = SRC.m.get(dd);
+  if (!e) {
+    e = { p: PDFLib.PDFDocument.load(dd.bytes).then(srcPrep) };
+    SRC.m.set(dd, e); e.p.catch(() => SRC.m.delete(dd));
+  }
+  e.t = Date.now();
+  clearTimeout(SRC.t);
+  SRC.t = setTimeout(() => { const old = Date.now() - 15000; for (const [k, v] of SRC.m) if (v.t < old) SRC.m.delete(k); }, 20000);
+  return e.p;
+}
+// 批注里指回页面的 /P 和链接目标会把整份文件的其他页面也一起复制过去：先换成页码，复制完再接回新文件的页面
+function srcPrep(doc) {
+  const { PDFName, PDFArray, PDFDict, PDFRef, PDFNumber } = PDFLib, ctx = doc.context, N = k => PDFName.of(k);
+  const refs = doc.getPages().map(p => p.ref), at = new Map(refs.map((r, i) => [r.toString(), i]));
+  const fixDest = d => { if (d instanceof PDFArray && d.size() && d.get(0) instanceof PDFRef && at.has(d.get(0).toString())) d.set(0, PDFNumber.of(at.get(d.get(0).toString()))); };
+  doc.getPages().forEach(pg => {
+    const an = pg.node.lookup(N('Annots'));
+    if (!(an instanceof PDFArray)) return;
+    for (let i = 0; i < an.size(); i++) {
+      const a = ctx.lookup(an.get(i));
+      if (!(a instanceof PDFDict)) continue;
+      a.delete(N('P'));
+      if (String(a.get(N('Subtype'))) !== '/Link') continue;
+      fixDest(a.lookup(N('Dest')));
+      const act = a.lookup(N('A'));
+      if (act instanceof PDFDict && String(act.get(N('S'))) === '/GoTo') fixDest(act.lookup(N('D')));
+    }
+  });
+  return doc;
+}
+const pdfjsId = r => r.objectNumber + 'R' + (r.generationNumber ? r.generationNumber : '');
+function keepAnnots(out, pages, copies, srcs) {
+  const { PDFName, PDFArray, PDFDict, PDFRef, PDFNumber, PDFObjectCopier } = PDFLib, ctx = out.context, N = k => PDFName.of(k);
+  const res = { fields: 0, finish: () => {} };
+  const jobs = [];
+  pages.forEach((p, j) => {
+    if (!copies[j]) return;
+    const src = srcs.get(p.doc), sa = src.getPage(p.idx).node.lookup(N('Annots'));
+    // 已经在 smartPDF 里填了的栏位：填的字会画在页面上，原来空的栏位就拿掉（跟以前一样），其他栏位照样可以填
+    const filled = new Set(p.ann.filter(a => a.fk).map(a => a.fk)), drop = new Set();
+    if (sa instanceof PDFArray) sa.asArray().forEach((r, i) => { if (r instanceof PDFRef && filled.has(pdfjsId(r))) drop.add(i); });
+    jobs.push({ j, p, src, drop });
+  });
+  res.finish = outPages => {
+    const pageOf = new Map();
+    pages.forEach((p, j) => { if (!p.blank && !pageOf.has(p.doc + ':' + p.idx)) pageOf.set(p.doc + ':' + p.idx, outPages[j].ref); });
+    const roots = new Map(), onPage = new Set(), acroSrc = [];
+    const relink = (d, p) => {
+      if (!(d instanceof PDFArray) || !d.size() || !(d.get(0) instanceof PDFNumber)) return true;
+      const r = pageOf.get(p.doc + ':' + d.get(0).asNumber());
+      if (!r) return false;
+      d.set(0, r); return true;
+    };
+    for (const { j, p, src, drop } of jobs) {
+      const pg = outPages[j], an = pg.node.lookup(N('Annots'));
+      if (!(an instanceof PDFArray)) continue;
+      const keepRefs = [];
+      an.asArray().forEach((r, i) => {
+        if (drop.has(i)) return;
+        const a = ctx.lookup(r);
+        if (!(a instanceof PDFDict)) { keepRefs.push(r); return; }
+        const sub = String(a.get(N('Subtype')));
+        if (sub === '/Link') {
+          const act = a.lookup(N('A'));
+          const ok = relink(a.lookup(N('Dest')), p) && (!(act instanceof PDFDict) || String(act.get(N('S'))) !== '/GoTo' || relink(act.lookup(N('D')), p));
+          if (!ok) return;   // 链接的目标页没有一起导出
+        }
+        if (sub !== '/Link') a.set(N('P'), pg.ref);
+        if (sub === '/Widget' && r instanceof PDFRef) {
+          onPage.add(r.toString());
+          let cur = r, dict = a;
+          for (let g = 0; g < 32; g++) { const par = dict.get(N('Parent')); if (!(par instanceof PDFRef)) break; cur = par; dict = ctx.lookup(par); if (!(dict instanceof PDFDict)) break; }
+          roots.set(cur.toString(), cur);
+          if (!acroSrc.includes(src)) acroSrc.push(src);
+        }
+        keepRefs.push(r);
+      });
+      if (keepRefs.length) pg.node.set(N('Annots'), ctx.obj(keepRefs)); else pg.node.delete(N('Annots'));
+    }
+    if (!roots.size) return;
+    // 栏位底下没有一起导出的页面上的小框，从栏位里拿掉
+    const prune = ref => {
+      const d = ctx.lookup(ref); if (!(d instanceof PDFDict)) return false;
+      const kids = d.lookup(N('Kids'));
+      if (kids instanceof PDFArray) {
+        const left = kids.asArray().filter(k => k instanceof PDFRef && prune(k));
+        if (!left.length) return String(d.get(N('Subtype'))) === '/Widget' && onPage.has(ref.toString());
+        d.set(N('Kids'), ctx.obj(left)); return true;
+      }
+      return String(d.get(N('Subtype'))) !== '/Widget' || onPage.has(ref.toString());
+    };
+    const acro = out.catalog.getOrCreateAcroForm().dict, fl = acro.lookup(N('Fields')) instanceof PDFArray ? acro.lookup(N('Fields')) : null;
+    const list = fl ? fl.asArray().slice() : [];
+    for (const r of roots.values()) if (prune(r) && !list.some(x => x.toString() === r.toString())) list.push(r);
+    acro.set(N('Fields'), ctx.obj(list));
+    res.fields = list.length;
+    // 栏位用到的字体（DR）和预设外观（DA）也要带过去
+    for (const src of acroSrc) {
+      const sa = src.catalog.lookup(N('AcroForm'));
+      if (!(sa instanceof PDFDict)) continue;
+      const cp = PDFObjectCopier.for(src.context, ctx);
+      for (const k of ['DR', 'DA', 'Q', 'NeedAppearances']) { const v = sa.get(N(k)); if (v && !acro.get(N(k))) acro.set(N(k), cp.copy(v)); }
+      break;
+    }
+  };
+  return res;
+}
+/* 书签（目录）也带到保存的文件里（v3.8.1：以前保存后书签都不见了）。目标页没有导出的书签就不要了，它下面的书签往上一层 */
+const OLC = new WeakMap();
+function olTree(dd) {
+  if (!OLC.has(dd)) OLC.set(dd, (async () => {
+    const pdf = dd.pdf, ol = await pdf.getOutline().catch(() => null);
+    const walk = async items => {
+      const outL = [];
+      for (const it of items || []) {
+        let pi = -1, d = it.dest, view = null;
+        try {
+          if (typeof d === 'string') d = await pdf.getDestination(d);
+          if (Array.isArray(d) && d.length) {
+            pi = typeof d[0] === 'number' ? d[0] : d[0] && typeof d[0] === 'object' ? await pdf.getPageIndex(d[0]) : -1;
+            view = d.slice(1).map(v => (v && typeof v === 'object' && v.name ? { n: v.name } : v));
+          }
+        } catch (e) { pi = -1; }
+        outL.push({ title: it.title || '', pi, view, url: it.url || null, kids: await walk(it.items) });
+      }
+      return outL;
+    };
+    return ol && ol.length ? walk(ol) : [];
+  })());
+  return OLC.get(dd);
+}
+async function copyOutline(out, pages) {
+  const { PDFName, PDFHexString, PDFNumber, PDFString } = PDFLib, ctx = out.context, N = k => PDFName.of(k);
+  const outPages = out.getPages(), pageOf = new Map(), docs = [];
+  pages.forEach((p, j) => {
+    if (p.blank) return;
+    const k = p.doc + ':' + p.idx;
+    if (!pageOf.has(k)) pageOf.set(k, { ref: outPages[j].ref, exact: !(S.docs[p.doc].enc || p.ann.some(a => a.rd)) });
+    if (!docs.includes(p.doc)) docs.push(p.doc);
+  });
+  const top = [];
+  for (const d of docs) {
+    let tree = [];
+    try { tree = await olTree(S.docs[d]); } catch (e) { console.warn(e); }
+    const pick = list => list.flatMap(it => {
+      const kids = pick(it.kids), tg = it.pi >= 0 ? pageOf.get(d + ':' + it.pi) : null;
+      const web = it.url && /^(https?:|mailto:)/i.test(it.url);
+      if (!tg && !web) return kids;
+      return [{ title: it.title, tg, view: it.view, url: web ? it.url : null, kids }];
+    });
+    top.push(...pick(tree));
+  }
+  if (!top.length) return;
+  const rootRef = ctx.nextRef();
+  const mk = (list, parent) => {
+    const refs = list.map(() => ctx.nextRef());
+    list.forEach((it, i) => {
+      const o = ctx.obj({});
+      o.set(N('Title'), PDFHexString.fromText(it.title)); o.set(N('Parent'), parent);
+      if (i > 0) o.set(N('Prev'), refs[i - 1]);
+      if (i < list.length - 1) o.set(N('Next'), refs[i + 1]);
+      if (it.tg) {
+        const v = it.view || [], kind = v[0] && v[0].n;
+        let dest = [it.tg.ref, N('Fit')];
+        if (it.tg.exact && kind === 'XYZ') dest = [it.tg.ref, N('XYZ'), ...[v[1], v[2], v[3]].map(x => (typeof x === 'number' ? x : null))];
+        else if (it.tg.exact && (kind === 'FitH' || kind === 'FitBH')) dest = [it.tg.ref, N(kind), typeof v[1] === 'number' ? v[1] : null];
+        o.set(N('Dest'), ctx.obj(dest));
+      } else o.set(N('A'), ctx.obj({ S: 'URI', URI: PDFString.of(it.url) }));
+      if (it.kids.length) { const c = mk(it.kids, refs[i]); o.set(N('First'), c.first); o.set(N('Last'), c.last); o.set(N('Count'), PDFNumber.of(-it.kids.length)); }
+      ctx.assign(refs[i], o);
+    });
+    return { first: refs[0], last: refs[refs.length - 1] };
+  };
+  const c = mk(top, rootRef);
+  ctx.assign(rootRef, ctx.obj({ Type: 'Outlines', First: c.first, Last: c.last, Count: top.length }));
+  out.catalog.set(N('Outlines'), rootRef);
 }
 let dlP = null;
 function getDL() { if (!dlP) dlP = (window.claude && window.claude.use ? window.claude.use('downloads') : Promise.resolve(null)).catch(() => null); return dlP; }
@@ -6092,7 +6333,8 @@ function wireRcpt() {
 const SCAN = { imgs: [], devs: null, busy: false, proc: null, listProc: null, listGen: 0 };
 const WIA_JPG = '{B96B3CAE-0728-11D3-9D7B-0000F81EF32E}', WIA_PNG = '{B96B3CAF-0728-11D3-9D7B-0000F81EF32E}';
 const SCAN_PAPER = { a4: [8.27, 11.69], letter: [8.5, 11], legal: [8.5, 14], max: [0, 0] };
-const psq = s => "'" + String(s).replace(/'/g, "''") + "'";
+// PowerShell 的单引号字符串：' ‘ ’ ‚ ‛ 都算引号，全部要重复一次（v3.8.1：以前文件名里有 ’ 可以插进命令）
+const psq = s => "'" + String(s).replace(/\0/g, '').replace(/['\u2018\u2019\u201A\u201B]/g, '$&$&') + "'";
 const PS_HEAD = `$ErrorActionPreference='Stop'
 function SetP($props,[int]$id,$v){ foreach($p in $props){ if($p.PropertyID -eq $id){ try{$p.Value=$v}catch{}; return } } }
 function MaxP($props,[int]$id){ foreach($p in $props){ if($p.PropertyID -eq $id){ try{return [int]$p.SubTypeMax}catch{return 0} } }; return 0 }
@@ -6512,6 +6754,7 @@ function wireDash() {
    下载安装包到临时文件夹（显示进度）→ 安静安装 → 安装程序装好后自动重新打开 smartPDF。 */
 const UPD = { info: null, busy: false };
 const UPD_API = 'https://api.github.com/repos/planetctc/SmartPDF/releases/latest';
+const UPD_DL = 'https://github.com/planetctc/SmartPDF/releases/download/';
 const verNum = v => String(v).replace(/^v/i, '').split('.').map(n => parseInt(n, 10) || 0);
 function verNewer(a, b) { const x = verNum(a), y = verNum(b); for (let i = 0; i < 3; i++) if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) > (y[i] || 0); return false; }
 async function updCheck(manual) {
@@ -6529,9 +6772,12 @@ async function updCheck(manual) {
     if (manual) $('#setUpdMsg').textContent = T('检查不到，请确认电脑有连上网络');
     return;
   }
-  const asset = (r.assets || []).find(a => /^smartPDF-Setup-.*\.exe$/i.test(a.name));
+  const assets = r.assets || [], asset = assets.find(a => /^smartPDF-Setup-.*\.exe$/i.test(a.name));
+  // 安装包只从我们自己的 GitHub 发布页下载，装之前核对 SHA-256（v3.8.1）
+  if (asset && !String(asset.browser_download_url || '').startsWith(UPD_DL)) { console.warn('update: unexpected url', asset.browser_download_url); if (manual) $('#setUpdMsg').textContent = T('检查不到，请确认电脑有连上网络'); return; }
   if (asset && verNewer(r.tag_name, VERSION)) {
-    UPD.info = { ver: String(r.tag_name).replace(/^v/i, ''), url: asset.browser_download_url, size: asset.size, notes: String(r.body || ''), page: r.html_url };
+    const dg = /^sha256:([0-9a-f]{64})$/i.exec(String(asset.digest || '')), sf = assets.find(a => a.name === asset.name + '.sha256');
+    UPD.info = { ver: String(r.tag_name).replace(/^v/i, ''), url: asset.browser_download_url, size: asset.size, notes: String(r.body || ''), page: r.html_url, sha: dg ? dg[1].toLowerCase() : '', shaUrl: sf && String(sf.browser_download_url || '').startsWith(UPD_DL) ? sf.browser_download_url : '' };
     if (manual) $('#setUpdMsg').textContent = T('有新版本 v{v}', { v: UPD.info.ver });
     if (manual || LS.get('pdfed.updSkip') !== UPD.info.ver) showUpd();
   } else if (manual) $('#setUpdMsg').textContent = T('已经是最新版本');
@@ -6561,10 +6807,15 @@ try{
   while(($n=$in.Read($buf,0,$buf.Length)) -gt 0){ $out.Write($buf,0,$n); $tot+=$n
     if($len -gt 0){ $p=[int](100*$tot/$len); if($p -ne $last){ [Console]::Out.WriteLine('PCT '+$p); [Console]::Out.Flush(); $last=$p } } }
   $out.Close(); $in.Close(); $resp.Close(); $res.size=$tot
+  $want=${psq(u.sha || '')}
+  if(-not $want -and ${psq(u.shaUrl || '')}){ $wc=New-Object Net.WebClient; $wc.Headers.Add('User-Agent','smartPDF'); $want=(($wc.DownloadString(${psq(u.shaUrl || '')})).Trim() -split ' ')[0] }
+  $got=(Get-FileHash -LiteralPath ${psq(f)} -Algorithm SHA256).Hash
+  if(-not $want -or $got.ToLower() -ne $want.Trim().ToLower()){ Remove-Item -LiteralPath ${psq(f)} -Force -ErrorAction SilentlyContinue; $res=@{ok=$false;code='HASH';msg='hash'} } else { $res.sha=$got }
 }catch{ $res=Err $_ }
 Done $res ${psq(res)}`;
     await psRun(psCmd(ps), l => { const m = /^PCT (\d+)/.exec(l.trim()); if (m) { $('#updBar').style.width = m[1] + '%'; $('#updMsg').textContent = T('正在下载… {p}%', { p: m[1] }); } });
     const r = await readRes(res);
+    if (r && r.code === 'HASH') throw new Error(T('下载的安装包核对不上（可能被改过或没下载完整），已删除，没有安装'));
     if (!r || !r.ok) throw new Error((r && (r.msg || r.code)) || T('没有回应'));
     if (u.size && r.size !== u.size) throw new Error(T('下载的文件不完整'));
     $('#updMsg').textContent = T('正在安装，smartPDF 会自动重新打开…');
@@ -7036,13 +7287,14 @@ try{
     [Console]::Out.WriteLine('FILE '+($i+1)); [Console]::Out.Flush()
     try{
       if($ext -match '^\\.(docx?|rtf|odt)$'){
-        if(-not $word){ L 'start word'; $word=New-Object -ComObject Word.Application; $word.Visible=$false; $word.DisplayAlerts=0 }
+        if(-not $word){ L 'start word'; $word=New-Object -ComObject Word.Application; $word.Visible=$false; $word.DisplayAlerts=0; $word.AutomationSecurity=3 }
+        try{ $word.WordBasic.DisableAutoMacros(1) }catch{}
         L ('open '+$f); $d=$word.Documents.Open($f,$false,$true,$false); L 'export'; $d.ExportAsFixedFormat($o,17); $d.Close($false); $ok=$true; L 'ok'
       } elseif($ext -match '^\\.(xlsx?|xlsm|csv|ods)$'){
-        if(-not $excel){ L 'start excel'; $excel=New-Object -ComObject Excel.Application; $excel.Visible=$false; $excel.DisplayAlerts=$false }
+        if(-not $excel){ L 'start excel'; $excel=New-Object -ComObject Excel.Application; $excel.Visible=$false; $excel.DisplayAlerts=$false; $excel.AutomationSecurity=3; $excel.EnableEvents=$false; try{ $excel.AskToUpdateLinks=$false }catch{} }
         L ('open '+$f); $b=$excel.Workbooks.Open($f,0,$true); L 'export'; $b.ExportAsFixedFormat(0,$o); $b.Close($false); $ok=$true; L 'ok'
       } else {
-        if(-not $ppt){ $ppt=New-Object -ComObject PowerPoint.Application }
+        if(-not $ppt){ $ppt=New-Object -ComObject PowerPoint.Application; $ppt.AutomationSecurity=3 }
         $p=$ppt.Presentations.Open($f,-1,0,0); $p.SaveAs($o,32); $p.Close(); $ok=$true
       }
       if($ok){ $res.via='office' }
@@ -7093,6 +7345,7 @@ async function pickOffice() {
   if (paths && paths.length) openOfficePaths(paths, S.pages.length && !DASH.home ? 'ask' : 'replace');
 }
 async function openOfficePaths(paths, mode) {
+  if (jobDefer(() => openOfficePaths(paths, mode))) return;
   if (mode === 'replace' && S.dirty && !tabWillNew() && !(await confirmDlg(T('当前文件有还没保存的修改，打开新文件会丢掉它们。'), T('放弃并打开')))) return;
   let files;
   try { files = await officeToPdf(paths); } catch (e) { console.error(e); toast(T('转换失败：{e}', { e: e.message || e })); return; }
@@ -7280,7 +7533,7 @@ async function ixRun(files, useCur) {
       if (run !== IX.run) return;
       $('#ixInfo').textContent = T('正在读取… {i}/{n}', { i: k + 1, n: files.length });
       try {
-        const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await files[k].arrayBuffer()) }).promise;
+        const pdf = await pdfjsLib.getDocument({ data: new Uint8Array(await files[k].arrayBuffer()), isEvalSupported: false }).promise;
         IX.rows.push(...await ixDoc(pdf, files[k].name.replace(/\.pdf$/i, ''), ocr, run));
         pdf.destroy();
       } catch (e) { console.warn(e); IX.rows.push({ file: files[k].name, pages: '', inv: '', date: '', seller: T('打不开这个文件'), buyer: '', cur: '', tax: null, total: null, bad: true }); }
@@ -7365,29 +7618,65 @@ async function rdkFind() {
     if (p.blank) continue;
     const items = await getItems(p);
     if (!items.some(i => i.str.trim())) { noText++; continue; }
-    items.forEach((it, ii) => {
-      for (const re of res) { re.lastIndex = 0; let m; while ((m = re.exec(it.str))) { if (!m[0].length) { re.lastIndex++; continue; } hits.push({ pid: p.id, ii, k: m.index, len: m[0].length, s: m[0] }); } }
+    // 同一行的几段文字连起来再找（v3.8.1）：号码在 PDF 里常常被拆成两段，以前只在每一段里面找，会漏掉
+    rdkRows(p, items).forEach((row, ri) => {
+      for (const re of res) { re.lastIndex = 0; let m; while ((m = re.exec(row.s))) { if (!m[0].length) { re.lastIndex++; continue; } hits.push({ pid: p.id, ri, a: m.index, b: m.index + m[0].length, row }); } }
     });
   }
   // 同一个地方被几个条件找到，只算一次
-  hits.sort((x, y) => (x.pid + ':' + x.ii).localeCompare(y.pid + ':' + y.ii) || x.k - y.k || y.len - x.len);
-  RDK.hits = [];
-  for (const h of hits) { const l = RDK.hits[RDK.hits.length - 1]; if (l && l.pid === h.pid && l.ii === h.ii && h.k < l.k + l.len) { const e = Math.max(l.k + l.len, h.k + h.len); l.len = e - l.k; continue; } RDK.hits.push({ ...h }); }
+  hits.sort((x, y) => (x.pid + ':' + x.ri).localeCompare(y.pid + ':' + y.ri) || x.a - y.a || y.b - x.b);
+  const merged = [];
+  for (const h of hits) { const l = merged[merged.length - 1]; if (l && l.pid === h.pid && l.ri === h.ri && h.a < l.b) { l.b = Math.max(l.b, h.b); continue; } merged.push({ ...h }); }
+  RDK.hits = merged.map(h => {
+    const parts = [];
+    for (let i = h.a; i < h.b; i++) {
+      const c = h.row.map[i]; if (!c) continue;
+      const l = parts[parts.length - 1];
+      if (l && l.ii === c.ii && l.k + l.len === c.k) l.len++; else parts.push({ ii: c.ii, k: c.k, len: 1 });
+    }
+    return { pid: h.pid, ii: parts.length ? parts[0].ii : 0, k: parts.length ? parts[0].k : 0, len: parts.length ? parts[0].len : 0, parts, s: h.row.s.slice(h.a, h.b).trim() };
+  }).filter(h => h.parts.length);
   const pg = new Set(RDK.hits.map(h => h.pid)).size;
   $('#rkInfo').textContent = (RDK.hits.length ? T('找到 {n} 处，在 {p} 页。', { n: RDK.hits.length, p: pg }) + ' ' + [...new Set(RDK.hits.map(h => h.s))].slice(0, 6).join('、') + (RDK.hits.length > 6 ? '…' : '') : T('没有找到。')) +
     (noText ? ' ' + T('有 {n} 页是扫描件，要先用「识别文字」才找得到。', { n: noText }) : '');
   $('#rkGo').disabled = !RDK.hits.length;
+}
+// 把一页的文字按行排好、连成一串，记下每个字来自哪一段（第几段、段里第几个字）
+function rdkRows(p, items) {
+  const rows = [];
+  items.forEach((it, ii) => {
+    if (!it.str) return;
+    const m = mmul(p.vt, it.tr), dl = Math.hypot(m[0], m[1]) || 1, dx = m[0] / dl, dy = m[1] / dl, h = Math.hypot(m[2], m[3]) || 10;
+    const along = m[4] * dx + m[5] * dy, perp = -m[4] * dy + m[5] * dx;
+    let r = rows.find(r => Math.abs(r.dx - dx) < 0.02 && Math.abs(r.dy - dy) < 0.02 && Math.abs(r.perp - perp) < Math.min(r.h, h) * 0.5);
+    if (!r) rows.push(r = { dx, dy, perp, h, segs: [] });
+    r.segs.push({ ii, s: it.str, a: along, e: along + (it.w || 0), h });
+  });
+  return rows.map(r => {
+    r.segs.sort((x, y) => x.a - y.a);
+    let s = '', map = [], prev = null;
+    for (const g of r.segs) {
+      if (prev && !/\s$/.test(s) && !/^\s/.test(g.s) && g.a - prev.e > Math.min(prev.h, g.h) * 0.25) { s += ' '; map.push(null); }
+      for (let k = 0; k < g.s.length; k++) { s += g.s[k]; map.push({ ii: g.ii, k }); }
+      prev = g;
+    }
+    return { s, map };
+  });
 }
 function rdkApply() {
   if (!RDK.hits.length) return;
   const before = snap(); let n = 0;
   for (const h of RDK.hits) {
     const p = pageById(h.pid); if (!p) continue;
-    const poly = hitPoly(p, h); if (!poly) continue;
-    const xs = poly.map(q => q[0]), ys = poly.map(q => q[1]);
-    const pd = Math.max(1, (Math.max(...ys) - Math.min(...ys)) * 0.12);
-    const x = Math.min(...xs) - pd, y = Math.min(...ys) - pd * 0.5, w = Math.max(...xs) - x + pd, hh = Math.max(...ys) - y + pd * 0.5;
-    p.ann.push({ id: uid(), t: 'rect', x, y, w, h: hh, c: null, sw: 0, f: '#000000', rd: true }); n++;
+    let done = false;
+    for (const part of h.parts || [h]) {
+      const poly = hitPoly(p, part); if (!poly) continue;
+      const xs = poly.map(q => q[0]), ys = poly.map(q => q[1]);
+      const pd = Math.max(1, (Math.max(...ys) - Math.min(...ys)) * 0.12);
+      const x = Math.min(...xs) - pd, y = Math.min(...ys) - pd * 0.5, w = Math.max(...xs) - x + pd, hh = Math.max(...ys) - y + pd * 0.5;
+      p.ann.push({ id: uid(), t: 'rect', x, y, w, h: hh, c: null, sw: 0, f: '#000000', rd: true }); done = true;
+    }
+    if (done) n++;
   }
   closeModals(); commit(before); redrawAll(); RDK.hits = [];
   toast(T('已涂黑 {n} 处。保存时这些地方下面的文字会被彻底删掉', { n }));
@@ -7788,7 +8077,7 @@ async function defSet() {
       pdf = tmp + sepOf(tmp) + 'smartPDF.pdf'; await Neutralino.filesystem.writeBinaryFile(pdf, toAB(await d.save()));
     } catch (e) { console.warn(e); }
   }
-  const q = s => "'" + String(s).replace(/'/g, "''") + "'";
+  const q = psq;
   const reg = (k, n, v) => `& reg.exe add ${q(k)} /v ${q(n)} /t REG_SZ /d ${q(v)} /f | Out-Null`;
   const ps = [
     reg('HKCU\\Software\\smartPDF\\Capabilities', 'ApplicationName', 'smartPDF'),
@@ -7990,7 +8279,7 @@ async function tsaFetch(req) {
   if (DESK.on) {
     const base = (await scanTmp()).replace('smartpdf-scan-', 'smartpdf-ts-'), qf = base + '.tsq', rf = base + '.tsr';
     await Neutralino.filesystem.writeBinaryFile(qf, toAB(req));
-    const q = s => "'" + String(s).replace(/'/g, "''") + "'";
+    const q = psq;
     const ps = `$ErrorActionPreference='Stop'
 try { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 } catch {}
 foreach ($u in @(${TSA_URLS.map(q).join(',')})) {
@@ -8136,8 +8425,8 @@ function wireCert() {
   $('#imGo').onclick = () => $('#fCert').click();
   $('#fCert').onchange = e => { const f = e.target.files[0]; e.target.value = ''; if (f) certImport(f); };
   $('#ctExp').onclick = certExport;
-  $('#ctGo').onclick = certSign;
-  $('#ctPw').onkeydown = e => { e.stopPropagation(); if (e.key === 'Enter') certSign(); };
+  $('#ctGo').onclick = () => locked(certSign);
+  $('#ctPw').onkeydown = e => { e.stopPropagation(); if (e.key === 'Enter') locked(certSign); };
 }
 
 /* ===== 文字识别：扫描件变成可搜索、可复制的 PDF（v3.0）=====
@@ -8180,7 +8469,7 @@ function overlayBox(r, vb) {
   return { x: X, y: Y + h, width: h, height: w, rotate: degrees(-90) };
 }
 // 识别一页；成功就把页面换成「原页面 + 文字层」。srcCache：同一份文件只读一次
-async function ocrOnePage(p, w, srcCache) {
+async function ocrOnePage(p, w, srcCache, d, done) {
   const sc = Math.min(OCR_SC, Math.sqrt(2.2e7 / (p.W * p.H)));
   const rec = async extra => { const blob = await ocrRender(p, sc, extra); return { extra, blob, data: (await w.recognize(blob, { pdfTitle: 'smartPDF OCR', pdfTextOnly: true }, { text: true, blocks: true, pdf: true })).data }; };
   let best = await rec(0);
@@ -8191,7 +8480,7 @@ async function ocrOnePage(p, w, srcCache) {
   const { data, blob, extra } = best;
   if (!(data.text || '').trim() || !data.pdf) return false;
   if (extra) { p.rot = ((p.rot || 0) + extra) % 360; computeView(p); }
-  const { PDFDocument } = PDFLib, d = await PDFDocument.create();
+  const { PDFDocument } = PDFLib;
   const [layer] = await d.embedPdf(await ocrLayerPdf(new Uint8Array(data.pdf), data, blob.w), [0]);
   const enc = S.docs[p.doc].enc;
   let page;
@@ -8208,11 +8497,17 @@ async function ocrOnePage(p, w, srcCache) {
     page = d.addPage(cp);
     page.drawPage(layer, overlayBox(totalRot(p), p.vb));
   }
-  const bytes = await d.save();
-  const di = await loadPdfBytes(bytes, S.docs[p.doc].name || S.fileName);
-  p.doc = di; p.idx = 0;
-  if (enc) { p.intr = 0; p.rot = 0; p.vb = [0, 0, p.W, p.H]; computeView(p); }
+  done.push({ p, k: d.getPageCount() - 1, enc });
   return true;
+}
+// 识别好的页面全部放进同一个新文件（v3.8.1：以前每页各变成一份文件，几百页的扫描件很占内存）
+async function ocrCommit(d, done) {
+  if (!done.length) return;
+  const di = await loadPdfBytes(await d.save(), S.docs[done[0].p.doc].name || S.fileName);
+  for (const { p, k, enc } of done) {
+    p.doc = di; p.idx = k;
+    if (enc) { p.intr = 0; p.rot = 0; p.vb = [0, 0, p.W, p.H]; computeView(p); }
+  }
 }
 // Tesseract 每个字后面都加一个空格，中文就变成「客 户 名 称」，搜索和复制都不好用。
 // 用它的字体和位置，自己重写文字层：中文连在一起，英文单词之间才有空格。
@@ -8253,11 +8548,13 @@ async function ocrPages(list, label) {
   let n = 0;
   const before = snap(); OCRL.run = true;
   try {
-    const w = await getOcrFull(), srcCache = new Map();
+    const w = await getOcrFull(), srcCache = new Map(), d = await PDFLib.PDFDocument.create(), done = [];
     for (let k = 0; k < todo.length; k++) {
       busy(true, (label || T('正在识别文字…')) + ' ' + (k + 1) + '/' + todo.length);
-      try { if (await ocrOnePage(todo[k], w, srcCache)) n++; } catch (e) { console.warn('ocr page', e); }
+      try { if (await ocrOnePage(todo[k], w, srcCache, d, done)) n++; } catch (e) { console.warn('ocr page', e); }
     }
+    srcCache.clear();
+    await ocrCommit(d, done);
   } finally { busy(false); OCRL.run = false; }
   if (n) $('#ocrNote').hidden = true;
   if (n) { textCache.clear(); OCR.cache.clear(); renderAll(); commit(before); }
@@ -8520,10 +8817,12 @@ async function renderPdfjsPng(pg, sc) {
 /* ----- 压缩 PDF（v2.3）：把图片重新存成较小的 JPG；字体和文字不动 ----- */
 const fmtSize = n => n >= 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB';
 const ZIP_LEVEL = { strong: [1100, 0.5], mid: [1700, 0.68], light: [2500, 0.82] };
-async function shrinkImage(ctx, st, maxPx, q) {
+// mask：这张图是别的图的透明遮罩（SMask）。遮罩只能是灰阶，不能存成彩色 JPG（v3.8.1：以前 logo、印章压缩后在 Adobe 里显示不对）
+async function shrinkImage(ctx, st, maxPx, q, mask) {
   const { PDFName, PDFArray, PDFRawStream, PDFNumber, decodePDFRawStream } = PDFLib;
   const d = st.dict, get = k => d.lookup(PDFName.of(k));
   if (String(get('ImageMask')) === 'true' || d.get(PDFName.of('Decode')) || d.get(PDFName.of('DecodeParms'))) return null;
+  if (get('Mask') instanceof PDFArray) return null;   // 用颜色当透明：JPG 会把颜色弄乱
   const w = get('Width') instanceof PDFNumber ? get('Width').asNumber() : 0, h = get('Height') instanceof PDFNumber ? get('Height').asNumber() : 0;
   if (!w || !h || w * h < 90000) return null;
   const f = get('Filter'), filters = f instanceof PDFArray ? f.asArray().map(String) : f ? [String(f)] : [];
@@ -8531,6 +8830,7 @@ async function shrinkImage(ctx, st, maxPx, q) {
   if (cs instanceof PDFArray && String(cs.get(0)) === '/ICCBased') { const icc = cs.lookup(1); const n = icc && icc.dict && icc.dict.lookup(PDFName.of('N')); comps = n ? n.asNumber() : 0; }
   else if (String(cs) === '/DeviceRGB') comps = 3; else if (String(cs) === '/DeviceGray') comps = 1;
   if (comps !== 3 && comps !== 1) return null;
+  if (mask && comps !== 1) return null;
   let src;
   if (filters.length === 1 && filters[0] === '/DCTDecode') src = await createImageBitmap(new Blob([st.contents], { type: 'image/jpeg' }));
   else if (filters.every(x => x === '/FlateDecode') && (!get('BitsPerComponent') || get('BitsPerComponent').asNumber() === 8)) {
@@ -8544,6 +8844,14 @@ async function shrinkImage(ctx, st, maxPx, q) {
   const c = document.createElement('canvas'); c.width = nw; c.height = nh;
   const cx = c.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, nw, nh); cx.drawImage(src, 0, 0, nw, nh);
   if (src.close) src.close();
+  if (mask) {
+    const px = cx.getImageData(0, 0, nw, nh).data, g = new Uint8Array(nw * nh);
+    for (let i = 0; i < g.length; i++) g[i] = px[i * 4];
+    const ms = ctx.flateStream(g, { Type: 'XObject', Subtype: 'Image', Width: nw, Height: nh, ColorSpace: 'DeviceGray', BitsPerComponent: 8 });
+    if (ms.contents.length >= st.contents.length * 0.9) return null;
+    const mt = d.get(PDFName.of('Matte')); if (mt) ms.dict.set(PDFName.of('Matte'), mt);
+    return ms;
+  }
   const jpg = new Uint8Array(await (await new Promise(r => c.toBlob(r, 'image/jpeg', q))).arrayBuffer());
   if (jpg.length >= st.contents.length * 0.9) return null;
   const nd = { Type: 'XObject', Subtype: 'Image', Width: nw, Height: nh, ColorSpace: 'DeviceRGB', BitsPerComponent: 8, Filter: 'DCTDecode' };
@@ -8555,9 +8863,12 @@ async function compressPdf(bytes, level, onProg) {
   const { PDFDocument, PDFName, PDFRawStream } = PDFLib, [maxPx, q] = ZIP_LEVEL[level] || ZIP_LEVEL.mid;
   const doc = await PDFDocument.load(bytes), ctx = doc.context;
   const imgs = ctx.enumerateIndirectObjects().filter(([, o]) => o instanceof PDFRawStream && String(o.dict.get(PDFName.of('Subtype'))) === '/Image');
+  // 哪些图是别的图的遮罩
+  const masks = new Set();
+  for (const [, o] of imgs) for (const k of ['SMask', 'Mask']) { const r = o.dict.get(PDFName.of(k)); if (r instanceof PDFLib.PDFRef) masks.add(r.toString()); }
   for (let k = 0; k < imgs.length; k++) {
     if (onProg) onProg(k + 1, imgs.length);
-    try { const ns = await shrinkImage(ctx, imgs[k][1], maxPx, q); if (ns) ctx.assign(imgs[k][0], ns); } catch (e) { console.warn('shrinkImage', e); }
+    try { const ns = await shrinkImage(ctx, imgs[k][1], maxPx, q, masks.has(imgs[k][0].toString())); if (ns) ctx.assign(imgs[k][0], ns); } catch (e) { console.warn('shrinkImage', e); }
   }
   const out = await doc.save({ useObjectStreams: true });
   return out.length < bytes.length ? out : bytes;
@@ -8594,13 +8905,15 @@ function batchUi() {
   $('#btInvOpts').hidden = mode !== 'inv' && mode !== 'invsort'; $('#btZipOpts').hidden = mode !== 'zip';
   $('#btGo').disabled = !BT.files.length; $('#btInfo').textContent = BT.files.length ? '' : T('先选择要处理的 PDF 文件');
 }
-async function batchLoad() {
-  const docs = [], skipped = [];
+// 只读需要的部分（v3.8.1）：压缩不用先读进来；pdf.js 只有找发票号码时才要，用完马上放掉
+async function batchLoad(mode) {
+  const docs = [], skipped = [], needPdf = mode === 'inv' || mode === 'invsort';
   for (const f of BT.files) {
     busy(true, T('正在读取 {name}…', { name: f.name }));
     try {
+      if (mode === 'zip') { docs.push({ name: f.name, stem: f.name.replace(/\.pdf$/i, ''), bytes: f.bytes }); continue; }
       const lib = await PDFLib.PDFDocument.load(f.bytes);
-      const pdf = await pdfjsLib.getDocument({ data: f.bytes.slice(), isEvalSupported: false, password: '' }).promise;
+      const pdf = needPdf ? await pdfjsLib.getDocument({ data: f.bytes.slice(), isEvalSupported: false, password: '' }).promise : null;
       docs.push({ name: f.name, stem: f.name.replace(/\.pdf$/i, ''), bytes: f.bytes, lib, pdf, n: lib.getPageCount() });
     } catch (e) { console.warn(f.name, e); skipped.push(f.name); }
   }
@@ -8632,6 +8945,7 @@ async function batchInvoices(docs, key, ocr) {
         if (!OCR.p) busy(true, T('正在下载文字识别组件…'));
         try { lines = await ocrImage(await renderPdfjsPng(pg, OCR_SC), OCR_SC); ocrN++; } catch (e) { ocrErr = e; console.warn(e); }
       }
+      pg.cleanup();
       const num = findInv(lines, key);
       if (num) {
         if (!map.has(num)) { const g = { num, pages: [] }; map.set(num, g); groups.push(g); }
@@ -8639,6 +8953,7 @@ async function batchInvoices(docs, key, ocr) {
       } else if (!cur) { cur = { num: null, name: d.stem + '_' + T('未识别') + '_' + (i + 1), pages: [] }; groups.push(cur); }
       cur.pages.push({ d, i });
     }
+    if (d.pdf) { d.pdf.destroy().catch(() => {}); d.pdf = null; }
   }
   return { groups, ocrN, ocrErr };
 }
@@ -8653,7 +8968,7 @@ async function batchGo() {
   }
   closeModals(); closeEditor();
   try {
-    const { docs, skipped } = await batchLoad();
+    const { docs, skipped } = await batchLoad(mode);
     if (!docs.length) { busy(false); toast(T('没有可以处理的文件')); return; }
     const results = [];
     let note = '';
@@ -8665,7 +8980,8 @@ async function batchGo() {
       let a = 0, b = 0;
       for (let k = 0; k < docs.length; k++) {
         busy(true, T('正在压缩… {i}/{n}', { i: k + 1, n: docs.length }));
-        const out = await compressPdf(docs[k].bytes, $('#btLvl').value);
+        let out;
+        try { out = await compressPdf(docs[k].bytes, $('#btLvl').value); } catch (e) { console.warn(docs[k].name, e); skipped.push(docs[k].name); continue; }
         a += docs[k].bytes.length; b += out.length;
         results.push({ name: docs[k].stem + '-compressed.pdf', bytes: out });
       }
@@ -8688,6 +9004,7 @@ async function batchGo() {
       }
       if (r.ocrN) note = T('其中 {n} 页用了文字识别', { n: r.ocrN });
     }
+    if (!results.length) { busy(false); toast(T('没有可以处理的文件')); return; }
     if (dir) {
       for (const f of results) await Neutralino.filesystem.writeBinaryFile(dir + sepOf(dir) + f.name, toAB(f.bytes));
       busy(false); toast(T('已完成，{n} 个文件保存在 {dir}', { n: results.length, dir: baseName(dir) || dir }) + (note ? ' · ' + note : ''));
@@ -8839,6 +9156,9 @@ function oneServe() {
   const beat = () => Neutralino.filesystem.writeFile(ONE.live, ONE.me + ' ' + Date.now() + '\n' + document.title).catch(() => {});
   beat(); setInterval(beat, 2000);
   setInterval(oneCheck, 400);
+  // 窗口从缩小还原／叫到前面时马上收文件（缩小时计时器会被放慢）
+  const wake = () => { if (!document.hidden) { beat(); oneCheck(); } };
+  document.addEventListener('visibilitychange', wake); window.addEventListener('focus', wake);
 }
 async function oneCheck() {
   if (ONE.busy || DESK.offline) return; ONE.busy = true;
@@ -8900,6 +9220,7 @@ async function boot() {
   await init();
 }
 async function onDeskClose() {
+  if (isBusy()) { toast(T('正在处理，请等做完再关')); return; }
   // 每个有未保存修改的标签都问一次
   for (let guard = 0; guard < 99; guard++) {
     if (!S.dirty && tabDirtyAny()) switchTab(TABS.list.findIndex((t, i) => i !== TABS.cur && t.st && t.st.dirty));

@@ -32,15 +32,29 @@ static int pid_alive(DWORD pid) {
   CloseHandle(h); return ok;
 }
 
-/* 读「我还在」记录：第一行 "pid 毫秒"，第二行窗口标题。新鲜（6 秒内）且进程还在才算 */
-static int read_live(DWORD *pid, WCHAR *title, int tcap) {
+/* 这个进程是不是 smartPDF.exe（进程号可能被别的程序重复用了） */
+static int is_smartpdf(DWORD pid) {
+  HANDLE h = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
+  if (!h) return 0;
+  WCHAR p[MAX_PATH]; DWORD n = MAX_PATH; int ok = 0;
+  if (QueryFullProcessImageNameW(h, 0, p, &n)) { WCHAR *b = wcsrchr(p, L'\\'); ok = !_wcsicmp(b ? b + 1 : p, L"smartPDF.exe"); }
+  DWORD code = 0; if (ok && !(GetExitCodeProcess(h, &code) && code == STILL_ACTIVE)) ok = 0;
+  CloseHandle(h); return ok;
+}
+
+/* 读「我还在」记录：第一行 "pid 毫秒"，第二行窗口标题。新鲜（6 秒内）且进程还在才算。
+   窗口缩小时 Edge 会把计时器放慢（几分钟后一分钟才跑一次），记录就不新鲜了：
+   这时只要那个进程还是开着的 smartPDF.exe 也算（*stale = 1），先把窗口叫出来再交文件 */
+static int read_live_ex(DWORD *pid, WCHAR *title, int tcap, int *stale) {
   HANDLE h = CreateFileW(g_live, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE, NULL, OPEN_EXISTING, 0, NULL);
   if (h == INVALID_HANDLE_VALUE) return 0;
   char buf[4096]; DWORD n = 0; int r = ReadFile(h, buf, sizeof buf - 1, &n, NULL); CloseHandle(h);
   if (!r || !n) return 0; buf[n] = 0;
   unsigned long p = 0; long long ts = 0;
   if (sscanf(buf, "%lu %lld", &p, &ts) != 2 || !p || !ts) return 0;
-  if (llabs(now_ms() - ts) > 6000 || !pid_alive((DWORD)p)) return 0;
+  int old = llabs(now_ms() - ts) > 6000;
+  if (old ? !is_smartpdf((DWORD)p) : !pid_alive((DWORD)p)) return 0;
+  if (stale) *stale = old; else if (old) return 0;
   *pid = (DWORD)p; title[0] = 0;
   char *nl = strchr(buf, '\n');
   if (nl) {
@@ -49,6 +63,8 @@ static int read_live(DWORD *pid, WCHAR *title, int tcap) {
   }
   return 1;
 }
+
+static int read_live(DWORD *pid, WCHAR *title, int tcap) { return read_live_ex(pid, title, tcap, NULL); }
 
 typedef struct { const WCHAR *want; HWND exact, any; } FindCtx;
 static BOOL CALLBACK enum_cb(HWND w, LPARAM lp) {
@@ -80,7 +96,7 @@ static void bring_front(const WCHAR *title) {
 static int exists(const WCHAR *f) { return GetFileAttributesW(f) != INVALID_FILE_ATTRIBUTES; }
 
 /* 把文件交给开着的 smartPDF。它 0.4 秒看一次收件夹，拿走了文件就会消失 */
-static int hand_off(const WCHAR *path, const WCHAR *title) {
+static int hand_off(const WCHAR *path, const WCHAR *title, int waits) {
   CreateDirectoryW(g_inbox, NULL);
   WCHAR tmp[MAX_PATH], fin[MAX_PATH]; long long t = now_ms(); DWORD me = GetCurrentProcessId();
   swprintf(tmp, MAX_PATH, L"%ls\\%lld-%lu.part", g_inbox, t, (unsigned long)me);
@@ -92,7 +108,7 @@ static int hand_off(const WCHAR *path, const WCHAR *title) {
   if (h == INVALID_HANDLE_VALUE) { free(u); return 0; }
   DWORD w = 0; int ok = WriteFile(h, u, (DWORD)(n - 1), &w, NULL); CloseHandle(h); free(u);
   if (!ok || !MoveFileExW(tmp, fin, MOVEFILE_REPLACE_EXISTING)) { DeleteFileW(tmp); return 0; }
-  for (int i = 0; i < 40; i++) { /* 最多等 4 秒 */
+  for (int i = 0; i < waits; i++) { /* 每次 0.1 秒 */
     Sleep(100);
     if (!exists(fin)) { bring_front(title); return 1; }
   }
@@ -121,8 +137,13 @@ int WINAPI wWinMain(HINSTANCE hi, HINSTANCE hp, PWSTR cmd, int show) {
   HANDLE mx = CreateMutexW(NULL, FALSE, L"Local\\smartPDF-open");
   if (mx) WaitForSingleObject(mx, 15000);
 
-  WCHAR title[512]; DWORD live = 0;
-  if (file && read_live(&live, title, 512) && hand_off(file, title)) {
+  WCHAR title[512]; DWORD live = 0; int stale = 0;
+  if (file && read_live_ex(&live, title, 512, &stale)) {
+    /* 先把窗口叫出来（缩小的会还原）：窗口在前面，smartPDF 的计时器才会照常跑、马上收文件 */
+    AllowSetForegroundWindow(live);
+    bring_front(title);
+  }
+  if (file && live && hand_off(file, title, stale ? 120 : 40)) {
     if (mx) { ReleaseMutex(mx); CloseHandle(mx); }
     return 0;
   }

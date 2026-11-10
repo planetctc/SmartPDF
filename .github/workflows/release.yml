@@ -18,6 +18,8 @@ jobs:
       - run: desktop/build.sh
       - id: ver
         run: echo "v=$(node -p "require('./desktop/neutralino.config.json').version")" >> "$GITHUB_OUTPUT"
+      - name: SHA-256 of the installer (the in-app updater refuses a download that does not match)
+        run: cd desktop/out && for f in smartPDF-Setup-*.exe; do sha256sum "$f" > "$f.sha256"; cat "$f.sha256"; done
       - name: Release notes from the app's changelog
         run: node desktop/notes.mjs > notes.md
       - uses: actions/upload-artifact@v4
@@ -30,7 +32,10 @@ jobs:
           name: smartPDF ${{ steps.ver.outputs.v }}
           target_commitish: ${{ github.sha }}
           body_path: notes.md
-          files: desktop/out/smartPDF-Setup-*.exe
+          files: |
+            desktop/out/smartPDF-Setup-*.exe
+            desktop/out/smartPDF-Setup-*.exe.sha256
   android-apk:
     needs: windows-installer
     uses: ./.github/workflows/android.yml
+    secrets: inherit
