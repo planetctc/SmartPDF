@@ -14,6 +14,7 @@ jobs:
         with:
           node-version: 20
       - run: sudo apt-get update && sudo apt-get install -y nsis gcc-mingw-w64-x86-64
+      - run: node desktop/checkjs.mjs
       - run: desktop/build.sh
       - id: ver
         run: echo "v=$(node -p "require('./desktop/neutralino.config.json').version")" >> "$GITHUB_OUTPUT"
