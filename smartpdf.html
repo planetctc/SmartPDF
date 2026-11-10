@@ -1309,16 +1309,17 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '3.7.2';
+const VERSION = '3.7.3';
 const CHANGELOG = [
+  { v: '3.7.3', d: '2026-11-10', items: [
+    "修正 3.7.2 打开后什么都不能用（按钮没反应、看不到文件）的问题",
+  ] },
   { v: '3.7.2', d: '2026-11-10', items: [
     "smartPDF 已经开着时双击别的 PDF，不会再闪出一个新窗口：文件直接开进已经开着的窗口的新标签，那个窗口会跳到最前面（最小化了也会还原）",
     "一次选好几个 PDF 按 Enter，全部开在同一个窗口的标签里",
   ] },
   { v: '3.7.1', d: '2026-11-06', items: [
-    "smartPDF 已经开着时双击别的 PDF，不会再闪出一个新窗口：文件直接开进已经开着的窗口的新标签，那个窗口会跳到最前面（最小化了也会还原）": "Double-clicking another PDF while smartPDF is open no longer flashes a new window: the file opens straight into a new tab of the open window, which comes to the front (restored if minimised)",
-  "一次选好几个 PDF 按 Enter，全部开在同一个窗口的标签里": "Select several PDFs and press Enter: they all open as tabs in one window",
-  "文件标签可以拖出窗口，变成自己一个窗口（也可以右键点标签选「移到新窗口」）；标签可以拖来拖去换位置，右键还有「关闭其他文件」",
+    "文件标签可以拖出窗口，变成自己一个窗口（也可以右键点标签选「移到新窗口」）；标签可以拖来拖去换位置，右键还有「关闭其他文件」",
   ] },
   { v: '3.7.0', d: '2026-11-06', items: [
     "分页标签：一个窗口可以开好几个文件，文件上方一排标签，点一下就切换；按「+」再开一个，按「×」关掉（没保存会先问）。Ctrl+Tab 换下一个",
@@ -1558,6 +1559,9 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  "smartPDF 已经开着时双击别的 PDF，不会再闪出一个新窗口：文件直接开进已经开着的窗口的新标签，那个窗口会跳到最前面（最小化了也会还原）": "Double-clicking another PDF while smartPDF is open no longer flashes a new window: the file opens straight into a new tab of the open window, which comes to the front (restored if minimised)",
+  "一次选好几个 PDF 按 Enter，全部开在同一个窗口的标签里": "Select several PDFs and press Enter: they all open as tabs in one window",
+  "修正 3.7.2 打开后什么都不能用（按钮没反应、看不到文件）的问题": "Fixed 3.7.2 starting up broken (buttons did nothing and no file could be opened)",
   "文件标签可以拖出窗口，变成自己一个窗口（也可以右键点标签选「移到新窗口」）；标签可以拖来拖去换位置，右键还有「关闭其他文件」": "Drag a file tab out of the window to give it its own window (or right-click the tab → Move to new window); drag tabs to reorder them; right-click also has Close other files",
   '移到新窗口': 'Move to new window', '关闭': 'Close', '关闭其他文件': 'Close other files',
   '移到新窗口要用 Windows 版 smartPDF': 'Moving to a new window needs the Windows version of smartPDF',
