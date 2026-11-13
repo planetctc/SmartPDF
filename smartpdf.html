@@ -1072,7 +1072,7 @@ html.mob .dRecentBox{display:none}
       <label class="row scChk"><input type="checkbox" id="scClean" checked> 自动拉正、去灰底</label>
       <label class="row scChk"><input type="checkbox" id="scOcr" checked> 扫完自动识别文字（可搜索、复制）</label>
       <button class="btn primary scGo" id="scGo">扫描</button>
-      <p class="muted" id="scInfo" style="margin:0;min-height:1.4em"></p>
+      <p class="muted" id="scInfo" style="margin:0;min-height:1.4em;white-space:pre-line"></p>
       <button class="linkbtn" id="scWin" style="align-self:flex-start">用 Windows 扫描窗口</button>
     </div>
     <div class="scPages"><div class="scThumbs" id="scThumbs"></div><p class="muted" id="scEmpty">扫好的页面会显示在这里</p></div>
@@ -1356,8 +1356,12 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '3.9.0';
+const VERSION = '3.9.1';
 const CHANGELOG = [
+  { v: '3.9.1', d: '2026-11-13', items: [
+    "修正扫描出现「Specified cast is not valid」扫不了：有些扫描仪的驱动不接受原来的取图方法，现在会自动换别的方法再试，转图片格式也换成更稳的做法",
+    "直接扫描还是不行时，会自动打开 Windows 的扫描窗口再试一次；出错时会显示是哪一步出错和错误代码，详细记录在临时文件夹的 smartpdf-scan.log",
+  ] },
   { v: '3.9.0', d: '2026-11-11', items: [
     "涂黑只删被涂的部分：保存时框里的字、图片和表单栏位被彻底删掉，同一页其他文字照样可以选、可以搜索、可以复制（以前整页变成图片）",
     "涂黑更安全：保存后会再检查一次，框里还读得到字就把那一页整页变成图片，保证删干净",
@@ -1625,6 +1629,8 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  "修正扫描出现「Specified cast is not valid」扫不了：有些扫描仪的驱动不接受原来的取图方法，现在会自动换别的方法再试，转图片格式也换成更稳的做法": "Fixed scanning failing with \"Specified cast is not valid\": some scanner drivers do not accept the original way of getting the image, so smartPDF now tries other ways automatically, and converts the image format more reliably",
+  "直接扫描还是不行时，会自动打开 Windows 的扫描窗口再试一次；出错时会显示是哪一步出错和错误代码，详细记录在临时文件夹的 smartpdf-scan.log": "If direct scanning still fails, the Windows scan window opens automatically to try again; errors now show which step failed and the error code, with full details in smartpdf-scan.log in the temp folder",
   "涂黑只删被涂的部分：保存时框里的字、图片和表单栏位被彻底删掉，同一页其他文字照样可以选、可以搜索、可以复制（以前整页变成图片）": "Redaction removes only what is covered: on save, the text, images and form fields inside the boxes are removed for good, and the rest of the page stays real text you can select, search and copy (it used to turn the whole page into an image)",
   "涂黑更安全：保存后会再检查一次，框里还读得到字就把那一页整页变成图片，保证删干净": "Safer redaction: after saving it checks again, and if any covered text can still be read, that page is turned into an image so nothing leaks",
   "表格自动计算：PDF 里的「合计」「数量×单价」等计算栏位，在 smartPDF 里填表时会自己算好": "Form calculations: calculated fields in a PDF (totals, quantity × price and so on) work out their results as you fill the form in smartPDF",
@@ -2204,6 +2210,8 @@ const EN = {
   "用 Windows 扫描窗口": "Use the Windows scan window",
   "扫好的页面会显示在这里": "Scanned pages appear here",
   "扫描失败：{e}": "Scan failed: {e}",
+  "找扫描仪": "finding the scanner", "连接扫描仪": "connecting to the scanner", "准备扫描": "preparing the scan", "设定扫描": "applying scan settings", "从扫描仪取图": "getting the image from the scanner", "保存图片": "saving the image", "Windows 扫描窗口": "Windows scan window",
+  "详细记录：{f}": "Details: {f}", "直接扫描不成功，已改用 Windows 扫描窗口。": "Direct scanning did not work, so the Windows scan window was opened instead.", "直接扫描：": "Direct scan: ",
   "没有回应": "no response",
   "扫描仪的盖子开着，请盖好再扫。": "The scanner lid is open. Close it and try again.",
   "正在找扫描仪…": "Looking for scanners…",
@@ -6922,51 +6930,108 @@ const SCAN_PAPER = { a4: [8.27, 11.69], letter: [8.5, 11], legal: [8.5, 14], max
 // PowerShell 的单引号字符串：' ‘ ’ ‚ ‛ 都算引号，全部要重复一次（v3.8.1：以前文件名里有 ’ 可以插进命令）
 const psq = s => "'" + String(s).replace(/\0/g, '').replace(/['\u2018\u2019\u201A\u201B]/g, '$&$&') + "'";
 const PS_HEAD = `$ErrorActionPreference='Stop'
-function SetP($props,[int]$id,$v){ foreach($p in $props){ if($p.PropertyID -eq $id){ try{$p.Value=$v}catch{}; return } } }
-function MaxP($props,[int]$id){ foreach($p in $props){ if($p.PropertyID -eq $id){ try{return [int]$p.SubTypeMax}catch{return 0} } }; return 0 }
+$LOGF=[IO.Path]::Combine([IO.Path]::GetTempPath(),'smartpdf-scan.log'); $STEP=''
+function Log($m){ try{ [IO.File]::AppendAllText($LOGF,('['+(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')+'] '+$m+[Environment]::NewLine),(New-Object Text.UTF8Encoding $false)) }catch{} }
+function HCode($e){ try{ $x=$e.Exception; $h=$x.HResult; if($x.InnerException){ $h=$x.InnerException.HResult }; return ('{0:X8}' -f [int]$h) }catch{ return '' } }
+function SetP($props,[int]$id,$v){ try{ foreach($p in $props){ $pid2=0; try{ $pid2=[int]$p.PropertyID }catch{}; if($pid2 -eq $id){ try{ $p.Value=$v }catch{ Log ('set '+$id+'='+$v+': '+$_.Exception.Message) }; return } } }catch{ Log ('props '+$id+': '+$_.Exception.Message) } }
+function MaxP($props,[int]$id){ try{ foreach($p in $props){ $pid2=0; try{ $pid2=[int]$p.PropertyID }catch{}; if($pid2 -eq $id){ try{ return [int]$p.SubTypeMax }catch{ return 0 } } } }catch{}; return 0 }
 function Done($res,$f){ [IO.File]::WriteAllText($f,(ConvertTo-Json $res -Depth 5 -Compress),(New-Object Text.UTF8Encoding $false)) }
-function Err($e){ $h=$e.Exception.HResult; if($e.Exception.InnerException){ $h=$e.Exception.InnerException.HResult }; return @{ok=$false;code=('{0:X8}' -f $h);msg=$e.Exception.Message} }
+function Err($e){
+  $x=$e.Exception; if($x.InnerException){ $x=$x.InnerException }; $c=HCode $e; $at=''
+  try{ $at=[string]$e.InvocationInfo.ScriptLineNumber+': '+$e.InvocationInfo.Line.Trim() }catch{}
+  Log ('ERROR step='+$STEP+' code='+$c+' type='+$x.GetType().FullName+' msg='+$x.Message+' at '+$at)
+  return @{ok=$false;code=$c;msg=[string]$x.Message;step=[string]$STEP;log=$LOGF}
+}
+`;
+// v3.9.1：扫描仪的状态（没纸、卡纸、忙、没连上、盖子开着、找不到），这些不用再换别的方法试
+const WIA_HW = ['80210002', '80210003', '80210005', '80210006', '80210015', '80210016'];
+/* v3.9.1：扫描的共用 PowerShell。有些扫描仪的驱动不接受 Item.Transfer（错误是「Specified cast is not valid」，
+   其实是 COM 的 E_NOINTERFACE 80004002），所以一个方法不行就换下一个：
+   Transfer(格式) → Transfer() → CommonDialog.ShowTransfer。转格式先用 .NET 的 System.Drawing，不行才用 WIA.ImageProcess。
+   每一步都写进 %TEMP%\smartpdf-scan.log，出错时画面上会显示是哪一步。 */
+const PS_SCANLIB = `$HW=@(${WIA_HW.map(c => "'" + c + "'").join(',')})
+function FirstItem($dev){
+  $it=$null
+  try{ $it=$dev.Items.Item(1) }catch{ Log ('Items.Item(1): '+$_.Exception.Message) }
+  if($it -eq $null){ try{ $it=$dev.Items(1) }catch{ Log ('Items(1): '+$_.Exception.Message) } }
+  if($it -eq $null){ try{ foreach($x in $dev.Items){ $it=$x; break } }catch{ Log ('foreach Items: '+$_.Exception.Message) } }
+  if($it -eq $null){ throw 'The scanner has no scan item' }
+  return ,$it
+}
+function Xfer($item,$fmt){
+  $img=$null; $last=$null
+  try{ $img=$item.Transfer($fmt) }catch{ $last=$_; $c=HCode $_; Log ('Transfer(fmt) '+$c+': '+$_.Exception.Message); if($HW -contains $c){ throw } }
+  if($img -eq $null){ try{ $img=$item.Transfer() }catch{ $last=$_; $c=HCode $_; Log ('Transfer() '+$c+': '+$_.Exception.Message); if($HW -contains $c){ throw } } }
+  if($img -eq $null){ try{ $cd=New-Object -ComObject WIA.CommonDialog; $img=$cd.ShowTransfer($item,$fmt,$false) }catch{ $last=$_; Log ('ShowTransfer '+(HCode $_)+': '+$_.Exception.Message) } }
+  if($img -eq $null){ if($last -ne $null){ throw $last }; throw 'The scanner returned no image' }
+  return ,$img
+}
+function SaveImg($img,$fmt,$f){
+  $same=$false; try{ $same=([string]$img.FormatID -eq $fmt) }catch{}
+  if($same){ try{ $img.SaveFile($f); return }catch{ Log ('SaveFile: '+$_.Exception.Message) } }
+  $raw=$f+'.raw'
+  try{ if(Test-Path -LiteralPath $raw){ Remove-Item -LiteralPath $raw -Force } }catch{}
+  $img.SaveFile($raw)
+  try{
+    Add-Type -AssemblyName System.Drawing
+    $bm=[Drawing.Image]::FromFile($raw)
+    try{
+      if($fmt -eq ${psq(WIA_JPG)}){
+        $enc=[Drawing.Imaging.ImageCodecInfo]::GetImageEncoders() | Where-Object { $_.MimeType -eq 'image/jpeg' } | Select-Object -First 1
+        $ep=New-Object Drawing.Imaging.EncoderParameters(1)
+        $ep.Param[0]=New-Object Drawing.Imaging.EncoderParameter([Drawing.Imaging.Encoder]::Quality,[long]92)
+        $bm.Save($f,$enc,$ep)
+      } else { $bm.Save($f,[Drawing.Imaging.ImageFormat]::Png) }
+    } finally { $bm.Dispose() }
+  }catch{
+    Log ('System.Drawing: '+$_.Exception.Message)
+    $ip=New-Object -ComObject WIA.ImageProcess
+    $ip.Filters.Add($ip.FilterInfos.Item('Convert').FilterID)
+    $ip.Filters.Item(1).Properties.Item('FormatID').Value=$fmt
+    if($fmt -eq ${psq(WIA_JPG)}){ try{ $ip.Filters.Item(1).Properties.Item('Quality').Value=92 }catch{} }
+    $img2=$ip.Apply($img); $img2.SaveFile($f)
+  } finally { try{ Remove-Item -LiteralPath $raw -Force -ErrorAction SilentlyContinue }catch{} }
+}
+Log ('--- smartPDF ${VERSION}, PowerShell '+$PSVersionTable.PSVersion+', '+[Threading.Thread]::CurrentThread.ApartmentState+', 64-bit '+[Environment]::Is64BitProcess)
 `;
 const PS_LIST = res => PS_HEAD + `$res=@{ok=$true;devices=@()}
 try{
-  $dm=New-Object -ComObject WIA.DeviceManager
-  foreach($d in $dm.DeviceInfos){ if($d.Type -eq 1){
+  $STEP='list'; $dm=New-Object -ComObject WIA.DeviceManager
+  foreach($d in $dm.DeviceInfos){ $ty=0; try{ $ty=[int]$d.Type }catch{}; if($ty -eq 1){
     $nm=''; try{ $nm=[string]$d.Properties.Item('Name').Value }catch{}
-    $caps=0; try{ $dev=$d.Connect(); foreach($p in $dev.Properties){ if($p.PropertyID -eq 3086){ $caps=[int]$p.Value } } }catch{}
+    $caps=0; try{ $dev=$d.Connect(); foreach($p in $dev.Properties){ try{ if([int]$p.PropertyID -eq 3086){ $caps=[int]$p.Value } }catch{} } }catch{}
     $res.devices+=@{id=[string]$d.DeviceID;name=$nm;caps=$caps}
   }}
 }catch{ $res=Err $_ }
 Done $res ${psq(res)}`;
 // o: {dev, feed(0 玻璃面/1 进纸器/5 双面), intent(1 彩色/2 灰色/4 黑白), dpi, w, h(像素，0=最大), png, out, res}
-const PS_SCAN = o => PS_HEAD + `$fmt=${psq(o.png ? WIA_PNG : WIA_JPG)}; $feed=${o.feed}; $res=@{ok=$true;pages=@()}
+const PS_SCAN = o => PS_HEAD + PS_SCANLIB + `$fmt=${psq(o.png ? WIA_PNG : WIA_JPG)}; $feed=${o.feed}; $res=@{ok=$true;pages=@()}; $img=$null; $item=$null; $dev=$null
 try{
+  $STEP='device'; $want=${psq(o.dev)}
   $dm=New-Object -ComObject WIA.DeviceManager; $info=$null
-  foreach($d in $dm.DeviceInfos){ if($d.DeviceID -eq ${psq(o.dev)}){ $info=$d } }
+  foreach($d in $dm.DeviceInfos){ try{ if([string]$d.DeviceID -eq $want){ $info=$d } }catch{} }
   if($info -eq $null){ throw (New-Object Runtime.InteropServices.COMException('no device',-2145320939)) }
-  $dev=$info.Connect()
+  $nm=''; try{ $nm=[string]$info.Properties.Item('Name').Value }catch{}; Log ('scan '+$nm+' feed='+$feed+' dpi=${o.dpi} intent=${o.intent}')
+  $STEP='connect'; $dev=$info.Connect()
+  $STEP='settings'
   if($feed -gt 0){ SetP $dev.Properties 3088 $feed; SetP $dev.Properties 3096 1 } else { SetP $dev.Properties 3088 2 }
   $n=0
   while($true){
-    $item=$dev.Items(1)
+    $STEP='item'; $item=FirstItem $dev
+    $STEP='settings'
     SetP $item.Properties 6146 ${o.intent}
     SetP $item.Properties 6147 ${o.dpi}; SetP $item.Properties 6148 ${o.dpi}
     SetP $item.Properties 6149 0; SetP $item.Properties 6150 0
     $w=${o.w}; $h=${o.h}; $mw=MaxP $item.Properties 6151; $mh=MaxP $item.Properties 6152
     if($w -le 0 -or ($mw -gt 0 -and $w -gt $mw)){ $w=$mw }; if($h -le 0 -or ($mh -gt 0 -and $h -gt $mh)){ $h=$mh }
     if($w -gt 0){ SetP $item.Properties 6151 $w }; if($h -gt 0){ SetP $item.Properties 6152 $h }
-    try{ $img=$item.Transfer($fmt) }catch{
-      $c=(Err $_).code
-      if($feed -gt 0 -and $n -gt 0 -and $c -eq '80210003'){ break } else { throw }
+    $STEP='transfer'; $img=$null
+    try{ $img=Xfer $item $fmt }catch{
+      if($feed -gt 0 -and $n -gt 0 -and (HCode $_) -eq '80210003'){ break } else { throw }
     }
-    if($img.FormatID -ne $fmt){
-      $ip=New-Object -ComObject WIA.ImageProcess
-      $ip.Filters.Add($ip.FilterInfos.Item('Convert').FilterID)
-      $ip.Filters.Item(1).Properties.Item('FormatID').Value=$fmt
-      if($fmt -eq ${psq(WIA_JPG)}){ $ip.Filters.Item(1).Properties.Item('Quality').Value=92 }
-      $img=$ip.Apply($img)
-    }
+    $STEP='save'
     $f=${psq(o.out)}+'-'+$n+${psq(o.png ? '.png' : '.jpg')}
-    $img.SaveFile($f); $res.pages+=$f; $n++
+    SaveImg $img $fmt $f; $res.pages+=$f; $n++; Log ('page '+$n+' ok')
     [Console]::Out.WriteLine('PAGE '+$n); [Console]::Out.Flush()
     if($feed -eq 0){ break }
   }
@@ -7000,8 +7065,14 @@ async function readRes(f) {
 const arr = v => (Array.isArray(v) ? v : v == null ? [] : [v]);
 function scanErr(r) {
   const known = { '80210015': T('找不到扫描仪。请确认扫描仪已开机、连上电脑，并在 Windows 的「打印机和扫描仪」里看得到它。'), '80210006': T('扫描仪正在忙，请稍后再试。'), '80210003': T('进纸器没有纸，请放好纸再扫。'), '80210002': T('扫描仪卡纸了，请处理好再扫。'), '80210005': T('扫描仪没有连上，请检查线或网络。'), '80210016': T('扫描仪的盖子开着，请盖好再扫。') };
-  return known[r && r.code] || T('扫描失败：{e}', { e: (r && (r.msg || r.code)) || T('没有回应') });
+  if (known[r && r.code]) return known[r.code];
+  // v3.9.1：看不懂的错误也说清楚是哪一步、错误代码，和记录文件在哪里，方便回报
+  const step = { device: T('找扫描仪'), connect: T('连接扫描仪'), item: T('准备扫描'), settings: T('设定扫描'), transfer: T('从扫描仪取图'), save: T('保存图片'), dialog: T('Windows 扫描窗口'), list: T('找扫描仪') }[r && r.step];
+  const e = ((r && (r.msg || r.code)) || T('没有回应')) + (r && r.code ? ' [' + r.code + (step ? ' · ' + step : '') + ']' : '');
+  return T('扫描失败：{e}', { e }) + (r && r.log ? (LANG === 'en' ? ' ' : '') + T('详细记录：{f}', { f: r.log }) : '');
 }
+// 直接扫描失败、而且不是扫描仪本身的状态（没纸、卡纸…）时，自动改用 Windows 的扫描窗口再试一次
+const scanFallback = r => !!(r && !r.ok && !WIA_HW.includes(r.code));
 async function scanFind(quiet) {
   const sel = $('#scDev');
   if (!quiet) { sel.innerHTML = `<option>${escHtml(T('正在找扫描仪…'))}</option>`; sel.disabled = true; $('#scInfo').textContent = ''; }
@@ -7133,27 +7204,32 @@ async function scanGo() {
     $('#scInfo').textContent = SCAN.stopped ? T('已停止，扫好的 {n} 页留着', { n: got })
       : r && r.ok ? (o.feed ? T('扫好了 {n} 页', { n: got }) : T('扫好了。换下一张纸，再按「继续扫描」。'))
         : scanErr(r) + (got ? (LANG === 'en' ? ' ' : '') + T('（扫好的 {n} 页留着）', { n: got }) : '');
+    if (!SCAN.stopped && !got && scanFallback(r)) { SCAN.busy = false; return scanWin(scanErr(r)); }
   } catch (e) { console.error(e); $('#scInfo').textContent = scanErr({ msg: e.message || String(e) }); }
   SCAN.busy = false; scanUi();
 }
 /* 退回用 Windows 的扫描窗口（扫描仪不接受上面的设定时用） */
-async function scanWin() {
-  scanStopList(); SCAN.busy = true; scanUi(); $('#scInfo').textContent = T('已打开 Windows 扫描窗口，请在那里按「扫描」。看不到的话，看看任务栏。');
+async function scanWin(prev) {
+  prev = typeof prev === 'string' ? prev : '';   // 直接扫描的错误（自动改用这个窗口时）
+  scanStopList(); SCAN.busy = true; scanUi();
+  $('#scInfo').textContent = (prev ? T('直接扫描不成功，已改用 Windows 扫描窗口。') + (LANG === 'en' ? ' ' : '') : '') + T('已打开 Windows 扫描窗口，请在那里按「扫描」。看不到的话，看看任务栏。');
   try {
     const base = await scanTmp(), path = base + '.jpg', res = base + '.json';
-    const ps = PS_HEAD + `try{
-  $dlg=New-Object -ComObject WIA.CommonDialog
+    const ps = PS_HEAD + PS_SCANLIB + `$img=$null
+try{
+  $STEP='dialog'; $dlg=New-Object -ComObject WIA.CommonDialog
   $img=$dlg.ShowAcquireImage(1,0,131072,${psq(WIA_JPG)},$false,$true,$false)
   if($img -eq $null){ $res=@{ok=$true;cancel=$true} } else {
-    if($img.FormatID -ne ${psq(WIA_JPG)}){ $ip=New-Object -ComObject WIA.ImageProcess; $ip.Filters.Add($ip.FilterInfos.Item('Convert').FilterID); $ip.Filters.Item(1).Properties.Item('FormatID').Value=${psq(WIA_JPG)}; $ip.Filters.Item(1).Properties.Item('Quality').Value=92; $img=$ip.Apply($img) }
-    $img.SaveFile(${psq(path)}); $res=@{ok=$true;dpi=[int]$img.HorizontalResolution}
+    $STEP='save'; SaveImg $img ${psq(WIA_JPG)} ${psq(path)}
+    $dpi=200; try{ $dpi=[int]$img.HorizontalResolution }catch{}; if($dpi -lt 50){ $dpi=200 }
+    $res=@{ok=$true;dpi=$dpi}; Log 'dialog scan ok'
   }
 }catch{ $res=Err $_ }
 Done $res ${psq(res)}`;
     await scanExec(ps);
     const r = await readRes(res);
     if (r && r.ok && !r.cancel) { await scanAdd(path, +r.dpi || 200, false); $('#scInfo').textContent = ''; }
-    else $('#scInfo').textContent = r && r.cancel ? '' : scanErr(r);
+    else $('#scInfo').textContent = r && r.cancel ? prev : scanErr(r) + (prev && r && !r.ok ? '\n' + T('直接扫描：') + prev : '');
   } catch (e) { console.error(e); $('#scInfo').textContent = scanErr({ msg: e.message || String(e) }); }
   SCAN.busy = false; scanUi();
 }
