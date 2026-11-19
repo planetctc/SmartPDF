@@ -268,22 +268,29 @@ textarea.ed{position:absolute;margin:0;padding:0;border:1px dashed var(--accent)
 .rcBox.on .h{border-color:var(--c-orange)}
 .rcBox .h[data-h=nw]{left:-7px;top:-7px;cursor:nwse-resize}.rcBox .h[data-h=ne]{right:-7px;top:-7px;cursor:nesw-resize}
 .rcBox .h[data-h=sw]{left:-7px;bottom:-7px;cursor:nesw-resize}.rcBox .h[data-h=se]{right:-7px;bottom:-7px;cursor:nwse-resize}
-.card.scan{width:min(940px,100%)}
+.card.scan{width:min(1180px,100%)}
 .scBody{display:flex;flex-wrap:wrap;gap:16px}
 .scSet{flex:1 1 260px;max-width:320px;display:flex;flex-direction:column;gap:10px}
 .scSet .field{margin:0}
 .scGo{height:44px;font-size:15px;margin-top:4px;justify-content:center}
-.scPages{flex:999 1 320px;min-width:0;min-height:340px;max-height:60vh;overflow:auto;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column}
+.scPages{flex:999 1 320px;min-width:0;min-height:340px;max-height:72vh;overflow:auto;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column}
 .scPages #scEmpty{margin:auto;text-align:center}
-.scThumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px}.scThumbs:empty{display:none}
+/* v3.9.2：预览图放大（以前 160px 高看不清），点一下看整页大图 */
+.scThumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}.scThumbs:empty{display:none}
 .scT{position:relative;display:flex;flex-direction:column;gap:4px}
-.scImg{height:160px;background:#fff;border:1px solid var(--line);border-radius:6px;display:grid;place-items:center;overflow:hidden}
-.scImg img{max-width:100%;max-height:100%;display:block;transition:transform .15s}
+.scImg{height:340px;cursor:zoom-in;background:#fff;border:1px solid var(--line);border-radius:6px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.scImg img{width:100%;height:100%;min-height:0;object-fit:contain;display:block;transition:transform .15s}
 .scNo{position:absolute;left:6px;top:6px;background:var(--accent);color:var(--accent-ink);font:600 11px/18px var(--mono);padding:0 6px;border-radius:9px}
 .scBar{display:flex;justify-content:center;gap:4px}
 .scBar button{width:28px;height:28px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:6px;padding:0;font-size:15px;line-height:1;cursor:pointer}
 .scBar button:disabled{opacity:.35;cursor:default}
 .scBar button:hover:not(:disabled){background:var(--accent-soft)}
+#scView{position:fixed;inset:0;z-index:9000;background:rgba(10,14,30,.86);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;cursor:zoom-out}
+#scView[hidden]{display:none}
+#scView img{max-width:min(96vw,1400px);max-height:calc(100vh - 80px);background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.5);border-radius:4px}
+#scView p{margin:0;color:#fff;font-size:13px;opacity:.85}
+#scView button{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:64px;border:0;border-radius:8px;background:rgba(255,255,255,.16);color:#fff;font-size:30px;cursor:pointer}
+#scView button:hover{background:rgba(255,255,255,.3)}#scView button:disabled{opacity:.25;cursor:default}
 .welcome{padding:0!important;display:block!important;place-items:normal!important}
 .welcome[hidden]{display:none!important}
 .dash{display:flex;width:100%;min-height:100%;background:var(--dbg)}
@@ -1076,6 +1083,7 @@ html.mob .dRecentBox{display:none}
       <button class="linkbtn" id="scWin" style="align-self:flex-start">用 Windows 扫描窗口</button>
     </div>
     <div class="scPages"><div class="scThumbs" id="scThumbs"></div><p class="muted" id="scEmpty">扫好的页面会显示在这里</p></div>
+    <div id="scView" hidden role="dialog" aria-label="看大图"><button type="button" id="scVPrev" style="left:16px" aria-label="上一页">‹</button><img id="scVImg" alt=""><p id="scVInfo"></p><button type="button" id="scVNext" style="right:16px" aria-label="下一页">›</button></div>
   </div>
   <div class="row end"><button class="btn" data-close>取消</button><button class="btn primary" id="scDone">完成</button></div>
 </div></div>
@@ -1356,8 +1364,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '3.9.1';
+const VERSION = '3.9.2';
 const CHANGELOG = [
+  { v: '3.9.2', d: '2026-11-19', items: [
+    "扫描画面的预览图放大了一倍多，看得清楚；点一下预览图可以看整页大图，左右键换页，Esc 关掉",
+  ] },
   { v: '3.9.1', d: '2026-11-13', items: [
     "修正扫描出现「Specified cast is not valid」扫不了：有些扫描仪的驱动不接受原来的取图方法，现在会自动换别的方法再试，转图片格式也换成更稳的做法",
     "直接扫描还是不行时，会自动打开 Windows 的扫描窗口再试一次；出错时会显示是哪一步出错和错误代码，详细记录在临时文件夹的 smartpdf-scan.log",
@@ -1629,6 +1640,7 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  "扫描画面的预览图放大了一倍多，看得清楚；点一下预览图可以看整页大图，左右键换页，Esc 关掉": "Scan previews are more than twice as big and easy to read; click a preview to see the whole page large, use the arrow keys to move between pages, Esc to close",
   "修正扫描出现「Specified cast is not valid」扫不了：有些扫描仪的驱动不接受原来的取图方法，现在会自动换别的方法再试，转图片格式也换成更稳的做法": "Fixed scanning failing with \"Specified cast is not valid\": some scanner drivers do not accept the original way of getting the image, so smartPDF now tries other ways automatically, and converts the image format more reliably",
   "直接扫描还是不行时，会自动打开 Windows 的扫描窗口再试一次；出错时会显示是哪一步出错和错误代码，详细记录在临时文件夹的 smartpdf-scan.log": "If direct scanning still fails, the Windows scan window opens automatically to try again; errors now show which step failed and the error code, with full details in smartpdf-scan.log in the temp folder",
   "涂黑只删被涂的部分：保存时框里的字、图片和表单栏位被彻底删掉，同一页其他文字照样可以选、可以搜索、可以复制（以前整页变成图片）": "Redaction removes only what is covered: on save, the text, images and form fields inside the boxes are removed for good, and the rest of the page stays real text you can select, search and copy (it used to turn the whole page into an image)",
@@ -1695,6 +1707,10 @@ const EN = {
   '收起页面栏': 'Hide page panel', '显示页面栏': 'Show page panel',  '页面操作': 'Page tools',
   "存成 PDF/A": "Save as PDF/A",
   "点一下在页面上看": "Click to see it on the page",
+  "看大图": "Large view",
+  "点一下看大图": "Click to see it large",
+  "点一下或按 Esc 关掉": "click or press Esc to close",
+  "第 {p} 页，共 {n} 页": "Page {p} of {n}",
   "第 {k} 处改动": "Change {k}",
   "共 {n} 处改动": "{n} changes",
   "正在准备页面…": "Preparing pages…",
@@ -5015,6 +5031,7 @@ function closeModals() {
   const cf = $('#cfNo');
   if (cf.onclick) { cf.onclick(); return; }
   $$('.modal').forEach(m => { m.hidden = true; });
+  const sv = $('#scView'); if (sv) sv.hidden = true;
 }
 
 const LIB = { sign: [], stamp: [] };
@@ -7134,7 +7151,7 @@ function scanUi() {
     const d = document.createElement('div'); d.className = 'scT';
     const fr = document.createElement('div'); fr.className = 'scImg';
     const img = document.createElement('img'); img.src = im.url; img.alt = T('第 {p} 页', { p: i + 1 }); img.style.transform = `rotate(${im.rot}deg)` + (im.rot % 180 ? ' scale(0.7)' : '');
-    fr.appendChild(img);
+    fr.appendChild(img); fr.title = T('点一下看大图'); fr.onclick = () => scanView(i);
     const bar = document.createElement('div'); bar.className = 'scBar';
     const mk = (txt, title, fn, dis) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = txt; b.title = title; b.setAttribute('aria-label', title); b.disabled = !!dis || SCAN.busy; b.onclick = fn; bar.appendChild(b); };
     mk('‹', T('往前移'), () => { [SCAN.imgs[i - 1], SCAN.imgs[i]] = [SCAN.imgs[i], SCAN.imgs[i - 1]]; scanUi(); }, i === 0);
@@ -7144,6 +7161,28 @@ function scanUi() {
     const no = document.createElement('span'); no.className = 'scNo'; no.textContent = i + 1;
     d.append(fr, no, bar); host.appendChild(d);
   });
+}
+// v3.9.2：点预览图看整页大图；左右键换页，Esc 或点一下关掉
+function scanView(i) {
+  const v = $('#scView'), n = SCAN.imgs.length;
+  if (i < 0 || i >= n) { v.hidden = true; return; }
+  const im = SCAN.imgs[i]; SCAN.view = i;
+  const img = $('#scVImg');
+  if (!im.rot) img.src = im.url;
+  else {   // 转过的页：画成转好的图再显示，大小和位置才对
+    const src = new Image();
+    src.onload = () => {
+      if (SCAN.view !== i) return;
+      const c = document.createElement('canvas'), q = im.rot % 180;
+      c.width = q ? src.height : src.width; c.height = q ? src.width : src.height;
+      const x = c.getContext('2d'); x.translate(c.width / 2, c.height / 2); x.rotate(im.rot * Math.PI / 180); x.drawImage(src, -src.width / 2, -src.height / 2);
+      img.src = c.toDataURL('image/jpeg', 0.9);
+    };
+    src.src = im.url;
+  }
+  $('#scVInfo').textContent = T('第 {p} 页，共 {n} 页', { p: i + 1, n }) + ' · ' + T('点一下或按 Esc 关掉');
+  $('#scVPrev').disabled = i === 0; $('#scVNext').disabled = i === n - 1;
+  v.hidden = false;
 }
 async function scanAdd(path, dpi, png) {
   let data = new Uint8Array(await Neutralino.filesystem.readBinaryFile(path));
@@ -7261,6 +7300,17 @@ async function scanDone() {
 }
 function wireScan() {
   $('#btnScan').onclick = openScan; $('#wScan').onclick = openScan;
+  document.body.appendChild($('#scView'));   // 放在最外层，才会盖满整个窗口
+  $('#scView').onclick = e => { if (e.target.tagName !== 'BUTTON') $('#scView').hidden = true; };
+  $('#scVPrev').onclick = () => scanView(SCAN.view - 1); $('#scVNext').onclick = () => scanView(SCAN.view + 1);
+  document.addEventListener('keydown', e => {
+    if ($('#scView').hidden) return;
+    if (e.key === 'Escape') $('#scView').hidden = true;
+    else if (e.key === 'ArrowLeft') scanView(Math.max(0, SCAN.view - 1));
+    else if (e.key === 'ArrowRight') scanView(Math.min(SCAN.imgs.length - 1, SCAN.view + 1));
+    else return;
+    e.preventDefault(); e.stopImmediatePropagation();
+  }, true);
   $('#scGo').onclick = scanGo; $('#scDone').onclick = scanDone; $('#scFind').onclick = () => scanFind(); $('#scWin').onclick = scanWin;
   $('#scDev').onchange = () => { scanSrcUi(); scanSave(); };
   for (const id of ['#scSrc', '#scColor', '#scDpi', '#scPaper', '#scClean', '#scOcr']) $(id).onchange = scanSave;
