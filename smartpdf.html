@@ -1364,8 +1364,11 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <script>
 'use strict';
 /* ===== PDF 编辑器 · 基础：常量、状态、几何、绘制 ===== */
-const VERSION = '3.9.2';
+const VERSION = '3.9.3';
 const CHANGELOG = [
+  { v: '3.9.3', d: '2026-11-19', items: [
+    "修正一键更新失败（显示「没有回应」）：3.9.1 起更新的命令太长，Windows 没有执行。现在太长的命令会先存成文件再执行；扫描找不到扫描帮手时的备用方法也一起修好",
+  ] },
   { v: '3.9.2', d: '2026-11-19', items: [
     "扫描画面的预览图放大了一倍多，看得清楚；点一下预览图可以看整页大图，左右键换页，Esc 关掉",
   ] },
@@ -1640,6 +1643,7 @@ const LS = {
 };
 /* ===== 中英文切换（v1.05） ===== */
 const EN = {
+  "修正一键更新失败（显示「没有回应」）：3.9.1 起更新的命令太长，Windows 没有执行。现在太长的命令会先存成文件再执行；扫描找不到扫描帮手时的备用方法也一起修好": "Fixed one-click update failing with \"no response\": since 3.9.1 the update command was too long for Windows to run. Long commands are now saved to a file first; the backup way of scanning (when the scan helper is not available) is fixed too",
   "扫描画面的预览图放大了一倍多，看得清楚；点一下预览图可以看整页大图，左右键换页，Esc 关掉": "Scan previews are more than twice as big and easy to read; click a preview to see the whole page large, use the arrow keys to move between pages, Esc to close",
   "修正扫描出现「Specified cast is not valid」扫不了：有些扫描仪的驱动不接受原来的取图方法，现在会自动换别的方法再试，转图片格式也换成更稳的做法": "Fixed scanning failing with \"Specified cast is not valid\": some scanner drivers do not accept the original way of getting the image, so smartPDF now tries other ways automatically, and converts the image format more reliably",
   "直接扫描还是不行时，会自动打开 Windows 的扫描窗口再试一次；出错时会显示是哪一步出错和错误代码，详细记录在临时文件夹的 smartpdf-scan.log": "If direct scanning still fails, the Windows scan window opens automatically to try again; errors now show which step failed and the error code, with full details in smartpdf-scan.log in the temp folder",
@@ -7066,7 +7070,14 @@ async function psFileCmd(s, base) {
   await Neutralino.filesystem.writeBinaryFile(f, u.buffer);
   return { cmd: 'powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -STA -WindowStyle Hidden -File "' + f + '"', file: f };
 }
-const psCmd = s => 'powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -STA -WindowStyle Hidden -EncodedCommand ' + psEncode(s);
+/* v3.9.3：Windows 的命令列最多 8191 个字。v3.9.1 的扫描记录让共用开头变长，一键更新的命令超过上限，
+   PowerShell 根本没有执行（画面显示「没有回应」）。现在命令太长时记下原来的脚本，psRun 会改写成 .ps1 文件再执行 */
+const PS_MAX = 7800, PS_LONG = new Map();
+const psCmd = s => {
+  const c = 'powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -STA -WindowStyle Hidden -EncodedCommand ' + psEncode(s);
+  if (c.length > PS_MAX) PS_LONG.set(c, s);
+  return c;
+};
 async function scanTmp() {
   let tmp = '';
   try { tmp = await Neutralino.os.getEnv('TEMP'); } catch (e) { /* ignore */ }
@@ -7197,7 +7208,15 @@ async function scanAdd(path, dpi, png) {
 /* 所有 PowerShell 都用 spawnProcess 在旁边跑（v2.7.2）。
    以前用 execCommand：它会卡住 Neutralino，跑完之前「打开」「另存为」等窗口全部要排队，
    找扫描仪（连每一台扫描仪）可能要几十秒，所以关掉扫描画面后按「打开」会等很久或没反应。 */
-function psRun(cmd, onLine, onStart, onErr) {
+async function psRun(cmd, onLine, onStart, onErr) {
+  const long = PS_LONG.get(cmd);
+  if (long === undefined) return psRun0(cmd, onLine, onStart, onErr);
+  PS_LONG.delete(cmd);
+  const pf = await psFileCmd(long, (await scanTmp()).replace(/smartpdf-scan-(\d+)$/, 'smartpdf-ps-$1-' + Math.random().toString(36).slice(2, 8)));
+  try { return await psRun0(pf.cmd, onLine, onStart, onErr); }
+  finally { Neutralino.filesystem.remove(pf.file).catch(() => {}); }
+}
+function psRun0(cmd, onLine, onStart, onErr) {
   return new Promise((res, rej) => {
     let id = null, buf = '', early = [];
     const h = e => {
