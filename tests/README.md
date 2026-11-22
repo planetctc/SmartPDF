@@ -21,4 +21,5 @@ node tests/redact-390.js smartpdf.html
 node tests/calc-390.js smartpdf.html
 node tests/scan-391.js smartpdf.html
 node tests/pscmd-393.js smartpdf.html
+node tests/v310.js smartpdf.html
 ```
